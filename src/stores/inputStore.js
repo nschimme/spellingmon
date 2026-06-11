@@ -6,10 +6,13 @@ export const useInputStore = defineStore('input', {
   }),
   actions: {
     init() {
-      window.addEventListener('keydown', this.handleKeydown);
+      this._handler = (e) => this.handleKeydown(e);
+      window.addEventListener('keydown', this._handler);
     },
     cleanup() {
-      window.removeEventListener('keydown', this.handleKeydown);
+      if (this._handler) {
+        window.removeEventListener('keydown', this._handler);
+      }
     },
     handleKeydown(e) {
       // Sort listeners by priority (highest first)

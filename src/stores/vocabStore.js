@@ -3,7 +3,6 @@ import { defineStore } from 'pinia';
 export const useVocabStore = defineStore('vocab', {
   state: () => ({
     vocabData: {}, // area -> words
-    currentArea: 1,
   }),
   actions: {
     async loadVocab(area) {

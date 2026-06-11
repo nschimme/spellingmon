@@ -29,7 +29,10 @@ export const usePlayerStore = defineStore('player', {
       this.healParty();
     },
     saveState() {
-      storage.save('player_state', this.$state);
+      if (this._saveTimeout) clearTimeout(this._saveTimeout);
+      this._saveTimeout = setTimeout(() => {
+        storage.save('player_state', this.$state);
+      }, 500); // Debounce saves by 500ms
     },
     addSpellingmon(mon) {
       if (this.party.length < 6) {

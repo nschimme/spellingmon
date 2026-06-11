@@ -54,9 +54,9 @@
         <div v-if="activeTab === 'settings'" class="flex flex-col gap-6">
           <div>
             <label class="font-black uppercase text-gray-800 block mb-2">TTS Voice Configuration</label>
-            <select @change="updateVoice"
+            <select v-model="settingsStore.selectedVoiceName" @change="updateVoice"
                     class="w-full border-4 border-gray-800 p-3 rounded-xl bg-white font-bold text-gray-700 outline-none focus:ring-4 focus:ring-blue-300">
-              <option v-for="voice in settingsStore.voices" :key="voice.name" :value="voice.name" :selected="voice.name === settingsStore.selectedVoiceName">
+              <option v-for="voice in settingsStore.voices" :key="voice.name" :value="voice.name">
                 {{ voice.name }} ({{ voice.lang }})
               </option>
             </select>
