@@ -33,9 +33,9 @@ export const AREA_CONFIGS = {
 };
 
 export const TRAINERS = {
-  1: [{ name: 'Youngster Joey', dialog: 'My Rattatext is top percentage!', party: [createMon('Rattatext', 4)] }],
-  2: [{ name: 'Lass Haley', dialog: 'Did you know you can catch these?', party: [createMon('Pidgeyparagraph', 8)] }],
-  3: [{ name: 'Hiker Erik', dialog: 'Sturdy as a rock!', party: [createMon('Geodudeo', 14)] }],
-  4: [{ name: 'Psychic Mark', dialog: 'I saw you coming...', party: [createMon('Slowspell', 19)] }],
-  5: [{ name: 'Ace Trainer Red', dialog: '...', party: [createMon('Pikachart', 28)] }],
+  1: [{ name: 'Youngster Joey', dialog: 'My Rattatext is top percentage!', party: [{ species: 'Rattatext', level: 4 }] }],
+  2: [{ name: 'Lass Haley', dialog: 'Did you know you can catch these?', party: [{ species: 'Pidgeyparagraph', level: 8 }] }],
+  3: [{ name: 'Hiker Erik', dialog: 'Sturdy as a rock!', party: [{ species: 'Geodudeo', level: 14 }] }],
+  4: [{ name: 'Psychic Mark', dialog: 'I saw you coming...', party: [{ species: 'Slowspell', level: 19 }] }],
+  5: [{ name: 'Ace Trainer Red', dialog: '...', party: [{ species: 'Pikachart', level: 28 }] }],
 };

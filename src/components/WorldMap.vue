@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-full bg-green-200 overflow-hidden select-none" ref="mapContainer">
+  <div class="relative w-full h-full bg-green-200 overflow-hidden select-none">
     <!-- Map Rendering -->
     <div class="absolute transition-all duration-200"
          :style="{ left: `calc(50% - ${playerX * 40}px)`, top: `calc(50% - ${playerY * 40}px)` }">
@@ -58,6 +58,10 @@ const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 
+const props = defineProps({
+  isMenuOpen: Boolean
+});
+
 const mapWidth = 20;
 const mapHeight = 20;
 const playerX = ref(playerStore.position.x);
@@ -96,7 +100,7 @@ const getTrainer = (x, y) => {
 };
 
 const handleKeydown = (e) => {
-  if (battleStore.inBattle) return;
+  if (battleStore.inBattle || props.isMenuOpen) return;
 
   let newX = playerX.value;
   let newY = playerY.value;
@@ -180,7 +184,9 @@ const triggerWildBattle = async () => {
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
   await vocabStore.loadVocab(playerStore.currentArea);
-  const enemyMon = trainer.party[0]; // Simplified: trainer has 1 mon for now
+  // Re-instantiate trainer mon to avoid persistent state
+  const enemyMonCfg = trainer.party[0];
+  const enemyMon = createMon(enemyMonCfg.species, enemyMonCfg.level);
   battleStore.startBattle(playerStore.party[0], enemyMon, 'trainer', trainer, trainerId);
 };
 
