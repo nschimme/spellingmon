@@ -4,8 +4,8 @@
     <div class="absolute transition-all duration-200"
          :style="{ left: `calc(50% - ${playerX * 40}px)`, top: `calc(50% - ${playerY * 40}px)` }">
 
-      <div v-for="y in mapHeight" :key="y" class="flex">
-        <div v-for="x in mapWidth" :key="x"
+      <div v-for="y in GAME_CONSTANTS.MAP_HEIGHT" :key="y" class="flex">
+        <div v-for="x in GAME_CONSTANTS.MAP_WIDTH" :key="x"
              class="w-10 h-10 border border-green-300 flex items-center justify-center relative"
              :class="getTileClass(x-1, y-1)">
           <span v-if="isGrass(x-1, y-1)" class="text-green-600">🌿</span>
@@ -54,6 +54,7 @@ import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { useInputStore } from '../stores/inputStore';
 import { createMon, TRAINERS, AREA_CONFIGS } from '../utils/gameData';
+import { GAME_CONSTANTS } from '../utils/constants';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
@@ -65,8 +66,6 @@ const props = defineProps({
   isMenuOpen: Boolean
 });
 
-const mapWidth = 20;
-const mapHeight = 20;
 const playerX = ref(playerStore.position.x);
 const playerY = ref(playerStore.position.y);
 
@@ -89,8 +88,9 @@ const isSpellCenter = (x, y) => {
 };
 
 const isAreaTransition = (x, y) => {
-  if (x === mapWidth - 1 && y === 10 && playerStore.currentArea < 5) return true;
-  if (x === 0 && y === 10 && playerStore.currentArea > 1) return true;
+  const transitionY = GAME_CONSTANTS.TRANSITION_Y;
+  if (x === GAME_CONSTANTS.MAP_WIDTH - 1 && y === transitionY && playerStore.currentArea < GAME_CONSTANTS.MAX_AREAS) return true;
+  if (x === 0 && y === transitionY && playerStore.currentArea > 1) return true;
   return false;
 };
 
@@ -108,18 +108,19 @@ const getTrainer = (x, y) => {
 const handleInput = (e) => {
   if (battleStore.inBattle || props.isMenuOpen) return false;
 
+  const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
   let newX = playerX.value;
   let newY = playerY.value;
   let moved = false;
 
-  if (e.key === 'ArrowUp' || e.key === 'w') { newY--; moved = true; }
-  if (e.key === 'ArrowDown' || e.key === 's') { newY++; moved = true; }
-  if (e.key === 'ArrowLeft' || e.key === 'a') { newX--; moved = true; }
-  if (e.key === 'ArrowRight' || e.key === 'd') { newX++; moved = true; }
+  if (e.key === 'ArrowUp' || key === 'w') { newY--; moved = true; }
+  if (e.key === 'ArrowDown' || key === 's') { newY++; moved = true; }
+  if (e.key === 'ArrowLeft' || key === 'a') { newX--; moved = true; }
+  if (e.key === 'ArrowRight' || key === 'd') { newX++; moved = true; }
 
   if (!moved) return false;
 
-  if (newX < 0 || newX >= mapWidth || newY < 0 || newY >= mapHeight) return true;
+  if (newX < 0 || newX >= GAME_CONSTANTS.MAP_WIDTH || newY < 0 || newY >= GAME_CONSTANTS.MAP_HEIGHT) return true;
 
   playerX.value = newX;
   playerY.value = newY;
@@ -151,12 +152,12 @@ const checkTriggers = (x, y) => {
     setTimeout(() => {
       triggerTrainerBattle(trainer, trainerId);
       engagedTrainers.delete(trainerId);
-    }, 1500);
+    }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS);
     return;
   }
 
   if (isAreaTransition(x, y)) {
-    if (x === mapWidth - 1) {
+    if (x === GAME_CONSTANTS.MAP_WIDTH - 1) {
       const trainersInArea = TRAINERS[playerStore.currentArea] || [];
       const allDefeated = trainersInArea.every((t, i) =>
         playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
@@ -164,7 +165,7 @@ const checkTriggers = (x, y) => {
 
       if (!allDefeated) {
         playerStore.notify("You must defeat the area's trainer before moving on!");
-        playerX.value = mapWidth - 2;
+        playerX.value = GAME_CONSTANTS.MAP_WIDTH - 2;
         playerStore.updatePosition({ x: playerX.value, y: playerY.value });
         return;
       }
@@ -174,14 +175,14 @@ const checkTriggers = (x, y) => {
       playerX.value = 1;
     } else {
       playerStore.setCurrentArea(playerStore.currentArea - 1);
-      playerX.value = mapWidth - 2;
+      playerX.value = GAME_CONSTANTS.MAP_WIDTH - 2;
     }
     playerStore.updatePosition({ x: playerX.value, y: playerY.value });
     return;
   }
 
   if (isGrass(x, y)) {
-    if (Math.random() < 0.15) {
+    if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
       triggerWildBattle();
     }
   }

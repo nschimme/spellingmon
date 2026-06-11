@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
+import { GAME_CONSTANTS } from '../utils/constants';
+
+let saveTimeout = null;
+let notificationCounter = 0;
 
 export const usePlayerStore = defineStore('player', {
   state: () => {
@@ -14,14 +18,21 @@ export const usePlayerStore = defineStore('player', {
       gameStarted: false,
       defeatedTrainers: [],
       notification: null,
+      notificationId: null,
     };
   },
   actions: {
     notify(message) {
+      const id = ++notificationCounter;
       this.notification = message;
+      this.notificationId = id;
+
       setTimeout(() => {
-        if (this.notification === message) this.notification = null;
-      }, 3000);
+        if (this.notificationId === id) {
+          this.notification = null;
+          this.notificationId = null;
+        }
+      }, GAME_CONSTANTS.NOTIFICATION_DURATION_MS);
     },
     handleWhiteout() {
       this.setCurrentArea(this.lastSpellCenter.area);
@@ -29,10 +40,14 @@ export const usePlayerStore = defineStore('player', {
       this.healParty();
     },
     saveState() {
-      if (this._saveTimeout) clearTimeout(this._saveTimeout);
-      this._saveTimeout = setTimeout(() => {
-        storage.save('player_state', this.$state);
-      }, 500); // Debounce saves by 500ms
+      if (saveTimeout) clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        // Create a clean state object for persistence
+        const cleanState = { ...this.$state };
+        delete cleanState.notification;
+        delete cleanState.notificationId;
+        storage.save('player_state', cleanState);
+      }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
     addSpellingmon(mon) {
       if (this.party.length < 6) {
