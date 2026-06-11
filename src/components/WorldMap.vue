@@ -24,7 +24,7 @@
     <!-- HUD -->
     <div class="absolute top-6 left-6 bg-white/95 border-4 border-gray-800 p-4 rounded-xl shadow-xl flex flex-col gap-1">
       <div class="text-sm font-black text-gray-800 uppercase tracking-tighter">
-        {{ AREA_CONFIGS[playerStore.currentArea]?.name || 'Route 1' }}
+        {{ areaConfig.name }}
       </div>
       <div class="text-[8px] font-bold text-gray-500 uppercase">
         Party: {{ playerStore.party[0]?.name }} (Lv{{ playerStore.party[0]?.level }})
@@ -48,15 +48,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
+import { useInputStore } from '../stores/inputStore';
 import { createMon, TRAINERS, AREA_CONFIGS } from '../utils/gameData';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
+const inputStore = useInputStore();
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -67,6 +69,8 @@ const mapHeight = 20;
 const playerX = ref(playerStore.position.x);
 const playerY = ref(playerStore.position.y);
 
+const areaConfig = computed(() => AREA_CONFIGS[playerStore.currentArea]);
+
 const getTileClass = (x, y) => {
   if (isSpellCenter(x, y)) return 'bg-red-50 border-red-300';
   if (isGrass(x, y)) return 'bg-green-300';
@@ -75,12 +79,13 @@ const getTileClass = (x, y) => {
 };
 
 const isGrass = (x, y) => {
-  const area = playerStore.currentArea;
-  if (area % 2 === 1) return (x > 2 && x < 8 && y > 2 && y < 8) || (x > 12 && x < 18 && y > 12 && y < 18);
-  return (x > 2 && x < 18 && y > 8 && y < 12);
+  return areaConfig.value.layout.grass.some(g => x >= g.x1 && x <= g.x2 && y >= g.y1 && y <= g.y2);
 };
 
-const isSpellCenter = (x, y) => x === 10 && y === 10;
+const isSpellCenter = (x, y) => {
+  const sc = areaConfig.value.layout.spellCenter;
+  return x === sc.x && y === sc.y;
+};
 
 const isAreaTransition = (x, y) => {
   if (x === mapWidth - 1 && y === 10 && playerStore.currentArea < 5) return true;
@@ -90,33 +95,37 @@ const isAreaTransition = (x, y) => {
 
 const getTrainer = (x, y) => {
   const trainers = TRAINERS[playerStore.currentArea] || [];
+  const trainerLayout = areaConfig.value.layout.trainers;
   return trainers.find((t, i) => {
     const trainerId = `area${playerStore.currentArea}_${i}`;
     if (playerStore.defeatedTrainers.includes(trainerId)) return false;
-    if (i === 0) return x === 5 && y === 15;
-    if (i === 1) return x === 15 && y === 5;
-    return false;
+    const pos = trainerLayout[i];
+    return pos && x === pos.x && y === pos.y;
   });
 };
 
-const handleKeydown = (e) => {
-  if (battleStore.inBattle || props.isMenuOpen) return;
+const handleInput = (e) => {
+  if (battleStore.inBattle || props.isMenuOpen) return false;
 
   let newX = playerX.value;
   let newY = playerY.value;
+  let moved = false;
 
-  if (e.key === 'ArrowUp' || e.key === 'w') newY--;
-  if (e.key === 'ArrowDown' || e.key === 's') newY++;
-  if (e.key === 'ArrowLeft' || e.key === 'a') newX--;
-  if (e.key === 'ArrowRight' || e.key === 'd') newX++;
+  if (e.key === 'ArrowUp' || e.key === 'w') { newY--; moved = true; }
+  if (e.key === 'ArrowDown' || e.key === 's') { newY++; moved = true; }
+  if (e.key === 'ArrowLeft' || e.key === 'a') { newX--; moved = true; }
+  if (e.key === 'ArrowRight' || e.key === 'd') { newX++; moved = true; }
 
-  if (newX < 0 || newX >= mapWidth || newY < 0 || newY >= mapHeight) return;
+  if (!moved) return false;
+
+  if (newX < 0 || newX >= mapWidth || newY < 0 || newY >= mapHeight) return true;
 
   playerX.value = newX;
   playerY.value = newY;
   playerStore.updatePosition({ x: newX, y: newY });
 
   checkTriggers(newX, newY);
+  return true;
 };
 
 const checkTriggers = (x, y) => {
@@ -142,7 +151,6 @@ const checkTriggers = (x, y) => {
 
   if (isAreaTransition(x, y)) {
     if (x === mapWidth - 1) {
-      // Check if all trainers in current area are defeated
       const trainersInArea = TRAINERS[playerStore.currentArea] || [];
       const allDefeated = trainersInArea.every((t, i) =>
         playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
@@ -175,27 +183,25 @@ const checkTriggers = (x, y) => {
 
 const triggerWildBattle = async () => {
   await vocabStore.loadVocab(playerStore.currentArea);
-  const config = AREA_CONFIGS[playerStore.currentArea];
-  const species = config.encounters[Math.floor(Math.random() * config.encounters.length)];
-  const level = config.minLevel + Math.floor(Math.random() * (config.maxLevel - config.minLevel + 1));
+  const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
+  const level = areaConfig.value.minLevel + Math.floor(Math.random() * (areaConfig.value.maxLevel - areaConfig.value.minLevel + 1));
   const wildMon = createMon(species, level);
   battleStore.startBattle(playerStore.party[0], wildMon, 'wild');
 };
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
   await vocabStore.loadVocab(playerStore.currentArea);
-  // Re-instantiate trainer mon to avoid persistent state
   const enemyMonCfg = trainer.party[0];
   const enemyMon = createMon(enemyMonCfg.species, enemyMonCfg.level);
   battleStore.startBattle(playerStore.party[0], enemyMon, 'trainer', trainer, trainerId);
 };
 
 onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
+  inputStore.addListener('world', handleInput, 5);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown);
+  inputStore.removeListener('world');
 });
 </script>
 

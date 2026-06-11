@@ -2,31 +2,45 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import { usePlayerStore } from './stores/playerStore';
 import { useBattleStore } from './stores/battleStore';
+import { useSettingsStore } from './stores/settingsStore';
+import { useInputStore } from './stores/inputStore';
 import LandingScreen from './components/LandingScreen.vue';
 import StarterSelection from './components/StarterSelection.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
-import { speech } from './utils/speech';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
+const settingsStore = useSettingsStore();
+const inputStore = useInputStore();
+
 const showMenu = ref(false);
 const gameStarted = ref(false);
 
-const toggleMenu = (e) => {
-  if (e.key === 'Escape' && playerStore.isStarterSelected && !battleStore.inBattle) {
-    showMenu.value = !showMenu.value;
+const handleGlobalInput = (e) => {
+  if (e.key === 'Escape') {
+    if (showMenu.value) {
+      showMenu.value = false;
+      return true;
+    }
+    if (playerStore.isStarterSelected && !battleStore.inBattle) {
+      showMenu.value = true;
+      return true;
+    }
   }
+  return false;
 };
 
 onMounted(async () => {
-  await speech.init();
-  window.addEventListener('keydown', toggleMenu);
+  await settingsStore.init();
+  inputStore.init();
+  inputStore.addListener('global', handleGlobalInput, 10);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', toggleMenu);
+  inputStore.removeListener('global');
+  inputStore.cleanup();
 });
 </script>
 

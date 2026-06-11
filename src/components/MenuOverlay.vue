@@ -56,7 +56,7 @@
             <label class="font-black uppercase text-gray-800 block mb-2">TTS Voice Configuration</label>
             <select @change="updateVoice"
                     class="w-full border-4 border-gray-800 p-3 rounded-xl bg-white font-bold text-gray-700 outline-none focus:ring-4 focus:ring-blue-300">
-              <option v-for="voice in voices" :key="voice.name" :value="voice.name" :selected="voice.name === currentVoiceName">
+              <option v-for="voice in settingsStore.voices" :key="voice.name" :value="voice.name" :selected="voice.name === settingsStore.selectedVoiceName">
                 {{ voice.name }} ({{ voice.lang }})
               </option>
             </select>
@@ -78,23 +78,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
 
 const playerStore = usePlayerStore();
+const settingsStore = useSettingsStore();
 const activeTab = ref('party');
-const voices = ref([]);
-const currentVoiceName = ref('');
-
-onMounted(() => {
-  voices.value = speech.voices;
-  currentVoiceName.value = speech.selectedVoice?.name || '';
-});
 
 const updateVoice = (e) => {
-  speech.setVoice(e.target.value);
-  currentVoiceName.value = e.target.value;
+  settingsStore.setVoice(e.target.value);
 };
 
 const testVoice = () => {

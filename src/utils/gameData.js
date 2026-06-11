@@ -25,17 +25,70 @@ export function createMon(species, level = 5) {
 }
 
 export const AREA_CONFIGS = {
-  1: { name: 'Route 1', minLevel: 2, maxLevel: 5, encounters: ['Rattatext', 'Pidgeyparagraph'] },
-  2: { name: 'Route 2', minLevel: 6, maxLevel: 10, encounters: ['Pikachart', 'Nidoranotes'] },
-  3: { name: 'Route 3', minLevel: 11, maxLevel: 15, encounters: ['Mankeymath', 'Geodudeo'] },
-  4: { name: 'Route 4', minLevel: 16, maxLevel: 20, encounters: ['Slowspell'] },
-  5: { name: 'Route 5', minLevel: 21, maxLevel: 30, encounters: ['Slowspell', 'Pikachart'] },
+  1: {
+    name: 'Route 1',
+    minLevel: 2,
+    maxLevel: 5,
+    encounters: ['Rattatext', 'Pidgeyparagraph'],
+    layout: {
+      grass: [{ x1: 3, y1: 3, x2: 7, y2: 7 }, { x1: 13, y1: 13, x2: 17, y2: 17 }],
+      spellCenter: { x: 10, y: 10 },
+      trainers: [{ x: 5, y: 15 }]
+    }
+  },
+  2: {
+    name: 'Route 2',
+    minLevel: 6,
+    maxLevel: 10,
+    encounters: ['Pikachart', 'Nidoranotes'],
+    layout: {
+      grass: [{ x1: 3, y1: 9, x2: 17, y2: 11 }],
+      spellCenter: { x: 10, y: 10 },
+      trainers: [{ x: 15, y: 5 }]
+    }
+  },
+  3: {
+    name: 'Route 3',
+    minLevel: 11,
+    maxLevel: 15,
+    encounters: ['Mankeymath', 'Geodudeo'],
+    layout: {
+      grass: [{ x1: 3, y1: 3, x2: 7, y2: 7 }, { x1: 13, y1: 13, x2: 17, y2: 17 }],
+      spellCenter: { x: 10, y: 10 },
+      trainers: [{ x: 5, y: 15 }, { x: 15, y: 5 }]
+    }
+  },
+  4: {
+    name: 'Route 4',
+    minLevel: 16,
+    maxLevel: 20,
+    encounters: ['Slowspell'],
+    layout: {
+      grass: [{ x1: 3, y1: 9, x2: 17, y2: 11 }],
+      spellCenter: { x: 10, y: 10 },
+      trainers: [{ x: 5, y: 15 }]
+    }
+  },
+  5: {
+    name: 'Route 5',
+    minLevel: 21,
+    maxLevel: 30,
+    encounters: ['Slowspell', 'Pikachart'],
+    layout: {
+      grass: [{ x1: 3, y1: 3, x2: 17, y2: 17 }],
+      spellCenter: { x: 10, y: 10 },
+      trainers: [{ x: 5, y: 5 }]
+    }
+  },
 };
 
 export const TRAINERS = {
   1: [{ name: 'Youngster Joey', dialog: 'My Rattatext is top percentage!', party: [{ species: 'Rattatext', level: 4 }] }],
   2: [{ name: 'Lass Haley', dialog: 'Did you know you can catch these?', party: [{ species: 'Pidgeyparagraph', level: 8 }] }],
-  3: [{ name: 'Hiker Erik', dialog: 'Sturdy as a rock!', party: [{ species: 'Geodudeo', level: 14 }] }],
+  3: [
+    { name: 'Hiker Erik', dialog: 'Sturdy as a rock!', party: [{ species: 'Geodudeo', level: 14 }] },
+    { name: 'Camper Ted', dialog: 'Nature is great!', party: [{ species: 'Mankeymath', level: 13 }] }
+  ],
   4: [{ name: 'Psychic Mark', dialog: 'I saw you coming...', party: [{ species: 'Slowspell', level: 19 }] }],
   5: [{ name: 'Ace Trainer Red', dialog: '...', party: [{ species: 'Pikachart', level: 28 }] }],
 };

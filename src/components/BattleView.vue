@@ -105,6 +105,7 @@ const repeatWord = () => {
 };
 
 const submitSpelling = () => {
+  if (!battleStore.currentWord) return;
   const isCorrect = userInput.value.toLowerCase() === battleStore.currentWord.toLowerCase();
 
   if (isCorrect) {
