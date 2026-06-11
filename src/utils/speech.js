@@ -4,16 +4,21 @@ export const speech = {
 
   init() {
     return new Promise((resolve) => {
-      const synth = window.speechSynthesis;
-      if (!synth) {
+      if (typeof window === 'undefined' || !window.speechSynthesis) {
         resolve();
         return;
       }
+      const synth = window.speechSynthesis;
 
       const loadVoices = () => {
-        this.voices = synth.getVoices();
-        if (this.voices.length > 0) {
-          this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+        try {
+          this.voices = synth.getVoices();
+          if (this.voices.length > 0) {
+            this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+            resolve();
+          }
+        } catch (e) {
+          console.warn('Failed to get voices:', e);
           resolve();
         }
       };
@@ -32,13 +37,17 @@ export const speech = {
   },
 
   speak(text) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    if (this.selectedVoice) {
-      utterance.voice = this.selectedVoice;
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (this.selectedVoice) {
+        utterance.voice = this.selectedVoice;
+      }
+      window.speechSynthesis.speak(utterance);
+    } catch (e) {
+      console.warn('Speech synthesis failed:', e);
     }
-    window.speechSynthesis.speak(utterance);
   },
 
   setVoice(name) {

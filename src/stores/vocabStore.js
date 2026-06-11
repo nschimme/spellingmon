@@ -9,7 +9,7 @@ export const useVocabStore = defineStore('vocab', {
     async loadVocab(area) {
       if (this.vocabData[area]) return;
       try {
-        const response = await fetch(`./vocab/area${area}.json`);
+        const response = await fetch(`/vocab/area${area}.json`);
         const data = await response.json();
         this.vocabData[area] = data.words;
       } catch (error) {
