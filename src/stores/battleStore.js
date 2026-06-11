@@ -9,6 +9,7 @@ export const useBattleStore = defineStore('battle', {
     isPlayerTurn: true,
     currentWord: null,
     battleType: 'wild', // 'wild' or 'trainer'
+    trainerId: null,
   }),
   actions: {
     startBattle(playerMon, enemyMon, type = 'wild', trainer = null, trainerId = null) {

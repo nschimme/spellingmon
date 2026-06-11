@@ -34,6 +34,16 @@
     <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest">
       WASD to Move | ESC for Menu
     </div>
+
+    <!-- Notifications -->
+    <transition name="fade">
+      <div v-if="playerStore.notification"
+           class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]">
+        <p class="text-[10px] font-black uppercase text-gray-800 text-center leading-relaxed">
+          {{ playerStore.notification }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -108,7 +118,7 @@ const handleKeydown = (e) => {
 const checkTriggers = (x, y) => {
   if (isSpellCenter(x, y)) {
     playerStore.healParty();
-    alert('Your Spellingmon have been fully healed!');
+    playerStore.notify('Your Spellingmon have been fully healed!');
     playerStore.lastSpellCenter = { x, y, area: playerStore.currentArea };
     playerStore.saveState();
     return;
@@ -119,8 +129,10 @@ const checkTriggers = (x, y) => {
     const trainers = TRAINERS[playerStore.currentArea];
     const index = trainers.indexOf(trainer);
     const trainerId = `area${playerStore.currentArea}_${index}`;
-    alert(`${trainer.name}: ${trainer.dialog}`);
-    triggerTrainerBattle(trainer, trainerId);
+    playerStore.notify(`${trainer.name}: "${trainer.dialog}"`);
+    setTimeout(() => {
+      triggerTrainerBattle(trainer, trainerId);
+    }, 1500);
     return;
   }
 
@@ -133,7 +145,7 @@ const checkTriggers = (x, y) => {
       );
 
       if (!allDefeated) {
-        alert("You must defeat the area's trainer before moving on!");
+        playerStore.notify("You must defeat the area's trainer before moving on!");
         playerX.value = mapWidth - 2;
         playerStore.updatePosition({ x: playerX.value, y: playerY.value });
         return;
@@ -180,3 +192,13 @@ onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown);
 });
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 20px);
+}
+</style>

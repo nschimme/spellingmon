@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { usePlayerStore } from './stores/playerStore';
 import { useBattleStore } from './stores/battleStore';
 import LandingScreen from './components/LandingScreen.vue';
@@ -23,6 +23,10 @@ const toggleMenu = (e) => {
 onMounted(async () => {
   await speech.init();
   window.addEventListener('keydown', toggleMenu);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', toggleMenu);
 });
 </script>
 

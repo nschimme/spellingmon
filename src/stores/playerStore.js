@@ -12,9 +12,21 @@ export const usePlayerStore = defineStore('player', {
       lastSpellCenter: { x: 5, y: 5, area: 1 },
       isStarterSelected: false,
       defeatedTrainers: [],
+      notification: null,
     };
   },
   actions: {
+    notify(message) {
+      this.notification = message;
+      setTimeout(() => {
+        if (this.notification === message) this.notification = null;
+      }, 3000);
+    },
+    handleWhiteout() {
+      this.setCurrentArea(this.lastSpellCenter.area);
+      this.updatePosition({ x: this.lastSpellCenter.x, y: this.lastSpellCenter.y });
+      this.healParty();
+    },
     saveState() {
       storage.save('player_state', this.$state);
     },

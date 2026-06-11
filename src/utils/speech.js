@@ -5,6 +5,11 @@ export const speech = {
   init() {
     return new Promise((resolve) => {
       const synth = window.speechSynthesis;
+      if (!synth) {
+        resolve();
+        return;
+      }
+
       const loadVoices = () => {
         this.voices = synth.getVoices();
         if (this.voices.length > 0) {
@@ -12,10 +17,17 @@ export const speech = {
           resolve();
         }
       };
+
       if (synth.onvoiceschanged !== undefined) {
         synth.onvoiceschanged = loadVoices;
       }
+
       loadVoices();
+
+      // Fallback resolve if voices take too long or never load
+      setTimeout(() => {
+        resolve();
+      }, 1000);
     });
   },
 

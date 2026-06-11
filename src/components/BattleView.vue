@@ -167,12 +167,11 @@ const enemyTurn = () => {
     if (battleStore.playerMon.hp <= 0) {
       battleStore.playerMon.hp = 0;
       battleStore.log(`${battleStore.playerMon.name} fainted!`);
+      battleStore.log('You whited out! Teleporting to SpellCenter.');
       setTimeout(() => {
-        alert('You whited out! Teleporting to SpellCenter.');
-        playerStore.position = { ...playerStore.lastSpellCenter };
-        playerStore.healParty();
+        playerStore.handleWhiteout();
         battleStore.endBattle();
-      }, 2000);
+      }, 2500);
     } else {
       battleStore.isPlayerTurn = true;
     }
