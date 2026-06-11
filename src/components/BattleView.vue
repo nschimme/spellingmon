@@ -77,6 +77,7 @@ const playerStore = usePlayerStore();
 
 const userInput = ref('');
 const isCapturing = ref(false);
+const currentDifficulty = ref(1);
 
 const prepareAttack = (move, difficulty) => {
   const wordObj = vocabStore.getRandomWord(playerStore.currentArea, difficulty);
@@ -85,6 +86,7 @@ const prepareAttack = (move, difficulty) => {
     return;
   }
   battleStore.currentWord = wordObj.word;
+  currentDifficulty.value = difficulty;
   battleStore.log(`Using ${move}!`);
   speech.speak(battleStore.currentWord);
   userInput.value = '';
@@ -108,6 +110,7 @@ const tryCapture = () => {
   }
 
   battleStore.currentWord = wordObj.word;
+  currentDifficulty.value = 2; // Hard difficulty for capture
   battleStore.log(`Attempting to capture!`);
   speech.speak(battleStore.currentWord);
   userInput.value = '';
@@ -138,7 +141,11 @@ const submitSpelling = () => {
 };
 
 const handleAttackSuccess = () => {
-  const damage = 5 + Math.floor(Math.random() * 5);
+  // Base damage scales with difficulty: 1 -> ~7, 2 -> ~14
+  const baseDamage = currentDifficulty.value === 2 ? 12 : 6;
+  const variance = Math.floor(Math.random() * 4);
+  const damage = baseDamage + variance;
+
   battleStore.enemyMon.hp -= damage;
   battleStore.log(`Correct! Dealt ${damage} damage.`);
 
@@ -159,8 +166,10 @@ const handleAttackSuccess = () => {
 
 const handleCaptureSuccess = () => {
   // Capture rate logic: higher success if HP is low
+  // Difficulty 2 words give a slight bonus to capture success
   const hpRatio = battleStore.enemyMon.hp / battleStore.enemyMon.maxHp;
-  const successChance = 0.8 - (hpRatio * 0.5);
+  const difficultyBonus = currentDifficulty.value === 2 ? 0.1 : 0;
+  const successChance = (0.7 - (hpRatio * 0.5)) + difficultyBonus;
 
   if (Math.random() < successChance) {
     const added = playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });

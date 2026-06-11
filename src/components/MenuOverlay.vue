@@ -37,7 +37,7 @@
         <div v-if="activeTab === 'progress'" class="flex flex-col gap-4">
           <h3 class="font-black uppercase text-gray-800">Unlocked Areas</h3>
           <div class="grid grid-cols-1 gap-2">
-            <div v-for="i in 5" :key="i"
+            <div v-for="i in GAME_CONSTANTS.MAX_AREAS" :key="i"
                  class="p-4 border-4 border-gray-800 rounded-xl font-bold flex justify-between items-center"
                  :class="playerStore.unlockedAreas.includes(i) ? 'bg-green-100' : 'bg-gray-200 text-gray-400'">
               <span>Route {{ i }}</span>
@@ -82,6 +82,7 @@ import { ref } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
+import { GAME_CONSTANTS } from '../utils/constants';
 
 const playerStore = usePlayerStore();
 const settingsStore = useSettingsStore();
