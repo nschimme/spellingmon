@@ -59,6 +59,7 @@ const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 const inputStore = useInputStore();
+const engagedTrainers = new Set();
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -142,9 +143,14 @@ const checkTriggers = (x, y) => {
     const trainers = TRAINERS[playerStore.currentArea];
     const index = trainers.indexOf(trainer);
     const trainerId = `area${playerStore.currentArea}_${index}`;
+
+    if (engagedTrainers.has(trainerId)) return;
+    engagedTrainers.add(trainerId);
+
     playerStore.notify(`${trainer.name}: "${trainer.dialog}"`);
     setTimeout(() => {
       triggerTrainerBattle(trainer, trainerId);
+      engagedTrainers.delete(trainerId);
     }, 1500);
     return;
   }

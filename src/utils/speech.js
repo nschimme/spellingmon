@@ -23,7 +23,9 @@ export const speech = {
         }
       };
 
-      if (synth.onvoiceschanged !== undefined) {
+      if (synth.addEventListener) {
+        synth.addEventListener('voiceschanged', loadVoices);
+      } else if (synth.onvoiceschanged !== undefined) {
         synth.onvoiceschanged = loadVoices;
       }
 

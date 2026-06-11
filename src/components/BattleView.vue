@@ -80,6 +80,10 @@ const isCapturing = ref(false);
 
 const prepareAttack = (move, difficulty) => {
   const wordObj = vocabStore.getRandomWord(playerStore.currentArea, difficulty);
+  if (!wordObj) {
+    battleStore.log("Error: No words available!");
+    return;
+  }
   battleStore.currentWord = wordObj.word;
   battleStore.log(`Using ${move}!`);
   speech.speak(battleStore.currentWord);
@@ -92,7 +96,17 @@ const tryCapture = () => {
     battleStore.log("You can't capture a trainer's Spellingmon!");
     return;
   }
+  if (playerStore.party.length >= 6) {
+    battleStore.log("Your party is full! Cannot capture more.");
+    return;
+  }
+
   const wordObj = vocabStore.getRandomWord(playerStore.currentArea, 2);
+  if (!wordObj) {
+    battleStore.log("Error: No words available!");
+    return;
+  }
+
   battleStore.currentWord = wordObj.word;
   battleStore.log(`Attempting to capture!`);
   speech.speak(battleStore.currentWord);
@@ -149,9 +163,14 @@ const handleCaptureSuccess = () => {
   const successChance = 0.8 - (hpRatio * 0.5);
 
   if (Math.random() < successChance) {
-    battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
-    playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });
-    setTimeout(() => battleStore.endBattle(), 2000);
+    const added = playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });
+    if (added) {
+      battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
+      setTimeout(() => battleStore.endBattle(), 2000);
+    } else {
+      battleStore.log(`Wait! Your party became full during the struggle?`);
+      enemyTurn();
+    }
   } else {
     battleStore.log(`${battleStore.enemyMon.name} broke free!`);
     enemyTurn();

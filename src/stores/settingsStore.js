@@ -8,13 +8,16 @@ export const useSettingsStore = defineStore('settings', {
   }),
   actions: {
     async init() {
+      if (typeof window === 'undefined') return;
+
       await speech.init();
       this.updateVoices();
-      // Listen for voice changes
-      if (window.speechSynthesis) {
-        window.speechSynthesis.onvoiceschanged = () => {
+
+      // Use addEventListener to avoid overriding speech.js handler
+      if (window.speechSynthesis && window.speechSynthesis.addEventListener) {
+        window.speechSynthesis.addEventListener('voiceschanged', () => {
           this.updateVoices();
-        };
+        });
       }
     },
     updateVoices() {

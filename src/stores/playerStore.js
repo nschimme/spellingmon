@@ -11,6 +11,7 @@ export const usePlayerStore = defineStore('player', {
       currentArea: 1,
       lastSpellCenter: { x: 5, y: 5, area: 1 },
       isStarterSelected: false,
+      gameStarted: false,
       defeatedTrainers: [],
       notification: null,
     };
@@ -34,7 +35,9 @@ export const usePlayerStore = defineStore('player', {
       if (this.party.length < 6) {
         this.party.push(mon);
         this.saveState();
+        return true;
       }
+      return false;
     },
     updatePosition(pos) {
       this.position = pos;
@@ -43,6 +46,10 @@ export const usePlayerStore = defineStore('player', {
     setStarter(mon) {
       this.party = [mon];
       this.isStarterSelected = true;
+      this.saveState();
+    },
+    startGame() {
+      this.gameStarted = true;
       this.saveState();
     },
     healParty() {

@@ -16,7 +16,6 @@ const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 
 const showMenu = ref(false);
-const gameStarted = ref(false);
 
 const handleGlobalInput = (e) => {
   if (e.key === 'Escape') {
@@ -48,7 +47,7 @@ onUnmounted(() => {
   <div class="w-screen h-screen overflow-hidden bg-gray-900 flex items-center justify-center p-2 sm:p-4">
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
-      <LandingScreen v-if="!gameStarted" @start="gameStarted = true" />
+      <LandingScreen v-if="!playerStore.gameStarted" @start="playerStore.startGame" />
       <template v-else>
         <StarterSelection v-if="!playerStore.isStarterSelected" />
         <template v-else>

@@ -18,9 +18,19 @@ export const useVocabStore = defineStore('vocab', {
     },
     getRandomWord(area, difficulty) {
       const words = this.vocabData[area] || [];
+      if (words.length === 0) {
+        console.error(`No vocabulary data loaded for area ${area}.`);
+        return null;
+      }
+
       const filtered = words.filter(w => w.difficulty === difficulty);
       const pool = filtered.length > 0 ? filtered : words;
-      if (pool.length === 0) return { word: 'test', difficulty: 1 };
+
+      if (pool.length === 0) {
+        console.error(`No words found for area ${area} even after fallback.`);
+        return null;
+      }
+
       return pool[Math.floor(Math.random() * pool.length)];
     }
   }
