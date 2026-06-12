@@ -22,8 +22,16 @@ export const speech = {
       const synth = window.speechSynthesis;
       let interval = null;
 
+      let isFinished = false;
       const finishInit = () => {
+        if (isFinished) return;
+        isFinished = true;
         if (interval) clearInterval(interval);
+        if (synth.removeEventListener) {
+          synth.removeEventListener('voiceschanged', loadVoices);
+        } else {
+          synth.onvoiceschanged = null;
+        }
         this._initialized = true;
         resolve();
       };

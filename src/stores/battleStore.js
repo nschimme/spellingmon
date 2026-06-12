@@ -14,19 +14,71 @@ export const useBattleStore = defineStore('battle', {
       battleType: 'wild', // 'wild' or 'trainer'
       trainerId: null,
     };
-    const saved = (typeof window !== 'undefined' ? storage.load('battle_state') : null) || {};
 
-    // Validate saved state
-    if (saved.inBattle) {
-      const isValid = saved.playerMon && typeof saved.playerMon.hp === 'number' &&
-                     saved.enemyMon && typeof saved.enemyMon.hp === 'number';
+    const rawSaved = typeof window !== 'undefined' ? storage.load('battle_state') : null;
+    const saved = (rawSaved && typeof rawSaved === 'object') ? rawSaved : {};
+
+    const validated = { ...defaults };
+
+    // Validate battle-specific state first
+    if (typeof saved.inBattle === 'boolean' && saved.inBattle) {
+      const hasValidPlayer =
+        saved.playerMon &&
+        typeof saved.playerMon === 'object' &&
+        typeof saved.playerMon.hp === 'number';
+
+      const hasValidEnemy =
+        saved.enemyMon &&
+        typeof saved.enemyMon === 'object' &&
+        typeof saved.enemyMon.hp === 'number';
+
+      const isValid = hasValidPlayer && hasValidEnemy;
+
       if (!isValid) {
         console.warn('Invalid battle state detected, resetting to defaults.');
         return defaults;
       }
+
+      validated.inBattle = true;
+      validated.playerMon = saved.playerMon;
+      validated.enemyMon = saved.enemyMon;
+    } else if (typeof saved.inBattle === 'boolean') {
+      // Accept a valid boolean even when not in battle
+      validated.inBattle = saved.inBattle;
     }
 
-    return { ...defaults, ...saved };
+    // Validate/normalize non-battle fields
+
+    // Battle log must be an array
+    if (Array.isArray(saved.battleLog)) {
+      validated.battleLog = saved.battleLog;
+    }
+
+    // Turn flag must be boolean
+    if (typeof saved.isPlayerTurn === 'boolean') {
+      validated.isPlayerTurn = saved.isPlayerTurn;
+    }
+
+    // Current word should be a string or null/undefined
+    if (typeof saved.currentWord === 'string' || saved.currentWord === null) {
+      validated.currentWord = saved.currentWord;
+    }
+
+    // Battle type must be one of the known values
+    if (saved.battleType === 'wild' || saved.battleType === 'trainer') {
+      validated.battleType = saved.battleType;
+    }
+
+    // Trainer ID: allow null/undefined or primitive identifier types
+    if (
+      saved.trainerId === null ||
+      saved.trainerId === undefined ||
+      ['string', 'number'].includes(typeof saved.trainerId)
+    ) {
+      validated.trainerId = saved.trainerId;
+    }
+
+    return validated;
   },
   actions: {
     saveState() {
