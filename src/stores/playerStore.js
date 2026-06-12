@@ -23,11 +23,28 @@ export const usePlayerStore = defineStore('player', {
     };
 
     if (saved) {
-      return {
+      const mergedState = {
         ...defaultState,
         ...saved,
-        ttsVerified: false // Explicitly set to false every load
       };
+
+      // Targeted deep merge for known nested structures to handle evolving state shapes
+      if (saved.position) {
+        mergedState.position = {
+          ...defaultState.position,
+          ...saved.position,
+        };
+      }
+
+      if (saved.lastSpellCenter) {
+        mergedState.lastSpellCenter = {
+          ...defaultState.lastSpellCenter,
+          ...saved.lastSpellCenter,
+        };
+      }
+
+      mergedState.ttsVerified = false; // Explicitly set to false every load
+      return mergedState;
     }
     return defaultState;
   },
