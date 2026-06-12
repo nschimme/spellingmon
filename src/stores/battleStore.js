@@ -14,7 +14,7 @@ export const useBattleStore = defineStore('battle', {
       battleType: 'wild', // 'wild' or 'trainer'
       trainerId: null,
     };
-    const saved = storage.load('battle_state') || {};
+    const saved = (typeof window !== 'undefined' ? storage.load('battle_state') : null) || {};
 
     // Validate saved state
     if (saved.inBattle) {

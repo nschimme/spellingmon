@@ -16,8 +16,7 @@ export const useSettingsStore = defineStore('settings', {
 
       await speech.init();
 
-      if (savedVoice) {
-        speech.setVoice(savedVoice);
+      if (savedVoice && speech.setVoice(savedVoice)) {
         this.selectedVoiceName = savedVoice;
       }
 

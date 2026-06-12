@@ -56,7 +56,7 @@ export const speech = {
       // Fallback resolve if voices take too long or never load
       setTimeout(() => {
         clearInterval(interval);
-        if (this.voices.length > 0) this._initialized = true;
+        this._initialized = true;
         resolve();
       }, 2000);
     });
