@@ -20,7 +20,7 @@
             Did you hear the voice?
           </p>
           <div class="flex gap-4">
-            <button @click="$emit('verified')"
+            <button @click="emit('verified')"
                     class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1">
               Yes
             </button>
@@ -63,9 +63,9 @@ const isChrome = computed(() => {
   return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 });
 
-const testVoice = async (force = true) => {
-  if (force) {
-    await speech.init(true); // Force re-init to ensure voices are loaded
+const testVoice = async (force = false) => {
+  if (force || !speech._initialized) {
+    await speech.init(force); // Force re-init if requested or not initialized
     settingsStore.updateVoices();
   }
   speech.speak('Welcome to Spellingmon. Can you hear me?');

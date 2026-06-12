@@ -8,10 +8,7 @@ let notificationCounter = 0;
 export const usePlayerStore = defineStore('player', {
   state: () => {
     const saved = storage.load('player_state');
-    if (saved) {
-      saved.ttsVerified = false;
-    }
-    return saved || {
+    const defaultState = {
       party: [],
       position: { x: 5, y: 5 },
       unlockedAreas: [1],
@@ -24,6 +21,15 @@ export const usePlayerStore = defineStore('player', {
       notification: null,
       notificationId: null,
     };
+
+    if (saved) {
+      return {
+        ...defaultState,
+        ...saved,
+        ttsVerified: false // Explicitly set to false every load
+      };
+    }
+    return defaultState;
   },
   actions: {
     notify(message) {
