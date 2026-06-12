@@ -58,11 +58,16 @@ const settingsStore = useSettingsStore();
 
 const hasTested = ref(false);
 const showTroubleshooting = ref(false);
-const isChrome = computed(() => /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor));
+const isChrome = computed(() => {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+});
 
-const testVoice = async () => {
-  await speech.init(true); // Force re-init to ensure voices are loaded
-  settingsStore.updateVoices();
+const testVoice = async (force = true) => {
+  if (force) {
+    await speech.init(true); // Force re-init to ensure voices are loaded
+    settingsStore.updateVoices();
+  }
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
 };
@@ -72,9 +77,7 @@ const handleNo = () => {
 };
 
 const reinitSpeech = async () => {
-  await speech.init(true);
-  settingsStore.updateVoices();
-  testVoice();
+  await testVoice(true);
 };
 
 onMounted(async () => {

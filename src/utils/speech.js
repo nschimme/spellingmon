@@ -62,11 +62,9 @@ export const speech = {
         synth.onvoiceschanged = loadVoices;
       }
 
-      // Explicitly call getVoices as some browsers need a poke
-      const initialVoices = synth.getVoices();
-      if (initialVoices && initialVoices.length > 0) {
-        loadVoices();
-      }
+      // Explicitly call getVoices as some browsers need a poke to trigger voiceschanged
+      synth.getVoices();
+      loadVoices();
 
       // Periodic check as some browsers are finicky with voiceschanged
       interval = setInterval(loadVoices, 250);
