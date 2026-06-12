@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
@@ -85,7 +85,7 @@ const prepareAttack = (move, difficulty) => {
     battleStore.log("Error: No words available!");
     return;
   }
-  battleStore.currentWord = wordObj.word;
+  battleStore.setCurrentWord(wordObj.word);
   currentDifficulty.value = difficulty;
   battleStore.log(`Using ${move}!`);
   speech.speak(battleStore.currentWord);
@@ -109,7 +109,7 @@ const tryCapture = () => {
     return;
   }
 
-  battleStore.currentWord = wordObj.word;
+  battleStore.setCurrentWord(wordObj.word);
   currentDifficulty.value = 2; // Hard difficulty for capture
   battleStore.log(`Attempting to capture!`);
   speech.speak(battleStore.currentWord);
@@ -136,7 +136,7 @@ const submitSpelling = () => {
     enemyTurn();
   }
 
-  battleStore.currentWord = null;
+  battleStore.setCurrentWord(null);
   userInput.value = '';
 };
 
@@ -148,6 +148,7 @@ const handleAttackSuccess = () => {
 
   battleStore.enemyMon.hp -= damage;
   battleStore.log(`Correct! Dealt ${damage} damage.`);
+  battleStore.saveState();
 
   if (battleStore.enemyMon.hp <= 0) {
     battleStore.enemyMon.hp = 0;
@@ -186,23 +187,30 @@ const handleCaptureSuccess = () => {
   }
 };
 
+onMounted(async () => {
+  // Ensure vocab is loaded for the current area if resuming a battle
+  await vocabStore.loadVocab(playerStore.currentArea);
+});
+
 const enemyTurn = () => {
-  battleStore.isPlayerTurn = false;
+  battleStore.setTurn(false);
   setTimeout(() => {
     const damage = 3 + Math.floor(Math.random() * 3);
     battleStore.playerMon.hp -= damage;
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
+    battleStore.saveState();
 
     if (battleStore.playerMon.hp <= 0) {
       battleStore.playerMon.hp = 0;
       battleStore.log(`${battleStore.playerMon.name} fainted!`);
       battleStore.log('You whited out! Teleporting to SpellCenter.');
+      battleStore.saveState();
       setTimeout(() => {
         playerStore.handleWhiteout();
         battleStore.endBattle();
       }, 2500);
     } else {
-      battleStore.isPlayerTurn = true;
+      battleStore.setTurn(true);
     }
   }, 1500);
 };

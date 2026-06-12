@@ -1,6 +1,7 @@
 export const speech = {
   voices: [],
   selectedVoice: null,
+  _preferredVoiceName: null,
 
   init() {
     return new Promise((resolve) => {
@@ -12,9 +13,16 @@ export const speech = {
 
       const loadVoices = () => {
         try {
-          this.voices = synth.getVoices();
-          if (this.voices.length > 0) {
-            this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+          const availableVoices = synth.getVoices();
+          if (availableVoices.length > 0) {
+            this.voices = availableVoices;
+            if (this._preferredVoiceName) {
+              const preferred = this.voices.find(v => v.name === this._preferredVoiceName);
+              if (preferred) this.selectedVoice = preferred;
+            }
+            if (!this.selectedVoice) {
+              this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+            }
             resolve();
           }
         } catch (e) {
@@ -31,10 +39,17 @@ export const speech = {
 
       loadVoices();
 
+      // Periodic check as some browsers are finicky with voiceschanged
+      const interval = setInterval(() => {
+        loadVoices();
+        if (this.voices.length > 0) clearInterval(interval);
+      }, 250);
+
       // Fallback resolve if voices take too long or never load
       setTimeout(() => {
+        clearInterval(interval);
         resolve();
-      }, 1000);
+      }, 2000);
     });
   },
 
@@ -53,6 +68,10 @@ export const speech = {
   },
 
   setVoice(name) {
-    this.selectedVoice = this.voices.find(v => v.name === name) || this.selectedVoice;
+    this._preferredVoiceName = name;
+    const voice = this.voices.find(v => v.name === name);
+    if (voice) {
+      this.selectedVoice = voice;
+    }
   }
 };
