@@ -2,8 +2,12 @@ export const speech = {
   voices: [],
   selectedVoice: null,
   _preferredVoiceName: null,
+  _initialized: false,
 
   init() {
+    if (this._initialized) return Promise.resolve();
+    this._initialized = true;
+
     return new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
         resolve();

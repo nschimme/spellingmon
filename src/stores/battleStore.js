@@ -6,8 +6,7 @@ let saveTimeout = null;
 
 export const useBattleStore = defineStore('battle', {
   state: () => {
-    const saved = storage.load('battle_state');
-    return saved || {
+    const defaults = {
       inBattle: false,
       playerMon: null,
       enemyMon: null,
@@ -17,6 +16,8 @@ export const useBattleStore = defineStore('battle', {
       battleType: 'wild', // 'wild' or 'trainer'
       trainerId: null,
     };
+    const saved = storage.load('battle_state') || {};
+    return { ...defaults, ...saved };
   },
   actions: {
     saveState() {
@@ -60,6 +61,16 @@ export const useBattleStore = defineStore('battle', {
     },
     setCurrentWord(word) {
       this.currentWord = word;
+      this.saveState();
+    },
+    damageEnemy(amount) {
+      if (!this.enemyMon) return;
+      this.enemyMon.hp = Math.max(0, this.enemyMon.hp - amount);
+      this.saveState();
+    },
+    damagePlayer(amount) {
+      if (!this.playerMon) return;
+      this.playerMon.hp = Math.max(0, this.playerMon.hp - amount);
       this.saveState();
     }
   }

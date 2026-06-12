@@ -146,12 +146,10 @@ const handleAttackSuccess = () => {
   const variance = Math.floor(Math.random() * 4);
   const damage = baseDamage + variance;
 
-  battleStore.enemyMon.hp -= damage;
+  battleStore.damageEnemy(damage);
   battleStore.log(`Correct! Dealt ${damage} damage.`);
-  battleStore.saveState();
 
   if (battleStore.enemyMon.hp <= 0) {
-    battleStore.enemyMon.hp = 0;
     battleStore.log(`${battleStore.enemyMon.name} fainted!`);
 
     if (battleStore.battleType === 'trainer') {
@@ -190,21 +188,23 @@ const handleCaptureSuccess = () => {
 onMounted(async () => {
   // Ensure vocab is loaded for the current area if resuming a battle
   await vocabStore.loadVocab(playerStore.currentArea);
+
+  // If it's not the player's turn and no word is being spelled, trigger enemy action
+  if (!battleStore.isPlayerTurn && battleStore.inBattle && !battleStore.currentWord) {
+    enemyTurn();
+  }
 });
 
 const enemyTurn = () => {
   battleStore.setTurn(false);
   setTimeout(() => {
     const damage = 3 + Math.floor(Math.random() * 3);
-    battleStore.playerMon.hp -= damage;
+    battleStore.damagePlayer(damage);
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
-    battleStore.saveState();
 
     if (battleStore.playerMon.hp <= 0) {
-      battleStore.playerMon.hp = 0;
       battleStore.log(`${battleStore.playerMon.name} fainted!`);
       battleStore.log('You whited out! Teleporting to SpellCenter.');
-      battleStore.saveState();
       setTimeout(() => {
         playerStore.handleWhiteout();
         battleStore.endBattle();
