@@ -8,6 +8,9 @@ let notificationCounter = 0;
 export const usePlayerStore = defineStore('player', {
   state: () => {
     const saved = storage.load('player_state');
+    if (saved) {
+      saved.ttsVerified = false;
+    }
     return saved || {
       party: [],
       position: { x: 5, y: 5 },
@@ -16,6 +19,7 @@ export const usePlayerStore = defineStore('player', {
       lastSpellCenter: { x: 5, y: 5, area: 1 },
       isStarterSelected: false,
       gameStarted: false,
+      ttsVerified: false,
       defeatedTrainers: [],
       notification: null,
       notificationId: null,
@@ -46,6 +50,7 @@ export const usePlayerStore = defineStore('player', {
         const cleanState = { ...this.$state };
         delete cleanState.notification;
         delete cleanState.notificationId;
+        delete cleanState.ttsVerified;
         storage.save('player_state', cleanState);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },

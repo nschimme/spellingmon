@@ -5,8 +5,8 @@ export const speech = {
   _initialized: false,
   _initPromise: null,
 
-  init() {
-    if (this._initPromise) return this._initPromise;
+  init(force = false) {
+    if (this._initPromise && !force) return this._initPromise;
 
     this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
@@ -14,7 +14,7 @@ export const speech = {
         resolve();
         return;
       }
-      if (this._initialized) {
+      if (this._initialized && !force) {
         resolve();
         return;
       }
@@ -62,13 +62,18 @@ export const speech = {
         synth.onvoiceschanged = loadVoices;
       }
 
-      loadVoices();
+      // Explicitly call getVoices as some browsers need a poke
+      const initialVoices = synth.getVoices();
+      if (initialVoices && initialVoices.length > 0) {
+        loadVoices();
+      }
 
       // Periodic check as some browsers are finicky with voiceschanged
       interval = setInterval(loadVoices, 250);
 
       // Fallback resolve if voices take too long or never load
-      setTimeout(finishInit, 2000);
+      // But keep interval running for a bit longer if we're forcing
+      setTimeout(finishInit, force ? 5000 : 2000);
     });
 
     return this._initPromise;
