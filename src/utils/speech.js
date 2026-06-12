@@ -46,7 +46,8 @@ export const speech = {
 
       // Store cleanup for force-restart
       this._cleanup = () => {
-        isFinished = true; // Mark as finished so this instance doesn't resolve later
+        if (isFinished) return;
+        isFinished = true;
         if (interval) clearInterval(interval);
         if (timeoutId) clearTimeout(timeoutId);
         if (synth.removeEventListener) {
@@ -54,6 +55,7 @@ export const speech = {
         } else {
           synth.onvoiceschanged = null;
         }
+        resolve(); // Prevent hanging callers of the previous init promise
       };
 
       const loadVoices = () => {

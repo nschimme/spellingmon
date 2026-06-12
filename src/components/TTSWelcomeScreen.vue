@@ -11,11 +11,12 @@
 
       <div class="space-y-6">
         <button @click="testVoice"
-                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 text-lg uppercase transition-all active:border-b-0 active:translate-y-1">
-          Test Voice
+                :disabled="isInitializing"
+                class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1">
+          {{ isInitializing ? 'Loading...' : 'Test Voice' }}
         </button>
 
-        <div v-if="hasTested" class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div v-if="hasTested && !isInitializing" class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
           <p class="text-xs font-bold text-center uppercase text-gray-500">
             Did you hear the voice?
           </p>
@@ -39,8 +40,10 @@
             <li>Try selecting a different voice in settings (once game starts)</li>
             <li v-if="isChrome">Chrome may need a moment to load voices.</li>
           </ul>
-          <button @click="reinitSpeech" class="w-full mt-2 text-[10px] bg-gray-300 hover:bg-gray-400 p-2 rounded border-b-2 border-gray-500 uppercase font-black">
-            Reload Voices
+          <button @click="reinitSpeech"
+                  :disabled="isInitializing"
+                  class="w-full mt-2 text-[10px] bg-gray-300 hover:bg-gray-400 disabled:bg-gray-200 p-2 rounded border-b-2 border-gray-500 uppercase font-black">
+            {{ isInitializing ? 'Reloading...' : 'Reload Voices' }}
           </button>
         </div>
       </div>
@@ -58,16 +61,27 @@ const settingsStore = useSettingsStore();
 
 const hasTested = ref(false);
 const showTroubleshooting = ref(false);
+const isInitializing = ref(false);
+
 const isChrome = computed(() => {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
   return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 });
 
-const testVoice = async (force = false) => {
+const ensureSpeechInitialized = async (force = false) => {
   if (force || !speech.isInitialized()) {
-    await speech.init(force); // Force re-init if requested or not initialized
-    settingsStore.updateVoices();
+    isInitializing.value = true;
+    try {
+      await speech.init(force);
+      settingsStore.updateVoices();
+    } finally {
+      isInitializing.value = false;
+    }
   }
+};
+
+const testVoice = async () => {
+  await ensureSpeechInitialized();
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
 };
@@ -77,12 +91,13 @@ const handleNo = () => {
 };
 
 const reinitSpeech = async () => {
-  await testVoice(true);
+  await ensureSpeechInitialized(true);
+  speech.speak('Welcome to Spellingmon. Can you hear me?');
+  hasTested.value = true;
 };
 
 onMounted(async () => {
-  await speech.init();
-  settingsStore.updateVoices();
+  await ensureSpeechInitialized();
 });
 </script>
 
