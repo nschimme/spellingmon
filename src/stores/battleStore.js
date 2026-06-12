@@ -32,7 +32,8 @@ export const useBattleStore = defineStore('battle', {
     saveState() {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
-        storage.save('battle_state', this.$state);
+        const { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId } = this.$state;
+        storage.save('battle_state', { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
     startBattle(playerMon, enemyMon, type = 'wild', trainer = null, trainerId = null) {

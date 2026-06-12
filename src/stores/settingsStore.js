@@ -35,9 +35,10 @@ export const useSettingsStore = defineStore('settings', {
       this.selectedVoiceName = speech.selectedVoice?.name || '';
     },
     setVoice(name) {
-      speech.setVoice(name);
-      this.selectedVoiceName = name;
-      storage.save('selected_voice_name', name);
+      if (speech.setVoice(name)) {
+        this.selectedVoiceName = name;
+        storage.save('selected_voice_name', name);
+      }
     }
   }
 });

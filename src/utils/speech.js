@@ -14,7 +14,6 @@ export const speech = {
         resolve();
         return;
       }
-      this._initialized = true;
       const synth = window.speechSynthesis;
 
       const loadVoices = () => {
@@ -48,12 +47,16 @@ export const speech = {
       // Periodic check as some browsers are finicky with voiceschanged
       const interval = setInterval(() => {
         loadVoices();
-        if (this.voices.length > 0) clearInterval(interval);
+        if (this.voices.length > 0) {
+          this._initialized = true;
+          clearInterval(interval);
+        }
       }, 250);
 
       // Fallback resolve if voices take too long or never load
       setTimeout(() => {
         clearInterval(interval);
+        if (this.voices.length > 0) this._initialized = true;
         resolve();
       }, 2000);
     });
@@ -78,6 +81,8 @@ export const speech = {
     const voice = this.voices.find(v => v.name === name);
     if (voice) {
       this.selectedVoice = voice;
+      return true;
     }
+    return false;
   }
 };
