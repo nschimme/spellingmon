@@ -5,14 +5,16 @@ export const speech = {
   _initialized: false,
 
   init() {
-    if (this._initialized) return Promise.resolve();
-    this._initialized = true;
-
     return new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
         resolve();
         return;
       }
+      if (this._initialized) {
+        resolve();
+        return;
+      }
+      this._initialized = true;
       const synth = window.speechSynthesis;
 
       const loadVoices = () => {

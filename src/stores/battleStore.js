@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { GAME_CONSTANTS } from '../utils/constants';
 
-let saveTimeout = null;
-
 export const useBattleStore = defineStore('battle', {
   state: () => {
     const defaults = {
@@ -32,8 +30,8 @@ export const useBattleStore = defineStore('battle', {
   },
   actions: {
     saveState() {
-      if (saveTimeout) clearTimeout(saveTimeout);
-      saveTimeout = setTimeout(() => {
+      if (this._saveTimeout) clearTimeout(this._saveTimeout);
+      this._saveTimeout = setTimeout(() => {
         storage.save('battle_state', this.$state);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
