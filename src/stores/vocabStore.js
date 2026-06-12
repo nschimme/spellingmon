@@ -8,7 +8,9 @@ export const useVocabStore = defineStore('vocab', {
     async loadVocab(area) {
       if (this.vocabData[area]) return;
       try {
-        const response = await fetch(`/vocab/area${area}.json`);
+        const baseUrl = import.meta.env.BASE_URL || '/';
+        const url = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}vocab/area${area}.json`;
+        const response = await fetch(url);
         const data = await response.json();
         this.vocabData[area] = data.words;
       } catch (error) {

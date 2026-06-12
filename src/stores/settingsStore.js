@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { speech } from '../utils/speech';
+import { storage } from '../utils/storage';
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
@@ -10,7 +11,15 @@ export const useSettingsStore = defineStore('settings', {
     async init() {
       if (typeof window === 'undefined') return;
 
+      // Load saved voice preference if any
+      const savedVoice = storage.load('selected_voice_name');
+
       await speech.init();
+
+      if (savedVoice && speech.setVoice(savedVoice)) {
+        this.selectedVoiceName = savedVoice;
+      }
+
       this.updateVoices();
 
       // Use addEventListener to avoid overriding speech.js handler
@@ -25,8 +34,10 @@ export const useSettingsStore = defineStore('settings', {
       this.selectedVoiceName = speech.selectedVoice?.name || '';
     },
     setVoice(name) {
-      speech.setVoice(name);
-      this.selectedVoiceName = name;
+      if (speech.setVoice(name)) {
+        this.selectedVoiceName = name;
+        storage.save('selected_voice_name', name);
+      }
     }
   }
 });

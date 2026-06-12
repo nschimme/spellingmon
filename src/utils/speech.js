@@ -1,25 +1,58 @@
 export const speech = {
   voices: [],
   selectedVoice: null,
+  _preferredVoiceName: null,
+  _initialized: false,
+  _initPromise: null,
 
   init() {
-    return new Promise((resolve) => {
+    if (this._initPromise) return this._initPromise;
+
+    this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
+        this._initPromise = null; // Don't cache a failure promise
         resolve();
         return;
       }
+      if (this._initialized) {
+        resolve();
+        return;
+      }
+
       const synth = window.speechSynthesis;
+      let interval = null;
+
+      let isFinished = false;
+      const finishInit = () => {
+        if (isFinished) return;
+        isFinished = true;
+        if (interval) clearInterval(interval);
+        if (synth.removeEventListener) {
+          synth.removeEventListener('voiceschanged', loadVoices);
+        } else {
+          synth.onvoiceschanged = null;
+        }
+        this._initialized = true;
+        resolve();
+      };
 
       const loadVoices = () => {
         try {
-          this.voices = synth.getVoices();
-          if (this.voices.length > 0) {
-            this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
-            resolve();
+          const availableVoices = synth.getVoices();
+          if (availableVoices.length > 0) {
+            this.voices = availableVoices;
+            if (this._preferredVoiceName) {
+              const preferred = this.voices.find(v => v.name === this._preferredVoiceName);
+              if (preferred) this.selectedVoice = preferred;
+            }
+            if (!this.selectedVoice) {
+              this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+            }
+            finishInit();
           }
         } catch (e) {
           console.warn('Failed to get voices:', e);
-          resolve();
+          finishInit();
         }
       };
 
@@ -31,11 +64,14 @@ export const speech = {
 
       loadVoices();
 
+      // Periodic check as some browsers are finicky with voiceschanged
+      interval = setInterval(loadVoices, 250);
+
       // Fallback resolve if voices take too long or never load
-      setTimeout(() => {
-        resolve();
-      }, 1000);
+      setTimeout(finishInit, 2000);
     });
+
+    return this._initPromise;
   },
 
   speak(text) {
@@ -53,6 +89,12 @@ export const speech = {
   },
 
   setVoice(name) {
-    this.selectedVoice = this.voices.find(v => v.name === name) || this.selectedVoice;
+    this._preferredVoiceName = name;
+    const voice = this.voices.find(v => v.name === name);
+    if (voice) {
+      this.selectedVoice = voice;
+      return true;
+    }
+    return false;
   }
 };
