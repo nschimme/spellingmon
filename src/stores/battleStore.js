@@ -17,6 +17,17 @@ export const useBattleStore = defineStore('battle', {
       trainerId: null,
     };
     const saved = storage.load('battle_state') || {};
+
+    // Validate saved state
+    if (saved.inBattle) {
+      const isValid = saved.playerMon && typeof saved.playerMon.hp === 'number' &&
+                     saved.enemyMon && typeof saved.enemyMon.hp === 'number';
+      if (!isValid) {
+        console.warn('Invalid battle state detected, resetting to defaults.');
+        return defaults;
+      }
+    }
+
     return { ...defaults, ...saved };
   },
   actions: {
