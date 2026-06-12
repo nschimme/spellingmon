@@ -10,7 +10,7 @@ export const speech = {
 
     this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
-        this._initialized = true;
+        this._initPromise = null; // Don't cache a failure promise
         resolve();
         return;
       }
