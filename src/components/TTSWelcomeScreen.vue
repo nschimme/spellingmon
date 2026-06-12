@@ -64,7 +64,7 @@ const isChrome = computed(() => {
 });
 
 const testVoice = async (force = false) => {
-  if (force || !speech._initialized) {
+  if (force || !speech.isInitialized()) {
     await speech.init(force); // Force re-init if requested or not initialized
     settingsStore.updateVoices();
   }

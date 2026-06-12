@@ -102,6 +102,10 @@ export const usePlayerStore = defineStore('player', {
         this.defeatedTrainers.push(trainerId);
         this.saveState();
       }
+    },
+    confirmTtsVerified() {
+      this.ttsVerified = true;
+      // We don't saveState() here because ttsVerified is deliberately excluded from persistence
     }
   }
 });
