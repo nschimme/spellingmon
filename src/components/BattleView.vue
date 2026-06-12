@@ -185,16 +185,6 @@ const handleCaptureSuccess = () => {
   }
 };
 
-onMounted(async () => {
-  // Ensure vocab is loaded for the current area if resuming a battle
-  await vocabStore.loadVocab(playerStore.currentArea);
-
-  // If it's not the player's turn and no word is being spelled, trigger enemy action
-  if (!battleStore.isPlayerTurn && battleStore.inBattle && !battleStore.currentWord) {
-    enemyTurn();
-  }
-});
-
 const enemyTurn = () => {
   battleStore.setTurn(false);
   setTimeout(() => {
@@ -214,4 +204,14 @@ const enemyTurn = () => {
     }
   }, 1500);
 };
+
+onMounted(async () => {
+  // Ensure vocab is loaded for the current area if resuming a battle
+  await vocabStore.loadVocab(playerStore.currentArea);
+
+  // If it's not the player's turn and no word is being spelled, trigger enemy action
+  if (!battleStore.isPlayerTurn && battleStore.inBattle && !battleStore.currentWord) {
+    enemyTurn();
+  }
+});
 </script>

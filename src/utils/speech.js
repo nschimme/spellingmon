@@ -3,10 +3,14 @@ export const speech = {
   selectedVoice: null,
   _preferredVoiceName: null,
   _initialized: false,
+  _initPromise: null,
 
   init() {
-    return new Promise((resolve) => {
+    if (this._initPromise) return this._initPromise;
+
+    this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
+        this._initialized = true;
         resolve();
         return;
       }
@@ -14,7 +18,15 @@ export const speech = {
         resolve();
         return;
       }
+
       const synth = window.speechSynthesis;
+      let interval = null;
+
+      const finishInit = () => {
+        if (interval) clearInterval(interval);
+        this._initialized = true;
+        resolve();
+      };
 
       const loadVoices = () => {
         try {
@@ -28,11 +40,11 @@ export const speech = {
             if (!this.selectedVoice) {
               this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
             }
-            resolve();
+            finishInit();
           }
         } catch (e) {
           console.warn('Failed to get voices:', e);
-          resolve();
+          finishInit();
         }
       };
 
@@ -45,21 +57,13 @@ export const speech = {
       loadVoices();
 
       // Periodic check as some browsers are finicky with voiceschanged
-      const interval = setInterval(() => {
-        loadVoices();
-        if (this.voices.length > 0) {
-          this._initialized = true;
-          clearInterval(interval);
-        }
-      }, 250);
+      interval = setInterval(loadVoices, 250);
 
       // Fallback resolve if voices take too long or never load
-      setTimeout(() => {
-        clearInterval(interval);
-        this._initialized = true;
-        resolve();
-      }, 2000);
+      setTimeout(finishInit, 2000);
     });
+
+    return this._initPromise;
   },
 
   speak(text) {
