@@ -163,7 +163,8 @@ const tryRun = () => {
   }
 
   const successChance = (battleStore.playerMon.level / battleStore.enemyMon.level) * 0.5;
-  if (Math.random() < Math.min(0.95, successChance)) {
+  const clampedChance = Math.max(0.1, Math.min(0.95, successChance));
+  if (Math.random() < clampedChance) {
     battleStore.log("Got away safely!");
     setTimeout(() => battleStore.endBattle(), 1000);
   } else {
@@ -242,7 +243,7 @@ const handleAttackSuccess = () => {
   const levelDiff = battleStore.playerMon.level / battleStore.enemyMon.level;
   const baseDamage = currentDifficulty.value === 2 ? 12 : 6;
   const variance = Math.floor(Math.random() * 4);
-  const damage = Math.floor((baseDamage + variance) * levelDiff);
+  const damage = Math.max(1, Math.floor((baseDamage + variance) * levelDiff));
 
   battleStore.damageEnemy(damage);
   battleStore.log(`Correct! Dealt ${damage} damage.`);

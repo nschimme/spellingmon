@@ -15,7 +15,7 @@
       <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
         <!-- Party Tab -->
         <div v-if="activeTab === 'party'" class="grid gap-4">
-          <div v-for="(mon, i) in playerStore.party" :key="i"
+          <div v-for="(mon, i) in playerStore.party" :key="mon.id"
                class="bg-white border-4 border-gray-800 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden">
             <div class="flex items-center gap-4">
               <div class="text-4xl">🦖</div>
