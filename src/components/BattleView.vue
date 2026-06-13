@@ -102,8 +102,13 @@
             <div>
               <button @click="repeatWord" class="text-blue-500 text-xs underline mb-1 block w-full">Listen Again</button>
               <input v-model="userInput" @keyup.enter="submitSpelling"
+                     @paste.prevent
                      class="w-full border-2 sm:border-4 border-gray-800 p-1 sm:p-2 text-center text-lg sm:text-xl uppercase rounded-lg"
                      placeholder="TYPE HERE"
+                     autocomplete="off"
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
                      autofocus />
               <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">Single Chance!</p>
             </div>
@@ -417,6 +422,14 @@ const enemyTurn = () => {
 };
 
 onMounted(async () => {
+  // Re-sync playerMon with playerStore party to avoid desync after reload
+  if (battleStore.playerMon) {
+    const freshMon = playerStore.party.find(m => m.id === battleStore.playerMon.id);
+    if (freshMon) {
+      battleStore.playerMon = freshMon;
+    }
+  }
+
   isFlashing.value = true;
   audio.playSound(SOUND_EFFECTS.BATTLE_START);
   setTimeout(() => isFlashing.value = false, ANIMATION_DURATIONS.FLASH_MS);

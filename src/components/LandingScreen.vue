@@ -68,11 +68,8 @@ const playerStore = usePlayerStore();
 const showSaveOptions = ref(false);
 const confirmDelete = ref(false);
 
-const hasSave = computed(() => !!storage.load(STORAGE_KEYS.PLAYER_STATE));
-const playerName = computed(() => {
-  const saved = storage.load(STORAGE_KEYS.PLAYER_STATE);
-  return saved ? saved.playerName : 'Trainer';
-});
+const hasSave = computed(() => playerStore.characterCreationComplete);
+const playerName = computed(() => playerStore.playerName);
 
 const handleInitialClick = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
@@ -87,8 +84,7 @@ const handleContinue = () => {
 const handleNewGame = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   if (hasSave.value) {
-    // If they have a save, we still want to make sure they're okay starting fresh
-    // But for simplicity of this flow, we just emit. Delete Save is explicit.
+    playerStore.resetStore();
   }
   emit('new-game');
 };

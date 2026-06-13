@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { GAME_CONSTANTS, GENDERS, SKIN_TONES, STORAGE_KEYS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS } from '../utils/gameData';
+import { useBattleStore } from './battleStore';
 
 let saveTimeout = null;
 let notificationCounter = 0;
@@ -139,6 +140,14 @@ export const usePlayerStore = defineStore('player', {
       this.saveState();
     },
     resetStore() {
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
+        saveTimeout = null;
+      }
+
+      const battleStore = useBattleStore();
+      battleStore.resetStore();
+
       storage.remove(STORAGE_KEYS.PLAYER_STATE);
       // Reset state to defaults (excluding ttsVerified which is transient anyway)
       const defaults = {
@@ -156,6 +165,7 @@ export const usePlayerStore = defineStore('player', {
         skinTone: SKIN_TONES.NEUTRAL,
         mapSeed: Math.random().toString(36).slice(2, 11),
         characterCreationComplete: false,
+        discoveredTiles: {},
       };
       Object.assign(this.$state, defaults);
     },

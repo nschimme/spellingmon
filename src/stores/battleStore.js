@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS } from '../utils/constants';
+import { usePlayerStore } from './playerStore';
 
 export const useBattleStore = defineStore('battle', {
   state: () => {
@@ -146,7 +147,32 @@ export const useBattleStore = defineStore('battle', {
     damagePlayer(amount) {
       if (!this.playerMon) return;
       this.playerMon.hp = Math.max(0, this.playerMon.hp - amount);
+
+      // Keep player store in sync
+      const playerStore = usePlayerStore();
+      const partyMon = playerStore.party.find(m => m.id === this.playerMon.id);
+      if (partyMon) {
+        partyMon.hp = this.playerMon.hp;
+        playerStore.saveState();
+      }
+
       this.saveState();
+    },
+    resetStore() {
+      if (this._saveTimeout) clearTimeout(this._saveTimeout);
+      storage.remove(STORAGE_KEYS.BATTLE_STATE);
+      const defaults = {
+        inBattle: false,
+        playerMon: null,
+        enemyMon: null,
+        battleLog: [],
+        isPlayerTurn: true,
+        currentWord: null,
+        battleType: BATTLE_TYPES.WILD,
+        trainerId: null,
+        trainerParty: [],
+      };
+      Object.assign(this.$state, defaults);
     }
   }
 });

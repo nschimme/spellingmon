@@ -16,5 +16,13 @@ export const storage = {
       console.warn('Storage load failed:', e);
       return null;
     }
+  },
+  remove(key) {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.warn('Storage remove failed:', e);
+    }
   }
 };
