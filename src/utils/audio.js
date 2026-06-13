@@ -22,12 +22,16 @@ class AudioService {
 
       if (this.ctx.state === 'suspended') {
         const resume = () => {
-          this.ctx.resume();
+          if (this.ctx.state === 'suspended') this.ctx.resume();
           window.removeEventListener('click', resume);
           window.removeEventListener('keydown', resume);
+          window.removeEventListener('pointerdown', resume);
+          window.removeEventListener('touchstart', resume);
         };
         window.addEventListener('click', resume);
         window.addEventListener('keydown', resume);
+        window.addEventListener('pointerdown', resume, { passive: true });
+        window.addEventListener('touchstart', resume, { passive: true });
       }
     } catch (e) {
       console.warn('Web Audio API not supported', e);

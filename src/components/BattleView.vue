@@ -1,25 +1,33 @@
 <template>
-  <div class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden" :class="{ 'animate-flash': isFlashing }">
+  <div class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden"
+       :class="{ 'animate-flash': isFlashing }"
+       :style="{
+         '--flash-duration': ANIMATION_DURATIONS.FLASH_MS + 'ms',
+         '--shake-duration': '100ms',
+         '--capture-duration': ANIMATION_DURATIONS.CAPTURE_PROCESS_MS / 3 + 'ms'
+       }">
     <!-- Battle Field -->
     <div class="flex-1 relative border-4 border-gray-800 rounded-lg overflow-hidden bg-gradient-to-b from-blue-100 to-green-100">
       <!-- Enemy -->
       <div class="absolute top-10 right-10 flex flex-col items-end transition-all duration-300"
-           :class="{ 'animate-shake': enemyShake, 'opacity-0 translate-y-10': enemyFainted }">
-        <div class="bg-white border-2 border-gray-800 p-2 rounded-lg w-48 shadow-md">
-          <div class="flex justify-between font-bold">
-            <span>{{ battleStore.enemyMon.name }}</span>
-            <span>Lv{{ battleStore.enemyMon.level }}</span>
+           :class="{ 'opacity-0 translate-y-10': enemyFainted }">
+        <div class="flex flex-col items-end" :class="{ 'animate-shake': enemyShake }">
+          <div class="bg-white border-2 border-gray-800 p-2 rounded-lg w-48 shadow-md">
+            <div class="flex justify-between font-bold">
+              <span>{{ battleStore.enemyMon.name }}</span>
+              <span>Lv{{ battleStore.enemyMon.level }}</span>
+            </div>
+            <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
+              <div class="h-full transition-all duration-500"
+                  :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
+                  :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"></div>
+            </div>
+            <div class="text-xs text-right">{{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}</div>
           </div>
-          <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
-            <div class="h-full transition-all duration-500"
-                 :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
-                 :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"></div>
-          </div>
-          <div class="text-xs text-right">{{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}</div>
+          <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
+          <div class="text-6xl mt-4 transition-transform duration-300"
+               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">👾</div>
         </div>
-        <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
-        <div class="text-6xl mt-4 transition-transform duration-300"
-             :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">👾</div>
 
         <!-- Capture Ball Anim -->
         <div v-if="isCapturing && !battleStore.currentWord" class="absolute inset-0 flex items-center justify-center animate-capture">
@@ -29,19 +37,21 @@
 
       <!-- Player -->
       <div class="absolute bottom-10 left-10 flex flex-col items-start transition-all duration-300"
-           :class="{ 'animate-shake': playerShake, 'opacity-0 translate-y-10': playerFainted }">
-        <div class="text-6xl mb-4 scale-x-[-1]">🦖</div>
-        <div class="bg-white border-2 border-gray-800 p-2 rounded-lg w-48 shadow-md">
-          <div class="flex justify-between font-bold">
-            <span>{{ battleStore.playerMon.name }}</span>
-            <span>Lv{{ battleStore.playerMon.level }}</span>
+           :class="{ 'opacity-0 translate-y-10': playerFainted }">
+        <div class="flex flex-col items-start" :class="{ 'animate-shake': playerShake }">
+          <div class="text-6xl mb-4 scale-x-[-1]">🦖</div>
+          <div class="bg-white border-2 border-gray-800 p-2 rounded-lg w-48 shadow-md">
+            <div class="flex justify-between font-bold">
+              <span>{{ battleStore.playerMon.name }}</span>
+              <span>Lv{{ battleStore.playerMon.level }}</span>
+            </div>
+            <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
+              <div class="h-full transition-all duration-500"
+                  :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
+                  :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"></div>
+            </div>
+            <div class="text-xs text-right">{{ battleStore.playerMon.hp }} / {{ battleStore.playerMon.maxHp }}</div>
           </div>
-          <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
-            <div class="h-full transition-all duration-500"
-                 :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
-                 :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"></div>
-          </div>
-          <div class="text-xs text-right">{{ battleStore.playerMon.hp }} / {{ battleStore.playerMon.maxHp }}</div>
         </div>
       </div>
     </div>
@@ -208,9 +218,16 @@ const handleAttackSuccess = () => {
 };
 
 const handleCaptureSuccess = () => {
-  // Animation state is already set by isCapturing being true and currentWord being cleared in submitSpelling
+  // Save current enemy state for verification after delay
+  const targetEnemyId = battleStore.enemyMon?.id;
 
   setTimeout(() => {
+    // Race condition check: ensure battle is still active and it's the same enemy
+    if (!battleStore.inBattle || battleStore.enemyMon?.id !== targetEnemyId) {
+      isCapturing.value = false;
+      return;
+    }
+
     const hpRatio = battleStore.enemyMon.hp / battleStore.enemyMon.maxHp;
     const difficultyBonus = currentDifficulty.value === 2 ? 0.1 : 0;
     const successChance = (0.7 - (hpRatio * 0.5)) + difficultyBonus;
@@ -220,7 +237,9 @@ const handleCaptureSuccess = () => {
       if (added) {
         audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
         battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
-        setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
+        setTimeout(() => {
+          if (battleStore.inBattle) battleStore.endBattle();
+        }, ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       } else {
         isCapturing.value = false;
         battleStore.log(`Wait! Your party became full during the struggle?`);
@@ -280,7 +299,7 @@ onMounted(async () => {
   75% { transform: translateX(10px); }
 }
 .animate-shake {
-  animation: shake 0.1s ease-in-out infinite;
+  animation: shake var(--shake-duration) ease-in-out infinite;
 }
 
 @keyframes flash {
@@ -288,7 +307,7 @@ onMounted(async () => {
   50% { background-color: #333; }
 }
 .animate-flash {
-  animation: flash 0.1s steps(2, start) 5;
+  animation: flash calc(var(--flash-duration) / 5) steps(2, start) 5;
 }
 
 @keyframes capture {
@@ -297,6 +316,6 @@ onMounted(async () => {
   100% { transform: translate(0, 0) rotate(360deg) scale(1); opacity: 1; }
 }
 .animate-capture {
-  animation: capture 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: capture var(--capture-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 </style>
