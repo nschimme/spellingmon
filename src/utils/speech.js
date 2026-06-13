@@ -4,36 +4,58 @@ export const speech = {
   _preferredVoiceName: null,
   _initialized: false,
   _initPromise: null,
+  _cleanup: null,
 
-  init() {
-    if (this._initPromise) return this._initPromise;
+  init(force = false) {
+    if (this._initPromise && !force) return this._initPromise;
 
+    if (force && this._cleanup) {
+      this._cleanup();
+    }
+
+    this._initialized = false;
     this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
-        this._initPromise = null; // Don't cache a failure promise
-        resolve();
-        return;
-      }
-      if (this._initialized) {
+        this._initPromise = null;
         resolve();
         return;
       }
 
       const synth = window.speechSynthesis;
       let interval = null;
-
       let isFinished = false;
+      let timeoutId = null;
+
       const finishInit = () => {
         if (isFinished) return;
         isFinished = true;
+
         if (interval) clearInterval(interval);
+        if (timeoutId) clearTimeout(timeoutId);
+
         if (synth.removeEventListener) {
           synth.removeEventListener('voiceschanged', loadVoices);
         } else {
           synth.onvoiceschanged = null;
         }
+
         this._initialized = true;
+        this._cleanup = null;
         resolve();
+      };
+
+      // Store cleanup for force-restart
+      this._cleanup = () => {
+        if (isFinished) return;
+        isFinished = true;
+        if (interval) clearInterval(interval);
+        if (timeoutId) clearTimeout(timeoutId);
+        if (synth.removeEventListener) {
+          synth.removeEventListener('voiceschanged', loadVoices);
+        } else {
+          synth.onvoiceschanged = null;
+        }
+        resolve(); // Prevent hanging callers of the previous init promise
       };
 
       const loadVoices = () => {
@@ -62,16 +84,22 @@ export const speech = {
         synth.onvoiceschanged = loadVoices;
       }
 
+      // Explicitly call getVoices as some browsers need a poke to trigger voiceschanged
+      synth.getVoices();
       loadVoices();
 
       // Periodic check as some browsers are finicky with voiceschanged
       interval = setInterval(loadVoices, 250);
 
       // Fallback resolve if voices take too long or never load
-      setTimeout(finishInit, 2000);
+      timeoutId = setTimeout(finishInit, force ? 5000 : 2000);
     });
 
     return this._initPromise;
+  },
+
+  isInitialized() {
+    return this._initialized;
   },
 
   speak(text) {
