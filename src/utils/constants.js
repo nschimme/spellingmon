@@ -19,6 +19,7 @@ export const SOUND_EFFECTS = {
   CAPTURE_FAIL: 'capture-fail',
   BATTLE_START: 'battle-start',
   VICTORY: 'victory',
+  EVOLUTION: 'evolution',
 };
 
 /**
@@ -35,4 +36,5 @@ export const ANIMATION_DURATIONS = {
   BATTLE_END_DELAY_MS: 3000,
   VICTORY_SOUND_DELAY_MS: 1000,
   CAPTURE_END_DELAY_MS: 2000,
+  EVOLUTION_DURATION_MS: 4000,
 };

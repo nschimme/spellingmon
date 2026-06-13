@@ -18,7 +18,7 @@
 
     <!-- Player -->
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md">
-      🚶
+      {{ playerStore.party[0] ? TYPE_EMOJIS[playerStore.party[0].type] : '🚶' }}
     </div>
 
     <!-- HUD -->
@@ -71,7 +71,7 @@ import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
-import { createMon, TRAINERS, AREA_CONFIGS } from '../utils/gameData';
+import { createMon, TRAINERS, AREA_CONFIGS, TYPE_EMOJIS } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS } from '../utils/constants';
 
 const playerStore = usePlayerStore();
@@ -230,14 +230,18 @@ const triggerWildBattle = async () => {
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
   const level = areaConfig.value.minLevel + Math.floor(Math.random() * (areaConfig.value.maxLevel - areaConfig.value.minLevel + 1));
   const wildMon = createMon(species, level);
-  battleStore.startBattle(playerStore.party[0], wildMon, 'wild');
+
+  const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
+  battleStore.startBattle(firstHealthyMon, wildMon, 'wild');
 };
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
   await vocabStore.loadVocab(playerStore.currentArea);
   const enemyMonCfg = trainer.party[0];
   const enemyMon = createMon(enemyMonCfg.species, enemyMonCfg.level);
-  battleStore.startBattle(playerStore.party[0], enemyMon, 'trainer', trainer, trainerId);
+
+  const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
+  battleStore.startBattle(firstHealthyMon, enemyMon, 'trainer', trainer, trainerId);
 };
 
 onMounted(() => {
