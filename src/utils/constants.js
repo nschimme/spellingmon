@@ -38,3 +38,70 @@ export const ANIMATION_DURATIONS = {
   CAPTURE_END_DELAY_MS: 2000,
   EVOLUTION_DURATION_MS: 4000,
 };
+
+export const BATTLE_TYPES = {
+  WILD: 'wild',
+  TRAINER: 'trainer',
+};
+
+export const GENDERS = {
+  BOY: 'Boy',
+  GIRL: 'Girl',
+};
+
+export const SKIN_TONES = {
+  PALE: 'pale',
+  FAIR: 'fair',
+  NEUTRAL: 'neutral',
+  TAN: 'tan',
+  DARK: 'dark',
+};
+
+export const INPUT_CONTEXTS = {
+  WORLD: 'world',
+};
+
+export const BIOMES = {
+  WILDERNESS: 'wilderness',
+  CAVE: 'cave',
+  TOWN: 'town',
+  ROUTE: 'route',
+  FOREST: 'forest',
+};
+
+export const TRANSITION_TYPES = {
+  PREV: 'prev',
+  NEXT: 'next',
+};
+
+export const MONSTER_TYPES = {
+  NORMAL: 'Normal',
+  FIRE: 'Fire',
+  WATER: 'Water',
+  GRASS: 'Grass',
+  ELECTRIC: 'Electric',
+  ICE: 'Ice',
+  FIGHTING: 'Fighting',
+  POISON: 'Poison',
+  GROUND: 'Ground',
+  FLYING: 'Flying',
+  PSYCHIC: 'Psychic',
+  BUG: 'Bug',
+  ROCK: 'Rock',
+  GHOST: 'Ghost',
+  DRAGON: 'Dragon',
+};
+
+export const STORAGE_KEYS = {
+  PLAYER_STATE: 'player_state',
+  BATTLE_STATE: 'battle_state',
+  SELECTED_VOICE: 'selected_voice_name',
+  VOLUME: 'volume',
+  IS_MUTED: 'is_muted',
+};
+
+export const MENU_TABS = {
+  PARTY: 'party',
+  PROGRESS: 'progress',
+  SETTINGS: 'settings',
+};

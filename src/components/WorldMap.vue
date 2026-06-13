@@ -1,24 +1,29 @@
 <template>
   <div class="relative w-full h-full bg-green-200 overflow-hidden select-none">
     <!-- Map Rendering -->
-    <div class="absolute transition-all duration-200"
-         :style="{ left: `calc(50% - ${playerX * 40}px)`, top: `calc(50% - ${playerY * 40}px)` }">
+    <div class="absolute"
+         :style="{
+           left: `calc(50% - ${playerX * 40}px)`,
+           top: `calc(50% - ${playerY * 40}px)`,
+           width: `${MAP_WIDTH * 40}px`,
+           height: `${MAP_HEIGHT * 40}px`
+         }">
 
-      <div v-for="y in GAME_CONSTANTS.MAP_HEIGHT" :key="y" class="flex">
-        <div v-for="x in GAME_CONSTANTS.MAP_WIDTH" :key="x"
-             class="w-10 h-10 border border-green-300 flex items-center justify-center relative"
-             :class="getTileClass(x-1, y-1)">
-          <span v-if="isGrass(x-1, y-1)" class="text-green-600">🌿</span>
-          <span v-if="isSpellCenter(x-1, y-1)" class="text-red-500 font-bold drop-shadow-sm">H</span>
-          <div v-if="getTrainer(x-1, y-1)" class="text-blue-500 transform scale-125">👤</div>
-          <div v-if="isAreaTransition(x-1, y-1)" class="text-yellow-600 font-bold">🚪</div>
-        </div>
+      <div v-for="tile in viewportTiles" :key="`${tile.x}-${tile.y}`"
+           class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg"
+           :class="getTileClass(tile.type)"
+           :style="{ left: `${tile.x * 40}px`, top: `${tile.y * 40}px` }">
+        {{ getTileEmoji(tile.type) }}
       </div>
     </div>
 
     <!-- Player -->
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md">
-      {{ playerStore.party[0] ? TYPE_EMOJIS[playerStore.party[0].type] : '🚶' }}
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center">
+      <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">{{ playerStore.playerName }}</div>
+      <div class="relative">
+        <span>{{ playerEmoji }}</span>
+        <span class="absolute -bottom-1 -right-1 text-xs">{{ playerStore.party[0]?.emoji }}</span>
+      </div>
     </div>
 
     <!-- HUD -->
@@ -31,12 +36,12 @@
       </div>
     </div>
 
-    <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest hidden sm:block">
+    <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest hidden lg:block">
       WASD to Move | ESC for Menu
     </div>
 
     <!-- Mobile Controls -->
-    <div class="absolute bottom-6 right-6 flex flex-col items-center gap-2 sm:hidden pointer-events-auto"
+    <div v-if="isTouchDevice" class="absolute bottom-6 right-6 flex flex-col items-center gap-2 pointer-events-auto"
          @mouseup="stopMovement" @mouseleave="stopMovement" @touchend="stopMovement" @touchcancel="stopMovement">
       <div class="flex flex-col items-center gap-1">
         <button @mousedown="startMovement('w')" @touchstart.prevent="startMovement('w')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▲</button>
@@ -48,7 +53,7 @@
       </div>
     </div>
 
-    <button @click="$emit('toggle-menu')" class="absolute top-6 right-6 w-12 h-12 bg-white border-4 border-gray-800 rounded-xl flex items-center justify-center text-xl shadow-xl active:scale-95 sm:hidden">
+    <button v-if="isTouchDevice" @click="$emit('toggle-menu')" class="absolute top-6 right-6 w-12 h-12 bg-white border-4 border-gray-800 rounded-xl flex items-center justify-center text-xl shadow-xl active:scale-95">
       📋
     </button>
 
@@ -65,14 +70,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
-import { createMon, TRAINERS, AREA_CONFIGS, TYPE_EMOJIS } from '../utils/gameData';
-import { GAME_CONSTANTS, SOUND_EFFECTS } from '../utils/constants';
+import { createMon, AREA_CONFIGS, TYPE_EMOJIS } from '../utils/gameData';
+import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS } from '../utils/constants';
+import { MapGenerator, TILE_TYPES } from '../utils/mapGenerator';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
@@ -80,50 +86,120 @@ const vocabStore = useVocabStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set();
 
+const MAP_WIDTH = 100;
+const MAP_HEIGHT = 100;
+const VIEWPORT_SIZE = 15; // 15x15 tiles visible
+
 const props = defineProps({
   isMenuOpen: Boolean
 });
 
 const emit = defineEmits(['toggle-menu']);
 
+const isTouchDevice = computed(() => {
+  if (typeof window === 'undefined') return false;
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+});
+
+const playerEmoji = computed(() => {
+  const gender = playerStore.gender;
+  const tone = playerStore.skinTone;
+
+  const base = gender === GENDERS.BOY ? '👦' : '👧';
+  const modifiers = {
+    [SKIN_TONES.PALE]: '🏻',
+    [SKIN_TONES.FAIR]: '🏼',
+    [SKIN_TONES.NEUTRAL]: '🏽',
+    [SKIN_TONES.TAN]: '🏾',
+    [SKIN_TONES.DARK]: '🏿'
+  };
+  return base + (modifiers[tone] || '');
+});
+
 const playerX = ref(playerStore.position.x);
 const playerY = ref(playerStore.position.y);
 const movementInterval = ref(null);
 
+const currentMapData = ref(null);
 const areaConfig = computed(() => AREA_CONFIGS[playerStore.currentArea]);
 
-const getTileClass = (x, y) => {
-  if (isSpellCenter(x, y)) return 'bg-red-50 border-red-300';
-  if (isGrass(x, y)) return 'bg-green-300';
-  if (isAreaTransition(x, y)) return 'bg-yellow-100';
-  return 'bg-green-100';
+const generateMap = () => {
+  const gen = new MapGenerator(playerStore.mapSeed, MAP_WIDTH, MAP_HEIGHT);
+  currentMapData.value = gen.generate(playerStore.currentArea);
+  // Ensure player is on a walkable tile if map just changed
+  if (getTileType(playerX.value, playerY.value) === TILE_TYPES.WALL) {
+    const startRoom = currentMapData.value.spellCenter;
+    playerX.value = startRoom.x;
+    playerY.value = startRoom.y;
+    playerStore.updatePosition({ x: playerX.value, y: playerY.value });
+  }
 };
 
-const isGrass = (x, y) => {
-  return areaConfig.value.layout.grass.some(g => x >= g.x1 && x <= g.x2 && y >= g.y1 && y <= g.y2);
+watch(() => playerStore.currentArea, generateMap);
+watch(() => playerStore.mapSeed, generateMap);
+
+const viewportTiles = computed(() => {
+  if (!currentMapData.value) return [];
+  const tiles = [];
+  const half = Math.floor(VIEWPORT_SIZE / 2);
+  const startX = Math.max(0, Math.min(MAP_WIDTH - VIEWPORT_SIZE, playerX.value - half));
+  const startY = Math.max(0, Math.min(MAP_HEIGHT - VIEWPORT_SIZE, playerY.value - half));
+
+  for (let y = startY; y < startY + VIEWPORT_SIZE; y++) {
+    for (let x = startX; x < startX + VIEWPORT_SIZE; x++) {
+      tiles.push({ x, y, type: currentMapData.value.map[y][x] });
+    }
+  }
+  return tiles;
+});
+
+const getTileType = (x, y) => {
+  if (!currentMapData.value) return TILE_TYPES.WALL;
+  if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) return TILE_TYPES.WALL;
+  return currentMapData.value.map[y][x];
 };
 
-const isSpellCenter = (x, y) => {
-  const sc = areaConfig.value.layout.spellCenter;
-  return x === sc.x && y === sc.y;
+const getTileClass = (type) => {
+  switch (type) {
+    case TILE_TYPES.SPELL_CENTER: return 'bg-red-50 border-red-300';
+    case TILE_TYPES.GRASS: return 'bg-green-300';
+    case TILE_TYPES.TRANSITION: return 'bg-yellow-100';
+    case TILE_TYPES.WATER: return 'bg-blue-300';
+    case TILE_TYPES.WALL: return 'bg-gray-800';
+    case TILE_TYPES.CAVE_WALL: return 'bg-amber-900';
+    case TILE_TYPES.BUILDING: return 'bg-blue-800';
+    case TILE_TYPES.PATH: return 'bg-orange-50';
+    case TILE_TYPES.EMPTY: return 'bg-gray-100';
+    default: return 'bg-green-100';
+  }
 };
 
-const isAreaTransition = (x, y) => {
-  const transitionY = GAME_CONSTANTS.TRANSITION_Y;
-  if (x === GAME_CONSTANTS.MAP_WIDTH - 1 && y === transitionY && playerStore.currentArea < GAME_CONSTANTS.MAX_AREAS) return true;
-  if (x === 0 && y === transitionY && playerStore.currentArea > 1) return true;
-  return false;
+const getTileEmoji = (type) => {
+  switch (type) {
+    case TILE_TYPES.GRASS: return '🌿';
+    case TILE_TYPES.SPELL_CENTER: return '🏥';
+    case TILE_TYPES.TRAINER: return '👤';
+    case TILE_TYPES.TRANSITION: return '🚪';
+    case TILE_TYPES.WATER: return '💧';
+    case TILE_TYPES.BUILDING: return '🏠';
+    default: return '';
+  }
 };
 
-const getTrainer = (x, y) => {
-  const trainers = TRAINERS[playerStore.currentArea] || [];
-  const trainerLayout = areaConfig.value.layout.trainers;
-  return trainers.find((t, i) => {
-    const trainerId = `area${playerStore.currentArea}_${i}`;
-    if (playerStore.defeatedTrainers.includes(trainerId)) return false;
-    const pos = trainerLayout[i];
-    return pos && x === pos.x && y === pos.y;
-  });
+const isGrass = (x, y) => getTileType(x, y) === TILE_TYPES.GRASS;
+const isSpellCenter = (x, y) => getTileType(x, y) === TILE_TYPES.SPELL_CENTER;
+const isAreaTransition = (x, y) => getTileType(x, y) === TILE_TYPES.TRANSITION;
+const getTrainerData = (x, y) => {
+  if (getTileType(x, y) !== TILE_TYPES.TRAINER) return null;
+  const trainers = currentMapData.value.trainers;
+  const trainer = trainers.find(t => t.x === x && t.y === y);
+  if (!trainer) return null;
+
+  const index = trainers.indexOf(trainer);
+  const trainerId = `area${playerStore.currentArea}_${index}`;
+  if (playerStore.defeatedTrainers.includes(trainerId)) return null;
+
+  return { trainer, trainerId };
 };
 
 const handleInput = (e) => {
@@ -141,7 +217,10 @@ const handleInput = (e) => {
 
   if (!moved) return false;
 
-  if (newX < 0 || newX >= GAME_CONSTANTS.MAP_WIDTH || newY < 0 || newY >= GAME_CONSTANTS.MAP_HEIGHT) return true;
+  const targetTile = getTileType(newX, newY);
+  const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
+
+  if (!walkable.includes(targetTile)) return false;
 
   playerX.value = newX;
   playerY.value = newY;
@@ -161,11 +240,9 @@ const checkTriggers = (x, y) => {
     return;
   }
 
-  const trainer = getTrainer(x, y);
-  if (trainer) {
-    const trainers = TRAINERS[playerStore.currentArea];
-    const index = trainers.indexOf(trainer);
-    const trainerId = `area${playerStore.currentArea}_${index}`;
+  const trainerData = getTrainerData(x, y);
+  if (trainerData) {
+    const { trainer, trainerId } = trainerData;
 
     if (engagedTrainers.has(trainerId)) return;
     engagedTrainers.add(trainerId);
@@ -179,15 +256,15 @@ const checkTriggers = (x, y) => {
   }
 
   if (isAreaTransition(x, y)) {
-    if (x === GAME_CONSTANTS.MAP_WIDTH - 1) {
-      const trainersInArea = TRAINERS[playerStore.currentArea] || [];
+    if (x === MAP_WIDTH - 1) {
+      const trainersInArea = currentMapData.value.trainers;
       const allDefeated = trainersInArea.every((t, i) =>
         playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
       );
 
       if (!allDefeated) {
         playerStore.notify("You must defeat the area's trainer before moving on!");
-        playerX.value = GAME_CONSTANTS.MAP_WIDTH - 2;
+        playerX.value = MAP_WIDTH - 2;
         playerStore.updatePosition({ x: playerX.value, y: playerY.value });
         return;
       }
@@ -197,7 +274,7 @@ const checkTriggers = (x, y) => {
       playerX.value = 1;
     } else {
       playerStore.setCurrentArea(playerStore.currentArea - 1);
-      playerX.value = GAME_CONSTANTS.MAP_WIDTH - 2;
+      playerX.value = MAP_WIDTH - 2;
     }
     playerStore.updatePosition({ x: playerX.value, y: playerY.value });
     return;
@@ -228,11 +305,18 @@ const stopMovement = () => {
 const triggerWildBattle = async () => {
   await vocabStore.loadVocab(playerStore.currentArea);
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
-  const level = areaConfig.value.minLevel + Math.floor(Math.random() * (areaConfig.value.maxLevel - areaConfig.value.minLevel + 1));
+
+  // Level scaling based on X position within the 100-wide map
+  const min = areaConfig.value.minLevel;
+  const max = areaConfig.value.maxLevel;
+  const progress = playerX.value / MAP_WIDTH;
+  const targetLevel = Math.floor(min + (progress * (max - min)));
+  const level = Math.max(min, Math.min(max, targetLevel + (Math.random() > 0.8 ? 1 : 0)));
+
   const wildMon = createMon(species, level);
 
   const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
-  battleStore.startBattle(firstHealthyMon, wildMon, 'wild');
+  battleStore.startBattle(firstHealthyMon, wildMon, BATTLE_TYPES.WILD);
 };
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
@@ -241,15 +325,16 @@ const triggerTrainerBattle = async (trainer, trainerId) => {
   const enemyMon = createMon(enemyMonCfg.species, enemyMonCfg.level);
 
   const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
-  battleStore.startBattle(firstHealthyMon, enemyMon, 'trainer', trainer, trainerId);
+  battleStore.startBattle(firstHealthyMon, enemyMon, BATTLE_TYPES.TRAINER, trainer, trainerId);
 };
 
 onMounted(() => {
-  inputStore.addListener('world', handleInput, 5);
+  generateMap();
+  inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput, 5);
 });
 
 onUnmounted(() => {
-  inputStore.removeListener('world');
+  inputStore.removeListener(INPUT_CONTEXTS.WORLD);
   stopMovement();
 });
 </script>

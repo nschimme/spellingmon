@@ -3,7 +3,7 @@
     <div class="bg-white border-8 border-gray-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh]">
       <!-- Header Tabs -->
       <div class="flex bg-gray-100 border-b-8 border-gray-800 font-bold uppercase text-xs">
-        <button v-for="tab in ['party', 'progress', 'settings']" :key="tab"
+        <button v-for="tab in Object.values(MENU_TABS)" :key="tab"
                 @click="activeTab = tab"
                 class="flex-1 py-4 transition-colors"
                 :class="activeTab === tab ? 'bg-white text-blue-600' : 'text-gray-500 hover:bg-gray-200'">
@@ -14,11 +14,14 @@
       <!-- Content Area -->
       <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
         <!-- Party Tab -->
-        <div v-if="activeTab === 'party'" class="grid gap-4">
+        <div v-if="activeTab === MENU_TABS.PARTY" class="grid gap-4">
           <div v-for="(mon, i) in playerStore.party" :key="mon.id"
                class="bg-white border-4 border-gray-800 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden">
             <div class="flex items-center gap-4">
-              <div class="text-4xl">🦖</div>
+              <div class="text-4xl flex items-center gap-1">
+                <span>{{ mon.emoji }}</span>
+                <span class="text-xl opacity-50">{{ TYPE_EMOJIS[mon.type] }}</span>
+              </div>
               <div class="flex-1">
                 <div class="flex justify-between font-black uppercase text-gray-800">
                   <span>{{ mon.name }}</span>
@@ -51,7 +54,7 @@
         </div>
 
         <!-- Progress Tab -->
-        <div v-if="activeTab === 'progress'" class="flex flex-col gap-4">
+        <div v-if="activeTab === MENU_TABS.PROGRESS" class="flex flex-col gap-4">
           <h3 class="font-black uppercase text-gray-800">Unlocked Areas</h3>
           <div class="grid grid-cols-1 gap-2">
             <div v-for="i in GAME_CONSTANTS.MAX_AREAS" :key="i"
@@ -68,7 +71,7 @@
         </div>
 
         <!-- Settings Tab -->
-        <div v-if="activeTab === 'settings'" class="flex flex-col gap-6">
+        <div v-if="activeTab === MENU_TABS.SETTINGS" class="flex flex-col gap-6">
           <!-- Audio Settings -->
           <div>
             <label class="font-black uppercase text-gray-800 block mb-2">Sound Settings</label>
@@ -119,12 +122,13 @@ import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { GAME_CONSTANTS, SOUND_EFFECTS } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS } from '../utils/constants';
+import { TYPE_EMOJIS } from '../utils/gameData';
 import { getHPColorClass } from '../utils/visuals';
 
 const playerStore = usePlayerStore();
 const settingsStore = useSettingsStore();
-const activeTab = ref('party');
+const activeTab = ref(MENU_TABS.PARTY);
 
 const updateVoice = (e) => {
   settingsStore.setVoice(e.target.value);

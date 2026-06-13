@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { GAME_CONSTANTS } from '../utils/constants';
+import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS } from '../utils/constants';
 
 export const useBattleStore = defineStore('battle', {
   state: () => {
@@ -11,11 +11,11 @@ export const useBattleStore = defineStore('battle', {
       battleLog: [],
       isPlayerTurn: true,
       currentWord: null,
-      battleType: 'wild', // 'wild' or 'trainer'
+      battleType: BATTLE_TYPES.WILD,
       trainerId: null,
     };
 
-    const rawSaved = typeof window !== 'undefined' ? storage.load('battle_state') : null;
+    const rawSaved = typeof window !== 'undefined' ? storage.load(STORAGE_KEYS.BATTLE_STATE) : null;
     const saved = (rawSaved && typeof rawSaved === 'object') ? rawSaved : {};
 
     const validated = { ...defaults };
@@ -65,7 +65,7 @@ export const useBattleStore = defineStore('battle', {
     }
 
     // Battle type must be one of the known values
-    if (saved.battleType === 'wild' || saved.battleType === 'trainer') {
+    if (Object.values(BATTLE_TYPES).includes(saved.battleType)) {
       validated.battleType = saved.battleType;
     }
 
@@ -85,17 +85,17 @@ export const useBattleStore = defineStore('battle', {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
         const { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId } = this.$state;
-        storage.save('battle_state', { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId });
+        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
-    startBattle(playerMon, enemyMon, type = 'wild', trainer = null, trainerId = null) {
+    startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null) {
       this.playerMon = playerMon;
       this.enemyMon = enemyMon;
       this.inBattle = true;
       this.battleType = type;
       this.trainerId = trainerId;
 
-      if (type === 'trainer') {
+      if (type === BATTLE_TYPES.TRAINER) {
         this.battleLog = [`${trainer.name} wants to battle!`, `They sent out ${enemyMon.name}!`];
       } else {
         this.battleLog = [`A wild ${enemyMon.name} appeared!`];
@@ -120,7 +120,7 @@ export const useBattleStore = defineStore('battle', {
       this.enemyMon = null;
       this.currentWord = null;
       this.trainerId = null;
-      this.battleType = 'wild';
+      this.battleType = BATTLE_TYPES.WILD;
       this.saveState();
     },
     setTurn(isPlayerTurn) {
