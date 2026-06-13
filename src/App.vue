@@ -10,6 +10,7 @@ import StarterSelection from './components/StarterSelection.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
+import EvolutionView from './components/EvolutionView.vue';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
@@ -58,6 +59,7 @@ onUnmounted(() => {
           <WorldMap :class="{ 'blur-[2px] pointer-events-none': showMenu }" v-if="!battleStore.inBattle" :isMenuOpen="showMenu" @toggle-menu="showMenu = !showMenu" />
           <BattleView v-if="battleStore.inBattle" />
           <MenuOverlay v-if="showMenu" @close="showMenu = false" />
+          <EvolutionView v-if="playerStore.evolutionPending" />
         </template>
       </template>
 

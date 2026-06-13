@@ -35,17 +35,6 @@
         </div>
       </div>
 
-      <!-- Evolution Overlay -->
-      <div v-if="isEvolving" class="absolute inset-0 z-50 bg-white flex flex-col items-center justify-center">
-        <h2 class="text-xl font-black mb-8 uppercase tracking-widest animate-pulse">What? {{ playerStore.evolutionPending?.oldSpecies }} is evolving!</h2>
-        <div class="relative w-48 h-48 flex items-center justify-center">
-          <div class="text-8xl transition-all duration-300" :class="evolutionStep % 2 === 0 ? 'scale-100 opacity-100' : 'scale-125 opacity-50'">
-            {{ evolutionStep < 10 ? TYPE_EMOJIS[battleStore.playerMon.type] : TYPE_EMOJIS[MONS[playerStore.evolutionPending?.newSpecies]?.type || battleStore.playerMon.type] }}
-          </div>
-          <div class="absolute inset-0 border-8 border-yellow-400 rounded-full animate-ping opacity-25"></div>
-        </div>
-      </div>
-
       <!-- Player -->
       <div class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
            :class="{ 'opacity-0 translate-y-10': playerFainted }">
@@ -152,8 +141,6 @@ const playerShake = ref(false);
 const enemyFainted = ref(false);
 const playerFainted = ref(false);
 const isFlashing = ref(false);
-const isEvolving = ref(false);
-const evolutionStep = ref(0);
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
@@ -329,37 +316,11 @@ const handleAttackSuccess = () => {
 
     setTimeout(() => {
       audio.playSound(SOUND_EFFECTS.VICTORY);
-
-      // Check for evolution after victory sound starts
-      if (playerStore.evolutionPending) {
-        setTimeout(handleEvolutionSequence, 1500);
-      } else {
-        setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
-      }
+      setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
     }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
   } else {
     enemyTurn();
   }
-};
-
-const handleEvolutionSequence = () => {
-  isEvolving.value = true;
-  audio.playSound(SOUND_EFFECTS.EVOLUTION);
-
-  const interval = setInterval(() => {
-    evolutionStep.value++;
-    if (evolutionStep.value >= 20) {
-      clearInterval(interval);
-      const newName = playerStore.evolutionPending.newSpecies;
-      playerStore.completeEvolution();
-      battleStore.log(`Congratulations! Your Spellingmon evolved into ${newName}!`);
-
-      setTimeout(() => {
-        isEvolving.value = false;
-        battleStore.endBattle();
-      }, 2000);
-    }
-  }, 200);
 };
 
 const handleCaptureSuccess = () => {
