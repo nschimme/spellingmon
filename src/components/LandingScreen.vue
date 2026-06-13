@@ -32,7 +32,6 @@ import { audio } from '../utils/audio';
 defineEmits(['start']);
 
 const handleStart = (emit) => {
-  audio.init();
   audio.playSound('click');
   emit('start');
 };

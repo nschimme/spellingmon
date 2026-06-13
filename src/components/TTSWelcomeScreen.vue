@@ -82,7 +82,6 @@ const ensureSpeechInitialized = async (force = false) => {
 };
 
 const testVoice = async () => {
-  audio.init();
   audio.playSound('click');
   await ensureSpeechInitialized();
   speech.speak('Welcome to Spellingmon. Can you hear me?');

@@ -22,7 +22,6 @@ export const useSettingsStore = defineStore('settings', {
       if (savedVolume !== null) this.volume = parseFloat(savedVolume);
       if (savedMuted !== null) this.isMuted = savedMuted === 'true';
 
-      audio.init();
       audio.setVolume(this.volume);
       audio.setMuted(this.isMuted);
 

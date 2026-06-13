@@ -24,7 +24,7 @@
                 <span>Lv{{ mon.level }}</span>
               </div>
               <div class="w-full bg-gray-200 h-3 border-2 border-gray-800 rounded-full mt-1 overflow-hidden">
-                <div :class="hpColorClass(mon.hp, mon.maxHp)"
+                <div :class="getHPColorClass(mon.hp, mon.maxHp)"
                      class="h-full"
                      :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"></div>
               </div>
@@ -103,6 +103,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { GAME_CONSTANTS } from '../utils/constants';
+import { getHPColorClass } from '../utils/visuals';
 
 const playerStore = usePlayerStore();
 const settingsStore = useSettingsStore();
@@ -127,12 +128,5 @@ const testVoice = () => {
 
 const testSFX = () => {
   audio.playSound('click');
-};
-
-const hpColorClass = (hp, max) => {
-  const ratio = hp / max;
-  if (ratio > 0.5) return 'bg-green-400';
-  if (ratio > 0.2) return 'bg-yellow-400';
-  return 'bg-red-400';
 };
 </script>

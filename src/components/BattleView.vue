@@ -12,7 +12,7 @@
           </div>
           <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
             <div class="h-full transition-all duration-500"
-                 :class="hpColor(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
+                 :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
                  :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"></div>
           </div>
           <div class="text-xs text-right">{{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}</div>
@@ -35,7 +35,7 @@
           </div>
           <div class="w-full bg-gray-200 h-2 rounded mt-1 overflow-hidden">
             <div class="h-full transition-all duration-500"
-                 :class="hpColor(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
+                 :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
                  :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"></div>
           </div>
           <div class="text-xs text-right">{{ battleStore.playerMon.hp }} / {{ battleStore.playerMon.maxHp }}</div>
@@ -79,6 +79,7 @@ import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
+import { getHPColorClass } from '../utils/visuals';
 
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
@@ -94,13 +95,6 @@ const enemyFainted = ref(false);
 const playerFainted = ref(false);
 const isFlashing = ref(false);
 const isCapturingAnim = ref(false);
-
-const hpColor = (hp, max) => {
-  const ratio = hp / max;
-  if (ratio > 0.5) return 'bg-green-500';
-  if (ratio > 0.2) return 'bg-yellow-500';
-  return 'bg-red-500';
-};
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {

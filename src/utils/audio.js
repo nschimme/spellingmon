@@ -47,6 +47,9 @@ class AudioService {
   }
 
   playSound(type) {
+    // Attempt auto-init on first play call (usually user triggered)
+    if (!this.initialized) this.init();
+
     if (!this.initialized || !this.ctx) return;
     if (this.ctx.state === 'suspended') this.ctx.resume();
 
