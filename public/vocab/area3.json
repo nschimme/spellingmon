@@ -1,1 +1,15 @@
-{"area": 3, "words": [{"word": "kitchen", "difficulty": 3}, {"word": "lemon", "difficulty": 3}, {"word": "mountain", "difficulty": 3}, {"word": "night", "difficulty": 3}, {"word": "ocean", "difficulty": 3}]}
+{
+  "area": 3,
+  "words": [
+    {"word": "animal", "difficulty": 1}, {"word": "basket", "difficulty": 1}, {"word": "candle", "difficulty": 1}, {"word": "dinner", "difficulty": 1}, {"word": "energy", "difficulty": 1},
+    {"word": "flower", "difficulty": 1}, {"word": "garden", "difficulty": 1}, {"word": "hammer", "difficulty": 1}, {"word": "island", "difficulty": 1}, {"word": "jungle", "difficulty": 1},
+    {"word": "kitchen", "difficulty": 2}, {"word": "ladder", "difficulty": 2}, {"word": "magnet", "difficulty": 2}, {"word": "nature", "difficulty": 2}, {"word": "office", "difficulty": 2},
+    {"word": "pencil", "difficulty": 2}, {"word": "quartz", "difficulty": 2}, {"word": "rocket", "difficulty": 2}, {"word": "school", "difficulty": 2}, {"word": "ticket", "difficulty": 2},
+    {"word": "unique", "difficulty": 2}, {"word": "valley", "difficulty": 2}, {"word": "window", "difficulty": 2}, {"word": "xylem", "difficulty": 2}, {"word": "yogurt", "difficulty": 2},
+    {"word": "zodiac", "difficulty": 2}, {"word": "airplane", "difficulty": 2}, {"word": "balloon", "difficulty": 2}, {"word": "camera", "difficulty": 2}, {"word": "dolphin", "difficulty": 2},
+    {"word": "engine", "difficulty": 2}, {"word": "forest", "difficulty": 2}, {"word": "guitar", "difficulty": 2}, {"word": "helmet", "difficulty": 2}, {"word": "insect", "difficulty": 2},
+    {"word": "journey", "difficulty": 2}, {"word": "kettle", "difficulty": 2}, {"word": "laptop", "difficulty": 2}, {"word": "mirror", "difficulty": 2}, {"word": "necklace", "difficulty": 2},
+    {"word": "octopus", "difficulty": 2}, {"word": "planet", "difficulty": 2}, {"word": "rabbit", "difficulty": 2}, {"word": "silver", "difficulty": 2}, {"word": "turtle", "difficulty": 2},
+    {"word": "umbrella", "difficulty": 2}, {"word": "violin", "difficulty": 2}, {"word": "wallet", "difficulty": 2}, {"word": "x-ray", "difficulty": 2}, {"word": "yellow", "difficulty": 2}
+  ]
+}

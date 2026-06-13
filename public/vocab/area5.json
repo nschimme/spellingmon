@@ -1,1 +1,15 @@
-{"area": 5, "words": [{"word": "universe", "difficulty": 5}, {"word": "valley", "difficulty": 5}, {"word": "winter", "difficulty": 5}, {"word": "yellow", "difficulty": 5}, {"word": "zebra", "difficulty": 5}]}
+{
+  "area": 5,
+  "words": [
+    {"word": "adventure", "difficulty": 2}, {"word": "beautiful", "difficulty": 2}, {"word": "celebrate", "difficulty": 2}, {"word": "different", "difficulty": 2}, {"word": "education", "difficulty": 2},
+    {"word": "favorite", "difficulty": 2}, {"word": "grateful", "difficulty": 2}, {"word": "happiness", "difficulty": 2}, {"word": "important", "difficulty": 2}, {"word": "journey", "difficulty": 2},
+    {"word": "knowledge", "difficulty": 3}, {"word": "laughter", "difficulty": 3}, {"word": "mountain", "difficulty": 3}, {"word": "neighbors", "difficulty": 3}, {"word": "original", "difficulty": 3},
+    {"word": "peaceful", "difficulty": 3}, {"word": "question", "difficulty": 3}, {"word": "remember", "difficulty": 3}, {"word": "sunshine", "difficulty": 3}, {"word": "together", "difficulty": 3},
+    {"word": "universe", "difficulty": 3}, {"word": "vacation", "difficulty": 3}, {"word": "wonderful", "difficulty": 3}, {"word": "xylophone", "difficulty": 3}, {"word": "yesterday", "difficulty": 3},
+    {"word": "zeroing", "difficulty": 3}, {"word": "ambitious", "difficulty": 3}, {"word": "brilliant", "difficulty": 3}, {"word": "community", "difficulty": 3}, {"word": "discovery", "difficulty": 3},
+    {"word": "enormous", "difficulty": 3}, {"word": "flourish", "difficulty": 3}, {"word": "generous", "difficulty": 3}, {"word": "harmony", "difficulty": 3}, {"word": "invisible", "difficulty": 3},
+    {"word": "jubilant", "difficulty": 3}, {"word": "kindness", "difficulty": 3}, {"word": "luminous", "difficulty": 3}, {"word": "majestic", "difficulty": 3}, {"word": "numerous", "difficulty": 3},
+    {"word": "optimism", "difficulty": 3}, {"word": "positive", "difficulty": 3}, {"word": "quantity", "difficulty": 3}, {"word": "reliable", "difficulty": 3}, {"word": "strength", "difficulty": 3},
+    {"word": "triumph", "difficulty": 3}, {"word": "ultimate", "difficulty": 3}, {"word": "vibrant", "difficulty": 3}, {"word": "wisdom", "difficulty": 3}, {"word": "xeroxed", "difficulty": 3}
+  ]
+}

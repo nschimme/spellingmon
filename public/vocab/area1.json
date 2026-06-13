@@ -1,1 +1,16 @@
-{"area": 1, "words": [{"word": "apple", "difficulty": 1}, {"word": "ball", "difficulty": 1}, {"word": "cat", "difficulty": 1}, {"word": "dog", "difficulty": 1}, {"word": "egg", "difficulty": 1}]}
+{
+  "area": 1,
+  "words": [
+    {"word": "apple", "difficulty": 1}, {"word": "ball", "difficulty": 1}, {"word": "cat", "difficulty": 1}, {"word": "dog", "difficulty": 1}, {"word": "egg", "difficulty": 1},
+    {"word": "fish", "difficulty": 1}, {"word": "goat", "difficulty": 1}, {"word": "hat", "difficulty": 1}, {"word": "ice", "difficulty": 1}, {"word": "jump", "difficulty": 1},
+    {"word": "kite", "difficulty": 1}, {"word": "lamp", "difficulty": 1}, {"word": "moon", "difficulty": 1}, {"word": "nest", "difficulty": 1}, {"word": "owl", "difficulty": 1},
+    {"word": "pig", "difficulty": 1}, {"word": "queen", "difficulty": 1}, {"word": "rain", "difficulty": 1}, {"word": "sun", "difficulty": 1}, {"word": "tree", "difficulty": 1},
+    {"word": "up", "difficulty": 1}, {"word": "van", "difficulty": 1}, {"word": "web", "difficulty": 1}, {"word": "box", "difficulty": 1}, {"word": "yoke", "difficulty": 1},
+    {"word": "zebra", "difficulty": 1}, {"word": "ant", "difficulty": 1}, {"word": "bee", "difficulty": 1}, {"word": "cup", "difficulty": 1}, {"word": "desk", "difficulty": 1},
+    {"word": "ear", "difficulty": 1}, {"word": "fan", "difficulty": 1}, {"word": "gum", "difficulty": 1}, {"word": "hen", "difficulty": 1}, {"word": "ink", "difficulty": 1},
+    {"word": "jet", "difficulty": 1}, {"word": "key", "difficulty": 1}, {"word": "log", "difficulty": 1}, {"word": "mud", "difficulty": 1}, {"word": "nut", "difficulty": 1},
+    {"word": "oat", "difficulty": 1}, {"word": "pen", "difficulty": 1}, {"word": "red", "difficulty": 1}, {"word": "sky", "difficulty": 1}, {"word": "ten", "difficulty": 1},
+    {"word": "urn", "difficulty": 1}, {"word": "vet", "difficulty": 1}, {"word": "wig", "difficulty": 1}, {"word": "yak", "difficulty": 1}, {"word": "zip", "difficulty": 1},
+    {"word": "star", "difficulty": 2}, {"word": "frog", "difficulty": 2}, {"word": "milk", "difficulty": 2}, {"word": "book", "difficulty": 2}, {"word": "cake", "difficulty": 2}
+  ]
+}

@@ -55,7 +55,7 @@ onUnmounted(() => {
       <template v-else>
         <StarterSelection v-if="!playerStore.isStarterSelected" />
         <template v-else>
-          <WorldMap :class="{ 'blur-[2px] pointer-events-none': showMenu }" v-if="!battleStore.inBattle" :isMenuOpen="showMenu" />
+          <WorldMap :class="{ 'blur-[2px] pointer-events-none': showMenu }" v-if="!battleStore.inBattle" :isMenuOpen="showMenu" @toggle-menu="showMenu = !showMenu" />
           <BattleView v-if="battleStore.inBattle" />
           <MenuOverlay v-if="showMenu" @close="showMenu = false" />
         </template>

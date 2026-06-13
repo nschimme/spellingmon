@@ -125,6 +125,11 @@ export const useBattleStore = defineStore('battle', {
       this.currentWord = word;
       this.saveState();
     },
+    switchPlayerMon(newMon) {
+      this.playerMon = newMon;
+      this.log(`Go, ${newMon.name}!`);
+      this.saveState();
+    },
     damageEnemy(amount) {
       if (!this.enemyMon) return;
       this.enemyMon.hp = Math.max(0, this.enemyMon.hp - amount);

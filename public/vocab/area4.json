@@ -1,1 +1,15 @@
-{"area": 4, "words": [{"word": "palace", "difficulty": 4}, {"word": "queen", "difficulty": 4}, {"word": "river", "difficulty": 4}, {"word": "stone", "difficulty": 4}, {"word": "travel", "difficulty": 4}]}
+{
+  "area": 4,
+  "words": [
+    {"word": "absent", "difficulty": 1}, {"word": "bottle", "difficulty": 1}, {"word": "circle", "difficulty": 1}, {"word": "dragon", "difficulty": 1}, {"word": "escape", "difficulty": 1},
+    {"word": "father", "difficulty": 1}, {"word": "ground", "difficulty": 1}, {"word": "health", "difficulty": 1}, {"word": "inside", "difficulty": 1}, {"word": "jacket", "difficulty": 1},
+    {"word": "knight", "difficulty": 2}, {"word": "lizard", "difficulty": 2}, {"word": "mother", "difficulty": 2}, {"word": "number", "difficulty": 2}, {"word": "orange", "difficulty": 2},
+    {"word": "people", "difficulty": 2}, {"word": "purple", "difficulty": 2}, {"word": "rabbit", "difficulty": 2}, {"word": "sister", "difficulty": 2}, {"word": "ticket", "difficulty": 2},
+    {"word": "useful", "difficulty": 2}, {"word": "valley", "difficulty": 2}, {"word": "winter", "difficulty": 2}, {"word": "yellow", "difficulty": 2}, {"word": "zigzag", "difficulty": 2},
+    {"word": "ancient", "difficulty": 3}, {"word": "believe", "difficulty": 3}, {"word": "captain", "difficulty": 3}, {"word": "diamond", "difficulty": 3}, {"word": "example", "difficulty": 3},
+    {"word": "feather", "difficulty": 3}, {"word": "gravity", "difficulty": 3}, {"word": "history", "difficulty": 3}, {"word": "imagine", "difficulty": 3}, {"word": "justice", "difficulty": 3},
+    {"word": "kitchen", "difficulty": 3}, {"word": "library", "difficulty": 3}, {"word": "message", "difficulty": 3}, {"word": "notebook", "difficulty": 3}, {"word": "outside", "difficulty": 3},
+    {"word": "perfect", "difficulty": 3}, {"word": "quality", "difficulty": 3}, {"word": "respect", "difficulty": 3}, {"word": "science", "difficulty": 3}, {"word": "thought", "difficulty": 3},
+    {"word": "uniform", "difficulty": 3}, {"word": "victory", "difficulty": 3}, {"word": "weather", "difficulty": 3}, {"word": "xylophone", "difficulty": 3}, {"word": "yesterday", "difficulty": 3}
+  ]
+}

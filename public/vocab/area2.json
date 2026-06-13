@@ -1,1 +1,15 @@
-{"area": 2, "words": [{"word": "forest", "difficulty": 2}, {"word": "green", "difficulty": 2}, {"word": "house", "difficulty": 2}, {"word": "island", "difficulty": 2}, {"word": "jump", "difficulty": 2}]}
+{
+  "area": 2,
+  "words": [
+    {"word": "bread", "difficulty": 1}, {"word": "chair", "difficulty": 1}, {"word": "dance", "difficulty": 1}, {"word": "eagle", "difficulty": 1}, {"word": "fruit", "difficulty": 1},
+    {"word": "grape", "difficulty": 1}, {"word": "house", "difficulty": 1}, {"word": "juice", "difficulty": 1}, {"word": "knife", "difficulty": 1}, {"word": "lemon", "difficulty": 1},
+    {"word": "melon", "difficulty": 1}, {"word": "night", "difficulty": 1}, {"word": "orange", "difficulty": 1}, {"word": "paper", "difficulty": 1}, {"word": "quiet", "difficulty": 1},
+    {"word": "river", "difficulty": 1}, {"word": "sleep", "difficulty": 1}, {"word": "table", "difficulty": 1}, {"word": "under", "difficulty": 1}, {"word": "water", "difficulty": 1},
+    {"word": "yellow", "difficulty": 2}, {"word": "zebra", "difficulty": 2}, {"word": "beach", "difficulty": 2}, {"word": "cloud", "difficulty": 2}, {"word": "dream", "difficulty": 2},
+    {"word": "earth", "difficulty": 2}, {"word": "field", "difficulty": 2}, {"word": "green", "difficulty": 2}, {"word": "heart", "difficulty": 2}, {"word": "light", "difficulty": 2},
+    {"word": "mountain", "difficulty": 2}, {"word": "ocean", "difficulty": 2}, {"word": "plant", "difficulty": 2}, {"word": "radio", "difficulty": 2}, {"word": "stone", "difficulty": 2},
+    {"word": "train", "difficulty": 2}, {"word": "voice", "difficulty": 2}, {"word": "world", "difficulty": 2}, {"word": "young", "difficulty": 2}, {"word": "bridge", "difficulty": 2},
+    {"word": "clock", "difficulty": 2}, {"word": "floor", "difficulty": 2}, {"word": "glass", "difficulty": 2}, {"word": "horse", "difficulty": 2}, {"word": "island", "difficulty": 2},
+    {"word": "jacket", "difficulty": 2}, {"word": "kitten", "difficulty": 2}, {"word": "lizard", "difficulty": 2}, {"word": "money", "difficulty": 2}, {"word": "north", "difficulty": 2}
+  ]
+}

@@ -16,19 +16,36 @@
         <!-- Party Tab -->
         <div v-if="activeTab === 'party'" class="grid gap-4">
           <div v-for="(mon, i) in playerStore.party" :key="i"
-               class="bg-white border-4 border-gray-800 p-4 rounded-xl flex items-center gap-4 shadow-md">
-            <div class="text-4xl">🦖</div>
-            <div class="flex-1">
-              <div class="flex justify-between font-black uppercase text-gray-800">
-                <span>{{ mon.name }}</span>
-                <span>Lv{{ mon.level }}</span>
+               class="bg-white border-4 border-gray-800 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden">
+            <div class="flex items-center gap-4">
+              <div class="text-4xl">🦖</div>
+              <div class="flex-1">
+                <div class="flex justify-between font-black uppercase text-gray-800">
+                  <span>{{ mon.name }}</span>
+                  <span>Lv{{ mon.level }}</span>
+                </div>
+                <div class="w-full bg-gray-200 h-3 border-2 border-gray-800 rounded-full mt-1 overflow-hidden">
+                  <div :class="getHPColorClass(mon.hp, mon.maxHp)"
+                       class="h-full transition-all duration-500"
+                       :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"></div>
+                </div>
+                <div class="flex justify-between items-center mt-1">
+                  <div class="text-[10px] font-bold text-gray-600 uppercase">HP: {{ mon.hp }} / {{ mon.maxHp }}</div>
+                  <div class="text-[10px] font-bold text-blue-600 uppercase">EXP: {{ mon.exp }} / {{ mon.expToNext }}</div>
+                </div>
               </div>
-              <div class="w-full bg-gray-200 h-3 border-2 border-gray-800 rounded-full mt-1 overflow-hidden">
-                <div :class="getHPColorClass(mon.hp, mon.maxHp)"
-                     class="h-full"
-                     :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"></div>
-              </div>
-              <div class="text-[10px] font-bold mt-1 text-gray-600 uppercase">HP: {{ mon.hp }} / {{ mon.maxHp }}</div>
+            </div>
+
+            <div v-if="i > 0" class="flex justify-end">
+              <button @click="playerStore.moveMonToFront(i)"
+                      class="bg-blue-500 text-white text-[10px] px-3 py-1 rounded font-bold uppercase border-b-2 border-blue-700 active:translate-y-0.5">
+                Set as Leader
+              </button>
+            </div>
+
+            <!-- Leader Badge -->
+            <div v-if="i === 0" class="absolute top-0 left-0 bg-yellow-400 text-[8px] font-black px-2 py-0.5 rounded-br-lg border-b-2 border-r-2 border-gray-800 uppercase">
+              Leader
             </div>
           </div>
         </div>

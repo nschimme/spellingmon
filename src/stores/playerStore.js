@@ -123,6 +123,35 @@ export const usePlayerStore = defineStore('player', {
     confirmTtsVerified() {
       this.ttsVerified = true;
       // We don't saveState() here because ttsVerified is deliberately excluded from persistence
+    },
+    moveMonToFront(index) {
+      if (index > 0 && index < this.party.length) {
+        const mon = this.party.splice(index, 1)[0];
+        this.party.unshift(mon);
+        this.saveState();
+      }
+    },
+    awardExp(amount) {
+      this.party.forEach(mon => {
+        if (mon.hp > 0) {
+          mon.exp += amount;
+          while (mon.exp >= mon.expToNext) {
+            this.levelUp(mon);
+          }
+        }
+      });
+      this.saveState();
+    },
+    levelUp(mon) {
+      mon.level++;
+      mon.exp -= mon.expToNext;
+      mon.expToNext = Math.pow(mon.level, 3);
+
+      const hpGain = 5 + Math.floor(Math.random() * 3);
+      mon.maxHp += hpGain;
+      mon.hp += hpGain;
+
+      this.notify(`${mon.name} grew to Level ${mon.level}!`);
     }
   }
 });

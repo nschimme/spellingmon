@@ -7,7 +7,7 @@ export const useSettingsStore = defineStore('settings', {
   state: () => ({
     voices: [],
     selectedVoiceName: '',
-    volume: 0.5,
+    volume: 1.0,
     isMuted: false,
   }),
   actions: {
