@@ -123,19 +123,41 @@ const movementInterval = ref(null);
 const currentMapData = ref(null);
 const areaConfig = computed(() => AREA_CONFIGS[playerStore.currentArea]);
 
-const generateMap = () => {
+const generateMap = (isTransition = false, direction = null) => {
   const gen = new MapGenerator(playerStore.mapSeed, MAP_WIDTH, MAP_HEIGHT);
   currentMapData.value = gen.generate(playerStore.currentArea);
-  // Ensure player is on a walkable tile if map just changed
-  if (getTileType(playerX.value, playerY.value) === TILE_TYPES.WALL) {
-    const startRoom = currentMapData.value.spellCenter;
-    playerX.value = startRoom.x;
-    playerY.value = startRoom.y;
-    playerStore.updatePosition({ x: playerX.value, y: playerY.value });
+
+  if (isTransition) {
+    if (direction === 'next') {
+      // Entering from previous area, should be at PREV transition
+      const entry = currentMapData.value.transitions.find(t => t.type === TRANSITION_TYPES.PREV);
+      if (entry) {
+        playerX.value = entry.x;
+        playerY.value = entry.y;
+      }
+    } else if (direction === 'prev') {
+      // Entering from next area, should be at NEXT transition
+      const entry = currentMapData.value.transitions.find(t => t.type === TRANSITION_TYPES.NEXT);
+      if (entry) {
+        playerX.value = entry.x;
+        playerY.value = entry.y;
+      }
+    }
+  } else {
+    // Initial load or whiteout - go to Spell Center
+    const sc = currentMapData.value.spellCenter;
+    if (sc) {
+      playerX.value = sc.x;
+      playerY.value = sc.y;
+    }
   }
+  playerStore.updatePosition({ x: playerX.value, y: playerY.value });
 };
 
-watch(() => playerStore.currentArea, generateMap);
+watch(() => playerStore.currentArea, (newArea, oldArea) => {
+  const direction = newArea > oldArea ? 'next' : 'prev';
+  generateMap(true, direction);
+});
 watch(() => playerStore.mapSeed, generateMap);
 
 const viewportTiles = computed(() => {
@@ -256,7 +278,8 @@ const checkTriggers = (x, y) => {
   }
 
   if (isAreaTransition(x, y)) {
-    if (x === MAP_WIDTH - 1) {
+    const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
+    if (transition.type === TRANSITION_TYPES.NEXT) {
       const trainersInArea = currentMapData.value.trainers;
       const allDefeated = trainersInArea.every((t, i) =>
         playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
@@ -264,19 +287,15 @@ const checkTriggers = (x, y) => {
 
       if (!allDefeated) {
         playerStore.notify("You must defeat the area's trainer before moving on!");
-        playerX.value = MAP_WIDTH - 2;
-        playerStore.updatePosition({ x: playerX.value, y: playerY.value });
+        // Bounce back
         return;
       }
 
       playerStore.unlockArea(playerStore.currentArea + 1);
       playerStore.setCurrentArea(playerStore.currentArea + 1);
-      playerX.value = 1;
-    } else {
+    } else if (transition.type === TRANSITION_TYPES.PREV) {
       playerStore.setCurrentArea(playerStore.currentArea - 1);
-      playerX.value = MAP_WIDTH - 2;
     }
-    playerStore.updatePosition({ x: playerX.value, y: playerY.value });
     return;
   }
 
@@ -306,12 +325,8 @@ const triggerWildBattle = async () => {
   await vocabStore.loadVocab(playerStore.currentArea);
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
 
-  // Level scaling based on X position within the 100-wide map
-  const min = areaConfig.value.minLevel;
-  const max = areaConfig.value.maxLevel;
-  const progress = playerX.value / MAP_WIDTH;
-  const targetLevel = Math.floor(min + (progress * (max - min)));
-  const level = Math.max(min, Math.min(max, targetLevel + (Math.random() > 0.8 ? 1 : 0)));
+  // Use pre-generated level map
+  const level = currentMapData.value.levelMap[playerY.value][playerX.value];
 
   const wildMon = createMon(species, level);
 

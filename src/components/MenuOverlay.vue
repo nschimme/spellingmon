@@ -107,7 +107,10 @@
       </div>
 
       <!-- Footer -->
-      <div class="p-6 border-t-8 border-gray-800 bg-gray-100 flex justify-end">
+      <div class="p-6 border-t-8 border-gray-800 bg-gray-100 flex justify-between">
+        <button @click="playerStore.logout()" class="bg-gray-500 text-white px-6 py-3 rounded-xl border-b-4 border-gray-700 font-black uppercase tracking-widest hover:bg-gray-600 active:translate-y-1 text-xs">
+          Log Out
+        </button>
         <button @click="$emit('close')" class="bg-red-500 text-white px-8 py-3 rounded-xl border-b-4 border-red-700 font-black uppercase tracking-widest hover:bg-red-600 active:translate-y-1">
           Back to Game
         </button>

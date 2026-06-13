@@ -345,7 +345,7 @@ export function calculateExpGain(enemyMon, isTrainer) {
 export const AREA_CONFIGS = {
   1: {
     name: 'Route 1',
-    minLevel: 2,
+    minLevel: 1,
     maxLevel: 6,
     encounters: [
       SPECIES.Verminverb, SPECIES.Aviprosa, SPECIES.Caterspell, SPECIES.Weedword,

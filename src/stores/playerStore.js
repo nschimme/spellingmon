@@ -143,6 +143,10 @@ export const usePlayerStore = defineStore('player', {
       this.gameStarted = true;
       this.saveState();
     },
+    logout() {
+      this.gameStarted = false;
+      this.saveState();
+    },
     healParty() {
       this.party.forEach(mon => {
         mon.hp = mon.maxHp;
