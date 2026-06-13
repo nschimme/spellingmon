@@ -134,6 +134,7 @@ const isCapturing = ref(false);
 const isSwitching = ref(false);
 const isForcedSwitch = ref(false);
 const currentDifficulty = ref(1);
+const hintTimeouts = ref([]);
 
 const enemyShake = ref(false);
 const playerShake = ref(false);
@@ -226,18 +227,24 @@ const tryCapture = () => {
 };
 
 const speakFullHint = (wordObj) => {
+  // Clear any existing hint timeouts
+  hintTimeouts.value.forEach(t => clearTimeout(t));
+  hintTimeouts.value = [];
+
   const word = typeof wordObj === 'string' ? wordObj : wordObj.word;
   const spokenVersion = wordObj.spoken_version || word;
 
   speech.speak(spokenVersion);
 
   if (wordObj.sentence_context) {
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       speech.speak(`As in... ${wordObj.sentence_context}`);
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         speech.speak(spokenVersion);
       }, 3000); // Estimated duration of sentence
+      hintTimeouts.value.push(t2);
     }, 1500);
+    hintTimeouts.value.push(t1);
   }
 };
 
@@ -246,9 +253,14 @@ const repeatWord = () => {
   speakFullHint(battleStore.currentWord);
 };
 
+const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
 const getMaskedSentence = (sentence, word) => {
   if (!sentence || !word) return '';
-  const regex = new RegExp(word, 'gi');
+  const escapedWord = escapeRegExp(word);
+  const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
   return sentence.replace(regex, '____');
 };
 
