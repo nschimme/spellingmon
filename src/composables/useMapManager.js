@@ -63,7 +63,7 @@ export function useMapManager(playerStore) {
   };
 
   const updateDiscovery = (x, y) => {
-    const RADIUS = 2;
+    const RADIUS = 5;
     for (let dy = -RADIUS; dy <= RADIUS; dy++) {
       for (let dx = -RADIUS; dx <= RADIUS; dx++) {
         const tx = x + dx;

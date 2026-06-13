@@ -33,8 +33,8 @@ describe('useMapManager', () => {
     const { updateDiscovery } = useMapManager(playerStore);
     updateDiscovery(10, 10);
 
-    // 5x5 radius = 25 tiles
-    expect(playerStore.discoverTile).toHaveBeenCalledTimes(25);
+    // 11x11 radius = 121 tiles
+    expect(playerStore.discoverTile).toHaveBeenCalledTimes(121);
   });
 });
 

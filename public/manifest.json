@@ -1,0 +1,17 @@
+{
+  "name": "Spellingmon",
+  "short_name": "Spellingmon",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "description": "Gotta Spell 'Em All! A Spelling Battle RPG.",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

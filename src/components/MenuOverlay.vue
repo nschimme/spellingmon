@@ -170,10 +170,12 @@ const drawMap = () => {
   ctx.fillRect(0, 0, 100, 100);
 
   ctx.fillStyle = '#4ade80'; // Green-400
-  discovered.forEach(key => {
-    const [x, y] = key.split(',').map(Number);
-    ctx.fillRect(x, y, 1, 1);
-  });
+  if (Array.isArray(discovered)) {
+    discovered.forEach(key => {
+      const [x, y] = key.split(',').map(Number);
+      ctx.fillRect(x, y, 1, 1);
+    });
+  }
 
   // Draw player
   ctx.fillStyle = '#ef4444'; // Red-500
