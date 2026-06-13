@@ -26,7 +26,7 @@
           </div>
           <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
           <div class="text-4xl sm:text-6xl mt-2 sm:mt-4 transition-transform duration-300"
-               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">👾</div>
+               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">{{ TYPE_EMOJIS[battleStore.enemyMon.type] }}</div>
         </div>
 
         <!-- Capture Ball Anim -->
@@ -35,11 +35,22 @@
         </div>
       </div>
 
+      <!-- Evolution Overlay -->
+      <div v-if="isEvolving" class="absolute inset-0 z-50 bg-white flex flex-col items-center justify-center">
+        <h2 class="text-xl font-black mb-8 uppercase tracking-widest animate-pulse">What? {{ playerStore.evolutionPending?.oldSpecies }} is evolving!</h2>
+        <div class="relative w-48 h-48 flex items-center justify-center">
+          <div class="text-8xl transition-all duration-300" :class="evolutionStep % 2 === 0 ? 'scale-100 opacity-100' : 'scale-125 opacity-50'">
+            {{ evolutionStep < 10 ? TYPE_EMOJIS[battleStore.playerMon.type] : TYPE_EMOJIS[MONS[playerStore.evolutionPending?.newSpecies]?.type || battleStore.playerMon.type] }}
+          </div>
+          <div class="absolute inset-0 border-8 border-yellow-400 rounded-full animate-ping opacity-25"></div>
+        </div>
+      </div>
+
       <!-- Player -->
       <div class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
            :class="{ 'opacity-0 translate-y-10': playerFainted }">
         <div class="flex flex-col items-start" :class="{ 'animate-shake': playerShake }">
-          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">🦖</div>
+          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">{{ TYPE_EMOJIS[battleStore.playerMon.type] }}</div>
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
             <div class="flex justify-between font-bold text-[10px] sm:text-base">
               <span>{{ battleStore.playerMon.name }}</span>
@@ -123,7 +134,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
 import { SOUND_EFFECTS, ANIMATION_DURATIONS } from '../utils/constants';
-import { calculateExpGain } from '../utils/gameData';
+import { calculateExpGain, calculateDamage, TYPE_EMOJIS, MONS } from '../utils/gameData';
 
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
@@ -141,6 +152,8 @@ const playerShake = ref(false);
 const enemyFainted = ref(false);
 const playerFainted = ref(false);
 const isFlashing = ref(false);
+const isEvolving = ref(false);
+const evolutionStep = ref(0);
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
@@ -267,6 +280,8 @@ const getMaskedSentence = (sentence, word) => {
 const submitSpelling = () => {
   if (!battleStore.currentWord) return;
   const word = typeof battleStore.currentWord === 'string' ? battleStore.currentWord : battleStore.currentWord.word;
+  if (!word) return;
+
   const isCorrect = userInput.value.toLowerCase().trim() === word.toLowerCase().trim();
 
   if (isCorrect) {
@@ -276,7 +291,7 @@ const submitSpelling = () => {
       handleAttackSuccess();
     }
   } else {
-    battleStore.log(`Incorrect! The word was "${battleStore.currentWord}".`);
+    battleStore.log(`Incorrect! The word was "${word}".`);
     isCapturing.value = false;
     enemyTurn();
   }
@@ -286,13 +301,14 @@ const submitSpelling = () => {
 };
 
 const handleAttackSuccess = () => {
-  const levelDiff = battleStore.playerMon.level / battleStore.enemyMon.level;
-  const baseDamage = currentDifficulty.value === 2 ? 12 : 6;
-  const variance = Math.floor(Math.random() * 4);
-  const damage = Math.max(1, Math.floor((baseDamage + variance) * levelDiff));
+  const basePower = currentDifficulty.value === 2 ? 60 : 30;
+  const { damage, typeMod } = calculateDamage(battleStore.playerMon, battleStore.enemyMon, basePower);
 
   battleStore.damageEnemy(damage);
   battleStore.log(`Correct! Dealt ${damage} damage.`);
+  if (typeMod > 1) battleStore.log("It's super effective!");
+  if (typeMod < 1 && typeMod > 0) battleStore.log("It's not very effective...");
+  if (typeMod === 0) battleStore.log("It had no effect!");
 
   audio.playSound(SOUND_EFFECTS.HIT);
   triggerShake(true);
@@ -313,12 +329,37 @@ const handleAttackSuccess = () => {
 
     setTimeout(() => {
       audio.playSound(SOUND_EFFECTS.VICTORY);
-    }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
 
-    setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS);
+      // Check for evolution after victory sound starts
+      if (playerStore.evolutionPending) {
+        setTimeout(handleEvolutionSequence, 1500);
+      } else {
+        setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
+      }
+    }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
   } else {
     enemyTurn();
   }
+};
+
+const handleEvolutionSequence = () => {
+  isEvolving.value = true;
+  audio.playSound(SOUND_EFFECTS.EVOLUTION);
+
+  const interval = setInterval(() => {
+    evolutionStep.value++;
+    if (evolutionStep.value >= 20) {
+      clearInterval(interval);
+      const newName = playerStore.evolutionPending.newSpecies;
+      playerStore.completeEvolution();
+      battleStore.log(`Congratulations! Your Spellingmon evolved into ${newName}!`);
+
+      setTimeout(() => {
+        isEvolving.value = false;
+        battleStore.endBattle();
+      }, 2000);
+    }
+  }, 200);
 };
 
 const handleCaptureSuccess = () => {
@@ -362,10 +403,11 @@ const enemyTurn = () => {
   if (!battleStore.inBattle || !battleStore.enemyMon || battleStore.enemyMon.hp <= 0) return;
   battleStore.setTurn(false);
   setTimeout(() => {
-    const levelDiff = battleStore.enemyMon.level / battleStore.playerMon.level;
-    const damage = Math.max(1, Math.floor((3 + Math.floor(Math.random() * 3)) * levelDiff));
+    const { damage, typeMod } = calculateDamage(battleStore.enemyMon, battleStore.playerMon, 30);
     battleStore.damagePlayer(damage);
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
+    if (typeMod > 1) battleStore.log("It's super effective!");
+    if (typeMod < 1 && typeMod > 0) battleStore.log("It's not very effective...");
 
     audio.playSound(SOUND_EFFECTS.HIT);
     triggerShake(false);

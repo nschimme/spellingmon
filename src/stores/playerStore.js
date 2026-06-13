@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { GAME_CONSTANTS } from '../utils/constants';
-import { calculateExpToNext } from '../utils/gameData';
+import { calculateExpToNext, calculateStat, MONS } from '../utils/gameData';
 
 let saveTimeout = null;
 let notificationCounter = 0;
@@ -21,6 +21,7 @@ export const usePlayerStore = defineStore('player', {
       defeatedTrainers: [],
       notification: null,
       notificationId: null,
+      evolutionPending: null, // { oldMon, newSpecies }
     };
 
     if (saved) {
@@ -165,11 +166,43 @@ export const usePlayerStore = defineStore('player', {
       mon.exp -= mon.expToNext;
       mon.expToNext = calculateExpToNext(mon.level);
 
-      const hpGain = 5 + Math.floor(Math.random() * 3);
-      mon.maxHp += hpGain;
-      mon.hp += hpGain;
+      const base = MONS[mon.species];
+      if (base) {
+        mon.maxHp = calculateStat(base.baseHp, mon.level, true);
+        mon.hp = mon.maxHp; // Fully heal on level up
+        mon.atk = calculateStat(base.baseAtk, mon.level);
+        mon.def = calculateStat(base.baseDef, mon.level);
+        mon.spd = calculateStat(base.baseSpd, mon.level);
+      }
 
       this.notify(`${mon.name} grew to Level ${mon.level}!`);
+
+      if (base && base.evolvesAt && mon.level >= base.evolvesAt) {
+        this.evolutionPending = {
+          monId: mon.id,
+          oldSpecies: mon.species,
+          newSpecies: base.evolvesInto
+        };
+      }
+    },
+    completeEvolution() {
+      if (!this.evolutionPending) return;
+      const mon = this.party.find(m => m.id === this.evolutionPending.monId);
+      if (mon) {
+        const newSpecies = this.evolutionPending.newSpecies;
+        const base = MONS[newSpecies];
+        mon.species = newSpecies;
+        mon.name = base.name;
+        mon.type = base.type;
+        // Recalculate stats for new species
+        mon.maxHp = calculateStat(base.baseHp, mon.level, true);
+        mon.hp = mon.maxHp;
+        mon.atk = calculateStat(base.baseAtk, mon.level);
+        mon.def = calculateStat(base.baseDef, mon.level);
+        mon.spd = calculateStat(base.baseSpd, mon.level);
+      }
+      this.evolutionPending = null;
+      this.saveState();
     }
   }
 });

@@ -35,8 +35,8 @@ const playerStore = usePlayerStore();
 
 const starters = [
   { name: 'Grammander', type: 'Fire', icon: '🔥', hp: 20 },
-  { name: 'Squirtspell', type: 'Water', icon: '💧', hp: 22 },
-  { name: 'Bulbaword', type: 'Grass', icon: '🌿', hp: 24 }
+  { name: 'Squirtspell', type: 'Water', icon: '💧', hp: 21 },
+  { name: 'Bulbaword', type: 'Grass', icon: '🌿', hp: 21 }
 ];
 
 const selectStarter = (mon) => {

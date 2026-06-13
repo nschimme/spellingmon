@@ -84,6 +84,9 @@ class AudioService {
       case SOUND_EFFECTS.VICTORY:
         this.playArpeggio([523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50], 0.1);
         break;
+      case SOUND_EFFECTS.EVOLUTION:
+        this.playEvolution();
+        break;
       default:
         console.warn(`Unknown sound type requested: ${type}`);
         break;
@@ -173,6 +176,33 @@ class AudioService {
       osc.start(now + i * noteDuration);
       osc.stop(now + i * noteDuration + noteDuration);
     });
+  }
+
+  playEvolution() {
+    const now = this.ctx.currentTime;
+    const duration = 4.0;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, now);
+
+    // Rapidly increasing pitch warble
+    for (let i = 0; i < duration * 10; i++) {
+      const time = now + (i * 0.1);
+      const freq = 220 + (i * 20);
+      osc.frequency.linearRampToValueAtTime(freq, time);
+    }
+
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.1, now + 0.5);
+    gain.gain.linearRampToValueAtTime(0, now + duration);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain);
+
+    osc.start(now);
+    osc.stop(now + duration);
   }
 }
 

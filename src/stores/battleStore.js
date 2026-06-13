@@ -100,7 +100,13 @@ export const useBattleStore = defineStore('battle', {
       } else {
         this.battleLog = [`A wild ${enemyMon.name} appeared!`];
       }
-      this.isPlayerTurn = true;
+
+      // Determine initial turn based on Speed
+      this.isPlayerTurn = (playerMon.spd >= enemyMon.spd);
+      if (!this.isPlayerTurn) {
+        this.log(`${enemyMon.name} is faster!`);
+      }
+
       this.saveState();
     },
     log(msg) {
