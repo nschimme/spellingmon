@@ -163,7 +163,7 @@ const tryRun = () => {
   }
 
   const successChance = (battleStore.playerMon.level / battleStore.enemyMon.level) * 0.5;
-  if (Math.random() < successChance || successChance >= 0.5) {
+  if (Math.random() < Math.min(0.95, successChance)) {
     battleStore.log("Got away safely!");
     setTimeout(() => battleStore.endBattle(), 1000);
   } else {

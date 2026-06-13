@@ -36,13 +36,14 @@
     </div>
 
     <!-- Mobile Controls -->
-    <div class="absolute bottom-6 right-6 flex flex-col items-center gap-2 sm:hidden pointer-events-auto">
+    <div class="absolute bottom-6 right-6 flex flex-col items-center gap-2 sm:hidden pointer-events-auto"
+         @mouseup="stopMovement" @mouseleave="stopMovement" @touchend="stopMovement" @touchcancel="stopMovement">
       <div class="flex flex-col items-center gap-1">
-        <button @mousedown="simulateKey('w')" @touchstart.prevent="simulateKey('w')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▲</button>
+        <button @mousedown="startMovement('w')" @touchstart.prevent="startMovement('w')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▲</button>
         <div class="flex gap-1">
-          <button @mousedown="simulateKey('a')" @touchstart.prevent="simulateKey('a')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">◀</button>
-          <button @mousedown="simulateKey('s')" @touchstart.prevent="simulateKey('s')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▼</button>
-          <button @mousedown="simulateKey('d')" @touchstart.prevent="simulateKey('d')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▶</button>
+          <button @mousedown="startMovement('a')" @touchstart.prevent="startMovement('a')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">◀</button>
+          <button @mousedown="startMovement('s')" @touchstart.prevent="startMovement('s')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▼</button>
+          <button @mousedown="startMovement('d')" @touchstart.prevent="startMovement('d')" class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95">▶</button>
         </div>
       </div>
     </div>
@@ -87,6 +88,7 @@ const emit = defineEmits(['toggle-menu']);
 
 const playerX = ref(playerStore.position.x);
 const playerY = ref(playerStore.position.y);
+const movementInterval = ref(null);
 
 const areaConfig = computed(() => AREA_CONFIGS[playerStore.currentArea]);
 
@@ -208,8 +210,19 @@ const checkTriggers = (x, y) => {
   }
 };
 
-const simulateKey = (key) => {
+const startMovement = (key) => {
+  stopMovement();
   handleInput({ key });
+  movementInterval.value = setInterval(() => {
+    handleInput({ key });
+  }, 200); // Repeat every 200ms
+};
+
+const stopMovement = () => {
+  if (movementInterval.value) {
+    clearInterval(movementInterval.value);
+    movementInterval.value = null;
+  }
 };
 
 const triggerWildBattle = async () => {
@@ -233,6 +246,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   inputStore.removeListener('world');
+  stopMovement();
 });
 </script>
 

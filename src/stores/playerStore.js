@@ -145,12 +145,17 @@ export const usePlayerStore = defineStore('player', {
       if (healthyMons.length === 0) return;
 
       const splitAmount = Math.floor(totalAmount / healthyMons.length);
-      if (splitAmount <= 0) return;
+      let remainder = totalAmount % healthyMons.length;
 
-      healthyMons.forEach(mon => {
-        mon.exp += splitAmount;
-        while (mon.exp >= mon.expToNext) {
-          this.levelUp(mon);
+      healthyMons.forEach((mon, i) => {
+        let amount = splitAmount;
+        if (i < remainder) amount += 1;
+
+        if (amount > 0) {
+          mon.exp += amount;
+          while (mon.exp >= mon.expToNext) {
+            this.levelUp(mon);
+          }
         }
       });
       this.saveState();
