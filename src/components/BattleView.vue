@@ -317,7 +317,7 @@ const enemyTurn = () => {
   battleStore.setTurn(false);
   setTimeout(() => {
     const levelDiff = battleStore.enemyMon.level / battleStore.playerMon.level;
-    const damage = Math.floor((3 + Math.floor(Math.random() * 3)) * levelDiff);
+    const damage = Math.max(1, Math.floor((3 + Math.floor(Math.random() * 3)) * levelDiff));
     battleStore.damagePlayer(damage);
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
 

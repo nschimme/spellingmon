@@ -215,7 +215,7 @@ const startMovement = (key) => {
   handleInput({ key });
   movementInterval.value = setInterval(() => {
     handleInput({ key });
-  }, 200); // Repeat every 200ms
+  }, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS);
 };
 
 const stopMovement = () => {
