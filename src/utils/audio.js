@@ -1,3 +1,5 @@
+import { SOUND_EFFECTS } from './constants';
+
 class AudioService {
   constructor() {
     this.ctx = null;
@@ -54,28 +56,28 @@ class AudioService {
     if (this.ctx.state === 'suspended') this.ctx.resume();
 
     switch (type) {
-      case 'click':
+      case SOUND_EFFECTS.CLICK:
         this.playBlip(880, 0.1);
         break;
-      case 'hit':
+      case SOUND_EFFECTS.HIT:
         this.playNoise(0.15, 0.5);
         break;
-      case 'faint':
+      case SOUND_EFFECTS.FAINT:
         this.playSlide(440, 110, 0.8);
         break;
-      case 'heal':
+      case SOUND_EFFECTS.HEAL:
         this.playArpeggio([440, 554.37, 659.25, 880], 0.1);
         break;
-      case 'capture-success':
+      case SOUND_EFFECTS.CAPTURE_SUCCESS:
         this.playArpeggio([523.25, 659.25, 783.99, 1046.50], 0.15);
         break;
-      case 'capture-fail':
+      case SOUND_EFFECTS.CAPTURE_FAIL:
         this.playSlide(220, 110, 0.3);
         break;
-      case 'battle-start':
+      case SOUND_EFFECTS.BATTLE_START:
         this.playSlide(110, 880, 0.5, 'square');
         break;
-      case 'victory':
+      case SOUND_EFFECTS.VICTORY:
         this.playArpeggio([523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50], 0.1);
         break;
     }

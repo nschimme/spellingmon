@@ -55,7 +55,7 @@ import { useVocabStore } from '../stores/vocabStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon, TRAINERS, AREA_CONFIGS } from '../utils/gameData';
-import { GAME_CONSTANTS } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS } from '../utils/constants';
 
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
@@ -134,7 +134,7 @@ const handleInput = (e) => {
 const checkTriggers = (x, y) => {
   if (isSpellCenter(x, y)) {
     playerStore.healParty();
-    audio.playSound('heal');
+    audio.playSound(SOUND_EFFECTS.HEAL);
     playerStore.notify('Your Spellingmon have been fully healed!');
     playerStore.lastSpellCenter = { x, y, area: playerStore.currentArea };
     playerStore.saveState();

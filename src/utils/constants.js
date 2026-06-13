@@ -8,3 +8,23 @@ export const GAME_CONSTANTS = {
   TRAINER_ENGAGEMENT_DELAY_MS: 1500,
   TRANSITION_Y: 10,
 };
+
+export const SOUND_EFFECTS = {
+  CLICK: 'click',
+  HIT: 'hit',
+  FAINT: 'faint',
+  HEAL: 'heal',
+  CAPTURE_SUCCESS: 'capture-success',
+  CAPTURE_FAIL: 'capture-fail',
+  BATTLE_START: 'battle-start',
+  VICTORY: 'victory',
+};
+
+export const ANIMATION_DURATIONS = {
+  SHAKE_MS: 500,
+  FLASH_MS: 500,
+  CAPTURE_PROCESS_MS: 1500,
+  BATTLE_END_DELAY_MS: 3000,
+  VICTORY_SOUND_DELAY_MS: 1000,
+  CAPTURE_END_DELAY_MS: 2000,
+};

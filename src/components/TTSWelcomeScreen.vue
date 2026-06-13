@@ -56,6 +56,7 @@ import { ref, onMounted, computed } from 'vue';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { useSettingsStore } from '../stores/settingsStore';
+import { SOUND_EFFECTS } from '../utils/constants';
 
 const emit = defineEmits(['verified']);
 const settingsStore = useSettingsStore();
@@ -82,24 +83,24 @@ const ensureSpeechInitialized = async (force = false) => {
 };
 
 const testVoice = async () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   await ensureSpeechInitialized();
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
 };
 
 const handleNo = () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   showTroubleshooting.value = true;
 };
 
 const confirmSuccess = () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   emit('verified');
 };
 
 const reinitSpeech = async () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   await ensureSpeechInitialized(true);
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;

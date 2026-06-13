@@ -29,10 +29,11 @@
 
 <script setup>
 import { audio } from '../utils/audio';
+import { SOUND_EFFECTS } from '../utils/constants';
 defineEmits(['start']);
 
 const handleStart = (emit) => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   emit('start');
 };
 </script>

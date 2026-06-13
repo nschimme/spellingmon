@@ -102,7 +102,7 @@ import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { GAME_CONSTANTS } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS } from '../utils/constants';
 import { getHPColorClass } from '../utils/visuals';
 
 const playerStore = usePlayerStore();
@@ -119,7 +119,7 @@ const updateVolume = (e) => {
 
 const toggleMute = () => {
   settingsStore.toggleMute();
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
 };
 
 const testVoice = () => {
@@ -127,6 +127,6 @@ const testVoice = () => {
 };
 
 const testSFX = () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
 };
 </script>

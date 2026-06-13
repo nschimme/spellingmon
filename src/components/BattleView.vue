@@ -55,7 +55,7 @@
         <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord">
           <button @click="prepareAttack('Quick Spell', 1)" class="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 font-bold border-b-4 border-blue-700 active:translate-y-1">Quick Spell (Easy)</button>
           <button @click="prepareAttack('Power Spell', 2)" class="bg-purple-500 text-white py-2 rounded hover:bg-purple-600 font-bold border-b-4 border-purple-700 active:translate-y-1">Power Spell (Hard)</button>
-          <button @click="tryCapture" class="bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1">Capture</button>
+          <button @click="tryCapture" :disabled="isCapturingAnim" class="bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">Capture</button>
         </template>
 
         <template v-if="battleStore.currentWord">
@@ -80,6 +80,7 @@ import { usePlayerStore } from '../stores/playerStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
+import { SOUND_EFFECTS, ANIMATION_DURATIONS } from '../utils/constants';
 
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
@@ -99,15 +100,15 @@ const isCapturingAnim = ref(false);
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
     enemyShake.value = true;
-    setTimeout(() => enemyShake.value = false, 500);
+    setTimeout(() => enemyShake.value = false, ANIMATION_DURATIONS.SHAKE_MS);
   } else {
     playerShake.value = true;
-    setTimeout(() => playerShake.value = false, 500);
+    setTimeout(() => playerShake.value = false, ANIMATION_DURATIONS.SHAKE_MS);
   }
 };
 
 const prepareAttack = (move, difficulty) => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   const wordObj = vocabStore.getRandomWord(playerStore.currentArea, difficulty);
   if (!wordObj) {
     battleStore.log("Error: No words available!");
@@ -122,7 +123,9 @@ const prepareAttack = (move, difficulty) => {
 };
 
 const tryCapture = () => {
-  audio.playSound('click');
+  if (isCapturingAnim.value) return;
+
+  audio.playSound(SOUND_EFFECTS.CLICK);
   if (battleStore.battleType === 'trainer') {
     battleStore.log("You can't capture a trainer's Spellingmon!");
     return;
@@ -147,7 +150,7 @@ const tryCapture = () => {
 };
 
 const repeatWord = () => {
-  audio.playSound('click');
+  audio.playSound(SOUND_EFFECTS.CLICK);
   speech.speak(battleStore.currentWord);
 };
 
@@ -178,12 +181,12 @@ const handleAttackSuccess = () => {
   battleStore.damageEnemy(damage);
   battleStore.log(`Correct! Dealt ${damage} damage.`);
 
-  audio.playSound('hit');
+  audio.playSound(SOUND_EFFECTS.HIT);
   triggerShake(true);
 
   if (battleStore.enemyMon.hp <= 0) {
     enemyFainted.value = true;
-    audio.playSound('faint');
+    audio.playSound(SOUND_EFFECTS.FAINT);
     battleStore.log(`${battleStore.enemyMon.name} fainted!`);
 
     if (battleStore.battleType === 'trainer') {
@@ -192,10 +195,10 @@ const handleAttackSuccess = () => {
     }
 
     setTimeout(() => {
-      audio.playSound('victory');
-    }, 1000);
+      audio.playSound(SOUND_EFFECTS.VICTORY);
+    }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
 
-    setTimeout(() => battleStore.endBattle(), 3000);
+    setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS);
   } else {
     enemyTurn();
   }
@@ -212,21 +215,21 @@ const handleCaptureSuccess = () => {
     if (Math.random() < successChance) {
       const added = playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });
       if (added) {
-        audio.playSound('capture-success');
+        audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
         battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
-        setTimeout(() => battleStore.endBattle(), 2000);
+        setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       } else {
         isCapturingAnim.value = false;
         battleStore.log(`Wait! Your party became full during the struggle?`);
         enemyTurn();
       }
     } else {
-      audio.playSound('capture-fail');
+      audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
       isCapturingAnim.value = false;
       battleStore.log(`${battleStore.enemyMon.name} broke free!`);
       enemyTurn();
     }
-  }, 1500);
+  }, ANIMATION_DURATIONS.CAPTURE_PROCESS_MS);
 };
 
 const enemyTurn = () => {
@@ -236,12 +239,12 @@ const enemyTurn = () => {
     battleStore.damagePlayer(damage);
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
 
-    audio.playSound('hit');
+    audio.playSound(SOUND_EFFECTS.HIT);
     triggerShake(false);
 
     if (battleStore.playerMon.hp <= 0) {
       playerFainted.value = true;
-      audio.playSound('faint');
+      audio.playSound(SOUND_EFFECTS.FAINT);
       battleStore.log(`${battleStore.playerMon.name} fainted!`);
       battleStore.log('You whited out! Teleporting to SpellCenter.');
       setTimeout(() => {
@@ -256,8 +259,8 @@ const enemyTurn = () => {
 
 onMounted(async () => {
   isFlashing.value = true;
-  audio.playSound('battle-start');
-  setTimeout(() => isFlashing.value = false, 500);
+  audio.playSound(SOUND_EFFECTS.BATTLE_START);
+  setTimeout(() => isFlashing.value = false, ANIMATION_DURATIONS.FLASH_MS);
 
   await vocabStore.loadVocab(playerStore.currentArea);
 
