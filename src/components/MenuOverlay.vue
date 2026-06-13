@@ -53,6 +53,33 @@
           </div>
         </div>
 
+        <!-- Map Tab -->
+        <div v-if="activeTab === MENU_TABS.MAP" class="flex flex-col gap-4 items-center">
+          <h3 class="font-black uppercase text-gray-800 w-full">Area Map (Discovered)</h3>
+          <div class="relative bg-gray-900 w-full aspect-square max-w-[400px] border-4 border-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+            <div class="grid grid-cols-[repeat(100,1fr)] w-full h-full">
+              <!-- Using a Canvas would be better for performance, but for 100x100 we can use a grid of divs for now or just a few -->
+              <!-- Actually 10,000 divs is too many. Let's use a canvas approach or a simplified representation -->
+               <div class="absolute inset-0 bg-gray-800 flex items-center justify-center text-white font-bold opacity-50">
+                 [Discovered View]
+               </div>
+               <canvas ref="mapCanvas" width="100" height="100" class="w-full h-full image-pixelated"></canvas>
+            </div>
+          </div>
+          <div class="w-full">
+             <h3 class="font-black uppercase text-gray-800 mb-2">World Map</h3>
+             <div class="flex gap-2 justify-between items-center bg-gray-200 p-4 rounded-xl border-4 border-gray-800">
+               <div v-for="i in GAME_CONSTANTS.MAX_AREAS" :key="i" class="flex flex-col items-center">
+                 <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border-2 border-gray-800 shadow-sm"
+                      :class="playerStore.currentArea === i ? 'bg-blue-500 text-white' : (playerStore.unlockedAreas.includes(i) ? 'bg-green-400' : 'bg-gray-400')">
+                   {{ i }}
+                 </div>
+                 <div v-if="i < GAME_CONSTANTS.MAX_AREAS" class="h-0.5 w-4 bg-gray-800"></div>
+               </div>
+             </div>
+          </div>
+        </div>
+
         <!-- Progress Tab -->
         <div v-if="activeTab === MENU_TABS.PROGRESS" class="flex flex-col gap-4">
           <h3 class="font-black uppercase text-gray-800">Unlocked Areas</h3>
@@ -120,7 +147,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
@@ -132,6 +159,38 @@ import { getHPColorClass } from '../utils/visuals';
 const playerStore = usePlayerStore();
 const settingsStore = useSettingsStore();
 const activeTab = ref(MENU_TABS.PARTY);
+const mapCanvas = ref(null);
+
+const drawMap = () => {
+  if (!mapCanvas.value || activeTab.value !== MENU_TABS.MAP) return;
+  const ctx = mapCanvas.value.getContext('2d');
+  const discovered = playerStore.discoveredTiles[playerStore.currentArea] || [];
+
+  ctx.fillStyle = '#1f2937'; // Gray-800
+  ctx.fillRect(0, 0, 100, 100);
+
+  ctx.fillStyle = '#4ade80'; // Green-400
+  discovered.forEach(key => {
+    const [x, y] = key.split(',').map(Number);
+    ctx.fillRect(x, y, 1, 1);
+  });
+
+  // Draw player
+  ctx.fillStyle = '#ef4444'; // Red-500
+  ctx.fillRect(playerStore.position.x, playerStore.position.y, 1, 1);
+};
+
+watch(activeTab, (newTab) => {
+  if (newTab === MENU_TABS.MAP) {
+    setTimeout(drawMap, 0);
+  }
+});
+
+onMounted(() => {
+  if (activeTab.value === MENU_TABS.MAP) {
+    setTimeout(drawMap, 0);
+  }
+});
 
 const updateVoice = (e) => {
   settingsStore.setVoice(e.target.value);

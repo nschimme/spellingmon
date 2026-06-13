@@ -229,7 +229,7 @@ export class MapGenerator {
 
   placeTrainers(rooms, map, areaNum, transitions, spellCenter) {
     const trainers = [];
-    const count = areaNum === 5 ? 3 : (areaNum === 3 ? 2 : 1);
+    const count = this.randomRange(8, 12);
     const titles = ['Spelling Bee', 'Grammar Geek', 'Vocab Victor', 'Linguist', 'Prose Pro', 'Word Wizard', 'Syntax Sage', 'Lexis Legend'];
     const names = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Robin', 'Jamie', 'Morgan', 'Quinn', 'Skyler', 'Sasha'];
     const dialogs = [
@@ -244,13 +244,17 @@ export class MapGenerator {
     ];
 
     const occupied = [...transitions, spellCenter].filter(Boolean);
+    const directions = ['up', 'down', 'left', 'right'];
 
     for (let i = 0; i < count; i++) {
       const room = rooms[this.randomRange(0, rooms.length - 1)];
-      const x = room.centerX;
-      const y = room.centerY;
+      const x = room.centerX + this.randomRange(-1, 1);
+      const y = room.centerY + this.randomRange(-1, 1);
 
-      const isOccupied = occupied.some(o => Math.abs(o.x - x) < 2 && Math.abs(o.y - y) < 2);
+      // Boundary check
+      if (x < 1 || x >= this.width - 1 || y < 1 || y >= this.height - 1) continue;
+
+      const isOccupied = occupied.some(o => Math.abs(o.x - x) < 3 && Math.abs(o.y - y) < 3) || map[y][x] !== TILE_TYPES.PATH;
       if (!isOccupied) {
         map[y][x] = TILE_TYPES.TRAINER;
         occupied.push({ x, y });
@@ -258,17 +262,29 @@ export class MapGenerator {
         const title = titles[this.randomRange(0, titles.length - 1)];
         const name = names[this.randomRange(0, names.length - 1)];
         const dialog = dialogs[this.randomRange(0, dialogs.length - 1)];
+        const direction = directions[this.randomRange(0, directions.length - 1)];
 
         const area = AREA_CONFIGS[areaNum];
-        const species = area.encounters[this.randomRange(0, area.encounters.length - 1)];
         const level = area.maxLevel;
-        const party = [{ species, level }];
+
+        // Scale party size based on area
+        let partySize = 1;
+        if (areaNum <= 2) partySize = this.randomRange(1, 2);
+        else if (areaNum <= 4) partySize = this.randomRange(2, 4);
+        else partySize = this.randomRange(3, 6);
+
+        const party = [];
+        for (let j = 0; j < partySize; j++) {
+          const species = area.encounters[this.randomRange(0, area.encounters.length - 1)];
+          party.push({ species, level });
+        }
 
         trainers.push({
           x, y,
           name: `${title} ${name}`,
           dialog,
-          party
+          party,
+          direction
         });
       }
     }

@@ -28,6 +28,7 @@ export const usePlayerStore = defineStore('player', {
       skinTone: SKIN_TONES.NEUTRAL,
       mapSeed: Math.random().toString(36).slice(2, 11),
       characterCreationComplete: false,
+      discoveredTiles: {}, // areaNum -> Set of "x,y" strings
     };
 
     if (saved) {
@@ -78,9 +79,18 @@ export const usePlayerStore = defineStore('player', {
       }, GAME_CONSTANTS.NOTIFICATION_DURATION_MS);
     },
     handleWhiteout() {
-      this.setCurrentArea(this.lastSpellCenter.area);
-      this.updatePosition({ x: this.lastSpellCenter.x, y: this.lastSpellCenter.y });
+      // If we white out, we must go back to the last visited Spellcenter
+      // Even if it was in a previous area.
+      this.currentArea = this.lastSpellCenter.area;
+      this.position = { x: this.lastSpellCenter.x, y: this.lastSpellCenter.y };
       this.healParty();
+      this.saveState();
+
+      // Force map regeneration by triggering seed change or just relying on currentArea watch
+      // Actually, if area is the same, watch won't trigger.
+      // We might need a way to force WorldMap to re-sync.
+      // For now, setting gameStarted to false then true quickly might work,
+      // but let's just make sure WorldMap handles it.
     },
     saveState() {
       if (saveTimeout) clearTimeout(saveTimeout);
@@ -92,6 +102,16 @@ export const usePlayerStore = defineStore('player', {
         delete cleanState.ttsVerified;
         storage.save(STORAGE_KEYS.PLAYER_STATE, cleanState);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
+    },
+    discoverTile(area, x, y) {
+      if (!this.discoveredTiles[area]) {
+        this.discoveredTiles[area] = [];
+      }
+      const key = `${x},${y}`;
+      if (!this.discoveredTiles[area].includes(key)) {
+        this.discoveredTiles[area].push(key);
+        this.saveState();
+      }
     },
     addSpellingmon(mon) {
       if (this.party.length < 6) {

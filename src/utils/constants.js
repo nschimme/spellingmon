@@ -103,5 +103,6 @@ export const STORAGE_KEYS = {
 export const MENU_TABS = {
   PARTY: 'party',
   PROGRESS: 'progress',
+  MAP: 'map',
   SETTINGS: 'settings',
 };

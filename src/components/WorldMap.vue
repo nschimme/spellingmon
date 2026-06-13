@@ -10,10 +10,12 @@
          }">
 
       <div v-for="tile in viewportTiles" :key="`${tile.x}-${tile.y}`"
-           class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg"
+           class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg transition-all duration-300"
            :class="getTileClass(tile.type)"
            :style="{ left: `${tile.x * 40}px`, top: `${tile.y * 40}px` }">
-        {{ getTileEmoji(tile.type) }}
+        <span v-if="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
+              class="absolute -top-6 text-red-600 font-bold animate-bounce text-2xl">!</span>
+        {{ getTileEmoji(tile.type, tile.x, tile.y) }}
       </div>
     </div>
 
@@ -85,6 +87,7 @@ const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set();
+const alertingTrainer = ref(null);
 
 const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
@@ -143,6 +146,10 @@ const generateMap = (isTransition = false, direction = null) => {
         playerY.value = entry.y;
       }
     }
+  } else if (playerStore.position && playerStore.position.x !== 5 && playerStore.position.y !== 5) {
+    // Restore saved position (e.g. after battle)
+    playerX.value = playerStore.position.x;
+    playerY.value = playerStore.position.y;
   } else {
     // Initial load or whiteout - go to Spell Center
     const sc = currentMapData.value.spellCenter;
@@ -155,9 +162,23 @@ const generateMap = (isTransition = false, direction = null) => {
 };
 
 watch(() => playerStore.currentArea, (newArea, oldArea) => {
+  // If we're whiting out, newArea might be equal to oldArea but position changed
+  // Or it might be a different area.
   const direction = newArea > oldArea ? 'next' : 'prev';
   generateMap(true, direction);
 });
+
+// Watch for whiteout specifically if area doesn't change
+watch(() => playerStore.position, (newPos) => {
+  if (battleStore.inBattle) return; // Ignore during battle
+  if (newPos.x === playerStore.lastSpellCenter.x && newPos.y === playerStore.lastSpellCenter.y && playerStore.currentArea === playerStore.lastSpellCenter.area) {
+     if (playerX.value !== newPos.x || playerY.value !== newPos.y) {
+        playerX.value = newPos.x;
+        playerY.value = newPos.y;
+        generateMap();
+     }
+  }
+}, { deep: true });
 watch(() => playerStore.mapSeed, generateMap);
 
 const viewportTiles = computed(() => {
@@ -196,11 +217,21 @@ const getTileClass = (type) => {
   }
 };
 
-const getTileEmoji = (type) => {
+const getTileEmoji = (type, x, y) => {
   switch (type) {
     case TILE_TYPES.GRASS: return '🌿';
     case TILE_TYPES.SPELL_CENTER: return '🏥';
-    case TILE_TYPES.TRAINER: return '👤';
+    case TILE_TYPES.TRAINER: {
+      const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
+      if (!trainer) return '👤';
+      switch (trainer.direction) {
+        case 'up': return '👤'; // Could use different emojis if available
+        case 'down': return '👤';
+        case 'left': return '👤';
+        case 'right': return '👤';
+        default: return '👤';
+      }
+    }
     case TILE_TYPES.TRANSITION: return '🚪';
     case TILE_TYPES.WATER: return '💧';
     case TILE_TYPES.BUILDING: return '🏠';
@@ -211,17 +242,20 @@ const getTileEmoji = (type) => {
 const isGrass = (x, y) => getTileType(x, y) === TILE_TYPES.GRASS;
 const isSpellCenter = (x, y) => getTileType(x, y) === TILE_TYPES.SPELL_CENTER;
 const isAreaTransition = (x, y) => getTileType(x, y) === TILE_TYPES.TRANSITION;
-const getTrainerData = (x, y) => {
-  if (getTileType(x, y) !== TILE_TYPES.TRAINER) return null;
-  const trainers = currentMapData.value.trainers;
-  const trainer = trainers.find(t => t.x === x && t.y === y);
-  if (!trainer) return null;
 
-  const index = trainers.indexOf(trainer);
+const getTrainerAt = (x, y) => {
+  if (!currentMapData.value) return null;
+  const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
+  if (!trainer) return null;
+  const index = currentMapData.value.trainers.indexOf(trainer);
   const trainerId = `area${playerStore.currentArea}_${index}`;
   if (playerStore.defeatedTrainers.includes(trainerId)) return null;
-
   return { trainer, trainerId };
+};
+
+const getTrainerData = (x, y) => {
+  if (getTileType(x, y) !== TILE_TYPES.TRAINER) return null;
+  return getTrainerAt(x, y);
 };
 
 const handleInput = (e) => {
@@ -249,7 +283,105 @@ const handleInput = (e) => {
   playerStore.updatePosition({ x: newX, y: newY });
 
   checkTriggers(newX, newY);
+  checkTrainerLOS();
+  updateDiscovery(newX, newY);
   return true;
+};
+
+const updateDiscovery = (x, y) => {
+  const RADIUS = 2;
+  for (let dy = -RADIUS; dy <= RADIUS; dy++) {
+    for (let dx = -RADIUS; dx <= RADIUS; dx++) {
+      const tx = x + dx;
+      const ty = y + dy;
+      if (tx >= 0 && tx < MAP_WIDTH && ty >= 0 && ty < MAP_HEIGHT) {
+        playerStore.discoverTile(playerStore.currentArea, tx, ty);
+      }
+    }
+  }
+};
+
+const checkTrainerLOS = () => {
+  if (battleStore.inBattle || alertingTrainer.value) return;
+
+  const trainers = currentMapData.value.trainers;
+  const LOS_RANGE = 5;
+
+  for (let i = 0; i < trainers.length; i++) {
+    const t = trainers[i];
+    const trainerId = `area${playerStore.currentArea}_${i}`;
+    if (playerStore.defeatedTrainers.includes(trainerId)) continue;
+    if (engagedTrainers.has(trainerId)) continue;
+
+    let inLOS = false;
+    const dx = playerX.value - t.x;
+    const dy = playerY.value - t.y;
+
+    if (t.direction === 'right' && dy === 0 && dx > 0 && dx <= LOS_RANGE) inLOS = true;
+    else if (t.direction === 'left' && dy === 0 && dx < 0 && dx >= -LOS_RANGE) inLOS = true;
+    else if (t.direction === 'down' && dx === 0 && dy > 0 && dy <= LOS_RANGE) inLOS = true;
+    else if (t.direction === 'up' && dx === 0 && dy < 0 && dy >= -LOS_RANGE) inLOS = true;
+
+    if (inLOS) {
+      // Check for obstacles
+      let hasObstacle = false;
+      const stepX = dx === 0 ? 0 : (dx > 0 ? 1 : -1);
+      const stepY = dy === 0 ? 0 : (dy > 0 ? 1 : -1);
+      const dist = Math.max(Math.abs(dx), Math.abs(dy));
+
+      for (let s = 1; s < dist; s++) {
+        const checkX = t.x + stepX * s;
+        const checkY = t.y + stepY * s;
+        const tile = getTileType(checkX, checkY);
+        if (tile === TILE_TYPES.WALL || tile === TILE_TYPES.WATER || tile === TILE_TYPES.CAVE_WALL || tile === TILE_TYPES.BUILDING) {
+          hasObstacle = true;
+          break;
+        }
+      }
+
+      if (!inLOS || hasObstacle) continue;
+
+      initiateTrainerApproach(t, trainerId);
+      break;
+    }
+  }
+};
+
+const initiateTrainerApproach = (trainer, trainerId) => {
+  engagedTrainers.add(trainerId);
+  alertingTrainer.value = trainerId;
+  audio.playSound(SOUND_EFFECTS.CLICK); // Placeholder for alert sound
+
+  setTimeout(async () => {
+    // Trainer walks to player
+    const dx = playerX.value - trainer.x;
+    const dy = playerY.value - trainer.y;
+    const stepX = dx === 0 ? 0 : (dx > 0 ? 1 : -1);
+    const stepY = dy === 0 ? 0 : (dy > 0 ? 1 : -1);
+    const dist = Math.max(Math.abs(dx), Math.abs(dy)) - 1;
+
+    for (let s = 0; s < dist; s++) {
+      // Actually update the map and trainer position
+      const oldX = trainer.x;
+      const oldY = trainer.y;
+      trainer.x += stepX;
+      trainer.y += stepY;
+
+      // Swap tiles on the map
+      currentMapData.value.map[oldY][oldX] = TILE_TYPES.PATH; // Assuming trainers always on path
+      currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
+
+      await new Promise(r => setTimeout(r, 150));
+    }
+
+    alertingTrainer.value = null;
+    playerStore.notify(`${trainer.name}: "${trainer.dialog}"`);
+
+    setTimeout(() => {
+      triggerTrainerBattle(trainer, trainerId);
+      engagedTrainers.delete(trainerId);
+    }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS);
+  }, 600);
 };
 
 const checkTriggers = (x, y) => {
@@ -336,15 +468,17 @@ const triggerWildBattle = async () => {
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
   await vocabStore.loadVocab(playerStore.currentArea);
-  const enemyMonCfg = trainer.party[0];
-  const enemyMon = createMon(enemyMonCfg.species, enemyMonCfg.level);
+  const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
+  const firstMonCfg = party[0];
+  const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
 
   const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
-  battleStore.startBattle(firstHealthyMon, enemyMon, BATTLE_TYPES.TRAINER, trainer, trainerId);
+  battleStore.startBattle(firstHealthyMon, enemyMon, BATTLE_TYPES.TRAINER, trainer, trainerId, party);
 };
 
 onMounted(() => {
   generateMap();
+  updateDiscovery(playerX.value, playerY.value);
   inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput, 5);
 });
 

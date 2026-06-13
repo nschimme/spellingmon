@@ -310,6 +310,26 @@ const handleAttackSuccess = () => {
     battleStore.log(`Gained ${exp} EXP!`);
 
     if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
+      // Find current mon in party and mark it
+      const currentMonInParty = battleStore.trainerParty.find(m => !m.isDefeated);
+      if (currentMonInParty) {
+        currentMonInParty.isDefeated = true;
+      }
+
+      // Check for next monster in trainer party
+      const nextMonCfg = battleStore.trainerParty.find(m => !m.isDefeated);
+      if (nextMonCfg) {
+        setTimeout(() => {
+          const nextMon = createMon(nextMonCfg.species, nextMonCfg.level);
+          battleStore.enemyMon = nextMon;
+          enemyFainted.value = false;
+          battleStore.log(`Trainer sent out ${nextMon.name}!`);
+          battleStore.saveState();
+          battleStore.setTurn(true);
+        }, 1500);
+        return;
+      }
+
       playerStore.markTrainerDefeated(battleStore.trainerId);
       battleStore.log('You defeated the trainer!');
     }

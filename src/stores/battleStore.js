@@ -13,6 +13,7 @@ export const useBattleStore = defineStore('battle', {
       currentWord: null,
       battleType: BATTLE_TYPES.WILD,
       trainerId: null,
+      trainerParty: [],
     };
 
     const rawSaved = typeof window !== 'undefined' ? storage.load(STORAGE_KEYS.BATTLE_STATE) : null;
@@ -84,16 +85,17 @@ export const useBattleStore = defineStore('battle', {
     saveState() {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
-        const { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId } = this.$state;
-        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId });
+        const { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty } = this.$state;
+        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
-    startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null) {
+    startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null, trainerParty = []) {
       this.playerMon = playerMon;
       this.enemyMon = enemyMon;
       this.inBattle = true;
       this.battleType = type;
       this.trainerId = trainerId;
+      this.trainerParty = trainerParty;
 
       if (type === BATTLE_TYPES.TRAINER) {
         this.battleLog = [`${trainer.name} wants to battle!`, `They sent out ${enemyMon.name}!`];

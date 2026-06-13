@@ -308,7 +308,8 @@ export function calculateDamage(attacker, defender, basePower, difficultyMultipl
 }
 
 export function calculateExpToNext(level) {
-  return Math.pow(level, 3);
+  // Use a quadratic formula for smoother "per-level" progression
+  return Math.floor(5 * Math.pow(level, 2)) + 10;
 }
 
 export function createMon(species, level = 5) {
@@ -336,10 +337,10 @@ export function createMon(species, level = 5) {
 }
 
 export function calculateExpGain(enemyMon, isTrainer) {
-  const baseExp = 50;
-  const levelBonus = enemyMon.level * 10;
+  // Pokemon-inspired formula: (Base * Level) / 7
+  const baseExp = 60;
   const trainerBonus = isTrainer ? 1.5 : 1.0;
-  return Math.floor((baseExp + levelBonus) * trainerBonus);
+  return Math.floor((baseExp * enemyMon.level / 7) * trainerBonus);
 }
 
 export const AREA_CONFIGS = {
