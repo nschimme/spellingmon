@@ -122,7 +122,7 @@ import { usePlayerStore } from '../stores/playerStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
-import { SOUND_EFFECTS, ANIMATION_DURATIONS } from '../utils/constants';
+import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES } from '../utils/constants';
 import { calculateExpGain, calculateDamage, TYPE_EMOJIS, MONS } from '../utils/gameData';
 
 const battleStore = useBattleStore();
@@ -169,7 +169,7 @@ const prepareAttack = (move, difficulty) => {
 
 const tryRun = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  if (battleStore.battleType === 'trainer') {
+  if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
     battleStore.log("You can't run from a trainer battle!");
     return;
   }
@@ -203,7 +203,7 @@ const tryCapture = () => {
   if (isCapturing.value || (battleStore.enemyMon && battleStore.enemyMon.hp <= 0)) return;
 
   audio.playSound(SOUND_EFFECTS.CLICK);
-  if (battleStore.battleType === 'trainer') {
+  if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
     battleStore.log("You can't capture a trainer's Spellingmon!");
     return;
   }
@@ -305,11 +305,11 @@ const handleAttackSuccess = () => {
     audio.playSound(SOUND_EFFECTS.FAINT);
     battleStore.log(`${battleStore.enemyMon.name} fainted!`);
 
-    const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === 'trainer');
+    const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === BATTLE_TYPES.TRAINER);
     playerStore.awardExp(exp);
     battleStore.log(`Gained ${exp} EXP!`);
 
-    if (battleStore.battleType === 'trainer') {
+    if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
       playerStore.markTrainerDefeated(battleStore.trainerId);
       battleStore.log('You defeated the trainer!');
     }

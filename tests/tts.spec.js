@@ -10,6 +10,14 @@ test.describe('TTS Verification Flow', () => {
     await expect(startButton).toBeVisible();
     await startButton.click();
 
+    const newGameButton = page.getByRole('button', { name: 'New Game' });
+    await expect(newGameButton).toBeVisible();
+    await newGameButton.click();
+
+    // 1b. Character Creation
+    await page.getByPlaceholder('NAME').fill('Test Player');
+    await page.getByRole('button', { name: 'Confirm' }).click();
+
     // 2. TTS Welcome Screen
     await expect(page.getByText('Audio Check')).toBeVisible();
     await expect(page.getByText('Did you hear the voice?')).not.toBeVisible();
@@ -32,6 +40,10 @@ test.describe('TTS Verification Flow', () => {
   test('should show troubleshooting when clicking No', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Start Game' }).click();
+    await page.getByRole('button', { name: 'New Game' }).click();
+
+    await page.getByPlaceholder('NAME').fill('Test Player');
+    await page.getByRole('button', { name: 'Confirm' }).click();
 
     await page.getByRole('button', { name: 'Test Voice' }).click();
     await page.getByRole('button', { name: 'No' }).click();

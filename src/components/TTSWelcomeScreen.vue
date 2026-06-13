@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center bg-gray-900 p-8 relative overflow-hidden text-white font-['Press_Start_2P']">
-    <div class="z-10 bg-white border-8 border-gray-800 p-8 rounded-[2rem] shadow-2xl max-w-lg w-full text-gray-800">
+  <div class="w-full h-full flex flex-col items-center justify-center bg-gray-900 p-4 md:p-8 relative overflow-hidden text-white font-['Press_Start_2P']">
+    <div class="z-10 bg-white border-8 border-gray-800 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-lg w-full text-gray-800 overflow-y-auto max-h-full">
       <h2 class="text-2xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
         Audio Check
       </h2>

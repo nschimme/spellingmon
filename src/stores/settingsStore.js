@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { storage } from '../utils/storage';
+import { STORAGE_KEYS } from '../utils/constants';
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
@@ -15,9 +16,9 @@ export const useSettingsStore = defineStore('settings', {
       if (typeof window === 'undefined') return;
 
       // Load saved preferences
-      const savedVoice = storage.load('selected_voice_name');
-      const savedVolume = storage.load('volume');
-      const savedMuted = storage.load('is_muted');
+      const savedVoice = storage.load(STORAGE_KEYS.SELECTED_VOICE);
+      const savedVolume = storage.load(STORAGE_KEYS.VOLUME);
+      const savedMuted = storage.load(STORAGE_KEYS.IS_MUTED);
 
       if (savedVolume !== null) this.volume = parseFloat(savedVolume);
       if (savedMuted !== null) this.isMuted = savedMuted === 'true';
@@ -47,18 +48,18 @@ export const useSettingsStore = defineStore('settings', {
     setVoice(name) {
       if (speech.setVoice(name)) {
         this.selectedVoiceName = name;
-        storage.save('selected_voice_name', name);
+        storage.save(STORAGE_KEYS.SELECTED_VOICE, name);
       }
     },
     setVolume(val) {
       this.volume = val;
       audio.setVolume(val);
-      storage.save('volume', val.toString());
+      storage.save(STORAGE_KEYS.VOLUME, val.toString());
     },
     setMuted(muted) {
       this.isMuted = muted;
       audio.setMuted(muted);
-      storage.save('is_muted', muted.toString());
+      storage.save(STORAGE_KEYS.IS_MUTED, muted.toString());
     },
     toggleMute() {
       this.setMuted(!this.isMuted);

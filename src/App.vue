@@ -6,6 +6,7 @@ import { useSettingsStore } from './stores/settingsStore';
 import { useInputStore } from './stores/inputStore';
 import LandingScreen from './components/LandingScreen.vue';
 import TTSWelcomeScreen from './components/TTSWelcomeScreen.vue';
+import CharacterCreation from './components/CharacterCreation.vue';
 import StarterSelection from './components/StarterSelection.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
@@ -49,7 +50,12 @@ onUnmounted(() => {
   <div class="w-screen h-screen overflow-hidden bg-gray-900 flex items-center justify-center p-2 sm:p-4">
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
-      <LandingScreen v-if="!playerStore.gameStarted" @start="playerStore.startGame" />
+      <LandingScreen v-if="!playerStore.gameStarted"
+                     @continue="playerStore.startGame"
+                     @new-game="playerStore.startGame" />
+      <template v-else-if="!playerStore.characterCreationComplete">
+        <CharacterCreation />
+      </template>
       <template v-else-if="!playerStore.ttsVerified">
         <TTSWelcomeScreen @verified="playerStore.confirmTtsVerified" />
       </template>

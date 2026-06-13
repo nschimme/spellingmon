@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center bg-blue-500 p-8">
-    <div class="bg-white border-8 border-gray-800 p-8 rounded-3xl shadow-2xl max-w-4xl w-full">
-      <h1 class="text-3xl font-black text-center mb-2 uppercase tracking-tighter text-orange-500 drop-shadow-sm">Spellingmon</h1>
-      <h2 class="text-sm font-bold text-center mb-10 text-gray-600 uppercase">Choose your partner!</h2>
+  <div class="w-full h-full flex flex-col items-center justify-center bg-blue-500 p-4 md:p-8">
+    <div class="bg-white border-8 border-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full">
+      <h1 class="text-2xl md:text-3xl font-black text-center mb-2 uppercase tracking-tighter text-orange-500 drop-shadow-sm">Spellingmon</h1>
+      <h2 class="text-xs md:text-sm font-bold text-center mb-6 md:mb-10 text-gray-600 uppercase">Choose your partner!</h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div v-for="mon in starters" :key="mon.name"
              @click="selectStarter(mon)"
              class="group cursor-pointer bg-white border-4 border-gray-200 hover:border-blue-500 p-4 rounded-2xl transition-all hover:-translate-y-2 hover:shadow-xl flex flex-col items-center">
@@ -29,18 +29,18 @@
 
 <script setup>
 import { usePlayerStore } from '../stores/playerStore';
-import { createMon } from '../utils/gameData';
+import { createMon, SPECIES } from '../utils/gameData';
 
 const playerStore = usePlayerStore();
 
 const starters = [
-  { name: 'Grammander', type: 'Fire', icon: '🔥', hp: 20 },
-  { name: 'Squirtspell', type: 'Water', icon: '💧', hp: 21 },
-  { name: 'Bulbaword', type: 'Grass', icon: '🌿', hp: 21 }
+  { name: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
+  { name: SPECIES.Squirtspell, type: 'Water', icon: '💧', hp: 21 },
+  { name: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
 ];
 
 const selectStarter = (mon) => {
-  const fullMon = createMon(mon.name, 5);
+  const fullMon = createMon(mon.name, 1);
   playerStore.setStarter(fullMon);
 };
 
