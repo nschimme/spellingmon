@@ -29,14 +29,14 @@
 
 <script setup>
 import { usePlayerStore } from '../stores/playerStore';
-import { createMon } from '../utils/gameData';
+import { createMon, SPECIES } from '../utils/gameData';
 
 const playerStore = usePlayerStore();
 
 const starters = [
-  { name: 'Grammander', type: 'Fire', icon: '🔥', hp: 20 },
-  { name: 'Squirtspell', type: 'Water', icon: '💧', hp: 21 },
-  { name: 'Bulbaword', type: 'Grass', icon: '🌿', hp: 21 }
+  { name: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
+  { name: SPECIES.Squirtspell, type: 'Water', icon: '💧', hp: 21 },
+  { name: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
 ];
 
 const selectStarter = (mon) => {
