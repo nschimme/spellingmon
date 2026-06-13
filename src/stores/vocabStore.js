@@ -12,7 +12,7 @@ export const useVocabStore = defineStore('vocab', {
         const url = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}vocab/area${area}.json`;
         const response = await fetch(url);
         const data = await response.json();
-        this.vocabData[area] = data.words;
+        this.vocabData[area] = Array.isArray(data) ? data : (Array.isArray(data.words) ? data.words : []);
       } catch (error) {
         console.error(`Failed to load vocab for area ${area}:`, error);
       }

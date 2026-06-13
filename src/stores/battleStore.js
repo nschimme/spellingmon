@@ -59,8 +59,8 @@ export const useBattleStore = defineStore('battle', {
       validated.isPlayerTurn = saved.isPlayerTurn;
     }
 
-    // Current word should be a string or null/undefined
-    if (typeof saved.currentWord === 'string' || saved.currentWord === null) {
+    // Current word should be an object, string, or null/undefined
+    if (typeof saved.currentWord === 'object' || typeof saved.currentWord === 'string' || saved.currentWord === null) {
       validated.currentWord = saved.currentWord;
     }
 
@@ -121,8 +121,8 @@ export const useBattleStore = defineStore('battle', {
       this.isPlayerTurn = isPlayerTurn;
       this.saveState();
     },
-    setCurrentWord(word) {
-      this.currentWord = word;
+    setCurrentWord(wordObj) {
+      this.currentWord = wordObj;
       this.saveState();
     },
     switchPlayerMon(newMon) {

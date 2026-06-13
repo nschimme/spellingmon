@@ -90,12 +90,23 @@
         </template>
 
         <template v-if="battleStore.currentWord">
-          <div class="text-center">
-            <p class="font-bold mb-2">Spell the word!</p>
-            <button @click="repeatWord" class="text-blue-500 text-sm underline mb-2">Listen Again</button>
-            <input v-model="userInput" @keyup.enter="submitSpelling"
-                   class="w-full border-4 border-gray-800 p-2 text-center text-xl uppercase rounded-lg"
-                   autofocus />
+          <div class="text-center flex flex-col h-full justify-between pb-1">
+            <div class="overflow-y-auto max-h-24 px-1">
+              <p v-if="battleStore.currentWord.definition" class="text-[10px] sm:text-xs leading-tight mb-1 italic">
+                "{{ battleStore.currentWord.definition }}"
+              </p>
+              <p v-if="battleStore.currentWord.sentence_context" class="text-[10px] sm:text-xs leading-tight font-bold mb-1">
+                {{ getMaskedSentence(battleStore.currentWord.sentence_context, battleStore.currentWord.word) }}
+              </p>
+            </div>
+            <div>
+              <button @click="repeatWord" class="text-blue-500 text-xs underline mb-1 block w-full">Listen Again</button>
+              <input v-model="userInput" @keyup.enter="submitSpelling"
+                     class="w-full border-2 sm:border-4 border-gray-800 p-1 sm:p-2 text-center text-lg sm:text-xl uppercase rounded-lg"
+                     placeholder="TYPE HERE"
+                     autofocus />
+              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">Single Chance!</p>
+            </div>
           </div>
         </template>
       </div>
@@ -123,6 +134,7 @@ const isCapturing = ref(false);
 const isSwitching = ref(false);
 const isForcedSwitch = ref(false);
 const currentDifficulty = ref(1);
+const hintTimeouts = ref([]);
 
 const enemyShake = ref(false);
 const playerShake = ref(false);
@@ -147,10 +159,10 @@ const prepareAttack = (move, difficulty) => {
     battleStore.log("Error: No words available!");
     return;
   }
-  battleStore.setCurrentWord(wordObj.word);
+  battleStore.setCurrentWord(wordObj);
   currentDifficulty.value = difficulty;
   battleStore.log(`Using ${move}!`);
-  speech.speak(battleStore.currentWord);
+  speakFullHint(wordObj);
   userInput.value = '';
   isCapturing.value = false;
 };
@@ -206,22 +218,56 @@ const tryCapture = () => {
     return;
   }
 
-  battleStore.setCurrentWord(wordObj.word);
+  battleStore.setCurrentWord(wordObj);
   currentDifficulty.value = 2; // Hard difficulty for capture
   battleStore.log(`Attempting to capture!`);
-  speech.speak(battleStore.currentWord);
+  speakFullHint(wordObj);
   userInput.value = '';
   isCapturing.value = true;
 };
 
+const speakFullHint = (wordObj) => {
+  // Clear any existing hint timeouts
+  hintTimeouts.value.forEach(t => clearTimeout(t));
+  hintTimeouts.value = [];
+
+  const word = typeof wordObj === 'string' ? wordObj : wordObj.word;
+  const spokenVersion = wordObj.spoken_version || word;
+
+  speech.speak(spokenVersion);
+
+  if (wordObj.sentence_context) {
+    const t1 = setTimeout(() => {
+      speech.speak(`As in... ${wordObj.sentence_context}`);
+      const t2 = setTimeout(() => {
+        speech.speak(spokenVersion);
+      }, 3000); // Estimated duration of sentence
+      hintTimeouts.value.push(t2);
+    }, 1500);
+    hintTimeouts.value.push(t1);
+  }
+};
+
 const repeatWord = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  speech.speak(battleStore.currentWord);
+  speakFullHint(battleStore.currentWord);
+};
+
+const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+const getMaskedSentence = (sentence, word) => {
+  if (!sentence || !word) return '';
+  const escapedWord = escapeRegExp(word);
+  const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
+  return sentence.replace(regex, '____');
 };
 
 const submitSpelling = () => {
   if (!battleStore.currentWord) return;
-  const isCorrect = userInput.value.toLowerCase() === battleStore.currentWord.toLowerCase();
+  const word = typeof battleStore.currentWord === 'string' ? battleStore.currentWord : battleStore.currentWord.word;
+  const isCorrect = userInput.value.toLowerCase().trim() === word.toLowerCase().trim();
 
   if (isCorrect) {
     if (isCapturing.value) {
