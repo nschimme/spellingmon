@@ -52,6 +52,20 @@
 
         <!-- Settings Tab -->
         <div v-if="activeTab === 'settings'" class="flex flex-col gap-6">
+          <!-- Audio Settings -->
+          <div>
+            <label class="font-black uppercase text-gray-800 block mb-2">Sound Settings</label>
+            <div class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner">
+              <button @click="toggleMute" class="text-3xl hover:scale-110 transition-transform">
+                {{ settingsStore.isMuted ? '🔇' : '🔊' }}
+              </button>
+              <input type="range" min="0" max="1" step="0.01"
+                     :value="settingsStore.volume"
+                     @input="updateVolume"
+                     class="flex-1 h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500" />
+            </div>
+          </div>
+
           <div>
             <label class="font-black uppercase text-gray-800 block mb-2">TTS Voice Configuration</label>
             <select v-model="settingsStore.selectedVoiceName" @change="updateVoice"
@@ -61,9 +75,14 @@
               </option>
             </select>
           </div>
-          <button @click="testVoice" class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black uppercase tracking-wider active:translate-y-1">
-            Test Voice
-          </button>
+          <div class="grid grid-cols-2 gap-4">
+            <button @click="testVoice" class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
+              Test Voice
+            </button>
+            <button @click="testSFX" class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
+              Test SFX
+            </button>
+          </div>
         </div>
       </div>
 
@@ -82,6 +101,7 @@ import { ref } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
+import { audio } from '../utils/audio';
 import { GAME_CONSTANTS } from '../utils/constants';
 
 const playerStore = usePlayerStore();
@@ -92,8 +112,21 @@ const updateVoice = (e) => {
   settingsStore.setVoice(e.target.value);
 };
 
+const updateVolume = (e) => {
+  settingsStore.setVolume(parseFloat(e.target.value));
+};
+
+const toggleMute = () => {
+  settingsStore.toggleMute();
+  audio.playSound('click');
+};
+
 const testVoice = () => {
   speech.speak('This is a test of the spelling notification system.');
+};
+
+const testSFX = () => {
+  audio.playSound('click');
 };
 
 const hpColorClass = (hp, max) => {

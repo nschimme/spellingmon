@@ -21,7 +21,7 @@
             Did you hear the voice?
           </p>
           <div class="flex gap-4">
-            <button @click="emit('verified')"
+            <button @click="confirmSuccess"
                     class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1">
               Yes
             </button>
@@ -54,6 +54,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { speech } from '../utils/speech';
+import { audio } from '../utils/audio';
 import { useSettingsStore } from '../stores/settingsStore';
 
 const emit = defineEmits(['verified']);
@@ -81,16 +82,25 @@ const ensureSpeechInitialized = async (force = false) => {
 };
 
 const testVoice = async () => {
+  audio.init();
+  audio.playSound('click');
   await ensureSpeechInitialized();
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
 };
 
 const handleNo = () => {
+  audio.playSound('click');
   showTroubleshooting.value = true;
 };
 
+const confirmSuccess = () => {
+  audio.playSound('click');
+  emit('verified');
+};
+
 const reinitSpeech = async () => {
+  audio.playSound('click');
   await ensureSpeechInitialized(true);
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
