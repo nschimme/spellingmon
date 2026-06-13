@@ -17,9 +17,12 @@
           </div>
           <div class="text-xs text-right">{{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}</div>
         </div>
-        <div class="text-6xl mt-4 transition-transform duration-300" :class="{ 'translate-x-[-100px] opacity-0': isCapturingAnim }">👾</div>
+        <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
+        <div class="text-6xl mt-4 transition-transform duration-300"
+             :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">👾</div>
+
         <!-- Capture Ball Anim -->
-        <div v-if="isCapturingAnim" class="absolute inset-0 flex items-center justify-center animate-capture">
+        <div v-if="isCapturing && !battleStore.currentWord" class="absolute inset-0 flex items-center justify-center animate-capture">
           <div class="text-4xl">🔴</div>
         </div>
       </div>
@@ -55,7 +58,7 @@
         <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord">
           <button @click="prepareAttack('Quick Spell', 1)" class="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 font-bold border-b-4 border-blue-700 active:translate-y-1">Quick Spell (Easy)</button>
           <button @click="prepareAttack('Power Spell', 2)" class="bg-purple-500 text-white py-2 rounded hover:bg-purple-600 font-bold border-b-4 border-purple-700 active:translate-y-1">Power Spell (Hard)</button>
-          <button @click="tryCapture" :disabled="isCapturingAnim" class="bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">Capture</button>
+          <button @click="tryCapture" :disabled="isCapturing" class="bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">Capture</button>
         </template>
 
         <template v-if="battleStore.currentWord">
@@ -95,7 +98,6 @@ const playerShake = ref(false);
 const enemyFainted = ref(false);
 const playerFainted = ref(false);
 const isFlashing = ref(false);
-const isCapturingAnim = ref(false);
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
@@ -123,7 +125,7 @@ const prepareAttack = (move, difficulty) => {
 };
 
 const tryCapture = () => {
-  if (isCapturingAnim.value) return;
+  if (isCapturing.value || (battleStore.enemyMon && battleStore.enemyMon.hp <= 0)) return;
 
   audio.playSound(SOUND_EFFECTS.CLICK);
   if (battleStore.battleType === 'trainer') {
@@ -166,6 +168,7 @@ const submitSpelling = () => {
     }
   } else {
     battleStore.log(`Incorrect! The word was "${battleStore.currentWord}".`);
+    isCapturing.value = false;
     enemyTurn();
   }
 
@@ -205,7 +208,7 @@ const handleAttackSuccess = () => {
 };
 
 const handleCaptureSuccess = () => {
-  isCapturingAnim.value = true;
+  // Animation state is already set by isCapturing being true and currentWord being cleared in submitSpelling
 
   setTimeout(() => {
     const hpRatio = battleStore.enemyMon.hp / battleStore.enemyMon.maxHp;
@@ -219,13 +222,13 @@ const handleCaptureSuccess = () => {
         battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
         setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       } else {
-        isCapturingAnim.value = false;
+        isCapturing.value = false;
         battleStore.log(`Wait! Your party became full during the struggle?`);
         enemyTurn();
       }
     } else {
       audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
-      isCapturingAnim.value = false;
+      isCapturing.value = false;
       battleStore.log(`${battleStore.enemyMon.name} broke free!`);
       enemyTurn();
     }

@@ -20,6 +20,13 @@ export const SOUND_EFFECTS = {
   VICTORY: 'victory',
 };
 
+/**
+ * Pacing and animation durations (in milliseconds).
+ * Note: Some values should align with CSS animation durations in BattleView.vue
+ * - SHAKE_MS: Total shake duration (CSS: shake is 0.1s infinite, this gates the state)
+ * - FLASH_MS: Screen flash duration (CSS: flash is 0.1s x 5 = 0.5s)
+ * - CAPTURE_PROCESS_MS: Time from ball throw to result (CSS: capture is 0.5s)
+ */
 export const ANIMATION_DURATIONS = {
   SHAKE_MS: 500,
   FLASH_MS: 500,
