@@ -121,6 +121,7 @@ const playerStore = usePlayerStore();
 const userInput = ref('');
 const isCapturing = ref(false);
 const isSwitching = ref(false);
+const isForcedSwitch = ref(false);
 const currentDifficulty = ref(1);
 
 const enemyShake = ref(false);
@@ -176,7 +177,13 @@ const handleSwitch = (mon) => {
   battleStore.switchPlayerMon(mon);
   isSwitching.value = false;
   playerFainted.value = false; // Reset fainted view if switching after faint
-  enemyTurn();
+
+  if (isForcedSwitch.value) {
+    isForcedSwitch.value = false;
+    battleStore.setTurn(true);
+  } else {
+    enemyTurn();
+  }
 };
 
 const tryCapture = () => {
@@ -325,6 +332,7 @@ const enemyTurn = () => {
       if (hasHealthyMon) {
         battleStore.log("Choose another Spellingmon!");
         isSwitching.value = true;
+        isForcedSwitch.value = true;
       } else {
         battleStore.log('You whited out! Teleporting to SpellCenter.');
         setTimeout(() => {

@@ -43,6 +43,14 @@ export const usePlayerStore = defineStore('player', {
         };
       }
 
+      // Ensure all party members have required stats for the new EXP system
+      mergedState.party.forEach(mon => {
+        if (mon.exp === undefined) mon.exp = 0;
+        if (mon.expToNext === undefined) {
+          mon.expToNext = Math.pow(mon.level || 5, 3);
+        }
+      });
+
       mergedState.ttsVerified = false; // Explicitly set to false every load
       return mergedState;
     }
