@@ -2,8 +2,8 @@ import { AREA_CONFIGS } from './gameData';
 import { BIOMES, TRANSITION_TYPES } from './constants';
 
 /**
- * Procedural Map Generator for Spellingmon
- * Inspired by Nethack/Pokemon. Generates large maps with biomes.
+ * State-of-the-art Map Generator for Spellingmon
+ * Uses BSP for room generation and Graph-based connectivity.
  */
 
 export const TILE_TYPES = {
@@ -18,6 +18,18 @@ export const TILE_TYPES = {
   CAVE_WALL: 8,
   BUILDING: 9,
 };
+
+class BSPNode {
+  constructor(x, y, w, h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.left = null;
+    this.right = null;
+    this.room = null;
+  }
+}
 
 export class MapGenerator {
   constructor(seed, width = 100, height = 100) {
@@ -55,40 +67,89 @@ export class MapGenerator {
 
   generate(areaNum) {
     const map = Array(this.height).fill(0).map(() => Array(this.width).fill(TILE_TYPES.WALL));
+    const levelMap = Array(this.height).fill(0).map(() => Array(this.width).fill(0));
     const biome = this.getBiomeForArea(areaNum);
 
-    // 1. Generate Rooms/Main Areas
-    const rooms = this.generateRooms(biome);
+    // 1. Generate BSP Rooms
+    const root = new BSPNode(2, 2, this.width - 4, this.height - 4);
+    this.splitNode(root, 4); // 4 levels of splitting approx 16 rooms
+    const leaves = this.getLeaves(root);
+    const rooms = [];
 
-    // 2. Connect Rooms with Paths
-    this.connectRooms(rooms, map, biome);
+    leaves.forEach(node => {
+      const w = this.randomRange(6, Math.min(15, node.w - 2));
+      const h = this.randomRange(6, Math.min(15, node.h - 2));
+      const x = node.x + this.randomRange(1, node.w - w - 1);
+      const y = node.y + this.randomRange(1, node.h - h - 1);
+      node.room = { x, y, w, h, centerX: Math.floor(x + w / 2), centerY: Math.floor(y + h / 2) };
+      rooms.push(node.room);
+      this.fillRoom(node.room, map, biome);
+    });
 
-    // 3. Fill Rooms
-    this.fillRooms(rooms, map, biome);
+    // 2. Connect Rooms
+    this.connectNodes(root, map);
 
-    // 4. Place Transitions and Connect them
-    const transitions = this.placeTransitions(map, areaNum);
-    this.connectTransitions(transitions, rooms, map);
-
-    // 5. Place Key Elements
-    const spellCenter = this.placeSpellCenter(rooms, map);
-    const trainers = this.placeTrainers(rooms, map, areaNum, biome);
-
-    // 6. Add Natural features (Grass, Water)
-    this.addFeatures(map, biome);
-
-    // 7. Validate connectivity
-    if (areaNum > 1 && areaNum < 5) {
-      const start = transitions.find(t => t.type === TRANSITION_TYPES.PREV);
-      const end = transitions.find(t => t.type === TRANSITION_TYPES.NEXT);
-      if (start && end && !this.isConnected(map, start.x, start.y, end.x, end.y)) {
-        // Simple fix: if not connected, draw a straight path between them
-        this.drawCorridor(map, start.x, start.y, end.x, end.y, TILE_TYPES.PATH);
+    // Add extra random corridors for multiple paths (Nethack style)
+    for (let i = 0; i < rooms.length; i++) {
+      if (this.random() > 0.6) {
+        const r1 = rooms[i];
+        const r2 = rooms[this.randomRange(0, rooms.length - 1)];
+        if (r1 !== r2) {
+          this.drawCorridor(map, r1.centerX, r1.centerY, r2.centerX, r2.centerY, TILE_TYPES.PATH);
+        }
       }
     }
 
+    // 3. Place Key Elements
+    // Sort rooms by distance from top-left to get consistent entry/exit
+    rooms.sort((a, b) => (a.x + a.y) - (b.x + b.y));
+    const entryRoom = rooms[0];
+    const exitRoom = rooms[rooms.length - 1];
+
+    const transitions = [];
+    if (areaNum > 1) {
+      const tx = entryRoom.centerX;
+      const ty = entryRoom.centerY;
+      map[ty][tx] = TILE_TYPES.TRANSITION;
+      transitions.push({ x: tx, y: ty, type: TRANSITION_TYPES.PREV });
+    }
+
+    let nextTransition = null;
+    if (areaNum < 5) {
+      const tx = exitRoom.centerX;
+      const ty = exitRoom.centerY;
+      map[ty][tx] = TILE_TYPES.TRANSITION;
+      nextTransition = { x: tx, y: ty, type: TRANSITION_TYPES.NEXT };
+      transitions.push(nextTransition);
+    }
+
+    let spellCenter = null;
+    if (areaNum === 1) {
+      // Area 1 starts at Spell Center
+      const scRoom = entryRoom;
+      spellCenter = { x: scRoom.centerX + 1, y: scRoom.centerY };
+      map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
+    } else {
+      // Other areas have spell center in a random room
+      const scRoom = rooms[this.randomRange(1, rooms.length - 2)];
+      spellCenter = { x: scRoom.centerX, y: scRoom.centerY };
+      if (map[spellCenter.y][spellCenter.x] === TILE_TYPES.TRANSITION) {
+        spellCenter.x++;
+      }
+      map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
+    }
+
+    const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter);
+
+    // 4. Features
+    this.addFeatures(map, biome);
+
+    // 5. Level Map generation
+    this.generateLevelMap(map, levelMap, areaNum, entryRoom);
+
     return {
       map,
+      levelMap,
       spellCenter,
       trainers,
       transitions,
@@ -96,59 +157,58 @@ export class MapGenerator {
     };
   }
 
-  isConnected(map, x1, y1, x2, y2) {
-    const queue = [[x1, y1]];
-    const visited = new Set();
-    visited.add(`${x1},${y1}`);
+  splitNode(node, depth) {
+    if (depth <= 0) return;
 
-    const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
+    let splitHorizontal = this.random() > 0.5;
+    if (node.w > node.h * 1.5) splitHorizontal = false;
+    else if (node.h > node.w * 1.5) splitHorizontal = true;
 
-    while (queue.length > 0) {
-      const [x, y] = queue.shift();
-      if (x === x2 && y === y2) return true;
+    const minSize = 10;
+    if (splitHorizontal) {
+      if (node.h < minSize * 2) return;
+      const split = this.randomRange(minSize, node.h - minSize);
+      node.left = new BSPNode(node.x, node.y, node.w, split);
+      node.right = new BSPNode(node.x, node.y + split, node.w, node.h - split);
+    } else {
+      if (node.w < minSize * 2) return;
+      const split = this.randomRange(minSize, node.w - minSize);
+      node.left = new BSPNode(node.x, node.y, split, node.h);
+      node.right = new BSPNode(node.x + split, node.y, node.w - split, node.h);
+    }
 
-      const neighbors = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
-      for (const [nx, ny] of neighbors) {
-        if (nx >= 0 && nx < this.width && ny >= 0 && ny < this.height) {
-          const type = map[ny][nx];
-          if (walkable.includes(type) && !visited.has(`${nx},${ny}`)) {
-            visited.add(`${nx},${ny}`);
-            queue.push([nx, ny]);
-          }
-        }
+    this.splitNode(node.left, depth - 1);
+    this.splitNode(node.right, depth - 1);
+  }
+
+  getLeaves(node) {
+    if (!node.left && !node.right) return [node];
+    return [...this.getLeaves(node.left), ...this.getLeaves(node.right)];
+  }
+
+  fillRoom(room, map, biome) {
+    const type = biome === BIOMES.CAVE ? TILE_TYPES.EMPTY : TILE_TYPES.PATH;
+    for (let y = room.y; y < room.y + room.h; y++) {
+      for (let x = room.x; x < room.x + room.w; x++) {
+        map[y][x] = type;
       }
     }
-    return false;
   }
 
-  getBiomeForArea(area) {
-    const biomes = [BIOMES.WILDERNESS, BIOMES.CAVE, BIOMES.TOWN, BIOMES.ROUTE, BIOMES.FOREST];
-    return biomes[(area - 1) % biomes.length];
-  }
-
-  generateRooms(biome) {
-    const rooms = [];
-    const count = biome === BIOMES.TOWN ? 12 : 8;
-    for (let i = 0; i < count; i++) {
-      rooms.push({
-        x: this.randomRange(5, this.width - 20),
-        y: this.randomRange(5, this.height - 20),
-        w: this.randomRange(6, 12),
-        h: this.randomRange(6, 12)
-      });
+  connectNodes(node, map) {
+    if (node.left && node.right) {
+      const r1 = this.findClosestRoom(node.left);
+      const r2 = this.findClosestRoom(node.right);
+      this.drawCorridor(map, r1.centerX, r1.centerY, r2.centerX, r2.centerY, TILE_TYPES.PATH);
+      this.connectNodes(node.left, map);
+      this.connectNodes(node.right, map);
     }
-    return rooms;
   }
 
-  connectRooms(rooms, map, biome) {
-    for (let i = 0; i < rooms.length - 1; i++) {
-      let x1 = rooms[i].x + Math.floor(rooms[i].w / 2);
-      let y1 = rooms[i].y + Math.floor(rooms[i].h / 2);
-      let x2 = rooms[i + 1].x + Math.floor(rooms[i + 1].w / 2);
-      let y2 = rooms[i + 1].y + Math.floor(rooms[i + 1].h / 2);
-
-      this.drawCorridor(map, x1, y1, x2, y2, TILE_TYPES.PATH);
-    }
+  findClosestRoom(node) {
+    if (node.room) return node.room;
+    // Arbitrarily pick from left or right child to find a room in sub-tree
+    return this.findClosestRoom(node.left || node.right);
   }
 
   drawCorridor(map, x1, y1, x2, y2, type) {
@@ -157,55 +217,19 @@ export class MapGenerator {
 
     while (x !== x2) {
       map[y][x] = type;
-      if (y + 1 < this.height) map[y + 1][x] = type; // Thicker paths
+      if (y + 1 < this.height && map[y+1][x] === TILE_TYPES.WALL) map[y + 1][x] = type;
       x += x1 < x2 ? 1 : -1;
     }
     while (y !== y2) {
       map[y][x] = type;
-      if (x + 1 < this.width) map[y][x + 1] = type;
+      if (x + 1 < this.width && map[y][x+1] === TILE_TYPES.WALL) map[y][x + 1] = type;
       y += y1 < y2 ? 1 : -1;
     }
   }
 
-  fillRooms(rooms, map, biome) {
-    rooms.forEach(room => {
-      const type = biome === BIOMES.CAVE ? TILE_TYPES.EMPTY : TILE_TYPES.PATH;
-      for (let y = room.y; y < room.y + room.h; y++) {
-        for (let x = room.x; x < room.x + room.w; x++) {
-          map[y][x] = type;
-        }
-      }
-      if (biome === BIOMES.TOWN && this.random() > 0.5) {
-        this.placeBuilding(room, map);
-      }
-    });
-  }
-
-  placeBuilding(room, map) {
-    const bw = 4;
-    const bh = 4;
-    const bx = room.x + 1;
-    const by = room.y + 1;
-    for (let y = by; y < by + bh; y++) {
-      for (let x = bx; x < bx + bw; x++) {
-        if (x < this.width && y < this.height) {
-          map[y][x] = TILE_TYPES.BUILDING;
-        }
-      }
-    }
-  }
-
-  placeSpellCenter(rooms, map) {
-    const room = rooms[Math.floor(this.random() * rooms.length)];
-    const x = room.x + 2;
-    const y = room.y + 2;
-    map[y][x] = TILE_TYPES.SPELL_CENTER;
-    return { x, y };
-  }
-
-  placeTrainers(rooms, map, areaNum, biome) {
+  placeTrainers(rooms, map, areaNum, transitions, spellCenter) {
     const trainers = [];
-    const count = areaNum === 5 ? 1 : (areaNum === 3 ? 2 : 1);
+    const count = areaNum === 5 ? 3 : (areaNum === 3 ? 2 : 1);
     const titles = ['Spelling Bee', 'Grammar Geek', 'Vocab Victor', 'Linguist', 'Prose Pro', 'Word Wizard', 'Syntax Sage', 'Lexis Legend'];
     const names = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Robin', 'Jamie', 'Morgan', 'Quinn', 'Skyler', 'Sasha'];
     const dialogs = [
@@ -219,12 +243,17 @@ export class MapGenerator {
       "You're about to be edited out of the game!"
     ];
 
+    const occupied = [...transitions, spellCenter].filter(Boolean);
+
     for (let i = 0; i < count; i++) {
       const room = rooms[this.randomRange(0, rooms.length - 1)];
-      const x = room.x + 1;
-      const y = room.y + 1;
-      if (map[y][x] !== TILE_TYPES.SPELL_CENTER && map[y][x] !== TILE_TYPES.TRAINER) {
+      const x = room.centerX;
+      const y = room.centerY;
+
+      const isOccupied = occupied.some(o => Math.abs(o.x - x) < 2 && Math.abs(o.y - y) < 2);
+      if (!isOccupied) {
         map[y][x] = TILE_TYPES.TRAINER;
+        occupied.push({ x, y });
 
         const title = titles[this.randomRange(0, titles.length - 1)];
         const name = names[this.randomRange(0, names.length - 1)];
@@ -246,56 +275,14 @@ export class MapGenerator {
     return trainers;
   }
 
-  placeTransitions(map, areaNum) {
-    const transitions = [];
-    // Left transition (to prev area)
-    if (areaNum > 1) {
-      const y = Math.floor(this.height / 2);
-      for(let i=-1; i<=1; i++) {
-        if (y+i >= 0 && y+i < this.height) map[y+i][0] = TILE_TYPES.TRANSITION;
-      }
-      transitions.push({ x: 0, y, type: TRANSITION_TYPES.PREV });
-    }
-    // Right transition (to next area)
-    if (areaNum < 5) {
-      const y = Math.floor(this.height / 2);
-      for(let i=-1; i<=1; i++) {
-        if (y+i >= 0 && y+i < this.height) map[y+i][this.width - 1] = TILE_TYPES.TRANSITION;
-      }
-      transitions.push({ x: this.width - 1, y, type: TRANSITION_TYPES.NEXT });
-    }
-    return transitions;
-  }
-
-  connectTransitions(transitions, rooms, map) {
-    transitions.forEach(trans => {
-      // Find nearest room
-      let nearestRoom = rooms[0];
-      let minDist = Infinity;
-      rooms.forEach(room => {
-        const rx = room.x + Math.floor(room.w / 2);
-        const ry = room.y + Math.floor(room.h / 2);
-        const dist = Math.abs(trans.x - rx) + Math.abs(trans.y - ry);
-        if (dist < minDist) {
-          minDist = dist;
-          nearestRoom = room;
-        }
-      });
-
-      const rx = nearestRoom.x + Math.floor(nearestRoom.w / 2);
-      const ry = nearestRoom.y + Math.floor(nearestRoom.h / 2);
-      this.drawCorridor(map, trans.x, trans.y, rx, ry, TILE_TYPES.PATH);
-    });
-  }
-
   addFeatures(map, biome) {
-    const grassChance = biome === BIOMES.FOREST ? 0.3 : (biome === BIOMES.CAVE ? 0 : 0.1);
-    const waterChance = biome === BIOMES.WILDERNESS ? 0.05 : 0.01;
+    const grassChance = biome === BIOMES.FOREST ? 0.4 : (biome === BIOMES.CAVE ? 0.05 : 0.15);
+    const waterChance = biome === BIOMES.WILDERNESS ? 0.02 : 0.005;
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (map[y][x] === TILE_TYPES.WALL) {
-          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 4);
+          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3);
         } else if (map[y][x] === TILE_TYPES.PATH || map[y][x] === TILE_TYPES.EMPTY) {
           if (this.random() < grassChance) map[y][x] = TILE_TYPES.GRASS;
         }
@@ -306,8 +293,56 @@ export class MapGenerator {
   floodFill(map, x, y, type, size) {
     if (size <= 0 || x < 0 || y < 0 || x >= this.width || y >= this.height) return;
     map[y][x] = type;
-    this.floodFill(map, x + 1, y, type, size - 1);
-    this.floodFill(map, x, y + 1, type, size - 1);
-    if (this.random() > 0.5) this.floodFill(map, x - 1, y, type, size - 1);
+    if (this.random() > 0.2) this.floodFill(map, x + 1, y, type, size - 1);
+    if (this.random() > 0.2) this.floodFill(map, x, y + 1, type, size - 1);
+  }
+
+  getBiomeForArea(area) {
+    const biomes = [BIOMES.WILDERNESS, BIOMES.CAVE, BIOMES.TOWN, BIOMES.ROUTE, BIOMES.FOREST];
+    return biomes[(area - 1) % biomes.length];
+  }
+
+  generateLevelMap(map, levelMap, areaNum, entryRoom) {
+    const config = AREA_CONFIGS[areaNum];
+    const min = config.minLevel;
+    const max = config.maxLevel;
+
+    const queue = [[entryRoom.centerX, entryRoom.centerY, 0]];
+    const visited = new Set();
+    visited.add(`${entryRoom.centerX},${entryRoom.centerY}`);
+
+    let maxDist = 0;
+    const distances = [];
+
+    const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
+
+    while (queue.length > 0) {
+      const [x, y, d] = queue.shift();
+      distances.push({ x, y, d });
+      if (d > maxDist) maxDist = d;
+
+      const neighbors = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
+      for (const [nx, ny] of neighbors) {
+        if (nx >= 0 && nx < this.width && ny >= 0 && ny < this.height) {
+          if (walkable.includes(map[ny][nx]) && !visited.has(`${nx},${ny}`)) {
+            visited.add(`${nx},${ny}`);
+            queue.push([nx, ny, d + 1]);
+          }
+        }
+      }
+    }
+
+    distances.forEach(({ x, y, d }) => {
+      const progress = d / (maxDist || 1);
+      // Level increases with distance, with some randomness
+      let level = Math.floor(min + progress * (max - min));
+
+      // Add "Risk" factor based on tile type or random patches
+      if (map[y][x] === TILE_TYPES.GRASS && this.random() > 0.8) {
+        level += 1;
+      }
+
+      levelMap[y][x] = Math.max(min, Math.min(max, level));
+    });
   }
 }
