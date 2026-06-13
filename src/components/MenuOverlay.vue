@@ -118,8 +118,11 @@ const updateVolume = (e) => {
 };
 
 const toggleMute = () => {
+  const willBeMuted = !settingsStore.isMuted;
   settingsStore.toggleMute();
-  audio.playSound(SOUND_EFFECTS.CLICK);
+  if (!willBeMuted) {
+    audio.playSound(SOUND_EFFECTS.CLICK);
+  }
 };
 
 const testVoice = () => {

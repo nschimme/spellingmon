@@ -14,7 +14,7 @@
           Gotta Spell 'Em All!
         </p>
 
-        <button @click="handleStart($emit)"
+        <button @click="handleStart"
                 class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-6 px-12 rounded-2xl border-b-8 border-blue-800 text-2xl uppercase tracking-widest transition-all active:border-b-0 active:translate-y-2 group">
           <span class="group-hover:scale-110 inline-block transition-transform">Start Game</span>
         </button>
@@ -30,9 +30,10 @@
 <script setup>
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
-defineEmits(['start']);
 
-const handleStart = (emit) => {
+const emit = defineEmits(['start']);
+
+const handleStart = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   emit('start');
 };
