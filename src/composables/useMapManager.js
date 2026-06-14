@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { MapGenerator, TILE_TYPES } from '../utils/mapGenerator';
 import { AREA_CONFIGS } from '../utils/gameData';
 import { TRANSITION_TYPES } from '../utils/constants';

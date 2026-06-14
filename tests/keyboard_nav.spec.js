@@ -22,27 +22,27 @@ test('battle menu keyboard navigation works', async ({ page }) => {
 
     // Default selected should be Attack (index 0)
     const attackBtn = page.locator('button:has-text("Attack")');
-    await expect(attackBtn).toHaveClass(/ring-4/);
+    await expect(attackBtn).toHaveClass(/ring-8/);
 
     // Press down to go to Capture (index 1)
     await page.keyboard.press('ArrowDown');
     const captureBtn = page.locator('button:has-text("Capture")');
-    await expect(captureBtn).toHaveClass(/ring-4/);
-    await expect(attackBtn).not.toHaveClass(/ring-4/);
+    await expect(captureBtn).toHaveClass(/ring-8/);
+    await expect(attackBtn).not.toHaveClass(/ring-8/);
 
     // Press right to go to Switch (index 2)
     await page.keyboard.press('ArrowRight');
     const switchBtn = page.locator('button:has-text("Switch")');
-    await expect(switchBtn).toHaveClass(/ring-4/);
+    await expect(switchBtn).toHaveClass(/ring-8/);
 
     // Press down to go to Run (index 3)
     await page.keyboard.press('ArrowDown');
     const runBtn = page.locator('button:has-text("Run")');
-    await expect(runBtn).toHaveClass(/ring-4/);
+    await expect(runBtn).toHaveClass(/ring-8/);
 
     // Press up to go back to Capture (index 1)
     await page.keyboard.press('ArrowUp');
-    await expect(captureBtn).toHaveClass(/ring-4/);
+    await expect(captureBtn).toHaveClass(/ring-8/);
 
   } catch (e) {
     console.log("Could not trigger battle for keyboard test, skipping visual check");

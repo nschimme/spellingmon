@@ -13,8 +13,8 @@
             v-model="name"
             type="text"
             maxlength="12"
-            :class="{ 'ring-4 ring-yellow-400': selectedIndex === 0 }"
-            class="w-full border-4 border-gray-800 p-3 rounded-xl bg-gray-50 font-bold outline-none focus:ring-4 focus:ring-blue-300"
+            :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+            class="w-full border-4 border-gray-800 p-3 rounded-xl bg-gray-50 font-bold outline-none focus:ring-8 focus:ring-blue-300"
             placeholder="NAME"
           >
         </div>
@@ -25,7 +25,7 @@
             <button
               :class="[
                 gender === GENDERS.BOY ? 'bg-blue-500 text-white border-blue-700' : 'bg-gray-100 text-gray-400 border-gray-300',
-                selectedIndex === 1 ? 'ring-4 ring-yellow-400' : ''
+                selectedIndex === 1 ? 'ring-8 ring-yellow-400' : ''
               ]"
               class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
               @click="gender = GENDERS.BOY"
@@ -35,7 +35,7 @@
             <button
               :class="[
                 gender === GENDERS.GIRL ? 'bg-pink-500 text-white border-pink-700' : 'bg-gray-100 text-gray-400 border-gray-300',
-                selectedIndex === 2 ? 'ring-4 ring-yellow-400' : ''
+                selectedIndex === 2 ? 'ring-8 ring-yellow-400' : ''
               ]"
               class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
               @click="gender = GENDERS.GIRL"
@@ -54,7 +54,7 @@
               :style="{ backgroundColor: tone.color }"
               :class="[
                 skinTone === tone.id ? 'border-blue-500 scale-110' : 'border-gray-800',
-                selectedIndex === (3 + i) ? 'ring-4 ring-yellow-400 border-yellow-400' : ''
+                selectedIndex === (3 + i) ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
               ]"
               class="w-10 h-10 rounded-full border-4 transition-transform active:scale-95"
               @click="skinTone = tone.id"
@@ -65,7 +65,7 @@
         <button
           :disabled="!name"
           :class="[
-            selectedIndex === 8 ? 'ring-4 ring-yellow-400' : '',
+            selectedIndex === 8 ? 'ring-8 ring-yellow-400' : '',
             !name ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600'
           ]"
           class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1"
@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';

@@ -714,7 +714,7 @@ const handleCaptureSuccess = (isPower) => {
 };
 
 // --- Action Selection Navigation ---
-const { selectedIndex, reset: resetActionNav } = useKeyboardNavigation({
+const { selectedIndex } = useKeyboardNavigation({
   id: 'battle-actions',
   maxIndex: 4,
   priority: INPUT_PRIORITIES.BATTLE,

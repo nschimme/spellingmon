@@ -19,9 +19,9 @@
 
 <script setup>
 defineProps({
-  areaName: String,
-  biome: String,
-  leaderName: String,
-  leaderLevel: [Number, String]
+  areaName: { type: String, default: '' },
+  biome: { type: String, default: '' },
+  leaderName: { type: String, default: '' },
+  leaderLevel: { type: [Number, String], default: 1 }
 });
 </script>

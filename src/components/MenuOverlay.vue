@@ -9,7 +9,7 @@
           class="flex-1 py-4 transition-colors"
           :class="[
             activeTab === tab ? 'bg-white text-blue-600' : 'text-gray-500 hover:bg-gray-200',
-            tabSelectedIndex === i ? 'ring-inset ring-4 ring-yellow-400' : ''
+            tabSelectedIndex === i ? 'ring-inset ring-8 ring-yellow-400' : ''
           ]"
           @click="activeTab = tab"
         >
@@ -230,7 +230,7 @@
               class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner"
             >
               <button
-                :class="{ 'ring-4 ring-yellow-400 rounded-full': contentSelectedIndex === 2 }"
+                :class="{ 'ring-8 ring-yellow-400 rounded-full': contentSelectedIndex === 2 }"
                 class="text-3xl hover:scale-110 transition-transform"
                 @click="toggleMute"
               >
@@ -242,7 +242,7 @@
                 max="1"
                 step="0.01"
                 :value="settingsStore.volume"
-                :class="{ 'ring-4 ring-yellow-400': contentSelectedIndex === 1 }"
+                :class="{ 'ring-8 ring-yellow-400': contentSelectedIndex === 1 }"
                 class="flex-1 h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
                 @input="updateVolume"
               >
@@ -254,7 +254,7 @@
             <select
               v-model="settingsStore.selectedVoiceName"
               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': contentSelectedIndex === 0 }"
-              class="w-full border-4 border-gray-800 p-3 rounded-xl bg-white font-bold text-gray-700 outline-none focus:ring-4 focus:ring-blue-300"
+              class="w-full border-4 border-gray-800 p-3 rounded-xl bg-white font-bold text-gray-700 outline-none focus:ring-8 focus:ring-blue-300"
               @change="updateVoice"
             >
               <option
@@ -307,15 +307,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onUnmounted, computed } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { useSettingsStore } from '../stores/settingsStore';
-import { useInputStore } from '../stores/inputStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS, INPUT_CONTEXTS, INPUT_PRIORITIES, TRANSITION_TYPES } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS, INPUT_PRIORITIES, TRANSITION_TYPES } from '../utils/constants';
 import { TYPE_EMOJIS } from '../utils/gameData';
 import { getHPColorClass } from '../utils/visuals';
 import { TILE_TYPES, MapGenerator } from '../utils/mapGenerator';
@@ -323,7 +322,6 @@ import { TILE_TYPES, MapGenerator } from '../utils/mapGenerator';
 const playerStore = usePlayerStore();
 const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
-const inputStore = useInputStore();
 const activeTab = ref(MENU_TABS.PARTY);
 const mapCanvas = ref(null);
 
@@ -377,7 +375,7 @@ const drawMap = () => {
         ctx.fillStyle = '#9ca3af'; // Gray-400
         ctx.fillRect(x, y, 1, 1);
       } else if (type === TILE_TYPES.GRASS) {
-        ctx.fillText('🌲', x, y);
+        ctx.fillText('🌿', x, y);
       } else if (type === TILE_TYPES.SPELL_CENTER) {
         ctx.fillText('🏥', x, y);
       } else if (type === TILE_TYPES.TRANSITION) {
@@ -423,7 +421,7 @@ watch(currentTabIndex, (newIdx) => {
 });
 
 // Content Navigation
-const { selectedIndex: contentSelectedIndex, reset: resetContentNav } = useKeyboardNavigation({
+const { selectedIndex: contentSelectedIndex } = useKeyboardNavigation({
   id: 'menu-content',
   priority: INPUT_PRIORITIES.MENU,
   maxIndex: computed(() => {

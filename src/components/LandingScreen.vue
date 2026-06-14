@@ -101,10 +101,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { audio } from '../utils/audio';
-import { storage } from '../utils/storage';
 import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
-import { SOUND_EFFECTS, STORAGE_KEYS, INPUT_PRIORITIES } from '../utils/constants';
+import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
 
 const emit = defineEmits(['start', 'new-game', 'continue']);
 const playerStore = usePlayerStore();

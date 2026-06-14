@@ -48,7 +48,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { createMon, SPECIES } from '../utils/gameData';

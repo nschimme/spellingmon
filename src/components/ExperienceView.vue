@@ -64,11 +64,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useInputStore } from '../stores/inputStore';
+import { ref, onMounted } from 'vue';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
-import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
+import { INPUT_PRIORITIES } from '../utils/constants';
 
 const props = defineProps({
   participatingMons: {

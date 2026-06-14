@@ -18,11 +18,11 @@ import { TILE_TYPES } from '../../utils/mapGenerator';
 import { TRANSITION_TYPES } from '../../utils/constants';
 
 const props = defineProps({
-  x: Number,
-  y: Number,
-  type: Number,
-  isAlerting: Boolean,
-  trainerEmoji: String,
+  x: { type: Number, default: 0 },
+  y: { type: Number, default: 0 },
+  type: { type: Number, default: 0 },
+  isAlerting: { type: Boolean, default: false },
+  trainerEmoji: { type: String, default: '👤' },
   transitions: {
     type: Array,
     default: () => []
@@ -48,7 +48,7 @@ const emoji = computed(() => {
   if (props.type === TILE_TYPES.TRAINER) return props.trainerEmoji || '👤';
 
   switch (props.type) {
-    case TILE_TYPES.GRASS: return '🌲';
+    case TILE_TYPES.GRASS: return '🌿';
     case TILE_TYPES.SPELL_CENTER: return '🏥';
     case TILE_TYPES.TRANSITION: {
       const transition = props.transitions.find(t => t.x === props.x && t.y === props.y);
