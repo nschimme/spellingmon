@@ -1,7 +1,7 @@
 [
   {"id": "w6_1", "word": "their", "definition": "Belonging to them.", "sentence_context": "The children took their shoes off.", "difficulty": 1},
   {"id": "w6_2", "word": "there", "definition": "In that place.", "sentence_context": "Please put the box over there.", "difficulty": 1},
-  {"id": "w6_3", "word": "they are", "definition": "A combination of they and are.", "sentence_context": "They are going to the park.", "difficulty": 1},
+  {"id": "w6_3", "word": "weather", "definition": "The state of the atmosphere at a place and time.", "sentence_context": "The weather is very sunny today.", "difficulty": 1},
   {"id": "w6_4", "word": "principal", "definition": "The head of a school.", "sentence_context": "The principal gave a speech at assembly.", "difficulty": 2},
   {"id": "w6_5", "word": "principle", "definition": "A fundamental truth or proposition.", "sentence_context": "It is the principle of the matter that counts.", "difficulty": 2},
   {"id": "w6_6", "word": "night", "definition": "The time when it is dark outside.", "sentence_context": "The stars come out at night.", "difficulty": 1},
@@ -18,5 +18,6 @@
   {"id": "w6_17", "word": "herd", "definition": "A large group of animals that live together.", "sentence_context": "A herd of elephants crossed the river.", "difficulty": 2},
   {"id": "w6_18", "word": "scent", "definition": "A distinctive smell.", "sentence_context": "The scent of roses filled the air.", "difficulty": 2},
   {"id": "w6_19", "word": "sent", "definition": "Past tense of send.", "sentence_context": "I sent a postcard from my vacation.", "difficulty": 2},
-  {"id": "w6_20", "word": "aisle", "definition": "A passage between rows of seats.", "sentence_context": "Walk down the aisle to find your seat.", "difficulty": 3}
+  {"id": "w6_20", "word": "aisle", "definition": "A passage between rows of seats.", "sentence_context": "Walk down the aisle to find your seat.", "difficulty": 3},
+  {"id": "w6_21", "word": "whether", "definition": "Expressing a doubt or choice between alternatives.", "sentence_context": "I do not know whether to go or stay.", "difficulty": 2}
 ]
