@@ -38,10 +38,14 @@ The game world's geography is directly tied to word complexity, allowing childre
 | Area / Region | Target Levels | Word Difficulty / Linguistic Focus | Examples |
 | --- | --- | --- | --- |
 | **Area 1: Alphabet Avenue** | Levels 1–10 | Short vowels, basic 3-4 letter consonant-vowel-consonant (CVC) words. | *Cat, Jump, Frog, Desk* |
-| **Area 2: Syllable Springs** | Levels 11–20 | Double consonants, compound words, basic multi-syllables. | *Sunlight, Written, Butter* |
-| **Area 3: Prefix Peak** | Levels 21–35 | Common prefixes/suffixes, silent letters, basic irregulars. | *Unhappy, Knight, Echoes* |
-| **Area 4: Phoneme Forest** | Levels 36–50 | Homophones, complex vowel blends, and common spelling traps. | *Receive, Separate, Pharaoh* |
-| **Area 5: Etymology Elite** | Levels 51+ | Advanced vocabulary, Latin/Greek roots, and obscure words. | *Conscientious, Onomatopoeia* |
+| **Area 2: Blend Boulevard** | Levels 11–18 | Consonant blends (bl, str), digraphs (ch, sh, th), and long vowel silent-e patterns. | *Brave, Shock, String, Whale* |
+| **Area 3: Syllable Springs** | Levels 19–28 | Double consonants, compound words, basic multi-syllables. | *Sunlight, Written, Butter* |
+| **Area 4: Suffix Summit** | Levels 29–38 | Suffix spelling rules (dropping 'e', changing 'y' to 'i', doubling consonants). | *Running, Happily, Baked, Crying* |
+| **Area 5: Prefix Peak** | Levels 39–48 | Common prefixes/suffixes, silent letters, basic irregulars. | *Unhappy, Knight, Echoes* |
+| **Area 6: Homophone Harbor** | Levels 49–58 | Words that sound alike but spell differently (relies heavily on context clues). | *Their/There/They're, Principal/Principle* |
+| **Area 7: Loanword Labyrinth** | Levels 59–68 | Words adopted from other languages (French, Italian, Spanish) with unique phonetic rules. | *Chef, Bouquet, Garage, Patio* |
+| **Area 8: Phoneme Forest** | Levels 69–80 | Homophones, complex vowel blends, and common spelling traps. | *Receive, Separate, Pharaoh* |
+| **Area 9: Etymology Elite** | Levels 81+ | Advanced vocabulary, Latin/Greek roots, and obscure words. | *Conscientious, Onomatopoeia* |
 
 ---
 

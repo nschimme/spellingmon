@@ -1,0 +1,22 @@
+[
+  {"id": "w7_1", "word": "chef", "definition": "A professional cook.", "sentence_context": "The chef prepared a gourmet meal.", "difficulty": 1},
+  {"id": "w7_2", "word": "bouquet", "definition": "An attractively arranged bunch of flowers.", "sentence_context": "He gave her a beautiful bouquet of roses.", "difficulty": 2},
+  {"id": "w7_3", "word": "garage", "definition": "A building for housing a motor vehicle.", "sentence_context": "I parked the car in the garage.", "difficulty": 1},
+  {"id": "w7_4", "word": "patio", "definition": "A paved outdoor area adjoining a house.", "sentence_context": "We had lunch on the patio.", "difficulty": 1},
+  {"id": "w7_5", "word": "ballet", "definition": "An artistic dance form.", "sentence_context": "She has been practicing ballet since she was five.", "difficulty": 1},
+  {"id": "w7_6", "word": "café", "definition": "A small restaurant selling light meals and drinks.", "sentence_context": "Let's meet at the café for coffee.", "spoken_version": "Caf ay", "difficulty": 1},
+  {"id": "w7_7", "word": "fiancé", "definition": "A man to whom someone is engaged to be married.", "sentence_context": "She introduced me to her fiancé.", "spoken_version": "Fee on say", "difficulty": 2},
+  {"id": "w7_8", "word": "pizza", "definition": "An Italian dish of a flat crust topped with tomatoes and cheese.", "sentence_context": "We ordered a large pepperoni pizza.", "difficulty": 1},
+  {"id": "w7_9", "word": "taco", "definition": "A Mexican dish consisting of a folded tortilla filled with meat and beans.", "sentence_context": "I'd like a beef taco, please.", "difficulty": 1},
+  {"id": "w7_10", "word": "siesta", "definition": "An afternoon rest or nap.", "sentence_context": "In some countries, people take a siesta after lunch.", "difficulty": 2},
+  {"id": "w7_11", "word": "plaza", "definition": "A public square or marketplace.", "sentence_context": "The fountain is in the center of the plaza.", "difficulty": 1},
+  {"id": "w7_12", "word": "mosquito", "definition": "A slender long-legged fly.", "sentence_context": "I got a mosquito bite on my arm.", "difficulty": 2},
+  {"id": "w7_13", "word": "piano", "definition": "A large keyboard musical instrument.", "sentence_context": "He plays the piano beautifully.", "difficulty": 1},
+  {"id": "w7_14", "word": "opera", "definition": "A dramatic work in one or more acts, set to music.", "sentence_context": "We went to see an opera last night.", "difficulty": 2},
+  {"id": "w7_15", "word": "solo", "definition": "A thing done by one person unaccompanied.", "sentence_context": "She sang a beautiful solo.", "difficulty": 1},
+  {"id": "w7_16", "word": "tempo", "definition": "The speed at which a passage of music is played.", "sentence_context": "The song has a very fast tempo.", "difficulty": 1},
+  {"id": "w7_17", "word": "robot", "definition": "A machine capable of carrying out a complex series of actions automatically.", "sentence_context": "The robot performed the task perfectly.", "difficulty": 1},
+  {"id": "w7_18", "word": "safari", "definition": "An expedition to observe animals in their natural habitat.", "sentence_context": "They went on a safari in Africa.", "difficulty": 1},
+  {"id": "w7_19", "word": "karate", "definition": "A system of unarmed combat using hands and feet.", "sentence_context": "He is a black belt in karate.", "difficulty": 1},
+  {"id": "w7_20", "word": "tsunami", "definition": "A long high sea wave caused by an earthquake.", "sentence_context": "The tsunami caused widespread damage.", "difficulty": 2}
+]

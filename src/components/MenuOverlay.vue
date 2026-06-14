@@ -124,8 +124,18 @@ const { selectedIndex } = useKeyboardNavigation({
   id: 'main-menu',
   priority: INPUT_PRIORITIES.MENU,
   maxIndex: menuItems.length,
-  isActive: computed(() => !activeDetailTab.value),
-  onConfirm: (idx) => handleMenuClick(menuItems[idx]),
-  onCancel: () => emit('close')
+  isActive: computed(() => true),
+  onConfirm: (idx) => {
+    if (!activeDetailTab.value) {
+      handleMenuClick(menuItems[idx]);
+    }
+  },
+  onCancel: () => {
+    if (activeDetailTab.value) {
+      activeDetailTab.value = null;
+    } else {
+      emit('close');
+    }
+  }
 });
 </script>

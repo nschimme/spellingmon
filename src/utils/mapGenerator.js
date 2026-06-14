@@ -1,5 +1,7 @@
 import { AREA_CONFIGS } from './gameData';
-import { BIOMES, TRANSITION_TYPES } from './constants';
+import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS } from './constants';
+
+const AREA_CONFIGS_MAX = GAME_CONSTANTS.MAX_AREAS;
 
 /**
  * State-of-the-art Map Generator for Spellingmon
@@ -116,7 +118,7 @@ export class MapGenerator {
     }
 
     let nextTransition = null;
-    if (areaNum < 5) {
+    if (areaNum < AREA_CONFIGS_MAX) {
       const tx = exitRoom.centerX;
       const ty = exitRoom.centerY;
       map[ty][tx] = TILE_TYPES.TRANSITION;

@@ -348,20 +348,18 @@ export function calculateExpGain(enemyMon, isTrainer) {
 
 export const AREA_CONFIGS = {
   1: {
-    name: 'Route 1',
+    name: 'Alphabet Avenue',
     minLevel: 1,
-    maxLevel: 6,
+    maxLevel: 10,
     encounters: [
       SPECIES.Verminverb, SPECIES.Aviprosa, SPECIES.Caterspell, SPECIES.Weedword,
-      SPECIES.Puffpoet, SPECIES.Phraseling, SPECIES.Leeletter, SPECIES.Memocat,
-      SPECIES.Voicenat, SPECIES.Wingword, SPECIES.Odeish, SPECIES.Drafto, SPECIES.Essayve,
-      SPECIES.Grammander, SPECIES.Squirtspell, SPECIES.Bulbaword
+      SPECIES.Drafto, SPECIES.Essayve, SPECIES.Grammander, SPECIES.Squirtspell, SPECIES.Bulbaword
     ],
   },
   2: {
-    name: 'Route 2',
-    minLevel: 7,
-    maxLevel: 11,
+    name: 'Blend Boulevard',
+    minLevel: 11,
+    maxLevel: 18,
     encounters: [
       SPECIES.Pikachart, SPECIES.Pointernote, SPECIES.Lexicat, SPECIES.Syntaxo,
       SPECIES.Metaphrase, SPECIES.Verbakuna, SPECIES.Foliofalcon, SPECIES.Slinkscript,
@@ -369,9 +367,9 @@ export const AREA_CONFIGS = {
     ],
   },
   3: {
-    name: 'Route 3',
-    minLevel: 12,
-    maxLevel: 16,
+    name: 'Syllable Springs',
+    minLevel: 19,
+    maxLevel: 28,
     encounters: [
       SPECIES.Primath, SPECIES.Rudeo, SPECIES.Burrowbook, SPECIES.Chopscript,
       SPECIES.Grammgloom, SPECIES.Paragraphid, SPECIES.Vowelmoth, SPECIES.Dictatone,
@@ -380,9 +378,9 @@ export const AREA_CONFIGS = {
     ],
   },
   4: {
-    name: 'Route 4',
-    minLevel: 17,
-    maxLevel: 21,
+    name: 'Suffix Summit',
+    minLevel: 29,
+    maxLevel: 38,
     encounters: [
       SPECIES.Spellpoke, SPECIES.Venomverse, SPECIES.Clausefairy, SPECIES.Foxphrase,
       SPECIES.Balloonbard, SPECIES.Echoedit, SPECIES.Kerneloff, SPECIES.Citesey,
@@ -391,17 +389,51 @@ export const AREA_CONFIGS = {
     ],
   },
   5: {
-    name: 'Route 5',
-    minLevel: 22,
-    maxLevel: 30,
+    name: 'Prefix Peak',
+    minLevel: 39,
+    maxLevel: 48,
     encounters: [
       SPECIES.Spellpoke, SPECIES.Pikachart, SPECIES.Summarylax, SPECIES.Legendras,
-      SPECIES.Musetwo, SPECIES.Muse, SPECIES.Scrypt, SPECIES.Seaslang, SPECIES.Finfolio,
-      SPECIES.Datanite, SPECIES.Docair, SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem,
-      SPECIES.Gramgar, SPECIES.Haikunter, SPECIES.Outlinix, SPECIES.Memowak, SPECIES.Wordweeze,
-      SPECIES.Bookbro, SPECIES.Houndhaiku, SPECIES.Gorillagram, SPECIES.Paperwrath, SPECIES.Verseon, SPECIES.Jingleon, SPECIES.Noteon,
+      SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem,
+      SPECIES.Bookbro, SPECIES.Houndhaiku, SPECIES.Gorillagram, SPECIES.Paperwrath,
       SPECIES.Spelchar, SPECIES.Blastlexis, SPECIES.Venusterm, SPECIES.Butterfluent, SPECIES.Quillquote, SPECIES.Toxiterm,
       SPECIES.Citable, SPECIES.Poetcat, SPECIES.Quackquote, SPECIES.Pagewhirl
+    ],
+  },
+  6: {
+    name: 'Homophone Harbor',
+    minLevel: 49,
+    maxLevel: 58,
+    encounters: [
+      SPECIES.Gramgar, SPECIES.Haikunter, SPECIES.Outlinix, SPECIES.Memowak, SPECIES.Wordweeze,
+      SPECIES.Scrypt, SPECIES.Seaslang, SPECIES.Finfolio, SPECIES.Docair,
+      SPECIES.Verseon, SPECIES.Jingleon, SPECIES.Noteon
+    ],
+  },
+  7: {
+    name: 'Loanword Labyrinth',
+    minLevel: 59,
+    maxLevel: 68,
+    encounters: [
+      SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Docair,
+      SPECIES.Legendras, SPECIES.Summarylax, SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem
+    ],
+  },
+  8: {
+    name: 'Phoneme Forest',
+    minLevel: 69,
+    maxLevel: 80,
+    encounters: [
+      SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Scrypt, SPECIES.Seaslang,
+      SPECIES.Gramgar, SPECIES.Toxiterm, SPECIES.Venusterm, SPECIES.Blastlexis, SPECIES.Spelchar
+    ],
+  },
+  9: {
+    name: 'Etymology Elite',
+    minLevel: 81,
+    maxLevel: 100,
+    encounters: [
+      SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem
     ],
   },
 };

@@ -26,7 +26,7 @@
     >
       <div class="bg-gray-800 p-3 flex justify-between items-center">
         <h3 class="font-black uppercase text-white text-sm tracking-widest">
-          Route {{ area }}
+          {{ AREA_CONFIGS[area]?.name || `Area ${area}` }}
         </h3>
         <div class="flex gap-3 items-center">
           <div class="bg-gray-700 px-2 py-1 rounded text-[8px] font-bold text-gray-300 uppercase">
@@ -85,6 +85,7 @@ import { usePlayerStore } from '../../stores/playerStore';
 import { useVocabStore } from '../../stores/vocabStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, INPUT_PRIORITIES } from '../../utils/constants';
+import { AREA_CONFIGS } from '../../utils/gameData';
 
 const playerStore = usePlayerStore();
 const vocabStore = useVocabStore();
