@@ -39,4 +39,17 @@ describe('Spellingmon Stats and Mechanics', () => {
     const result = calculateDamage(attacker, defender, 40);
     expect(result.typeMod).toBe(0.5);
   });
+
+  it('calculates damage incorporating word difficulty', () => {
+    const attacker = { species: 'Grammander', type: 'Fire', level: 10, atk: 20 };
+    const defender = { species: 'Caterspell', type: 'Bug', level: 10, def: 15 };
+
+    // Easy word (difficulty 1)
+    const resultEasy = calculateDamage(attacker, defender, 40, 1);
+    // Hard word (difficulty 2)
+    const resultHard = calculateDamage(attacker, defender, 40, 2);
+
+    // Using toBeCloseTo or checking if it's within 1 because of Math.floor during calculation
+    expect(resultHard.damage).toBeGreaterThanOrEqual(Math.floor(resultEasy.damage * 1.5));
+  });
 });

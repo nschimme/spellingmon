@@ -80,6 +80,11 @@ export const useBattleStore = defineStore('battle', {
       validated.trainerId = saved.trainerId;
     }
 
+    // Trainer party rehydration
+    if (Array.isArray(saved.trainerParty)) {
+      validated.trainerParty = saved.trainerParty;
+    }
+
     return validated;
   },
   actions: {

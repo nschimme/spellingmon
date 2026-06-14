@@ -54,17 +54,16 @@
         </div>
 
         <!-- Map Tab -->
-        <div v-if="activeTab === MENU_TABS.MAP" class="flex flex-col gap-4 items-center">
-          <h3 class="font-black uppercase text-gray-800 w-full">Area Map (Discovered)</h3>
-          <div class="relative bg-gray-900 w-full aspect-square max-w-[400px] border-4 border-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-            <div class="grid grid-cols-[repeat(100,1fr)] w-full h-full">
-              <!-- Using a Canvas would be better for performance, but for 100x100 we can use a grid of divs for now or just a few -->
-              <!-- Actually 10,000 divs is too many. Let's use a canvas approach or a simplified representation -->
-               <div class="absolute inset-0 bg-gray-800 flex items-center justify-center text-white font-bold opacity-50">
-                 [Discovered View]
-               </div>
-               <canvas ref="mapCanvas" width="100" height="100" class="w-full h-full image-pixelated"></canvas>
-            </div>
+        <div v-if="activeTab === MENU_TABS.MAP" class="flex flex-col gap-4 items-center h-full overflow-hidden">
+          <h3 class="font-black uppercase text-gray-800 w-full shrink-0">Area Map (Discovered)</h3>
+          <div class="relative bg-gray-900 w-full aspect-square max-w-[400px] border-8 border-gray-800 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner shrink-0">
+             <canvas ref="mapCanvas" width="100" height="100" class="w-full h-full image-pixelated bg-gray-800" data-testid="map-canvas"></canvas>
+             <!-- Player pulse indicator -->
+             <div class="absolute w-4 h-4 bg-red-500 rounded-full animate-ping pointer-events-none opacity-75"
+                  :style="{
+                    left: `calc(${(playerStore.position.x / 100) * 100}% - 8px)`,
+                    top: `calc(${(playerStore.position.y / 100) * 100}% - 8px)`
+                  }"></div>
           </div>
           <div class="w-full">
              <h3 class="font-black uppercase text-gray-800 mb-2">World Map</h3>

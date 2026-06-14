@@ -212,12 +212,14 @@ export const usePlayerStore = defineStore('player', {
     },
     awardExp(totalAmount) {
       const healthyMons = this.party.filter(m => m.hp > 0);
-      if (healthyMons.length === 0) return;
+      if (healthyMons.length === 0) return [];
 
       const splitAmount = Math.floor(totalAmount / healthyMons.length);
       let remainder = totalAmount % healthyMons.length;
 
-      healthyMons.forEach((mon, i) => {
+      const result = healthyMons.map((mon, i) => {
+        const oldLevel = mon.level;
+        const oldExp = mon.exp;
         let amount = splitAmount;
         if (i < remainder) amount += 1;
 
@@ -227,8 +229,21 @@ export const usePlayerStore = defineStore('player', {
             this.levelUp(mon);
           }
         }
+        return {
+          id: mon.id,
+          name: mon.name,
+          emoji: mon.emoji,
+          oldLevel,
+          oldExp,
+          oldLevelExpToNext: calculateExpToNext(oldLevel),
+          level: mon.level,
+          exp: mon.exp,
+          expToNext: mon.expToNext,
+          expGained: amount
+        };
       });
       this.saveState();
+      return result;
     },
     levelUp(mon) {
       mon.level++;

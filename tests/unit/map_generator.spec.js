@@ -95,4 +95,37 @@ describe('MapGenerator (State-of-the-art)', () => {
 
     expect(isConnected(result.map, start.x, start.y, end.x, end.y)).toBe(true);
   });
+
+  it('generates grass in patches rather than single tiles', () => {
+    const gen = new MapGenerator('grass-patch-test', 60, 60);
+    const result = gen.generate(1);
+
+    // Count total grass tiles
+    let totalGrass = 0;
+    const grassTiles = [];
+    for (let y = 0; y < 60; y++) {
+      for (let x = 0; x < 60; x++) {
+        if (result.map[y][x] === TILE_TYPES.GRASS) {
+          totalGrass++;
+          grassTiles.push({x, y});
+        }
+      }
+    }
+
+    expect(totalGrass).toBeGreaterThan(0);
+
+    // Check if grass tiles have at least one grass neighbor (mostly)
+    // Some isolated patches of size 1 might still exist if rng is very unlucky but rare
+    let withNeighbor = 0;
+    for (const {x, y} of grassTiles) {
+      const neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]];
+      const hasGrassNeighbor = neighbors.some(([nx, ny]) =>
+        nx >= 0 && nx < 60 && ny >= 0 && ny < 60 && result.map[ny][nx] === TILE_TYPES.GRASS
+      );
+      if (hasGrassNeighbor) withNeighbor++;
+    }
+
+    // With flood fill size 2-5, majority should have neighbors
+    expect(withNeighbor / totalGrass).toBeGreaterThan(0.7);
+  });
 });

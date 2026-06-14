@@ -13,11 +13,19 @@
            :class="{ 'opacity-0 translate-y-10': enemyFainted }">
         <div class="flex flex-col items-end" :class="{ 'animate-shake': enemyShake }">
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
-            <div class="flex justify-between font-bold text-[10px] sm:text-base">
-              <span>{{ battleStore.enemyMon.name }}</span>
-              <span>Lv{{ battleStore.enemyMon.level }}</span>
+            <div class="flex flex-col font-bold leading-tight">
+              <div class="flex justify-between items-start">
+                <div class="flex flex-col">
+                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ battleStore.enemyMon.name }}</span>
+                  <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.enemyMon.level }}</span>
+                </div>
+                <div class="flex flex-col items-end opacity-80">
+                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[battleStore.enemyMon.type] }}</span>
+                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.enemyMon.type }}</span>
+                </div>
+              </div>
             </div>
-            <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-1 overflow-hidden">
+            <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden">
               <div class="h-full transition-all duration-500"
                   :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
                   :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"></div>
@@ -41,11 +49,19 @@
         <div class="flex flex-col items-start" :class="{ 'animate-shake': playerShake }">
           <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">{{ TYPE_EMOJIS[battleStore.playerMon.type] }}</div>
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
-            <div class="flex justify-between font-bold text-[10px] sm:text-base">
-              <span>{{ battleStore.playerMon.name }}</span>
-              <span>Lv{{ battleStore.playerMon.level }}</span>
+            <div class="flex flex-col font-bold leading-tight">
+              <div class="flex justify-between items-start">
+                <div class="flex flex-col">
+                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ battleStore.playerMon.name }}</span>
+                  <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.playerMon.level }}</span>
+                </div>
+                <div class="flex flex-col items-end opacity-80">
+                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[battleStore.playerMon.type] }}</span>
+                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.playerMon.type }}</span>
+                </div>
+              </div>
             </div>
-            <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-1 overflow-hidden">
+            <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden">
               <div class="h-full transition-all duration-500"
                   :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
                   :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"></div>
@@ -67,12 +83,20 @@
       <div class="w-full sm:w-1/3 pl-0 sm:pl-4 mt-2 sm:mt-0 flex flex-col justify-center gap-2 shrink-0">
         <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord && !isSwitching">
           <div class="grid grid-cols-2 gap-2">
-            <button @click="prepareAttack('Quick Spell', 1)" class="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 font-bold border-b-4 border-blue-700 active:translate-y-1 text-sm">Attack (Easy)</button>
-            <button @click="prepareAttack('Power Spell', 2)" class="bg-purple-500 text-white py-2 rounded hover:bg-purple-600 font-bold border-b-4 border-purple-700 active:translate-y-1 text-sm">Attack (Hard)</button>
-            <button @click="tryCapture" :disabled="isCapturing" class="bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-sm">Capture</button>
-            <button @click="isSwitching = true" class="bg-green-500 text-white py-2 rounded hover:bg-green-600 font-bold border-b-4 border-green-700 active:translate-y-1 text-sm">Switch</button>
+            <button @click="prepareAttack"
+                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 0 }"
+                    class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg">Attack</button>
+            <button @click="tryCapture"
+                    :disabled="isCapturing"
+                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 1 }"
+                    class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs">Capture</button>
+            <button @click="isSwitching = true"
+                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 2 }"
+                    class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs">Switch</button>
           </div>
-          <button @click="tryRun" class="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600 font-bold border-b-4 border-gray-700 active:translate-y-1 mt-1 text-sm">Run</button>
+          <button @click="tryRun"
+                  :class="{ 'ring-4 ring-yellow-400': selectedIndex === 3 }"
+                  class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs">Run</button>
         </template>
 
         <template v-if="isSwitching">
@@ -91,36 +115,51 @@
 
         <template v-if="battleStore.currentWord">
           <div class="text-center flex flex-col h-full justify-between pb-1">
-            <div class="overflow-y-auto max-h-24 px-1">
-              <p v-if="battleStore.currentWord.definition" class="text-[10px] sm:text-xs leading-tight mb-1 italic">
-                "{{ battleStore.currentWord.definition }}"
-              </p>
-              <p v-if="battleStore.currentWord.sentence_context" class="text-[10px] sm:text-xs leading-tight font-bold mb-1">
-                {{ getMaskedSentence(battleStore.currentWord.sentence_context, battleStore.currentWord.word) }}
-              </p>
+            <div class="px-1">
+              <!-- Timer Bar -->
+              <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-2 border border-gray-400">
+                <div class="h-full transition-all duration-100"
+                     :class="timeLeft > (totalTime / 2) ? 'bg-yellow-400' : 'bg-red-500'"
+                     :style="{ width: `${(timeLeft / totalTime) * 100}%` }"></div>
+              </div>
+
+              <div class="overflow-y-auto max-h-16">
+                <p v-if="battleStore.currentWord.definition" class="text-[10px] leading-tight mb-1 italic">
+                  "{{ battleStore.currentWord.definition }}"
+                </p>
+                <p v-if="battleStore.currentWord.sentence_context" class="text-[10px] leading-tight font-bold mb-1">
+                  {{ getMaskedSentence(battleStore.currentWord.sentence_context, battleStore.currentWord.word) }}
+                </p>
+              </div>
             </div>
             <div>
-              <button @click="repeatWord" class="text-blue-500 text-xs underline mb-1 block w-full">Listen Again</button>
+              <button @click="repeatWord" class="text-blue-500 text-[10px] underline mb-1 block w-full">Listen Again</button>
               <input v-model="userInput" @keyup.enter="submitSpelling"
+                     ref="spellingInput"
                      @paste.prevent
-                     class="w-full border-2 sm:border-4 border-gray-800 p-1 sm:p-2 text-center text-lg sm:text-xl uppercase rounded-lg"
+                     class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
                      placeholder="TYPE HERE"
                      autocomplete="off"
                      autocorrect="off"
                      autocapitalize="off"
                      spellcheck="false"
+                     x-inputmode="text"
+                     inputmode="text"
                      autofocus />
-              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">Single Chance!</p>
+              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">Spell for Power!</p>
             </div>
           </div>
         </template>
       </div>
     </div>
+    <ExperienceView v-if="showResults"
+                      :participatingMons="participatingMons"
+                      @continue="battleStore.endBattle()" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
@@ -128,7 +167,8 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
 import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES } from '../utils/constants';
-import { calculateExpGain, calculateDamage, TYPE_EMOJIS, MONS } from '../utils/gameData';
+import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, MONS } from '../utils/gameData';
+import ExperienceView from './ExperienceView.vue';
 
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
@@ -138,14 +178,21 @@ const userInput = ref('');
 const isCapturing = ref(false);
 const isSwitching = ref(false);
 const isForcedSwitch = ref(false);
-const currentDifficulty = ref(1);
 const hintTimeouts = ref([]);
+
+const timeLeft = ref(0);
+const totalTime = ref(0);
+let timerInterval = null;
 
 const enemyShake = ref(false);
 const playerShake = ref(false);
 const enemyFainted = ref(false);
 const playerFainted = ref(false);
 const isFlashing = ref(false);
+const showResults = ref(false);
+const participatingMons = ref([]);
+const selectedIndex = ref(0);
+const spellingInput = ref(null);
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
@@ -157,16 +204,39 @@ const triggerShake = (isEnemy) => {
   }
 };
 
-const prepareAttack = (move, difficulty) => {
+const startTimer = (seconds) => {
+  if (timerInterval) clearInterval(timerInterval);
+  timeLeft.value = seconds;
+  totalTime.value = seconds;
+  timerInterval = setInterval(() => {
+    timeLeft.value -= 0.1;
+    if (timeLeft.value <= 0) {
+      timeLeft.value = 0;
+      clearInterval(timerInterval);
+      // Timer expired, but we don't auto-submit.
+      // User must still type and press Enter.
+      battleStore.log("Time's up! Type fast next time!");
+    }
+  }, 100);
+};
+
+const prepareAttack = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  const wordObj = vocabStore.getRandomWord(playerStore.currentArea, difficulty);
+  const wordObj = vocabStore.getRandomWord(playerStore.currentArea);
   if (!wordObj) {
     battleStore.log("Error: No words available!");
     return;
   }
   battleStore.setCurrentWord(wordObj);
-  currentDifficulty.value = difficulty;
-  battleStore.log(`Using ${move}!`);
+
+  // Timer based on difficulty and length
+  // Easy (1): 10s base, Hard (2): 6s base. + 0.8s per char
+  const baseTime = wordObj.difficulty === 2 ? 6 : 10;
+  const wordTime = wordObj.word.length * 0.8;
+  const time = Math.round(baseTime + wordTime);
+
+  startTimer(time);
+  battleStore.log(`Spellingmon Attack!`);
   speakFullHint(wordObj);
   userInput.value = '';
   isCapturing.value = false;
@@ -217,14 +287,19 @@ const tryCapture = () => {
     return;
   }
 
-  const wordObj = vocabStore.getRandomWord(playerStore.currentArea, 2);
+  const wordObj = vocabStore.getRandomWord(playerStore.currentArea);
   if (!wordObj) {
     battleStore.log("Error: No words available!");
     return;
   }
 
   battleStore.setCurrentWord(wordObj);
-  currentDifficulty.value = 2; // Hard difficulty for capture
+
+  const baseTime = wordObj.difficulty === 2 ? 5 : 8; // Slightly harder for capture
+  const wordTime = wordObj.word.length * 0.6;
+  const time = Math.round(baseTime + wordTime);
+
+  startTimer(time);
   battleStore.log(`Attempting to capture!`);
   speakFullHint(wordObj);
   userInput.value = '';
@@ -274,13 +349,23 @@ const submitSpelling = () => {
   const word = typeof battleStore.currentWord === 'string' ? battleStore.currentWord : battleStore.currentWord.word;
   if (!word) return;
 
+  const isPower = timeLeft.value > (totalTime.value / 2);
+
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
   const isCorrect = userInput.value.toLowerCase().trim() === word.toLowerCase().trim();
+
+  // Disable turn immediately to prevent double-actions during animations
+  battleStore.setTurn(false);
 
   if (isCorrect) {
     if (isCapturing.value) {
-      handleCaptureSuccess();
+      handleCaptureSuccess(isPower);
     } else {
-      handleAttackSuccess();
+      handleAttackSuccess(isPower);
     }
   } else {
     battleStore.log(`Incorrect! The word was "${word}".`);
@@ -292,9 +377,14 @@ const submitSpelling = () => {
   userInput.value = '';
 };
 
-const handleAttackSuccess = () => {
-  const basePower = currentDifficulty.value === 2 ? 60 : 30;
-  const { damage, typeMod } = calculateDamage(battleStore.playerMon, battleStore.enemyMon, basePower);
+const handleAttackSuccess = (isPower) => {
+  const basePower = isPower ? 60 : 30;
+  const wordDifficulty = battleStore.currentWord?.difficulty || 1;
+  const { damage, typeMod } = calculateDamage(battleStore.playerMon, battleStore.enemyMon, basePower, wordDifficulty);
+
+  if (isPower) {
+    battleStore.log("Super fast! Critical hit!");
+  }
 
   battleStore.damageEnemy(damage);
   battleStore.log(`Correct! Dealt ${damage} damage.`);
@@ -306,12 +396,14 @@ const handleAttackSuccess = () => {
   triggerShake(true);
 
   if (battleStore.enemyMon.hp <= 0) {
+    battleStore.setTurn(false);
     enemyFainted.value = true;
     audio.playSound(SOUND_EFFECTS.FAINT);
     battleStore.log(`${battleStore.enemyMon.name} fainted!`);
 
     const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === BATTLE_TYPES.TRAINER);
-    playerStore.awardExp(exp);
+    const results = playerStore.awardExp(exp);
+    participatingMons.value = results;
     battleStore.log(`Gained ${exp} EXP!`);
 
     if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
@@ -341,14 +433,16 @@ const handleAttackSuccess = () => {
 
     setTimeout(() => {
       audio.playSound(SOUND_EFFECTS.VICTORY);
-      setTimeout(() => battleStore.endBattle(), ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
+      setTimeout(() => {
+        showResults.value = true;
+      }, ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
     }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
   } else {
     enemyTurn();
   }
 };
 
-const handleCaptureSuccess = () => {
+const handleCaptureSuccess = (isPower) => {
   // Save current enemy state for verification after delay
   const targetEnemyId = battleStore.enemyMon?.id;
 
@@ -360,8 +454,8 @@ const handleCaptureSuccess = () => {
     }
 
     const hpRatio = battleStore.enemyMon.hp / battleStore.enemyMon.maxHp;
-    const difficultyBonus = currentDifficulty.value === 2 ? 0.1 : 0;
-    const successChance = (0.7 - (hpRatio * 0.5)) + difficultyBonus;
+    const speedBonus = isPower ? 0.2 : 0;
+    const successChance = (0.7 - (hpRatio * 0.5)) + speedBonus;
 
     if (Math.random() < successChance) {
       const added = playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });
@@ -369,7 +463,10 @@ const handleCaptureSuccess = () => {
         audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
         battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
         setTimeout(() => {
-          if (battleStore.inBattle) battleStore.endBattle();
+          if (battleStore.inBattle) {
+            participatingMons.value = [];
+            showResults.value = true;
+          }
         }, ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       } else {
         isCapturing.value = false;
@@ -383,6 +480,47 @@ const handleCaptureSuccess = () => {
       enemyTurn();
     }
   }, ANIMATION_DURATIONS.CAPTURE_PROCESS_MS);
+};
+
+const handleKeyDown = (e) => {
+  if (!battleStore.inBattle || showResults.value) return;
+
+  // If spelling word
+  if (battleStore.currentWord) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      // Prevent cancellation - word entry must be completed or timer must run out
+      e.preventDefault();
+    }
+    // Left/Right handled by input default behavior
+    return;
+  }
+
+  if (isSwitching.value) return;
+
+  if (e.key === 'ArrowUp') {
+    if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 0;
+    else if (selectedIndex.value === 3) selectedIndex.value = 1;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    e.preventDefault();
+  } else if (e.key === 'ArrowDown') {
+    if (selectedIndex.value === 0) selectedIndex.value = 1;
+    else if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 3;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    e.preventDefault();
+  } else if (e.key === 'ArrowLeft') {
+    if (selectedIndex.value === 2) selectedIndex.value = 1;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    e.preventDefault();
+  } else if (e.key === 'ArrowRight') {
+    if (selectedIndex.value === 1) selectedIndex.value = 2;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    e.preventDefault();
+  } else if (e.key === 'Enter') {
+    if (selectedIndex.value === 0) prepareAttack();
+    else if (selectedIndex.value === 1) tryCapture();
+    else if (selectedIndex.value === 2) isSwitching.value = true;
+    else if (selectedIndex.value === 3) tryRun();
+  }
 };
 
 const enemyTurn = () => {
@@ -421,7 +559,16 @@ const enemyTurn = () => {
   }, 1500);
 };
 
+watch(() => battleStore.currentWord, async (newVal) => {
+  if (newVal) {
+    await nextTick();
+    spellingInput.value?.focus();
+  }
+});
+
 onMounted(async () => {
+  window.addEventListener('keydown', handleKeyDown);
+
   // Re-sync playerMon with playerStore party to avoid desync after reload
   if (battleStore.playerMon) {
     const freshMon = playerStore.party.find(m => m.id === battleStore.playerMon.id);
@@ -439,6 +586,10 @@ onMounted(async () => {
   if (!battleStore.isPlayerTurn && battleStore.inBattle && !battleStore.currentWord) {
     enemyTurn();
   }
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown);
 });
 </script>
 

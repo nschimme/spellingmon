@@ -300,7 +300,10 @@ export class MapGenerator {
         if (map[y][x] === TILE_TYPES.WALL) {
           if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3);
         } else if (map[y][x] === TILE_TYPES.PATH || map[y][x] === TILE_TYPES.EMPTY) {
-          if (this.random() < grassChance) map[y][x] = TILE_TYPES.GRASS;
+          if (this.random() < grassChance) {
+             // Instead of a single tile, we use flood fill for grass to create "patches"
+             this.floodFill(map, x, y, TILE_TYPES.GRASS, this.randomRange(2, 5));
+          }
         }
       }
     }
@@ -309,8 +312,13 @@ export class MapGenerator {
   floodFill(map, x, y, type, size) {
     if (size <= 0 || x < 0 || y < 0 || x >= this.width || y >= this.height) return;
     map[y][x] = type;
-    if (this.random() > 0.2) this.floodFill(map, x + 1, y, type, size - 1);
-    if (this.random() > 0.2) this.floodFill(map, x, y + 1, type, size - 1);
+    const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    // Branch out in random directions to create more natural patches
+    for (const [dx, dy] of dirs) {
+      if (this.random() > 0.5) {
+        this.floodFill(map, x + dx, y + dy, type, size - 1);
+      }
+    }
   }
 
   getBiomeForArea(area) {

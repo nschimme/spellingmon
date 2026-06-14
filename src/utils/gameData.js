@@ -288,9 +288,12 @@ export function calculateStat(base, level, isHp = false) {
   return Math.floor(((2 * base + iv) * level) / 100) + 5;
 }
 
-export function calculateDamage(attacker, defender, basePower, difficultyMultiplier = 1) {
+export function calculateDamage(attacker, defender, basePower, difficulty = 1) {
   const atk = attacker.atk || calculateStat(MONS[attacker.species]?.baseAtk || 50, attacker.level);
   const def = defender.def || calculateStat(MONS[defender.species]?.baseDef || 50, defender.level);
+
+  // Use word difficulty to scale damage: Easy (1) -> 1.0x, Hard (2) -> 1.5x
+  const difficultyMultiplier = difficulty === 2 ? 1.5 : 1.0;
 
   const typeMod = TYPE_CHART[attacker.type]?.[defender.type] || 1;
 
@@ -298,9 +301,9 @@ export function calculateDamage(attacker, defender, basePower, difficultyMultipl
   // Damage = (((2 * level / 5 + 2) * Power * A/D) / 50 + 2) * Multiplier
   const levelPart = (2 * attacker.level) / 5 + 2;
   const statRatio = atk / def;
-  const baseDamage = ((levelPart * basePower * statRatio) / 50) + 2;
+  const baseDamage = (((levelPart * basePower * statRatio) / 50) + 2) * typeMod;
 
-  const finalDamage = Math.floor(baseDamage * typeMod * difficultyMultiplier);
+  const finalDamage = Math.floor(baseDamage * difficultyMultiplier);
   return {
     damage: Math.max(1, finalDamage),
     typeMod,
