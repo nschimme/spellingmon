@@ -4,6 +4,7 @@ import { usePlayerStore } from './stores/playerStore';
 import { useBattleStore } from './stores/battleStore';
 import { useSettingsStore } from './stores/settingsStore';
 import { useInputStore } from './stores/inputStore';
+import { speech } from './utils/speech';
 import LandingScreen from './components/LandingScreen.vue';
 import TTSWelcomeScreen from './components/TTSWelcomeScreen.vue';
 import CharacterCreation from './components/CharacterCreation.vue';
@@ -35,12 +36,16 @@ const handleGlobalInput = (e) => {
 };
 
 onMounted(async () => {
+  speech.onError(() => {
+    playerStore.notify('Speech failed. Your browser may not support TTS.');
+  });
   await settingsStore.init();
   inputStore.init();
   inputStore.addListener('global', handleGlobalInput, 10);
 });
 
 onUnmounted(() => {
+  speech.onError(null);
   inputStore.removeListener('global');
   inputStore.cleanup();
 });
@@ -81,6 +86,18 @@ onUnmounted(() => {
 
       <!-- Screen Glare Overlay -->
       <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
+
+      <!-- Global Notifications -->
+      <transition name="fade">
+        <div
+          v-if="playerStore.notification"
+          class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]"
+        >
+          <p class="text-[10px] font-black uppercase text-gray-800 text-center leading-relaxed">
+            {{ playerStore.notification }}
+          </p>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -105,5 +122,11 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #1f2937;
   border: 2px solid #f1f1f1;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>

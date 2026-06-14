@@ -49,18 +49,6 @@
       @stop="stopMovement"
       @toggle-menu="$emit('toggle-menu')"
     />
-
-    <!-- Notifications -->
-    <transition name="fade">
-      <div
-        v-if="playerStore.notification"
-        class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]"
-      >
-        <p class="text-[10px] font-black uppercase text-gray-800 text-center leading-relaxed">
-          {{ playerStore.notification }}
-        </p>
-      </div>
-    </transition>
   </div>
 </template>
 
