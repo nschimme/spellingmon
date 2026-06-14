@@ -449,6 +449,9 @@ const prepareAttack = () => {
   }
   battleStore.setCurrentWord(wordObj);
 
+  // Record as discovered
+  playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
+
   // Timer based on difficulty and length
   // Easy (1): 10s base, Hard (2): 6s base. + 0.8s per char
   const baseTime = wordObj.difficulty === 2 ? 6 : 10;
@@ -510,6 +513,9 @@ const tryCapture = () => {
 
   battleStore.setPhase(BATTLE_PHASES.SPELLING);
   battleStore.setCurrentWord(wordObj);
+
+  // Record as discovered
+  playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
   const baseTime = wordObj.difficulty === 2 ? 5 : 8; // Slightly harder for capture
   const wordTime = wordObj.word.length * 0.6;
@@ -580,6 +586,13 @@ const submitSpelling = () => {
   if (isCorrect) {
     thrownWord.value = word;
     setTimeout(() => thrownWord.value = '', 1000);
+
+    // Record as mastered
+    const isNewMastery = playerStore.recordMasteredWord(playerStore.currentArea, word);
+    if (isNewMastery) {
+      audio.playSound(SOUND_EFFECTS.DISCOVERY);
+      playerStore.notify(`Newly mastered word: ${word.toUpperCase()}!`);
+    }
 
     if (battleStore.isCapturing) {
       handleCaptureSuccess(isPower);

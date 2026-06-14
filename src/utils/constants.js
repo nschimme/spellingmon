@@ -20,6 +20,7 @@ export const SOUND_EFFECTS = {
   BATTLE_START: 'battle-start',
   VICTORY: 'victory',
   EVOLUTION: 'evolution',
+  DISCOVERY: 'discovery',
 };
 
 /**

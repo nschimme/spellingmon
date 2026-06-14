@@ -30,6 +30,8 @@ export const usePlayerStore = defineStore('player', {
       mapSeed: Math.random().toString(36).slice(2, 11),
       characterCreationComplete: false,
       discoveredTiles: {}, // areaNum -> Set of "x,y" strings
+      discoveredWords: {}, // areaNum -> Array of words (seen)
+      masteredWords: {}, // areaNum -> Array of words (spelled correctly)
     };
 
     if (saved) {
@@ -86,12 +88,6 @@ export const usePlayerStore = defineStore('player', {
       this.position = { x: this.lastSpellCenter.x, y: this.lastSpellCenter.y };
       this.healParty();
       this.saveState();
-
-      // Force map regeneration by triggering seed change or just relying on currentArea watch
-      // Actually, if area is the same, watch won't trigger.
-      // We might need a way to force WorldMap to re-sync.
-      // For now, setting gameStarted to false then true quickly might work,
-      // but let's just make sure WorldMap handles it.
     },
     saveState() {
       if (saveTimeout) clearTimeout(saveTimeout);
@@ -112,6 +108,32 @@ export const usePlayerStore = defineStore('player', {
         this.discoveredTiles[area].push(key);
         this.saveState();
       }
+    },
+    recordDiscoveredWord(area, word) {
+      if (!this.discoveredWords[area]) {
+        this.discoveredWords[area] = [];
+      }
+      const normalizedWord = word.toLowerCase().trim();
+      if (!this.discoveredWords[area].includes(normalizedWord)) {
+        this.discoveredWords[area].push(normalizedWord);
+        this.saveState();
+        return true;
+      }
+      return false;
+    },
+    recordMasteredWord(area, word) {
+      if (!this.masteredWords[area]) {
+        this.masteredWords[area] = [];
+      }
+      const normalizedWord = word.toLowerCase().trim();
+      if (!this.masteredWords[area].includes(normalizedWord)) {
+        this.masteredWords[area].push(normalizedWord);
+        // Also ensure it is in discovered
+        this.recordDiscoveredWord(area, word);
+        this.saveState();
+        return true; // Newly mastered
+      }
+      return false;
     },
     addSpellingmon(mon) {
       if (this.party.length < 6) {
@@ -173,6 +195,8 @@ export const usePlayerStore = defineStore('player', {
         mapSeed: Math.random().toString(36).slice(2, 11),
         characterCreationComplete: false,
         discoveredTiles: {},
+        discoveredWords: {},
+        masteredWords: {},
       };
       Object.assign(this.$state, defaults);
     },

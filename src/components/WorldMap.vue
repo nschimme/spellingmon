@@ -18,6 +18,7 @@
         :type="tile.type"
         :is-alerting="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
         :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
+        :transitions="currentMapData?.transitions"
       />
     </div>
 

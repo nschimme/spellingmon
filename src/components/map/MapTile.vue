@@ -15,13 +15,18 @@
 <script setup>
 import { computed } from 'vue';
 import { TILE_TYPES } from '../../utils/mapGenerator';
+import { TRANSITION_TYPES } from '../../utils/constants';
 
 const props = defineProps({
   x: Number,
   y: Number,
   type: Number,
   isAlerting: Boolean,
-  trainerEmoji: String
+  trainerEmoji: String,
+  transitions: {
+    type: Array,
+    default: () => []
+  }
 });
 
 const getTileClass = (type) => {
@@ -43,9 +48,12 @@ const emoji = computed(() => {
   if (props.type === TILE_TYPES.TRAINER) return props.trainerEmoji || '👤';
 
   switch (props.type) {
-    case TILE_TYPES.GRASS: return '🌿';
+    case TILE_TYPES.GRASS: return '🌲';
     case TILE_TYPES.SPELL_CENTER: return '🏥';
-    case TILE_TYPES.TRANSITION: return '🚪';
+    case TILE_TYPES.TRANSITION: {
+      const transition = props.transitions.find(t => t.x === props.x && t.y === props.y);
+      return transition?.type === TRANSITION_TYPES.NEXT ? '🔼' : '🔽';
+    }
     case TILE_TYPES.WATER: return '💧';
     case TILE_TYPES.BUILDING: return '🏠';
     default: return '';

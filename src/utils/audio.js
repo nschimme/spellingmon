@@ -87,6 +87,9 @@ class AudioService {
       case SOUND_EFFECTS.EVOLUTION:
         this.playEvolution();
         break;
+      case SOUND_EFFECTS.DISCOVERY:
+        this.playArpeggio([440, 659.25, 880, 1318.51], 0.08);
+        break;
       default:
         console.warn(`Unknown sound type requested: ${type}`);
         break;
