@@ -97,6 +97,9 @@ const handleConfirm = () => {
   });
 };
 
+import { onMounted, onUnmounted } from 'vue';
+import { useInputStore } from '../stores/inputStore';
+
 const { selectedIndex } = useKeyboardNavigation({
   id: 'character-creation',
   priority: INPUT_PRIORITIES.GLOBAL,
@@ -109,5 +112,46 @@ const { selectedIndex } = useKeyboardNavigation({
     if (idx >= 3 && idx <= 7) skinTone.value = skinTones[idx - 3].id;
     if (idx === 8) handleConfirm();
   }
+});
+
+// Custom navigation override
+const inputStore = useInputStore();
+const handleKeyDown = (e) => {
+  let newIdx = selectedIndex.value;
+  if (e.key === 'ArrowUp') {
+    if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 0;
+    else if (selectedIndex.value >= 3 && selectedIndex.value <= 7) newIdx = 1;
+    else if (selectedIndex.value === 8) newIdx = 3;
+  } else if (e.key === 'ArrowDown') {
+    if (selectedIndex.value === 0) newIdx = 1;
+    else if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 3;
+    else if (selectedIndex.value >= 3 && selectedIndex.value <= 7) newIdx = 8;
+  } else if (e.key === 'ArrowLeft') {
+    if (selectedIndex.value === 2) newIdx = 1;
+    else if (selectedIndex.value > 3 && selectedIndex.value <= 7) newIdx = selectedIndex.value - 1;
+  } else if (e.key === 'ArrowRight') {
+    if (selectedIndex.value === 1) newIdx = 2;
+    else if (selectedIndex.value >= 3 && selectedIndex.value < 7) newIdx = selectedIndex.value + 1;
+  } else {
+    return false;
+  }
+
+  if (newIdx !== selectedIndex.value) {
+    // If we are leaving the name input, blur it
+    if (selectedIndex.value === 0) {
+      nameInputRef.value?.blur();
+    }
+    selectedIndex.value = newIdx;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    return true;
+  }
+  return false;
+};
+
+onMounted(() => {
+  inputStore.addListener('character-creation-custom', handleKeyDown, INPUT_PRIORITIES.GLOBAL + 1);
+});
+onUnmounted(() => {
+  inputStore.removeListener('character-creation-custom');
 });
 </script>

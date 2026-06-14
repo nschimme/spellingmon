@@ -1,5 +1,6 @@
 <template>
-  <div class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden"
+  <div v-if="battleStore.inBattle && battleStore.playerMon && battleStore.enemyMon"
+       class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden"
        :class="{ 'animate-flash': isFlashing }"
        :style="{
          '--flash-duration': ANIMATION_DURATIONS.FLASH_MS + 'ms',
@@ -186,7 +187,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
+import { ref, onMounted, nextTick, watch, onUnmounted, computed } from 'vue';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
@@ -634,33 +635,50 @@ watch(isSwitching, (newVal) => {
 });
 
 onMounted(async () => {
-  // Override the default grid/list nav for action selection to handle the custom layout
-  inputStore.addListener('battle-actions-grid', handleActionKeyDown, INPUT_PRIORITIES.BATTLE + 1);
+  try {
+    // Override the default grid/list nav for action selection to handle the custom layout
+    inputStore.addListener('battle-actions-grid', handleActionKeyDown, INPUT_PRIORITIES.BATTLE + 1);
 
-  // Re-sync playerMon with playerStore party to avoid desync after reload
-  if (battleStore.playerMon) {
-    const freshMon = playerStore.party.find(m => m.id === battleStore.playerMon.id);
-    if (freshMon) {
-      battleStore.playerMon = freshMon;
+    // Re-sync playerMon with playerStore party to avoid desync after reload
+    if (battleStore.playerMon) {
+      const freshMon = playerStore.party.find(m => m.id === battleStore.playerMon.id);
+      if (freshMon) {
+        battleStore.playerMon = freshMon;
+      }
     }
-  }
 
-  isFlashing.value = true;
-  audio.playSound(SOUND_EFFECTS.BATTLE_START);
-  setTimeout(() => isFlashing.value = false, ANIMATION_DURATIONS.FLASH_MS);
-
-  await vocabStore.loadVocab(playerStore.currentArea);
-
-  // If it's the enemy's turn to start, make sure they do!
-  if (battleStore.inBattle) {
-    if (!battleStore.isPlayerTurn && !battleStore.currentWord) {
-      // Add a slight delay to let the battle start animation finish
-      setTimeout(() => {
-        enemyTurn();
-      }, ANIMATION_DURATIONS.FLASH_MS + 500);
-    } else {
-      battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
+    if (!battleStore.playerMon || !battleStore.enemyMon) {
+      console.error('Battle data missing on mount', {
+        player: !!battleStore.playerMon,
+        enemy: !!battleStore.enemyMon
+      });
+      battleStore.endBattle();
+      return;
     }
+
+    isFlashing.value = true;
+    audio.playSound(SOUND_EFFECTS.BATTLE_START);
+    setTimeout(() => isFlashing.value = false, ANIMATION_DURATIONS.FLASH_MS);
+
+    await vocabStore.loadVocab(playerStore.currentArea).catch(err => {
+      console.error('Failed to load vocab during battle init', err);
+      // We still proceed, but prepareAttack might fail later.
+    });
+
+    // If it's the enemy's turn to start, make sure they do!
+    if (battleStore.inBattle) {
+      if (!battleStore.isPlayerTurn && !battleStore.currentWord) {
+        // Add a slight delay to let the battle start animation finish
+        setTimeout(() => {
+          enemyTurn();
+        }, ANIMATION_DURATIONS.FLASH_MS + 500);
+      } else {
+        battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
+      }
+    }
+  } catch (error) {
+    console.error('Critical error during BattleView onMounted:', error);
+    battleStore.endBattle();
   }
 });
 
