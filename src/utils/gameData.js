@@ -1,4 +1,4 @@
-import { MONSTER_TYPES } from './constants';
+import { MONSTER_TYPES, BIOMES } from './constants';
 
 export const SPECIES = {
   Grammander: 'Grammander',
@@ -351,6 +351,7 @@ export const AREA_CONFIGS = {
     name: 'Alphabet Avenue',
     minLevel: 1,
     maxLevel: 10,
+    biome: BIOMES.ROUTE,
     encounters: [
       SPECIES.Verminverb, SPECIES.Aviprosa, SPECIES.Caterspell, SPECIES.Weedword,
       SPECIES.Drafto, SPECIES.Essayve, SPECIES.Grammander, SPECIES.Squirtspell, SPECIES.Bulbaword
@@ -360,6 +361,7 @@ export const AREA_CONFIGS = {
     name: 'Blend Boulevard',
     minLevel: 11,
     maxLevel: 18,
+    biome: BIOMES.TOWN,
     encounters: [
       SPECIES.Pikachart, SPECIES.Pointernote, SPECIES.Lexicat, SPECIES.Syntaxo,
       SPECIES.Metaphrase, SPECIES.Verbakuna, SPECIES.Foliofalcon, SPECIES.Slinkscript,
@@ -370,6 +372,7 @@ export const AREA_CONFIGS = {
     name: 'Syllable Springs',
     minLevel: 19,
     maxLevel: 28,
+    biome: BIOMES.WILDERNESS,
     encounters: [
       SPECIES.Primath, SPECIES.Rudeo, SPECIES.Burrowbook, SPECIES.Chopscript,
       SPECIES.Grammgloom, SPECIES.Paragraphid, SPECIES.Vowelmoth, SPECIES.Dictatone,
@@ -381,6 +384,7 @@ export const AREA_CONFIGS = {
     name: 'Suffix Summit',
     minLevel: 29,
     maxLevel: 38,
+    biome: BIOMES.CAVE,
     encounters: [
       SPECIES.Spellpoke, SPECIES.Venomverse, SPECIES.Clausefairy, SPECIES.Foxphrase,
       SPECIES.Balloonbard, SPECIES.Echoedit, SPECIES.Kerneloff, SPECIES.Citesey,
@@ -392,6 +396,7 @@ export const AREA_CONFIGS = {
     name: 'Prefix Peak',
     minLevel: 39,
     maxLevel: 48,
+    biome: BIOMES.WILDERNESS,
     encounters: [
       SPECIES.Spellpoke, SPECIES.Pikachart, SPECIES.Summarylax, SPECIES.Legendras,
       SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem,
@@ -404,6 +409,7 @@ export const AREA_CONFIGS = {
     name: 'Homophone Harbor',
     minLevel: 49,
     maxLevel: 58,
+    biome: BIOMES.TOWN,
     encounters: [
       SPECIES.Gramgar, SPECIES.Haikunter, SPECIES.Outlinix, SPECIES.Memowak, SPECIES.Wordweeze,
       SPECIES.Scrypt, SPECIES.Seaslang, SPECIES.Finfolio, SPECIES.Docair,
@@ -414,6 +420,7 @@ export const AREA_CONFIGS = {
     name: 'Loanword Labyrinth',
     minLevel: 59,
     maxLevel: 68,
+    biome: BIOMES.CAVE,
     encounters: [
       SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Docair,
       SPECIES.Legendras, SPECIES.Summarylax, SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem
@@ -423,6 +430,7 @@ export const AREA_CONFIGS = {
     name: 'Phoneme Forest',
     minLevel: 69,
     maxLevel: 80,
+    biome: BIOMES.FOREST,
     encounters: [
       SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Scrypt, SPECIES.Seaslang,
       SPECIES.Gramgar, SPECIES.Toxiterm, SPECIES.Venusterm, SPECIES.Blastlexis, SPECIES.Spelchar
@@ -432,6 +440,7 @@ export const AREA_CONFIGS = {
     name: 'Etymology Elite',
     minLevel: 81,
     maxLevel: 100,
+    biome: BIOMES.TOWN,
     encounters: [
       SPECIES.Musetwo, SPECIES.Muse, SPECIES.Datanite, SPECIES.Archizam, SPECIES.Champmanual, SPECIES.Textlem
     ],

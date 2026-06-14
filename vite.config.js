@@ -13,4 +13,7 @@ export default defineConfig({
       targets: ['defaults', 'not IE 11', 'Safari 12'],
     }),
   ],
+  build: {
+    target: 'es2015',
+  },
 })

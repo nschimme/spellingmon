@@ -19,6 +19,16 @@
   {"id": "w1_18", "word": "run", "definition": "To move quickly on foot.", "sentence_context": "I like to run in the park.", "difficulty": 1},
   {"id": "w1_19", "word": "sit", "definition": "To rest on your bottom.", "sentence_context": "Please sit down in your chair.", "difficulty": 1},
   {"id": "w1_20", "word": "hop", "definition": "To jump on one foot.", "sentence_context": "The rabbit likes to hop around.", "difficulty": 1},
+  {"id": "w1_21", "word": "map", "definition": "A drawing of an area or country.", "sentence_context": "We used a map to find the treasure.", "difficulty": 1},
+  {"id": "w1_22", "word": "net", "definition": "A mesh of wire or thread.", "sentence_context": "He caught a butterfly in his net.", "difficulty": 1},
+  {"id": "w1_23", "word": "pot", "definition": "A round container used for cooking.", "sentence_context": "Mom put the soup in a large pot.", "difficulty": 1},
+  {"id": "w1_24", "word": "rug", "definition": "A floor covering.", "sentence_context": "The cat is sleeping on the rug.", "difficulty": 1},
+  {"id": "w1_25", "word": "tub", "definition": "A large container for bathing.", "sentence_context": "Fill the tub with warm water.", "difficulty": 1},
+  {"id": "w1_26", "word": "van", "definition": "A large vehicle used for moving things.", "sentence_context": "We loaded the boxes into the van.", "difficulty": 1},
+  {"id": "w1_27", "word": "web", "definition": "A net made by a spider.", "sentence_context": "There is a spider web in the corner.", "difficulty": 1},
+  {"id": "w1_28", "word": "yak", "definition": "A large animal with long hair.", "sentence_context": "A yak lives in the cold mountains.", "difficulty": 1},
+  {"id": "w1_29", "word": "zip", "definition": "To fasten with a zipper.", "sentence_context": "Can you help me zip my coat?", "difficulty": 1},
+  {"id": "w1_30", "word": "jam", "definition": "A sweet spread made from fruit.", "sentence_context": "I like strawberry jam on my toast.", "difficulty": 1},
   {"id": "w1_31", "word": "frog", "definition": "A small green animal that hops.", "sentence_context": "The frog jumped into the pond.", "difficulty": 2},
   {"id": "w1_32", "word": "jump", "definition": "To push yourself off the ground.", "sentence_context": "How high can you jump?", "difficulty": 2},
   {"id": "w1_33", "word": "desk", "definition": "A table used for working or writing.", "sentence_context": "I keep my books on my desk.", "difficulty": 2},
@@ -26,5 +36,7 @@
   {"id": "w1_35", "word": "milk", "definition": "A white liquid from cows.", "sentence_context": "I drink a glass of milk with breakfast.", "difficulty": 2},
   {"id": "w1_38", "word": "fish", "definition": "An animal that lives in water.", "sentence_context": "The fish swam through the coral.", "difficulty": 2},
   {"id": "w1_39", "word": "lamp", "definition": "A device that produces light.", "sentence_context": "Turn on the lamp so we can see.", "difficulty": 2},
-  {"id": "w1_40", "word": "tree", "definition": "A tall plant with a trunk and branches.", "sentence_context": "The apple tree is full of fruit.", "difficulty": 2}
+  {"id": "w1_40", "word": "tree", "definition": "A tall plant with a trunk and branches.", "sentence_context": "The apple tree is full of fruit.", "difficulty": 2},
+  {"id": "w1_41", "word": "bus", "definition": "A large motor vehicle carrying passengers.", "sentence_context": "I take the bus to school.", "difficulty": 2},
+  {"id": "w1_42", "word": "bug", "definition": "A small insect.", "sentence_context": "A tiny bug crawled on the leaf.", "difficulty": 1}
 ]

@@ -377,8 +377,7 @@ export class MapGenerator {
   }
 
   getBiomeForArea(area) {
-    const biomes = [BIOMES.WILDERNESS, BIOMES.CAVE, BIOMES.TOWN, BIOMES.ROUTE, BIOMES.FOREST];
-    return biomes[(area - 1) % biomes.length];
+    return AREA_CONFIGS[area]?.biome || BIOMES.ROUTE;
   }
 
   generateLevelMap(map, levelMap, areaNum, entryRoom) {

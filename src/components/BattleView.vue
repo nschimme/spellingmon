@@ -453,8 +453,9 @@ const prepareAttack = () => {
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
   // Timer based on difficulty and length
-  // Easy (1): 10s base, Hard (2): 6s base. + 0.8s per char
-  const baseTime = wordObj.difficulty === 2 ? 6 : 10;
+  // Difficulty scale: 1 (Easy) to 3 (Hard)
+  // Base time: 10s (Easy), 7s (Medium), 5s (Hard)
+  const baseTime = wordObj.difficulty === 3 ? 5 : (wordObj.difficulty === 2 ? 7 : 10);
   const wordTime = wordObj.word.length * 0.8;
   const time = Math.round(baseTime + wordTime);
 
@@ -517,7 +518,7 @@ const tryCapture = () => {
   // Record as discovered
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
-  const baseTime = wordObj.difficulty === 2 ? 5 : 8; // Slightly harder for capture
+  const baseTime = wordObj.difficulty === 3 ? 4 : (wordObj.difficulty === 2 ? 6 : 8); // Slightly harder for capture
   const wordTime = wordObj.word.length * 0.6;
   const time = Math.round(baseTime + wordTime);
 

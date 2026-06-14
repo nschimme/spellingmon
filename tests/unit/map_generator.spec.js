@@ -45,9 +45,9 @@ describe('MapGenerator (State-of-the-art)', () => {
 
   it('generates specific biomes', () => {
     const gen = new MapGenerator('seed', 40, 40);
-    expect(gen.getBiomeForArea(1)).toBe(BIOMES.WILDERNESS);
-    expect(gen.getBiomeForArea(2)).toBe(BIOMES.CAVE);
-    expect(gen.getBiomeForArea(3)).toBe(BIOMES.TOWN);
+    expect(gen.getBiomeForArea(1)).toBe(BIOMES.ROUTE);
+    expect(gen.getBiomeForArea(2)).toBe(BIOMES.TOWN);
+    expect(gen.getBiomeForArea(3)).toBe(BIOMES.WILDERNESS);
   });
 
   it('generates a valid levelMap', () => {
