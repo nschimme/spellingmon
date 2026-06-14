@@ -103,16 +103,16 @@
       </div>
 
       <div class="w-full sm:w-1/3 pl-0 sm:pl-4 mt-2 sm:mt-0 flex flex-col justify-center gap-2 shrink-0">
-        <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord && !isSwitching">
+        <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord && !battleStore.isSwitching">
           <div class="grid grid-cols-2 gap-2">
             <button @click="prepareAttack"
                     :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
                     class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg">Attack</button>
             <button @click="tryCapture"
-                    :disabled="isCapturing"
+                    :disabled="battleStore.isCapturing"
                     :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
                     class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs">Capture</button>
-            <button @click="isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
+            <button @click="battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
                     :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
                     class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs">Switch</button>
           </div>
@@ -121,7 +121,7 @@
                   class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs">Run</button>
         </template>
 
-        <template v-if="isSwitching">
+        <template v-if="battleStore.isSwitching">
           <p class="text-xs font-bold text-center mb-1">Switch to who?</p>
           <div class="flex-1 overflow-y-auto pr-1">
             <button v-for="(mon, i) in playerStore.party" :key="i"
@@ -136,7 +136,7 @@
             </button>
           </div>
           <button v-show="battleStore.playerMon.hp > 0"
-                  @click="isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
+                  @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
                   :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
                   class="text-xs text-red-500 font-bold mt-1">Cancel</button>
         </template>
@@ -183,6 +183,71 @@
     <ExperienceView v-if="showResults"
                       :participatingMons="participatingMons"
                       @continue="battleStore.endBattle()" />
+
+    <!-- Party Full Replacement Modal -->
+    <div v-if="battleStore.phase === BATTLE_PHASES.PARTY_FULL_REPLACE && battleStore.pendingCapture"
+         class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
+        <div class="bg-yellow-500 p-6 text-center border-b-8 border-gray-800">
+          <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">Party Full!</h2>
+          <p class="text-white font-bold text-xs uppercase opacity-90">Choose someone to replace or release new Spellingmon</p>
+        </div>
+
+        <div class="flex-1 p-6 space-y-4 bg-gray-50 overflow-y-auto">
+          <div class="flex items-center gap-4 p-4 bg-yellow-100 border-4 border-yellow-400 rounded-2xl mb-6 shadow-sm">
+            <div class="text-5xl animate-bounce">{{ battleStore.pendingCapture.emoji }}</div>
+            <div class="flex-1">
+              <p class="text-[10px] font-black text-yellow-700 uppercase">New Capture</p>
+              <h3 class="text-2xl font-black text-gray-800 uppercase">{{ battleStore.pendingCapture.name }}</h3>
+              <p class="text-sm font-bold text-gray-500 uppercase">Level {{ battleStore.pendingCapture.level }} • {{ battleStore.pendingCapture.type }}</p>
+            </div>
+          </div>
+
+          <p class="text-center font-black text-gray-400 uppercase text-xs tracking-widest">Your Current Party</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button v-for="(mon, i) in playerStore.party" :key="mon.id"
+                    @click="handleReplaceMon(i)"
+                    :class="{ 'ring-8 ring-yellow-400 border-yellow-400 bg-yellow-50': partyReplaceSelectedIndex === i }"
+                    class="flex items-center gap-3 p-3 bg-white border-4 border-gray-800 rounded-xl hover:bg-gray-100 transition-all text-left">
+              <div class="text-2xl">{{ mon.emoji }}</div>
+              <div class="flex-1">
+                <div class="flex justify-between items-center">
+                  <span class="font-black text-sm uppercase truncate">{{ mon.name }}</span>
+                  <span class="text-[10px] font-bold text-blue-600">Lv {{ mon.level }}</span>
+                </div>
+                <div class="w-full bg-gray-200 h-1 rounded-full mt-1">
+                  <div class="h-full bg-green-500 rounded-full" :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"></div>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 bg-gray-100 border-t-8 border-gray-800 flex flex-col sm:flex-row gap-4">
+          <button @click="handleReleaseNewMon"
+                  :class="{ 'ring-8 ring-yellow-400': partyReplaceSelectedIndex === playerStore.party.length }"
+                  class="flex-1 bg-gray-400 text-white py-4 rounded-xl border-b-8 border-gray-600 font-black uppercase text-lg tracking-widest hover:bg-gray-500 active:translate-y-2 transition-all shadow-lg">
+            Release New
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Whited Out Modal -->
+    <div v-if="battleStore.phase === BATTLE_PHASES.WHITED_OUT"
+         class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center">
+      <div class="mb-8 text-8xl">🏥</div>
+      <h2 class="text-6xl font-black text-gray-800 mb-4 uppercase tracking-tighter italic">Whited Out!</h2>
+      <p class="text-xl font-bold text-gray-600 mb-12 max-w-md">
+        You have no more Spellingmon able to battle! You rushed to the nearest SpellCenter to heal.
+      </p>
+      <button @click="handleWhiteoutConfirm"
+              :class="{ 'ring-8 ring-yellow-400': whitedOutSelectedIndex === 0 }"
+              class="bg-red-600 text-white px-16 py-6 rounded-2xl border-b-8 border-red-800 font-black uppercase text-2xl tracking-widest hover:bg-red-700 active:translate-y-2 transition-all shadow-2xl">
+        Continue
+      </button>
+    </div>
   </div>
 </template>
 
@@ -206,8 +271,6 @@ const playerStore = usePlayerStore();
 const inputStore = useInputStore();
 
 const userInput = ref('');
-const isCapturing = ref(false);
-const isSwitching = ref(false);
 const isForcedSwitch = ref(false);
 const hintTimeouts = ref([]);
 
@@ -272,7 +335,7 @@ const prepareAttack = () => {
   battleStore.log(`Spellingmon Attack!`);
   speakFullHint(wordObj);
   userInput.value = '';
-  isCapturing.value = false;
+  battleStore.isCapturing = false;
 };
 
 const tryRun = () => {
@@ -296,7 +359,6 @@ const tryRun = () => {
 const handleSwitch = (mon) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   battleStore.switchPlayerMon(mon);
-  isSwitching.value = false;
   playerFainted.value = false; // Reset fainted view if switching after faint
 
   if (isForcedSwitch.value) {
@@ -308,15 +370,11 @@ const handleSwitch = (mon) => {
 };
 
 const tryCapture = () => {
-  if (isCapturing.value || (battleStore.enemyMon && battleStore.enemyMon.hp <= 0)) return;
+  if (battleStore.isCapturing || (battleStore.enemyMon && battleStore.enemyMon.hp <= 0)) return;
 
   audio.playSound(SOUND_EFFECTS.CLICK);
   if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
     battleStore.log("You can't capture a trainer's Spellingmon!");
-    return;
-  }
-  if (playerStore.party.length >= 6) {
-    battleStore.log("Your party is full! Cannot capture more.");
     return;
   }
 
@@ -337,7 +395,7 @@ const tryCapture = () => {
   battleStore.log(`Attempting to capture!`);
   speakFullHint(wordObj);
   userInput.value = '';
-  isCapturing.value = true;
+  battleStore.isCapturing = true;
 };
 
 const speakFullHint = (wordObj) => {
@@ -399,7 +457,7 @@ const submitSpelling = () => {
     thrownWord.value = word;
     setTimeout(() => thrownWord.value = '', 1000);
 
-    if (isCapturing.value) {
+    if (battleStore.isCapturing) {
       handleCaptureSuccess(isPower);
     } else {
       handleAttackSuccess(isPower);
@@ -437,6 +495,8 @@ const handleAttackSuccess = (isPower) => {
     participatingMons.value = results;
     battleStore.log(`Gained ${exp} EXP!`);
 
+      const hasExp = results.some(r => r.expGained > 0);
+
     if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
       const nextMonCfg = battleStore.getNextTrainerMon();
       if (nextMonCfg) {
@@ -459,8 +519,12 @@ const handleAttackSuccess = (isPower) => {
     setTimeout(() => {
       audio.playSound(SOUND_EFFECTS.VICTORY);
       setTimeout(() => {
-        battleStore.setPhase(BATTLE_PHASES.RESULTS);
-        showResults.value = true;
+        if (hasExp) {
+          battleStore.setPhase(BATTLE_PHASES.RESULTS);
+          showResults.value = true;
+        } else {
+          battleStore.endBattle();
+        }
       }, ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
     }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
   } else {
@@ -475,7 +539,7 @@ const handleCaptureSuccess = (isPower) => {
   setTimeout(() => {
     // Race condition check: ensure battle is still active and it's the same enemy
     if (!battleStore.inBattle || battleStore.enemyMon?.id !== targetEnemyId) {
-      isCapturing.value = false;
+      battleStore.isCapturing = false;
       return;
     }
 
@@ -484,24 +548,28 @@ const handleCaptureSuccess = (isPower) => {
     const successChance = (0.7 - (hpRatio * 0.5)) + speedBonus;
 
     if (Math.random() < successChance) {
-      const added = playerStore.addSpellingmon({ ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp });
-      if (added) {
-        audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
-        battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
+      audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
+      battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
+
+      const newMon = { ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp };
+
+      if (playerStore.party.length < 6) {
+        playerStore.addSpellingmon(newMon);
         setTimeout(() => {
           if (battleStore.inBattle) {
-            participatingMons.value = [];
-            showResults.value = true;
+            battleStore.endBattle();
           }
         }, ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       } else {
-        isCapturing.value = false;
-        battleStore.log(`Wait! Your party became full during the struggle?`);
-        enemyTurn();
+        // Party full flow
+        battleStore.pendingCapture = newMon;
+        setTimeout(() => {
+          battleStore.setPhase(BATTLE_PHASES.PARTY_FULL_REPLACE);
+        }, ANIMATION_DURATIONS.CAPTURE_END_DELAY_MS);
       }
     } else {
       audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
-      isCapturing.value = false;
+      battleStore.isCapturing = false;
       battleStore.log(`${battleStore.enemyMon.name} broke free!`);
       enemyTurn();
     }
@@ -513,18 +581,18 @@ const { selectedIndex, reset: resetActionNav } = useKeyboardNavigation({
   id: 'battle-actions',
   maxIndex: 4,
   priority: INPUT_PRIORITIES.BATTLE,
-  isActive: computed(() => battleStore.inBattle && battleStore.phase === BATTLE_PHASES.SELECT_ACTION && !isSwitching.value),
+  isActive: computed(() => battleStore.inBattle && battleStore.phase === BATTLE_PHASES.SELECT_ACTION && !battleStore.isSwitching),
   onConfirm: (idx) => {
     if (idx === 0) prepareAttack();
     else if (idx === 1) tryCapture();
-    else if (idx === 2) { isSwitching.value = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING); }
+    else if (idx === 2) { battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING); }
     else if (idx === 3) tryRun();
   }
 });
 
 // Custom override for 2x2-ish grid navigation
 const handleActionKeyDown = (e) => {
-  if (battleStore.phase !== BATTLE_PHASES.SELECT_ACTION || isSwitching.value) return false;
+  if (battleStore.phase !== BATTLE_PHASES.SELECT_ACTION || battleStore.isSwitching) return false;
 
   let newIdx = selectedIndex.value;
   if (e.key === 'ArrowUp') {
@@ -557,7 +625,7 @@ const { selectedIndex: switchingSelectedIndex } = useKeyboardNavigation({
   id: 'battle-switching',
   maxIndex: computed(() => playerStore.party.length + (battleStore.playerMon?.hp > 0 ? 1 : 0)),
   priority: INPUT_PRIORITIES.MODAL,
-  isActive: computed(() => isSwitching.value),
+  isActive: computed(() => battleStore.isSwitching),
   onConfirm: (idx) => {
     if (idx < playerStore.party.length) {
       const mon = playerStore.party[idx];
@@ -565,13 +633,13 @@ const { selectedIndex: switchingSelectedIndex } = useKeyboardNavigation({
         handleSwitch(mon);
       }
     } else {
-      isSwitching.value = false;
+      battleStore.isSwitching = false;
       battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
     }
   },
   onCancel: () => {
     if (battleStore.playerMon?.hp > 0) {
-      isSwitching.value = false;
+      battleStore.isSwitching = false;
       battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
     }
   }
@@ -603,16 +671,11 @@ const enemyTurn = () => {
       const hasHealthyMon = playerStore.party.some(m => m.hp > 0);
       if (hasHealthyMon) {
         battleStore.log("Choose another Spellingmon!");
-        isSwitching.value = true;
+        battleStore.isSwitching = true;
         isForcedSwitch.value = true;
         battleStore.setPhase(BATTLE_PHASES.SWITCHING);
       } else {
-        battleStore.setPhase(BATTLE_PHASES.END);
-        battleStore.log('You whited out! Teleporting to SpellCenter.');
-        setTimeout(() => {
-          playerStore.handleWhiteout();
-          battleStore.endBattle();
-        }, 2500);
+        battleStore.setPhase(BATTLE_PHASES.WHITED_OUT);
       }
     } else {
       battleStore.setTurn(true);
@@ -628,7 +691,49 @@ watch(() => battleStore.currentWord, async (newVal) => {
   }
 });
 
-watch(isSwitching, (newVal) => {
+const { selectedIndex: whitedOutSelectedIndex } = useKeyboardNavigation({
+  id: 'battle-whited-out',
+  maxIndex: 1,
+  priority: INPUT_PRIORITIES.MODAL,
+  isActive: computed(() => battleStore.phase === BATTLE_PHASES.WHITED_OUT),
+  onConfirm: () => handleWhiteoutConfirm()
+});
+
+const handleWhiteoutConfirm = () => {
+  audio.playSound(SOUND_EFFECTS.CLICK);
+  playerStore.handleWhiteout();
+  battleStore.endBattle();
+};
+
+const { selectedIndex: partyReplaceSelectedIndex } = useKeyboardNavigation({
+  id: 'battle-party-replace',
+  maxIndex: computed(() => playerStore.party.length + 1),
+  priority: INPUT_PRIORITIES.MODAL,
+  isActive: computed(() => battleStore.phase === BATTLE_PHASES.PARTY_FULL_REPLACE),
+  onConfirm: (idx) => {
+    if (idx < playerStore.party.length) handleReplaceMon(idx);
+    else handleReleaseNewMon();
+  }
+});
+
+const handleReplaceMon = (index) => {
+  audio.playSound(SOUND_EFFECTS.CLICK);
+  const replacedMonName = playerStore.party[index].name;
+  playerStore.replaceSpellingmon(index, battleStore.pendingCapture);
+  battleStore.log(`${replacedMonName} was released.`);
+  battleStore.log(`${battleStore.pendingCapture.name} joined the party!`);
+
+  // Finish battle
+  battleStore.endBattle();
+};
+
+const handleReleaseNewMon = () => {
+  audio.playSound(SOUND_EFFECTS.CLICK);
+  battleStore.log(`Released the wild ${battleStore.pendingCapture.name}.`);
+  battleStore.endBattle();
+};
+
+watch(() => battleStore.isSwitching, (newVal) => {
   if (newVal) {
     switchingSelectedIndex.value = 0;
   }
@@ -645,6 +750,11 @@ onMounted(async () => {
       if (freshMon) {
         battleStore.playerMon = freshMon;
       }
+    }
+
+    // Ensure phase is consistent with store state on mount
+    if (battleStore.isSwitching && battleStore.phase !== BATTLE_PHASES.SWITCHING) {
+      battleStore.setPhase(BATTLE_PHASES.SWITCHING);
     }
 
     if (!battleStore.playerMon || !battleStore.enemyMon) {

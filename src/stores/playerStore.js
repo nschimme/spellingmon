@@ -121,6 +121,14 @@ export const usePlayerStore = defineStore('player', {
       }
       return false;
     },
+    replaceSpellingmon(index, newMon) {
+      if (index >= 0 && index < this.party.length) {
+        this.party[index] = newMon;
+        this.saveState();
+        return true;
+      }
+      return false;
+    },
     updatePosition(pos) {
       this.position = pos;
       this.saveState();

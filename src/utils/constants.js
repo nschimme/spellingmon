@@ -53,6 +53,8 @@ export const BATTLE_PHASES = {
   SWITCHING: 'switching',
   END: 'end',
   RESULTS: 'results',
+  WHITED_OUT: 'whited_out',
+  PARTY_FULL_REPLACE: 'party_full_replace',
 };
 
 export const GENDERS = {

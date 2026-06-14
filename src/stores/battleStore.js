@@ -18,6 +18,9 @@ export const useBattleStore = defineStore('battle', {
       battleType: BATTLE_TYPES.WILD,
       trainerId: null,
       trainerParty: [],
+      isSwitching: false,
+      isCapturing: false,
+      pendingCapture: null,
     };
 
     const rawSaved = typeof window !== 'undefined' ? storage.load(STORAGE_KEYS.BATTLE_STATE) : null;
@@ -92,14 +95,26 @@ export const useBattleStore = defineStore('battle', {
       validated.trainerParty = saved.trainerParty;
     }
 
+    if (typeof saved.isSwitching === 'boolean') {
+      validated.isSwitching = saved.isSwitching;
+    }
+
+    if (typeof saved.isCapturing === 'boolean') {
+      validated.isCapturing = saved.isCapturing;
+    }
+
+    if (saved.pendingCapture) {
+      validated.pendingCapture = saved.pendingCapture;
+    }
+
     return validated;
   },
   actions: {
     saveState() {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
-        const { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty } = this.$state;
-        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty });
+        const { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture } = this.$state;
+        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
     startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null, trainerParty = []) {
@@ -166,6 +181,9 @@ export const useBattleStore = defineStore('battle', {
       this.currentWord = null;
       this.trainerId = null;
       this.battleType = BATTLE_TYPES.WILD;
+      this.isSwitching = false;
+      this.isCapturing = false;
+      this.pendingCapture = null;
       this.saveState();
     },
     setPhase(phase) {
@@ -184,8 +202,9 @@ export const useBattleStore = defineStore('battle', {
     },
     switchPlayerMon(newMon) {
       this.playerMon = newMon;
+      this.isSwitching = false;
       this.log(`Go, ${newMon.name}!`);
-      this.saveState();
+      this.setPhase(BATTLE_PHASES.SELECT_ACTION);
     },
     damageEnemy(amount) {
       if (!this.enemyMon) return;
@@ -220,6 +239,9 @@ export const useBattleStore = defineStore('battle', {
         battleType: BATTLE_TYPES.WILD,
         trainerId: null,
         trainerParty: [],
+        isSwitching: false,
+        isCapturing: false,
+        pendingCapture: null,
       };
       Object.assign(this.$state, defaults);
     }
