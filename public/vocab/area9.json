@@ -1,7 +1,7 @@
 [
   {"id": "w9_1", "word": "conscientious", "definition": "Wishing to do what is right; careful and painstaking.", "sentence_context": "She is a conscientious student who always finishes her work.", "difficulty": 2},
-  {"id": "w9_2", "word": "onomatopoeia", "definition": "A word that sounds like what it means.", "sentence_context": "'Buzz' and 'hiss' are examples of onomatopoeia.", "difficulty": 2},
-  {"id": "w9_3", "word": "etymology", "definition": "The study of the origin of words.", "sentence_context": "The etymology of 'robot' comes from a Czech word.", "difficulty": 2},
+  {"id": "w9_2", "word": "onomatopoeia", "definition": "A word that sounds like what it means.", "sentence_context": "Buzz and hiss are examples of onomatopoeia.", "difficulty": 2},
+  {"id": "w9_3", "word": "etymology", "definition": "The study of the origin of words.", "sentence_context": "The etymology of robot comes from a Czech word.", "difficulty": 2},
   {"id": "w9_4", "word": "renaissance", "definition": "A period of new growth or interest.", "sentence_context": "The city is experiencing a cultural renaissance.", "difficulty": 2},
   {"id": "w9_5", "word": "hierarchy", "definition": "A system where people are ranked one above another.", "sentence_context": "The company has a clear hierarchy.", "difficulty": 2},
   {"id": "w9_6", "word": "maneuver", "definition": "A movement requiring skill and care.", "sentence_context": "The pilot performed a difficult maneuver.", "difficulty": 2},

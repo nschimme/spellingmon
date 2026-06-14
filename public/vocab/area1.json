@@ -1,6 +1,6 @@
 [
   {"id": "w1_1", "word": "cat", "definition": "A small furry animal often kept as a pet.", "sentence_context": "The cat chased the laser pointer across the floor.", "difficulty": 1},
-  {"id": "w1_2", "word": "dog", "definition": "A common pet that bark and wags its tail.", "sentence_context": "I take my dog for a walk every morning.", "difficulty": 1},
+  {"id": "w1_2", "word": "dog", "definition": "A common pet that barks and wags its tail.", "sentence_context": "I take my dog for a walk every morning.", "difficulty": 1},
   {"id": "w1_3", "word": "bat", "definition": "A wooden stick used for hitting a ball.", "sentence_context": "He swung the bat and hit a home run.", "difficulty": 1},
   {"id": "w1_4", "word": "sun", "definition": "The star at the center of our solar system.", "sentence_context": "The sun is very bright today.", "difficulty": 1},
   {"id": "w1_5", "word": "cup", "definition": "A small bowl-shaped container for drinking.", "sentence_context": "She drank a cup of water.", "difficulty": 1},
@@ -12,7 +12,7 @@
   {"id": "w1_11", "word": "red", "definition": "The color of blood or a tomato.", "sentence_context": "My favorite color is red.", "difficulty": 1},
   {"id": "w1_12", "word": "ten", "definition": "The number after nine.", "sentence_context": "I have ten fingers.", "difficulty": 1},
   {"id": "w1_13", "word": "log", "definition": "A thick piece of wood from a tree.", "sentence_context": "We put another log on the fire.", "difficulty": 1},
-  {"id": "w1_14", "word": "mud", "definition": "Soft, wet earth.", "sentence_context": "The kids got stuck in the mud.", "difficulty": 1},
+  {"id": "w1_14", "word": "mud", "definition": "Soft, wet earth.", "sentence_context": "The children got stuck in the mud.", "difficulty": 1},
   {"id": "w1_15", "word": "nut", "definition": "A hard-shelled fruit or seed.", "sentence_context": "The squirrel hid a nut in the ground.", "difficulty": 1},
   {"id": "w1_16", "word": "ant", "definition": "A tiny insect that lives in a colony.", "sentence_context": "An ant was carrying a crumb of bread.", "difficulty": 1},
   {"id": "w1_17", "word": "bed", "definition": "A piece of furniture for sleeping.", "sentence_context": "It is time to go to bed.", "difficulty": 1},
