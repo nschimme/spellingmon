@@ -70,6 +70,27 @@
           </div>
         </div>
       </div>
+      <!-- Thrown Word Animation -->
+      <div v-if="thrownWord"
+           class="absolute z-50 pointer-events-none font-black text-xl sm:text-2xl text-blue-600 bg-white/90 px-4 py-2 rounded-lg border-4 border-blue-600 shadow-xl animate-throw"
+           :style="{
+             '--start-x': '10%',
+             '--start-y': '80%',
+             '--end-x': '70%',
+             '--end-y': '20%'
+           }">
+        {{ thrownWord }}
+      </div>
+
+      <!-- Mistake Feedback -->
+      <div v-if="mistakeWord"
+           class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm">
+        <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2 animate-bounce">
+          <p class="text-red-600 font-black uppercase text-xl mb-2">Incorrect!</p>
+          <p class="text-gray-500 font-bold uppercase text-[10px] mb-1">Should have been:</p>
+          <p class="text-4xl font-black uppercase tracking-widest text-gray-800">{{ mistakeWord }}</p>
+        </div>
+      </div>
     </div>
 
     <!-- Battle Log & Input -->
@@ -199,6 +220,8 @@ const showResults = ref(false);
 const participatingMons = ref([]);
 const selectedIndex = ref(0);
 const switchingSelectedIndex = ref(0);
+const thrownWord = ref('');
+const mistakeWord = ref('');
 const spellingInput = ref(null);
 
 const triggerShake = (isEnemy) => {
@@ -356,12 +379,12 @@ const submitSpelling = () => {
   const word = typeof battleStore.currentWord === 'string' ? battleStore.currentWord : battleStore.currentWord.word;
   if (!word) return;
 
-  const isPower = timeLeft.value > (totalTime.value / 2);
-
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
   }
+
+  const isPower = timeLeft.value > (totalTime.value / 2);
 
   const isCorrect = userInput.value.toLowerCase().trim() === word.toLowerCase().trim();
 
@@ -369,13 +392,20 @@ const submitSpelling = () => {
   battleStore.setTurn(false);
 
   if (isCorrect) {
+    thrownWord.value = word;
+    setTimeout(() => thrownWord.value = '', 1000);
+
     if (isCapturing.value) {
       handleCaptureSuccess(isPower);
     } else {
       handleAttackSuccess(isPower);
     }
   } else {
-    battleStore.log(`Incorrect! The word was "${word}".`);
+    mistakeWord.value = word.toUpperCase();
+    setTimeout(() => mistakeWord.value = '', 2000);
+
+    battleStore.log(`Incorrect!`);
+    battleStore.log(`Correct spelling: ${word.toUpperCase()}`);
     isCapturing.value = false;
     enemyTurn();
   }
@@ -654,5 +684,15 @@ onUnmounted(() => {
 }
 .animate-capture {
   animation: capture var(--capture-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes throw {
+  0% { left: var(--start-x); top: var(--start-y); transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  20% { opacity: 1; transform: scale(1.2) rotate(5deg); }
+  80% { opacity: 1; transform: scale(1) rotate(0deg); }
+  100% { left: var(--end-x); top: var(--end-y); transform: scale(0.2) rotate(20deg); opacity: 0; }
+}
+.animate-throw {
+  animation: throw 0.8s ease-in forwards;
 }
 </style>

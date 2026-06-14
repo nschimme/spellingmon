@@ -58,7 +58,7 @@ const props = defineProps({
   }
 });
 
-defineEmits(['continue']);
+const emit = defineEmits(['continue']);
 
 const results = ref([]);
 
