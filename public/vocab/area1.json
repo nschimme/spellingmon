@@ -34,9 +34,9 @@
   {"id": "w1_33", "word": "desk", "definition": "A table used for working or writing.", "sentence_context": "I keep my books on my desk.", "difficulty": 2},
   {"id": "w1_34", "word": "star", "definition": "A bright point in the night sky.", "sentence_context": "I saw a shooting star last night.", "difficulty": 2},
   {"id": "w1_35", "word": "milk", "definition": "A white liquid from cows.", "sentence_context": "I drink a glass of milk with breakfast.", "difficulty": 2},
-  {"id": "w1_38", "word": "fish", "definition": "An animal that lives in water.", "sentence_context": "The fish swam through the coral.", "difficulty": 2},
-  {"id": "w1_39", "word": "lamp", "definition": "A device that produces light.", "sentence_context": "Turn on the lamp so we can see.", "difficulty": 2},
-  {"id": "w1_40", "word": "tree", "definition": "A tall plant with a trunk and branches.", "sentence_context": "The apple tree is full of fruit.", "difficulty": 2},
-  {"id": "w1_41", "word": "bus", "definition": "A large motor vehicle carrying passengers.", "sentence_context": "I take the bus to school.", "difficulty": 2},
-  {"id": "w1_42", "word": "bug", "definition": "A small insect.", "sentence_context": "A tiny bug crawled on the leaf.", "difficulty": 1}
+  {"id": "w1_36", "word": "fish", "definition": "An animal that lives in water.", "sentence_context": "The fish swam through the coral.", "difficulty": 2},
+  {"id": "w1_37", "word": "lamp", "definition": "A device that produces light.", "sentence_context": "Turn on the lamp so we can see.", "difficulty": 2},
+  {"id": "w1_38", "word": "tree", "definition": "A tall plant with a trunk and branches.", "sentence_context": "The apple tree is full of fruit.", "difficulty": 2},
+  {"id": "w1_39", "word": "bus", "definition": "A large motor vehicle carrying passengers.", "sentence_context": "I take the bus to school.", "difficulty": 2},
+  {"id": "w1_40", "word": "bug", "definition": "A small insect.", "sentence_context": "A tiny bug crawled on the leaf.", "difficulty": 1}
 ]
