@@ -128,6 +128,7 @@ export const STORAGE_KEYS = {
 
 export const MENU_TABS = {
   PARTY: 'party',
+  SPELLINGDEX: 'spellingdex',
   PROGRESS: 'progress',
   MAP: 'map',
   SETTINGS: 'settings',

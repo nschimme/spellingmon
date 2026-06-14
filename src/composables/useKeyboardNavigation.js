@@ -73,7 +73,9 @@ export function useKeyboardNavigation({
       if (e.key === ' ' && e.target.tagName === 'INPUT') return false;
       onConfirm(selectedIndex.value);
       return true;
-    } else if (e.key === 'Escape' && onCancel) {
+    } else if ((e.key === 'Escape' || e.key === 'Backspace') && onCancel) {
+      // Backspace only triggers if not in an input field
+      if (e.key === 'Backspace' && e.target.tagName === 'INPUT') return false;
       onCancel();
       return true;
     } else {
