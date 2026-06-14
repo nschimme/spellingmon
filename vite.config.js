@@ -13,7 +13,4 @@ export default defineConfig({
       targets: ['Safari >= 12'],
     }),
   ],
-  build: {
-    target: 'es2015',
-  },
 })
