@@ -10,42 +10,60 @@
       </p>
 
       <div class="space-y-6">
-        <button @click="testVoice"
-                :disabled="isInitializing"
-                :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
-                class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1">
+        <button
+          :disabled="isInitializing"
+          :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+          class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1"
+          @click="testVoice"
+        >
           {{ isInitializing ? 'Loading...' : 'Test Voice' }}
         </button>
 
-        <div v-if="hasTested && !isInitializing" class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div
+          v-if="hasTested && !isInitializing"
+          class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500"
+        >
           <p class="text-xs font-bold text-center uppercase text-gray-500">
             Did you hear the voice?
           </p>
           <div class="flex gap-4">
-            <button @click="confirmSuccess"
-                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
-                    class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1">
+            <button
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
+              class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1"
+              @click="confirmSuccess"
+            >
               Yes
             </button>
-            <button @click="handleNo"
-                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
-                    class="flex-1 bg-red-500 hover:bg-red-600 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase text-sm active:border-b-0 active:translate-y-1">
+            <button
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
+              class="flex-1 bg-red-500 hover:bg-red-600 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase text-sm active:border-b-0 active:translate-y-1"
+              @click="handleNo"
+            >
               No
             </button>
           </div>
         </div>
 
-        <div v-if="showTroubleshooting" class="p-4 bg-gray-100 border-4 border-gray-300 rounded-xl space-y-2">
-          <p class="text-[10px] font-bold text-red-600 uppercase">Troubleshooting:</p>
+        <div
+          v-if="showTroubleshooting"
+          class="p-4 bg-gray-100 border-4 border-gray-300 rounded-xl space-y-2"
+        >
+          <p class="text-[10px] font-bold text-red-600 uppercase">
+            Troubleshooting:
+          </p>
           <ul class="text-[9px] font-bold text-gray-600 list-disc list-inside space-y-1">
             <li>Check your system volume</li>
             <li>Ensure your browser allows site audio</li>
             <li>Try selecting a different voice in settings (once game starts)</li>
-            <li v-if="isChrome">Chrome may need a moment to load voices.</li>
+            <li v-if="isChrome">
+              Chrome may need a moment to load voices.
+            </li>
           </ul>
-          <button @click="reinitSpeech"
-                  :disabled="isInitializing"
-                  class="w-full mt-2 text-[10px] bg-gray-300 hover:bg-gray-400 disabled:bg-gray-200 p-2 rounded border-b-2 border-gray-500 uppercase font-black">
+          <button
+            :disabled="isInitializing"
+            class="w-full mt-2 text-[10px] bg-gray-300 hover:bg-gray-400 disabled:bg-gray-200 p-2 rounded border-b-2 border-gray-500 uppercase font-black"
+            @click="reinitSpeech"
+          >
             {{ isInitializing ? 'Reloading...' : 'Reload Voices' }}
           </button>
         </div>

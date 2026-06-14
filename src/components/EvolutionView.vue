@@ -6,25 +6,35 @@
       </h2>
 
       <div class="relative w-64 h-64 flex items-center justify-center bg-gray-50 rounded-full border-8 border-gray-800 shadow-inner overflow-hidden">
-        <div class="text-9xl transition-all duration-300"
-             :class="step % 2 === 0 ? 'scale-100 opacity-100' : 'scale-125 opacity-50'">
+        <div
+          class="text-9xl transition-all duration-300"
+          :class="step % 2 === 0 ? 'scale-100 opacity-100' : 'scale-125 opacity-50'"
+        >
           {{ currentEmoji }}
         </div>
 
         <!-- Flash Effect -->
-        <div v-if="isComplete" class="absolute inset-0 bg-white animate-ping opacity-75"></div>
+        <div
+          v-if="isComplete"
+          class="absolute inset-0 bg-white animate-ping opacity-75"
+        />
       </div>
 
       <div class="mt-12 h-24 flex items-center justify-center">
-        <p v-if="isComplete" class="text-lg font-black uppercase text-center animate-bounce">
+        <p
+          v-if="isComplete"
+          class="text-lg font-black uppercase text-center animate-bounce"
+        >
           Congratulations! Your Spellingmon evolved into {{ pending?.newSpecies }}!
         </p>
       </div>
 
-      <button v-if="isComplete"
-              @click="finish"
-              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
-              class="mt-4 bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1">
+      <button
+        v-if="isComplete"
+        :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+        class="mt-4 bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1"
+        @click="finish"
+      >
         Awesome!
       </button>
     </div>

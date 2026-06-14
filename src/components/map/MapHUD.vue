@@ -4,7 +4,10 @@
       <div class="text-sm font-black text-gray-800 uppercase tracking-tighter">
         {{ areaName }}
       </div>
-      <div v-if="biome" class="text-[10px] font-bold text-blue-600 uppercase italic opacity-75">
+      <div
+        v-if="biome"
+        class="text-[10px] font-bold text-blue-600 uppercase italic opacity-75"
+      >
         {{ biome }}
       </div>
     </div>

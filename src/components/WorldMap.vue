@@ -1,44 +1,60 @@
 <template>
   <div class="relative w-full h-full bg-green-200 overflow-hidden select-none">
     <!-- Map Rendering -->
-    <div class="absolute"
-         :style="{
-           left: `calc(50% - ${playerX * 40}px)`,
-           top: `calc(50% - ${playerY * 40}px)`,
-           width: `${MAP_WIDTH * 40}px`,
-           height: `${MAP_HEIGHT * 40}px`
-         }">
-
-      <MapTile v-for="tile in viewportTiles" :key="`${tile.x}-${tile.y}`"
-               :x="tile.x" :y="tile.y" :type="tile.type"
-               :isAlerting="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
-               :trainerEmoji="getTrainerEmoji(tile.x, tile.y)" />
+    <div
+      class="absolute"
+      :style="{
+        left: `calc(50% - ${playerX * 40}px)`,
+        top: `calc(50% - ${playerY * 40}px)`,
+        width: `${MAP_WIDTH * 40}px`,
+        height: `${MAP_HEIGHT * 40}px`
+      }"
+    >
+      <MapTile
+        v-for="tile in viewportTiles"
+        :key="`${tile.x}-${tile.y}`"
+        :x="tile.x"
+        :y="tile.y"
+        :type="tile.type"
+        :is-alerting="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
+        :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
+      />
     </div>
 
     <!-- Player -->
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center">
-      <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">{{ playerStore.playerName }}</div>
+      <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">
+        {{ playerStore.playerName }}
+      </div>
       <div class="relative">
         <span>{{ playerEmoji }}</span>
         <span class="absolute -bottom-1 -right-1 text-xs">{{ playerStore.party[0]?.emoji }}</span>
       </div>
     </div>
 
-    <MapHUD :areaName="areaConfig.name"
-            :biome="currentMapData?.biome"
-            :leaderName="playerStore.party[0]?.name"
-            :leaderLevel="playerStore.party[0]?.level" />
+    <MapHUD
+      :area-name="areaConfig.name"
+      :biome="currentMapData?.biome"
+      :leader-name="playerStore.party[0]?.name"
+      :leader-level="playerStore.party[0]?.level"
+    />
 
     <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest hidden lg:block">
       WASD to Move | ESC for Menu
     </div>
 
-    <MobileControls @start="startMovement" @stop="stopMovement" @toggle-menu="$emit('toggle-menu')" />
+    <MobileControls
+      @start="startMovement"
+      @stop="stopMovement"
+      @toggle-menu="$emit('toggle-menu')"
+    />
 
     <!-- Notifications -->
     <transition name="fade">
-      <div v-if="playerStore.notification"
-           class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]">
+      <div
+        v-if="playerStore.notification"
+        class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]"
+      >
         <p class="text-[10px] font-black uppercase text-gray-800 text-center leading-relaxed">
           {{ playerStore.notification }}
         </p>

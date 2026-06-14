@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, SOUND_EFFECTS, BATTLE_PHASES } from '../utils/constants';
+import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, BATTLE_PHASES } from '../utils/constants';
 import { usePlayerStore } from './playerStore';
-import { calculateDamage, calculateExpGain, createMon } from '../utils/gameData';
-import { audio } from '../utils/audio';
+import { calculateDamage } from '../utils/gameData';
 
 export const useBattleStore = defineStore('battle', {
   state: () => {

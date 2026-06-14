@@ -1,18 +1,25 @@
 <template>
-  <div v-if="battleStore.inBattle && battleStore.playerMon && battleStore.enemyMon"
-       class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden"
-       :class="{ 'animate-flash': isFlashing }"
-       :style="{
-         '--flash-duration': ANIMATION_DURATIONS.FLASH_MS + 'ms',
-         '--shake-duration': '100ms',
-         '--capture-duration': ANIMATION_DURATIONS.CAPTURE_PROCESS_MS / 3 + 'ms'
-       }">
+  <div
+    v-if="battleStore.inBattle && battleStore.playerMon && battleStore.enemyMon"
+    class="fixed inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden"
+    :class="{ 'animate-flash': isFlashing }"
+    :style="{
+      '--flash-duration': ANIMATION_DURATIONS.FLASH_MS + 'ms',
+      '--shake-duration': '100ms',
+      '--capture-duration': ANIMATION_DURATIONS.CAPTURE_PROCESS_MS / 3 + 'ms'
+    }"
+  >
     <!-- Battle Field -->
     <div class="flex-1 relative border-4 border-gray-800 rounded-lg overflow-hidden bg-gradient-to-b from-blue-100 to-green-100 min-h-0">
       <!-- Enemy -->
-      <div class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
-           :class="{ 'opacity-0 translate-y-10': enemyFainted }">
-        <div class="flex flex-col items-end" :class="{ 'animate-shake': enemyShake }">
+      <div
+        class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
+        :class="{ 'opacity-0 translate-y-10': enemyFainted }"
+      >
+        <div
+          class="flex flex-col items-end"
+          :class="{ 'animate-shake': enemyShake }"
+        >
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
@@ -27,28 +34,48 @@
               </div>
             </div>
             <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden">
-              <div class="h-full transition-all duration-500"
-                  :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
-                  :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"></div>
+              <div
+                class="h-full transition-all duration-500"
+                :class="getHPColorClass(battleStore.enemyMon.hp, battleStore.enemyMon.maxHp)"
+                :style="{ width: `${(battleStore.enemyMon.hp / battleStore.enemyMon.maxHp) * 100}%` }"
+              />
             </div>
-            <div class="text-[8px] sm:text-xs text-right">{{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}</div>
+            <div class="text-[8px] sm:text-xs text-right">
+              {{ battleStore.enemyMon.hp }} / {{ battleStore.enemyMon.maxHp }}
+            </div>
           </div>
           <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
-          <div class="text-4xl sm:text-6xl mt-2 sm:mt-4 transition-transform duration-300"
-               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">{{ battleStore.enemyMon.emoji }}</div>
+          <div
+            class="text-4xl sm:text-6xl mt-2 sm:mt-4 transition-transform duration-300"
+            :class="{ 'scale-0 opacity-0': battleStore.isCapturing && !battleStore.currentWord }"
+          >
+            {{ battleStore.enemyMon.emoji }}
+          </div>
         </div>
 
         <!-- Capture Ball Anim -->
-        <div v-if="isCapturing && !battleStore.currentWord" class="absolute inset-0 flex items-center justify-center animate-capture">
-          <div class="text-2xl sm:text-4xl">🔴</div>
+        <div
+          v-if="battleStore.isCapturing && !battleStore.currentWord"
+          class="absolute inset-0 flex items-center justify-center animate-capture"
+        >
+          <div class="text-2xl sm:text-4xl">
+            🔴
+          </div>
         </div>
       </div>
 
       <!-- Player -->
-      <div class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
-           :class="{ 'opacity-0 translate-y-10': playerFainted }">
-        <div class="flex flex-col items-start" :class="{ 'animate-shake': playerShake }">
-          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">{{ battleStore.playerMon.emoji }}</div>
+      <div
+        class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
+        :class="{ 'opacity-0 translate-y-10': playerFainted }"
+      >
+        <div
+          class="flex flex-col items-start"
+          :class="{ 'animate-shake': playerShake }"
+        >
+          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">
+            {{ battleStore.playerMon.emoji }}
+          </div>
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
@@ -63,33 +90,47 @@
               </div>
             </div>
             <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden">
-              <div class="h-full transition-all duration-500"
-                  :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
-                  :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"></div>
+              <div
+                class="h-full transition-all duration-500"
+                :class="getHPColorClass(battleStore.playerMon.hp, battleStore.playerMon.maxHp)"
+                :style="{ width: `${(battleStore.playerMon.hp / battleStore.playerMon.maxHp) * 100}%` }"
+              />
             </div>
-            <div class="text-[8px] sm:text-xs text-right">{{ battleStore.playerMon.hp }} / {{ battleStore.playerMon.maxHp }}</div>
+            <div class="text-[8px] sm:text-xs text-right">
+              {{ battleStore.playerMon.hp }} / {{ battleStore.playerMon.maxHp }}
+            </div>
           </div>
         </div>
       </div>
       <!-- Thrown Word Animation -->
-      <div v-if="thrownWord"
-           class="absolute z-50 pointer-events-none font-black text-xl sm:text-2xl text-blue-600 bg-white/90 px-4 py-2 rounded-lg border-4 border-blue-600 shadow-xl animate-throw"
-           :style="{
-             '--start-x': '10%',
-             '--start-y': '80%',
-             '--end-x': '70%',
-             '--end-y': '20%'
-           }">
+      <div
+        v-if="thrownWord"
+        class="absolute z-50 pointer-events-none font-black text-xl sm:text-2xl text-blue-600 bg-white/90 px-4 py-2 rounded-lg border-4 border-blue-600 shadow-xl animate-throw"
+        :style="{
+          '--start-x': '10%',
+          '--start-y': '80%',
+          '--end-x': '70%',
+          '--end-y': '20%'
+        }"
+      >
         {{ thrownWord }}
       </div>
 
       <!-- Mistake Feedback -->
-      <div v-if="mistakeWord"
-           class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm">
+      <div
+        v-if="mistakeWord"
+        class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm"
+      >
         <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2 animate-bounce">
-          <p class="text-red-600 font-black uppercase text-xl mb-2">Incorrect!</p>
-          <p class="text-gray-500 font-bold uppercase text-[10px] mb-1">Should have been:</p>
-          <p class="text-4xl font-black uppercase tracking-widest text-gray-800">{{ mistakeWord }}</p>
+          <p class="text-red-600 font-black uppercase text-xl mb-2">
+            Incorrect!
+          </p>
+          <p class="text-gray-500 font-bold uppercase text-[10px] mb-1">
+            Should have been:
+          </p>
+          <p class="text-4xl font-black uppercase tracking-widest text-gray-800">
+            {{ mistakeWord }}
+          </p>
         </div>
       </div>
     </div>
@@ -97,7 +138,11 @@
     <!-- Battle Log & Input -->
     <div class="h-48 mt-4 border-4 border-gray-800 rounded-lg flex flex-col sm:flex-row p-4 bg-white overflow-hidden">
       <div class="flex-1 border-b sm:border-b-0 sm:border-r border-gray-300 pr-0 sm:pr-4 overflow-y-auto min-h-0">
-        <div v-for="(log, i) in battleStore.battleLog" :key="i" class="mb-1 text-xs sm:text-sm font-bold">
+        <div
+          v-for="(log, i) in battleStore.battleLog"
+          :key="i"
+          class="mb-1 text-xs sm:text-sm font-bold"
+        >
           {{ log }}
         </div>
       </div>
@@ -105,40 +150,65 @@
       <div class="w-full sm:w-1/3 pl-0 sm:pl-4 mt-2 sm:mt-0 flex flex-col justify-center gap-2 shrink-0">
         <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord && !battleStore.isSwitching">
           <div class="grid grid-cols-2 gap-2">
-            <button @click="prepareAttack"
-                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
-                    class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg">Attack</button>
-            <button @click="tryCapture"
-                    :disabled="battleStore.isCapturing"
-                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
-                    class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs">Capture</button>
-            <button @click="battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
-                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
-                    class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs">Switch</button>
+            <button
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+              class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg"
+              @click="prepareAttack"
+            >
+              Attack
+            </button>
+            <button
+              :disabled="battleStore.isCapturing"
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
+              class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs"
+              @click="tryCapture"
+            >
+              Capture
+            </button>
+            <button
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
+              class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs"
+              @click="battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
+            >
+              Switch
+            </button>
           </div>
-          <button @click="tryRun"
-                  :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
-                  class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs">Run</button>
+          <button
+            :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
+            class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs"
+            @click="tryRun"
+          >
+            Run
+          </button>
         </template>
 
         <template v-if="battleStore.isSwitching">
-          <p class="text-xs font-bold text-center mb-1">Switch to who?</p>
+          <p class="text-xs font-bold text-center mb-1">
+            Switch to who?
+          </p>
           <div class="flex-1 overflow-y-auto pr-1">
-            <button v-for="(mon, i) in playerStore.party" :key="i"
-                    @click="handleSwitch(mon)"
-                    :disabled="mon.hp <= 0 || mon.id === battleStore.playerMon.id"
-                    class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold disabled:opacity-50"
-                    :class="[
-                      mon.id === battleStore.playerMon.id ? 'bg-blue-100' : 'bg-white',
-                      switchingSelectedIndex === i ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
-                    ]">
+            <button
+              v-for="(mon, i) in playerStore.party"
+              :key="i"
+              :disabled="mon.hp <= 0 || mon.id === battleStore.playerMon.id"
+              class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold disabled:opacity-50"
+              :class="[
+                mon.id === battleStore.playerMon.id ? 'bg-blue-100' : 'bg-white',
+                switchingSelectedIndex === i ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
+              ]"
+              @click="handleSwitch(mon)"
+            >
               {{ mon.name }} (HP: {{ mon.hp }})
             </button>
           </div>
-          <button v-show="battleStore.playerMon.hp > 0"
-                  @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
-                  :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
-                  class="text-xs text-red-500 font-bold mt-1">Cancel</button>
+          <button
+            v-show="battleStore.playerMon.hp > 0"
+            :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
+            class="text-xs text-red-500 font-bold mt-1"
+            @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
+          >
+            Cancel
+          </button>
         </template>
 
         <template v-if="battleStore.currentWord">
@@ -146,78 +216,122 @@
             <div class="px-1">
               <!-- Timer Bar -->
               <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-2 border border-gray-400">
-                <div class="h-full transition-all duration-100"
-                     :class="timeLeft > (totalTime / 2) ? 'bg-yellow-400' : 'bg-red-500'"
-                     :style="{ width: `${(timeLeft / totalTime) * 100}%` }"></div>
+                <div
+                  class="h-full transition-all duration-100"
+                  :class="timeLeft > (totalTime / 2) ? 'bg-yellow-400' : 'bg-red-500'"
+                  :style="{ width: `${(timeLeft / totalTime) * 100}%` }"
+                />
               </div>
 
               <div class="overflow-y-auto max-h-16">
-                <p v-if="battleStore.currentWord.definition" class="text-[10px] leading-tight mb-1 italic">
+                <p
+                  v-if="battleStore.currentWord.definition"
+                  class="text-[10px] leading-tight mb-1 italic"
+                >
                   "{{ battleStore.currentWord.definition }}"
                 </p>
-                <p v-if="battleStore.currentWord.sentence_context" class="text-[10px] leading-tight font-bold mb-1">
+                <p
+                  v-if="battleStore.currentWord.sentence_context"
+                  class="text-[10px] leading-tight font-bold mb-1"
+                >
                   {{ getMaskedSentence(battleStore.currentWord.sentence_context, battleStore.currentWord.word) }}
                 </p>
               </div>
             </div>
             <div>
-              <button @click="repeatWord" class="text-blue-500 text-[10px] underline mb-1 block w-full">Listen Again</button>
-              <input v-model="userInput" @keydown.enter="submitSpelling"
-                     ref="spellingInput"
-                     @paste.prevent
-                     class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
-                     placeholder="TYPE HERE"
-                     autocomplete="off"
-                     autocorrect="off"
-                     autocapitalize="off"
-                     spellcheck="false"
-                     x-inputmode="text"
-                     inputmode="text"
-                     autofocus />
-              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">Spell for Power!</p>
+              <button
+                class="text-blue-500 text-[10px] underline mb-1 block w-full"
+                @click="repeatWord"
+              >
+                Listen Again
+              </button>
+              <input
+                ref="spellingInput"
+                v-model="userInput"
+                class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
+                placeholder="TYPE HERE"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                x-inputmode="text"
+                inputmode="text"
+                autofocus
+                @keydown.enter="submitSpelling"
+                @paste.prevent
+              >
+              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">
+                Spell for Power!
+              </p>
             </div>
           </div>
         </template>
       </div>
     </div>
-    <ExperienceView v-if="showResults"
-                      :participatingMons="participatingMons"
-                      @continue="battleStore.endBattle()" />
+    <ExperienceView
+      v-if="showResults"
+      :participating-mons="participatingMons"
+      @continue="battleStore.endBattle()"
+    />
 
     <!-- Party Full Replacement Modal -->
-    <div v-if="battleStore.phase === BATTLE_PHASES.PARTY_FULL_REPLACE && battleStore.pendingCapture"
-         class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div
+      v-if="battleStore.phase === BATTLE_PHASES.PARTY_FULL_REPLACE && battleStore.pendingCapture"
+      class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+    >
       <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
         <div class="bg-yellow-500 p-6 text-center border-b-8 border-gray-800">
-          <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">Party Full!</h2>
-          <p class="text-white font-bold text-xs uppercase opacity-90">Choose someone to replace or release new Spellingmon</p>
+          <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">
+            Party Full!
+          </h2>
+          <p class="text-white font-bold text-xs uppercase opacity-90">
+            Choose someone to replace or release new Spellingmon
+          </p>
         </div>
 
         <div class="flex-1 p-6 space-y-4 bg-gray-50 overflow-y-auto">
           <div class="flex items-center gap-4 p-4 bg-yellow-100 border-4 border-yellow-400 rounded-2xl mb-6 shadow-sm">
-            <div class="text-5xl animate-bounce">{{ battleStore.pendingCapture.emoji }}</div>
+            <div class="text-5xl animate-bounce">
+              {{ battleStore.pendingCapture.emoji }}
+            </div>
             <div class="flex-1">
-              <p class="text-[10px] font-black text-yellow-700 uppercase">New Capture</p>
-              <h3 class="text-2xl font-black text-gray-800 uppercase">{{ battleStore.pendingCapture.name }}</h3>
-              <p class="text-sm font-bold text-gray-500 uppercase">Level {{ battleStore.pendingCapture.level }} • {{ battleStore.pendingCapture.type }}</p>
+              <p class="text-[10px] font-black text-yellow-700 uppercase">
+                New Capture
+              </p>
+              <h3 class="text-2xl font-black text-gray-800 uppercase">
+                {{ battleStore.pendingCapture.name }}
+              </h3>
+              <p class="text-sm font-bold text-gray-500 uppercase">
+                Level {{ battleStore.pendingCapture.level }} • {{ battleStore.pendingCapture.type }}
+              </p>
             </div>
           </div>
 
-          <p class="text-center font-black text-gray-400 uppercase text-xs tracking-widest">Your Current Party</p>
+          <p class="text-center font-black text-gray-400 uppercase text-xs tracking-widest">
+            Your Current Party
+          </p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button v-for="(mon, i) in playerStore.party" :key="mon.id"
-                    @click="handleReplaceMon(i)"
-                    :class="{ 'ring-8 ring-yellow-400 border-yellow-400 bg-yellow-50': partyReplaceSelectedIndex === i }"
-                    class="flex items-center gap-3 p-3 bg-white border-4 border-gray-800 rounded-xl hover:bg-gray-100 transition-all text-left">
-              <div class="text-2xl">{{ mon.emoji }}</div>
+            <button
+              v-for="(mon, i) in playerStore.party"
+              :key="mon.id"
+              :class="{ 'ring-8 ring-yellow-400 border-yellow-400 bg-yellow-50': partyReplaceSelectedIndex === i }"
+              class="flex items-center gap-3 p-3 bg-white border-4 border-gray-800 rounded-xl hover:bg-gray-100 transition-all text-left"
+              @click="handleReplaceMon(i)"
+            >
+              <div class="text-2xl">
+                {{ mon.emoji }}
+              </div>
               <div class="flex-1">
                 <div class="flex justify-between items-center">
                   <span class="font-black text-sm uppercase truncate">{{ mon.name }}</span>
                   <span class="text-[10px] font-bold text-blue-600">Lv {{ mon.level }}</span>
                 </div>
                 <div class="w-full bg-gray-200 h-1 rounded-full mt-1">
-                  <div class="h-full bg-green-500 rounded-full" :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"></div>
+                  <div
+                    class="h-full bg-green-500 rounded-full"
+                    :style="{ width: `${(mon.hp / mon.maxHp) * 100}%` }"
+                  />
                 </div>
               </div>
             </button>
@@ -225,9 +339,11 @@
         </div>
 
         <div class="p-6 bg-gray-100 border-t-8 border-gray-800 flex flex-col sm:flex-row gap-4">
-          <button @click="handleReleaseNewMon"
-                  :class="{ 'ring-8 ring-yellow-400': partyReplaceSelectedIndex === playerStore.party.length }"
-                  class="flex-1 bg-gray-400 text-white py-4 rounded-xl border-b-8 border-gray-600 font-black uppercase text-lg tracking-widest hover:bg-gray-500 active:translate-y-2 transition-all shadow-lg">
+          <button
+            :class="{ 'ring-8 ring-yellow-400': partyReplaceSelectedIndex === playerStore.party.length }"
+            class="flex-1 bg-gray-400 text-white py-4 rounded-xl border-b-8 border-gray-600 font-black uppercase text-lg tracking-widest hover:bg-gray-500 active:translate-y-2 transition-all shadow-lg"
+            @click="handleReleaseNewMon"
+          >
             Release New
           </button>
         </div>
@@ -235,16 +351,24 @@
     </div>
 
     <!-- Whited Out Modal -->
-    <div v-if="battleStore.phase === BATTLE_PHASES.WHITED_OUT"
-         class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center">
-      <div class="mb-8 text-8xl">🏥</div>
-      <h2 class="text-6xl font-black text-gray-800 mb-4 uppercase tracking-tighter italic">Whited Out!</h2>
+    <div
+      v-if="battleStore.phase === BATTLE_PHASES.WHITED_OUT"
+      class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center"
+    >
+      <div class="mb-8 text-8xl">
+        🏥
+      </div>
+      <h2 class="text-6xl font-black text-gray-800 mb-4 uppercase tracking-tighter italic">
+        Whited Out!
+      </h2>
       <p class="text-xl font-bold text-gray-600 mb-12 max-w-md">
         You have no more Spellingmon able to battle! You rushed to the nearest SpellCenter to heal.
       </p>
-      <button @click="handleWhiteoutConfirm"
-              :class="{ 'ring-8 ring-yellow-400': whitedOutSelectedIndex === 0 }"
-              class="bg-red-600 text-white px-16 py-6 rounded-2xl border-b-8 border-red-800 font-black uppercase text-2xl tracking-widest hover:bg-red-700 active:translate-y-2 transition-all shadow-2xl">
+      <button
+        :class="{ 'ring-8 ring-yellow-400': whitedOutSelectedIndex === 0 }"
+        class="bg-red-600 text-white px-16 py-6 rounded-2xl border-b-8 border-red-800 font-black uppercase text-2xl tracking-widest hover:bg-red-700 active:translate-y-2 transition-all shadow-2xl"
+        @click="handleWhiteoutConfirm"
+      >
         Continue
       </button>
     </div>
@@ -261,7 +385,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
 import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES, INPUT_PRIORITIES, BATTLE_PHASES } from '../utils/constants';
-import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, MONS } from '../utils/gameData';
+import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
@@ -468,7 +592,7 @@ const submitSpelling = () => {
 
     battleStore.log(`Incorrect!`);
     battleStore.log(`Correct spelling: ${word.toUpperCase()}`);
-    isCapturing.value = false;
+    battleStore.isCapturing = false;
     enemyTurn();
   }
 

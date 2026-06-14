@@ -1,9 +1,13 @@
 <template>
-  <div class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg transition-all duration-300"
-       :class="getTileClass(type)"
-       :style="{ left: `${x * 40}px`, top: `${y * 40}px` }">
-    <span v-if="isAlerting"
-          class="absolute -top-6 text-red-600 font-bold animate-bounce text-2xl">!</span>
+  <div
+    class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg transition-all duration-300"
+    :class="getTileClass(type)"
+    :style="{ left: `${x * 40}px`, top: `${y * 40}px` }"
+  >
+    <span
+      v-if="isAlerting"
+      class="absolute -top-6 text-red-600 font-bold animate-bounce text-2xl"
+    >!</span>
     {{ emoji }}
   </div>
 </template>

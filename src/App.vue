@@ -50,9 +50,11 @@ onUnmounted(() => {
   <div class="w-screen h-screen overflow-hidden bg-gray-900 flex items-center justify-center p-2 sm:p-4">
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
-      <LandingScreen v-if="!playerStore.gameStarted"
-                     @continue="playerStore.startGame"
-                     @new-game="playerStore.startGame" />
+      <LandingScreen
+        v-if="!playerStore.gameStarted"
+        @continue="playerStore.startGame"
+        @new-game="playerStore.startGame"
+      />
       <template v-else-if="!playerStore.characterCreationComplete">
         <CharacterCreation />
       </template>
@@ -62,15 +64,23 @@ onUnmounted(() => {
       <template v-else>
         <StarterSelection v-if="!playerStore.isStarterSelected" />
         <template v-else>
-          <WorldMap :class="{ 'blur-[2px] pointer-events-none': showMenu }" v-if="!battleStore.inBattle" :isMenuOpen="showMenu" @toggle-menu="showMenu = !showMenu" />
+          <WorldMap
+            v-if="!battleStore.inBattle"
+            :class="{ 'blur-[2px] pointer-events-none': showMenu }"
+            :is-menu-open="showMenu"
+            @toggle-menu="showMenu = !showMenu"
+          />
           <BattleView v-if="battleStore.inBattle" />
-          <MenuOverlay v-if="showMenu" @close="showMenu = false" />
+          <MenuOverlay
+            v-if="showMenu"
+            @close="showMenu = false"
+          />
           <EvolutionView v-if="playerStore.evolutionPending" />
         </template>
       </template>
 
       <!-- Screen Glare Overlay -->
-      <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10"></div>
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
     </div>
   </div>
 </template>
