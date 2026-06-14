@@ -3,8 +3,12 @@
     <div class="bg-blue-50 p-4 rounded-2xl border-4 border-blue-200">
       <div class="flex justify-end items-center mb-4">
         <div class="text-right">
-          <div class="text-[10px] font-bold text-blue-600 uppercase">Global Progress</div>
-          <div class="text-lg font-black text-blue-800">{{ totalMastered }} / {{ totalWords }}</div>
+          <div class="text-[10px] font-bold text-blue-600 uppercase">
+            Global Progress
+          </div>
+          <div class="text-lg font-black text-blue-800">
+            {{ totalMastered }} / {{ totalWords }}
+          </div>
         </div>
       </div>
       <div class="w-full bg-blue-200 h-4 rounded-full border-2 border-blue-300 overflow-hidden">
@@ -66,7 +70,7 @@
         >
           <span class="text-4xl">🔒</span>
           <span class="font-black text-xs text-gray-500 uppercase tracking-widest text-center">
-            Area Information Locked<br/>
+            Area Information Locked<br>
             <span class="text-[10px] font-bold">Discover this route to unlock</span>
           </span>
         </div>

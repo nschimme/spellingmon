@@ -33,7 +33,9 @@
 
           <div class="flex-1 min-w-0">
             <div class="flex justify-between items-end mb-1">
-              <h3 class="text-xl font-black uppercase text-gray-800 truncate">{{ mon.name }}</h3>
+              <h3 class="text-xl font-black uppercase text-gray-800 truncate">
+                {{ mon.name }}
+              </h3>
               <span class="text-sm font-black text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md border-2 border-blue-200">LV{{ mon.level }}</span>
             </div>
 
@@ -70,22 +72,28 @@
 
         <div class="flex justify-between items-center mt-2 relative z-10">
           <div class="flex gap-4">
-             <div class="flex flex-col">
-               <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Attack</span>
-               <span class="text-sm font-black text-gray-700">{{ mon.atk }}</span>
-             </div>
-             <div class="flex flex-col">
-               <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Defense</span>
-               <span class="text-sm font-black text-gray-700">{{ mon.def }}</span>
-             </div>
-             <div class="flex flex-col">
-               <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Speed</span>
-               <span class="text-sm font-black text-gray-700">{{ mon.spd }}</span>
-             </div>
+            <div class="flex flex-col">
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Attack</span>
+              <span class="text-sm font-black text-gray-700">{{ mon.atk }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Defense</span>
+              <span class="text-sm font-black text-gray-700">{{ mon.def }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Speed</span>
+              <span class="text-sm font-black text-gray-700">{{ mon.spd }}</span>
+            </div>
           </div>
 
-          <div v-if="i > 0" class="flex items-center gap-2">
-            <span class="text-[10px] font-bold text-blue-500 uppercase animate-pulse" v-if="selectedIndex === i">Press ENTER to Swap</span>
+          <div
+            v-if="i > 0"
+            class="flex items-center gap-2"
+          >
+            <span
+              v-if="selectedIndex === i"
+              class="text-[10px] font-bold text-blue-500 uppercase animate-pulse"
+            >Press ENTER to Swap</span>
             <button
               class="bg-blue-500 hover:bg-blue-600 text-white text-[10px] px-4 py-2 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1 transition-all"
               @click="playerStore.moveMonToFront(i)"
@@ -93,7 +101,10 @@
               Set Leader
             </button>
           </div>
-          <div v-else class="flex items-center gap-2">
+          <div
+            v-else
+            class="flex items-center gap-2"
+          >
             <div class="bg-yellow-400 text-gray-900 text-[10px] px-3 py-1 rounded-full font-black uppercase border-2 border-gray-800 shadow-sm">
               ★ Active Leader
             </div>

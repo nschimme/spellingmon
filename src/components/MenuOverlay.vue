@@ -1,14 +1,15 @@
 <template>
   <div class="fixed inset-0 bg-gray-900 z-50 flex flex-col">
     <div class="flex-1 flex flex-col overflow-hidden max-w-4xl mx-auto w-full bg-white sm:border-x-8 sm:border-gray-800 shadow-2xl relative">
-
       <!-- Main Menu List -->
       <div
         v-if="!activeDetailTab"
         class="flex-1 flex flex-col p-6 bg-gray-50 overflow-y-auto"
       >
         <div class="mb-8">
-          <h1 class="text-4xl font-black uppercase text-gray-800 tracking-tighter">Menu</h1>
+          <h1 class="text-4xl font-black uppercase text-gray-800 tracking-tighter">
+            Menu
+          </h1>
           <div class="h-2 w-20 bg-blue-500 mt-2" />
         </div>
 
@@ -16,18 +17,21 @@
           <button
             v-for="(item, i) in menuItems"
             :key="item.id"
+            class="group flex items-center justify-between p-4 rounded-2xl transition-all duration-200 font-black uppercase tracking-widest text-left"
             :class="[
               selectedIndex === i ? 'bg-blue-600 text-white translate-x-2 ring-8 ring-yellow-400' : 'bg-white text-gray-700 hover:bg-gray-100 border-4 border-gray-800',
               item.class
             ]"
-            class="group flex items-center justify-between p-4 rounded-2xl transition-all duration-200 font-black uppercase tracking-widest text-left"
             @click="handleMenuClick(item)"
           >
             <div class="flex items-center gap-4">
               <span class="text-2xl group-hover:scale-125 transition-transform">{{ item.icon }}</span>
               <span>{{ item.label }}</span>
             </div>
-            <span v-if="selectedIndex === i" class="text-xl">▶</span>
+            <span
+              v-if="selectedIndex === i"
+              class="text-xl"
+            >▶</span>
           </button>
         </nav>
       </div>
@@ -47,7 +51,9 @@
           </button>
           <div class="flex flex-col">
             <span class="text-[10px] uppercase font-bold text-gray-400 leading-none">Menu</span>
-            <h2 class="text-xl font-black uppercase tracking-tight leading-none">{{ activeItemLabel }}</h2>
+            <h2 class="text-xl font-black uppercase tracking-tight leading-none">
+              {{ activeItemLabel }}
+            </h2>
           </div>
         </div>
 
@@ -64,7 +70,6 @@
           Press ESC or Back Button to return to Main Menu
         </div>
       </div>
-
     </div>
   </div>
 </template>
