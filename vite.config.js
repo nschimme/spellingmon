@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     legacy({
-      targets: ['defaults', 'not IE 11', 'Safari 12'],
+      targets: ['Safari >= 12'],
     }),
   ],
   build: {

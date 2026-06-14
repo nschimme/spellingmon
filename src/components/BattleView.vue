@@ -119,7 +119,7 @@
       <!-- Mistake Feedback -->
       <div
         v-if="mistakeWord"
-        class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm"
+        class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm webkit-backdrop-blur-sm"
       >
         <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2 animate-bounce">
           <p class="text-red-600 font-black uppercase text-xl mb-2">
@@ -277,7 +277,7 @@
     <!-- Party Full Replacement Modal -->
     <div
       v-if="battleStore.phase === BATTLE_PHASES.PARTY_FULL_REPLACE && battleStore.pendingCapture"
-      class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+      class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md webkit-backdrop-blur-md flex items-center justify-center p-4"
     >
       <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
         <div class="bg-yellow-500 p-6 text-center border-b-8 border-gray-800">
@@ -385,7 +385,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
 import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES, INPUT_PRIORITIES, BATTLE_PHASES } from '../utils/constants';
-import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS } from '../utils/gameData';
+import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, calculateTimerDuration } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
@@ -452,13 +452,7 @@ const prepareAttack = () => {
   // Record as discovered
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
-  // Linear timer algorithm: Base + (Difficulty * Multiplier) + (Length * Multiplier)
-  // Harder words (higher difficulty) get MORE time.
-  const baseTime = 8;
-  const difficultyBonus = (wordObj.difficulty || 1) * 2;
-  const wordLengthBonus = wordObj.word.length * 0.6;
-  const time = Math.round(baseTime + difficultyBonus + wordLengthBonus);
-
+  const time = calculateTimerDuration(wordObj, false);
   startTimer(time);
   battleStore.log(`Spellingmon Attack!`);
   speakFullHint(wordObj);
@@ -518,12 +512,7 @@ const tryCapture = () => {
   // Record as discovered
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
-  // Capture is slightly tighter: 70% of standard time
-  const baseTime = 6;
-  const difficultyBonus = (wordObj.difficulty || 1) * 1.5;
-  const wordLengthBonus = wordObj.word.length * 0.4;
-  const time = Math.round(baseTime + difficultyBonus + wordLengthBonus);
-
+  const time = calculateTimerDuration(wordObj, true);
   startTimer(time);
   battleStore.log(`Attempting to capture!`);
   speakFullHint(wordObj);

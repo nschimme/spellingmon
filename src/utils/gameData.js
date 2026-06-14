@@ -346,6 +346,25 @@ export function calculateExpGain(enemyMon, isTrainer) {
   return Math.floor((baseExp * enemyMon.level / 7) * trainerBonus);
 }
 
+/**
+ * Linear algorithm for battle timer duration.
+ * Harder and longer words receive more time.
+ * @param {Object} wordObj - The word object
+ * @param {boolean} isCapture - Whether this is a capture attempt
+ * @returns {number} Duration in seconds
+ */
+export function calculateTimerDuration(wordObj, isCapture = false) {
+  const base = isCapture ? 6 : 8;
+  const diffMultiplier = isCapture ? 1.5 : 2;
+  const lengthMultiplier = isCapture ? 0.4 : 0.6;
+
+  const difficulty = wordObj.difficulty || 1;
+  const length = wordObj.word.length;
+
+  const time = base + (difficulty * diffMultiplier) + (length * lengthMultiplier);
+  return Math.round(time);
+}
+
 export const AREA_CONFIGS = {
   1: {
     name: 'Alphabet Avenue',

@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.webkit-backdrop-blur-sm {
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.webkit-backdrop-blur-md {
+  -webkit-backdrop-filter: blur(12px);
+}

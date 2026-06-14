@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md webkit-backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
       <div class="bg-blue-600 p-6 text-center border-b-8 border-gray-800">
         <h2 class="text-3xl font-black text-white uppercase tracking-widest">
