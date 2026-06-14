@@ -65,7 +65,8 @@ export class MapGenerator {
     return Math.floor(this.random() * (max - min + 1)) + min;
   }
 
-  generate(areaNum) {
+  generate(areaNum, retryCount = 0) {
+    const MAX_RETRIES = 10;
     const map = Array(this.height).fill(0).map(() => Array(this.width).fill(TILE_TYPES.WALL));
     const levelMap = Array(this.height).fill(0).map(() => Array(this.width).fill(0));
     const biome = this.getBiomeForArea(areaNum);
@@ -144,7 +145,20 @@ export class MapGenerator {
     // 4. Features
     this.addFeatures(map, biome);
 
-    // 5. Level Map generation
+    // 5. Reachability Check
+    if (!this.isMapNavigable(map, transitions, spellCenter)) {
+      if (retryCount < MAX_RETRIES) {
+        console.warn(`Map generation failed reachability check for area ${areaNum} (attempt ${retryCount + 1}/${MAX_RETRIES}). Retrying with new seed...`);
+        // If map is invalid, retry with a slightly modified seed
+        this.seed = this.seed + "_retry" + retryCount;
+        this.rng = this.mulberry32(this.hashString(this.seed));
+        return this.generate(areaNum, retryCount + 1);
+      } else {
+        console.error(`Map generation failed after ${MAX_RETRIES} attempts for area ${areaNum}. Using potentially disconnected map.`);
+      }
+    }
+
+    // 6. Level Map generation
     this.generateLevelMap(map, levelMap, areaNum, entryRoom);
 
     return {
@@ -155,6 +169,42 @@ export class MapGenerator {
       transitions,
       biome
     };
+  }
+
+  isMapNavigable(map, transitions, spellCenter) {
+    if (transitions.length === 0) return true;
+
+    const start = transitions[0];
+    const targets = [...transitions.slice(1)];
+    if (spellCenter) targets.push(spellCenter);
+
+    if (targets.length === 0) return true;
+
+    const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
+
+    const checkReachability = (from, to) => {
+      const queue = [[from.x, from.y]];
+      const visited = new Set([`${from.x},${from.y}`]);
+
+      while (queue.length > 0) {
+        const [x, y] = queue.shift();
+        if (x === to.x && y === to.y) return true;
+
+        const neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]];
+        for (const [nx, ny] of neighbors) {
+          if (nx >= 0 && nx < this.width && ny >= 0 && ny < this.height) {
+            const key = `${nx},${ny}`;
+            if (walkable.includes(map[ny][nx]) && !visited.has(key)) {
+              visited.add(key);
+              queue.push([nx, ny]);
+            }
+          }
+        }
+      }
+      return false;
+    };
+
+    return targets.every(target => checkReachability(start, target));
   }
 
   splitNode(node, depth) {
@@ -292,31 +342,34 @@ export class MapGenerator {
   }
 
   addFeatures(map, biome) {
-    const grassChance = biome === BIOMES.FOREST ? 0.4 : (biome === BIOMES.CAVE ? 0.05 : 0.15);
+    const grassChance = biome === BIOMES.FOREST ? 0.2 : (biome === BIOMES.CAVE ? 0.025 : 0.07);
     const waterChance = biome === BIOMES.WILDERNESS ? 0.02 : 0.005;
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (map[y][x] === TILE_TYPES.WALL) {
-          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3);
+          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3, [TILE_TYPES.WALL]);
         } else if (map[y][x] === TILE_TYPES.PATH || map[y][x] === TILE_TYPES.EMPTY) {
           if (this.random() < grassChance) {
-             // Instead of a single tile, we use flood fill for grass to create "patches"
-             this.floodFill(map, x, y, TILE_TYPES.GRASS, this.randomRange(2, 5));
+             // Grass can only overwrite Path or Empty, never Water, Transitions or SpellCenters
+             this.floodFill(map, x, y, TILE_TYPES.GRASS, this.randomRange(2, 5), [TILE_TYPES.PATH, TILE_TYPES.EMPTY]);
           }
         }
       }
     }
   }
 
-  floodFill(map, x, y, type, size) {
+  floodFill(map, x, y, type, size, allowedOverwrites = null) {
     if (size <= 0 || x < 0 || y < 0 || x >= this.width || y >= this.height) return;
+
+    if (allowedOverwrites && !allowedOverwrites.includes(map[y][x])) return;
+
     map[y][x] = type;
     const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
     // Branch out in random directions to create more natural patches
     for (const [dx, dy] of dirs) {
       if (this.random() > 0.5) {
-        this.floodFill(map, x + dx, y + dy, type, size - 1);
+        this.floodFill(map, x + dx, y + dy, type, size - 1, allowedOverwrites);
       }
     }
   }

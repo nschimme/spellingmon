@@ -9,14 +9,10 @@
            height: `${MAP_HEIGHT * 40}px`
          }">
 
-      <div v-for="tile in viewportTiles" :key="`${tile.x}-${tile.y}`"
-           class="absolute w-10 h-10 border border-black/5 flex items-center justify-center text-lg transition-all duration-300"
-           :class="getTileClass(tile.type)"
-           :style="{ left: `${tile.x * 40}px`, top: `${tile.y * 40}px` }">
-        <span v-if="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
-              class="absolute -top-6 text-red-600 font-bold animate-bounce text-2xl">!</span>
-        {{ getTileEmoji(tile.type, tile.x, tile.y) }}
-      </div>
+      <MapTile v-for="tile in viewportTiles" :key="`${tile.x}-${tile.y}`"
+               :x="tile.x" :y="tile.y" :type="tile.type"
+               :isAlerting="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
+               :trainerEmoji="getTrainerEmoji(tile.x, tile.y)" />
     </div>
 
     <!-- Player -->
@@ -67,6 +63,7 @@ import { useTrainerAI } from '../composables/useTrainerAI';
 import { usePlayerMovement } from '../composables/usePlayerMovement';
 
 import MapHUD from './map/MapHUD.vue';
+import MapTile from './map/MapTile.vue';
 import MobileControls from './map/MobileControls.vue';
 
 const playerStore = usePlayerStore();
@@ -179,40 +176,15 @@ const viewportTiles = computed(() => {
   return tiles;
 });
 
-const getTileClass = (type) => {
-  switch (type) {
-    case TILE_TYPES.SPELL_CENTER: return 'bg-red-50 border-red-300';
-    case TILE_TYPES.GRASS: return 'bg-green-300';
-    case TILE_TYPES.TRANSITION: return 'bg-yellow-100';
-    case TILE_TYPES.WATER: return 'bg-blue-300';
-    case TILE_TYPES.WALL: return 'bg-gray-800';
-    case TILE_TYPES.CAVE_WALL: return 'bg-amber-900';
-    case TILE_TYPES.BUILDING: return 'bg-blue-800';
-    case TILE_TYPES.PATH: return 'bg-orange-50';
-    case TILE_TYPES.EMPTY: return 'bg-gray-100';
-    default: return 'bg-green-100';
-  }
-};
-
-const getTileEmoji = (type, x, y) => {
-  switch (type) {
-    case TILE_TYPES.GRASS: return '🌿';
-    case TILE_TYPES.SPELL_CENTER: return '🏥';
-    case TILE_TYPES.TRAINER: {
-      const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
-      if (!trainer) return '👤';
-      switch (trainer.direction) {
-        case 'up': return '🧒';
-        case 'down': return '👦';
-        case 'left': return '👧';
-        case 'right': return '🧒';
-        default: return '👤';
-      }
-    }
-    case TILE_TYPES.TRANSITION: return '🚪';
-    case TILE_TYPES.WATER: return '💧';
-    case TILE_TYPES.BUILDING: return '🏠';
-    default: return '';
+const getTrainerEmoji = (x, y) => {
+  const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
+  if (!trainer) return '👤';
+  switch (trainer.direction) {
+    case 'up': return '🧒';
+    case 'down': return '👦';
+    case 'left': return '👧';
+    case 'right': return '🧒';
+    default: return '👤';
   }
 };
 

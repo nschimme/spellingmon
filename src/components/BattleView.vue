@@ -34,7 +34,7 @@
           </div>
           <!-- Hide sprite during the capture ball animation (when isCapturing and word is gone) -->
           <div class="text-4xl sm:text-6xl mt-2 sm:mt-4 transition-transform duration-300"
-               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">{{ TYPE_EMOJIS[battleStore.enemyMon.type] }}</div>
+               :class="{ 'scale-0 opacity-0': isCapturing && !battleStore.currentWord }">{{ battleStore.enemyMon.emoji }}</div>
         </div>
 
         <!-- Capture Ball Anim -->
@@ -47,7 +47,7 @@
       <div class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
            :class="{ 'opacity-0 translate-y-10': playerFainted }">
         <div class="flex flex-col items-start" :class="{ 'animate-shake': playerShake }">
-          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">{{ TYPE_EMOJIS[battleStore.playerMon.type] }}</div>
+          <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">{{ battleStore.playerMon.emoji }}</div>
           <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
@@ -190,6 +190,7 @@ import { ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
+import { useInputStore } from '../stores/inputStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
@@ -200,6 +201,7 @@ import ExperienceView from './ExperienceView.vue';
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 const playerStore = usePlayerStore();
+const inputStore = useInputStore();
 
 const userInput = ref('');
 const isCapturing = ref(false);
@@ -415,19 +417,7 @@ const submitSpelling = () => {
 };
 
 const handleAttackSuccess = (isPower) => {
-  const basePower = isPower ? 60 : 30;
-  const wordDifficulty = battleStore.currentWord?.difficulty || 1;
-  const { damage, typeMod } = calculateDamage(battleStore.playerMon, battleStore.enemyMon, basePower, wordDifficulty);
-
-  if (isPower) {
-    battleStore.log("Super fast! Critical hit!");
-  }
-
-  battleStore.damageEnemy(damage);
-  battleStore.log(`Correct! Dealt ${damage} damage.`);
-  if (typeMod > 1) battleStore.log("It's super effective!");
-  if (typeMod < 1 && typeMod > 0) battleStore.log("It's not very effective...");
-  if (typeMod === 0) battleStore.log("It had no effect!");
+  battleStore.processAttack(isPower);
 
   audio.playSound(SOUND_EFFECTS.HIT);
   triggerShake(true);
@@ -444,14 +434,7 @@ const handleAttackSuccess = (isPower) => {
     battleStore.log(`Gained ${exp} EXP!`);
 
     if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
-      // Find current mon in party and mark it
-      const currentMonInParty = battleStore.trainerParty.find(m => !m.isDefeated);
-      if (currentMonInParty) {
-        currentMonInParty.isDefeated = true;
-      }
-
-      // Check for next monster in trainer party
-      const nextMonCfg = battleStore.trainerParty.find(m => !m.isDefeated);
+      const nextMonCfg = battleStore.getNextTrainerMon();
       if (nextMonCfg) {
         setTimeout(() => {
           const nextMon = createMon(nextMonCfg.species, nextMonCfg.level);

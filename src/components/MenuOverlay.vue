@@ -5,10 +5,9 @@
       <div class="flex bg-gray-100 border-b-8 border-gray-800 font-bold uppercase text-xs">
         <button v-for="tab in Object.values(MENU_TABS)" :key="tab"
                 @click="activeTab = tab"
-                class="flex-1 py-4 transition-colors relative"
+                class="flex-1 py-4 transition-colors"
                 :class="activeTab === tab ? 'bg-white text-blue-600' : 'text-gray-500 hover:bg-gray-200'">
           {{ tab }}
-          <div v-if="activeTab === tab" class="absolute bottom-0 left-0 w-full h-1 bg-blue-600"></div>
         </button>
       </div>
 
@@ -17,10 +16,7 @@
         <!-- Party Tab -->
         <div v-if="activeTab === MENU_TABS.PARTY" class="grid gap-4">
           <div v-for="(mon, i) in playerStore.party" :key="mon.id"
-               :class="[
-                 'bg-white border-4 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden',
-                 partySelectedIndex === i ? 'border-yellow-400 ring-4 ring-yellow-400' : 'border-gray-800'
-               ]">
+               class="bg-white border-4 border-gray-800 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden">
             <div class="flex items-center gap-4">
               <div class="text-4xl flex items-center gap-1">
                 <span>{{ mon.emoji }}</span>
@@ -150,89 +146,64 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, watch, onUnmounted } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS, INPUT_CONTEXTS } from '../utils/constants';
 import { TYPE_EMOJIS } from '../utils/gameData';
 import { getHPColorClass } from '../utils/visuals';
-import { MapGenerator, TILE_TYPES } from '../utils/mapGenerator';
+import { TILE_TYPES, MapGenerator } from '../utils/mapGenerator';
 
 const playerStore = usePlayerStore();
 const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const activeTab = ref(MENU_TABS.PARTY);
 const mapCanvas = ref(null);
-const partySelectedIndex = ref(0);
 
 const drawMap = () => {
   if (!mapCanvas.value || activeTab.value !== MENU_TABS.MAP) return;
   const ctx = mapCanvas.value.getContext('2d');
-  const discovered = playerStore.discoveredTiles[playerStore.currentArea] || [];
-  const areaNum = playerStore.currentArea;
+  const discovered = new Set(playerStore.discoveredTiles[playerStore.currentArea] || []);
 
-  // Use a temporary MapGenerator to get the map data for drawing paths/rooms
-  const gen = new MapGenerator(playerStore.mapSeed, 100, 100);
-  const mapData = gen.generate(areaNum);
+  const MAP_SIZE = 100;
+  ctx.fillStyle = '#111827'; // bg-gray-900
+  ctx.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
 
-  ctx.fillStyle = '#1f2937'; // Gray-800
-  ctx.fillRect(0, 0, 100, 100);
+  // Generate map data for rendering structure
+  const gen = new MapGenerator(playerStore.mapSeed, MAP_SIZE, MAP_SIZE);
+  const mapData = gen.generate(playerStore.currentArea);
 
-  if (Array.isArray(discovered)) {
-    discovered.forEach(key => {
-      const [x, y] = key.split(',').map(Number);
-      const tileType = mapData.map[y][x];
+  for (let y = 0; y < MAP_SIZE; y++) {
+    for (let x = 0; x < MAP_SIZE; x++) {
+      if (!discovered.has(`${x},${y}`)) continue;
 
-      // Determine color based on tile type but only if discovered
-      if (tileType === TILE_TYPES.PATH) {
-        ctx.fillStyle = '#000000'; // Black lines for paths
-      } else if (tileType === TILE_TYPES.EMPTY) {
-        ctx.fillStyle = '#4b5563'; // Gray-600 for rooms/empty
-      } else if (tileType === TILE_TYPES.GRASS) {
-        ctx.fillStyle = '#15803d'; // Green-700 for grass
-      } else if (tileType === TILE_TYPES.SPELL_CENTER) {
-        ctx.fillStyle = '#ef4444'; // Red-500 for SpellCenter
-      } else if (tileType === TILE_TYPES.TRANSITION) {
-        ctx.fillStyle = '#eab308'; // Yellow-500 for transitions
-      } else {
-        ctx.fillStyle = '#4ade80'; // Green-400 for others
+      const type = mapData.map[y][x];
+
+      if (type === TILE_TYPES.PATH) {
+        ctx.fillStyle = '#000000'; // Black lines for possible routes
+        ctx.fillRect(x, y, 1, 1);
+      } else if (type === TILE_TYPES.EMPTY) {
+        ctx.fillStyle = '#4b5563'; // Gray-600 boxes for rooms
+        ctx.fillRect(x, y, 1, 1);
+      } else if (type === TILE_TYPES.GRASS) {
+        ctx.fillStyle = '#15803d'; // Green-700
+        ctx.fillRect(x, y, 1, 1);
+      } else if (type === TILE_TYPES.SPELL_CENTER) {
+        ctx.fillStyle = '#ef4444'; // Red dot for Spelling Center
+        ctx.fillRect(x, y, 1, 1);
+      } else if (type === TILE_TYPES.TRANSITION) {
+        ctx.fillStyle = '#eab308'; // Yellow dot for entrance/exit
+        ctx.fillRect(x, y, 1, 1);
       }
-
-      ctx.fillRect(x, y, 1, 1);
-    });
-  }
-
-  // Draw special markers if discovered
-  if (Array.isArray(discovered)) {
-    const discoveredSet = new Set(discovered);
-
-    // Spell Center
-    if (mapData.spellCenter && discoveredSet.has(`${mapData.spellCenter.x},${mapData.spellCenter.y}`)) {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(mapData.spellCenter.x, mapData.spellCenter.y, 2, 2);
-      ctx.fillStyle = '#ef4444';
-      ctx.fillRect(mapData.spellCenter.x, mapData.spellCenter.y, 1, 1);
     }
-
-    // Transitions
-    mapData.transitions.forEach(t => {
-      if (discoveredSet.has(`${t.x},${t.y}`)) {
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(t.x, t.y, 2, 2);
-        ctx.fillStyle = '#eab308';
-        ctx.fillRect(t.x, t.y, 1, 1);
-      }
-    });
   }
 
   // Draw player
-  ctx.fillStyle = '#ef4444'; // Red-500
-  ctx.beginPath();
-  ctx.arc(playerStore.position.x + 0.5, playerStore.position.y + 0.5, 1.5, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillStyle = '#ef4444'; // Red dot
+  ctx.fillRect(playerStore.position.x, playerStore.position.y, 1, 1);
 };
 
 watch(activeTab, (newTab) => {
@@ -243,35 +214,16 @@ watch(activeTab, (newTab) => {
 
 const handleKeyDown = (e) => {
   const tabs = Object.values(MENU_TABS);
-  const currentTabIndex = tabs.indexOf(activeTab.value);
+  const currentIndex = tabs.indexOf(activeTab.value);
 
-  if (e.key === 'ArrowLeft') {
-    const nextTabIndex = (currentTabIndex - 1 + tabs.length) % tabs.length;
-    activeTab.value = tabs[nextTabIndex];
+  if (e.key === 'ArrowRight') {
+    activeTab.value = tabs[(currentIndex + 1) % tabs.length];
     audio.playSound(SOUND_EFFECTS.CLICK);
     return true;
-  } else if (e.key === 'ArrowRight') {
-    const nextTabIndex = (currentTabIndex + 1) % tabs.length;
-    activeTab.value = tabs[nextTabIndex];
+  } else if (e.key === 'ArrowLeft') {
+    activeTab.value = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
     audio.playSound(SOUND_EFFECTS.CLICK);
     return true;
-  } else if (activeTab.value === MENU_TABS.PARTY) {
-    if (e.key === 'ArrowUp') {
-      partySelectedIndex.value = (partySelectedIndex.value - 1 + playerStore.party.length) % playerStore.party.length;
-      audio.playSound(SOUND_EFFECTS.CLICK);
-      return true;
-    } else if (e.key === 'ArrowDown') {
-      partySelectedIndex.value = (partySelectedIndex.value + 1) % playerStore.party.length;
-      audio.playSound(SOUND_EFFECTS.CLICK);
-      return true;
-    } else if (e.key === 'Enter') {
-      if (partySelectedIndex.value > 0) {
-        playerStore.moveMonToFront(partySelectedIndex.value);
-        audio.playSound(SOUND_EFFECTS.CLICK);
-        partySelectedIndex.value = 0;
-      }
-      return true;
-    }
   }
   return false;
 };

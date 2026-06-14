@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS } from '../utils/constants';
+import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { usePlayerStore } from './playerStore';
+import { calculateDamage, calculateExpGain, createMon } from '../utils/gameData';
+import { audio } from '../utils/audio';
 
 export const useBattleStore = defineStore('battle', {
   state: () => {
@@ -116,6 +118,34 @@ export const useBattleStore = defineStore('battle', {
       }
 
       this.saveState();
+    },
+    // New action to centralize damage processing
+    processAttack(isPower) {
+      const basePower = isPower ? 60 : 30;
+      const wordDifficulty = this.currentWord?.difficulty || 1;
+      const { damage, typeMod } = calculateDamage(this.playerMon, this.enemyMon, basePower, wordDifficulty);
+
+      if (isPower) {
+        this.log("Super fast! Critical hit!");
+      }
+
+      this.damageEnemy(damage);
+      this.log(`Correct! Dealt ${damage} damage.`);
+      if (typeMod > 1) this.log("It's super effective!");
+      if (typeMod < 1 && typeMod > 0) this.log("It's not very effective...");
+      if (typeMod === 0) this.log("It had no effect!");
+
+      return { damage, typeMod };
+    },
+    getNextTrainerMon() {
+      if (this.battleType !== BATTLE_TYPES.TRAINER) return null;
+
+      const currentMonInParty = this.trainerParty.find(m => !m.isDefeated);
+      if (currentMonInParty) {
+        currentMonInParty.isDefeated = true;
+      }
+
+      return this.trainerParty.find(m => !m.isDefeated) || null;
     },
     log(msg) {
       this.battleLog.push(msg);
