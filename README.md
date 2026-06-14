@@ -1,6 +1,8 @@
 # Spellingmon 🐉 📝
 
-Welcome to **Spellingmon**, an open-source, educational role-playing game (RPG) built for kids!
+Welcome to **Spellingmon**, an open-source, educational role-playing game (RPG) built for kids! Heavily inspired by classic monster-collection games like Pokémon, Spellingmon swaps out traditional elemental battles for spelling proficiency.
+
+Instead of fighting, players progress through a vibrant 2D world by learning, listening, and typing. To defeat opponents and catch wild Spellingmon, players must listen to vocal audio hints and correctly spell words on their very first attempt!
 
 ## 🚀 Quick Start (Local Development)
 
@@ -27,9 +29,7 @@ npm install
 npm run dev
 ```
 
-See `bootstrap.sh` for the full launcher (handles Node checks, dependency installation, build, and preview). Heavily inspired by classic monster-collection games like Pokémon, Spellingmon swaps out traditional elemental battles for spelling proficiency.
-
-Instead of fighting, players progress through a vibrant 2D world by learning, listening, and typing. To defeat opponents and catch wild Spellingmon, players must listen to vocal audio hints and correctly spell words on their very first attempt!
+See `bootstrap.sh` for the full launcher (handles Node checks, dependency installation, build, and preview).
 
 ---
 

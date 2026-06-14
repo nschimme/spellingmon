@@ -127,20 +127,17 @@ export class MapGenerator {
     }
 
     let spellCenter = null;
-    if (areaNum === 1) {
-      // Area 1 starts at Spell Center
-      const scRoom = entryRoom;
-      spellCenter = { x: scRoom.centerX + 1, y: scRoom.centerY };
-      map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
-    } else {
-      // Other areas have spell center in a random room
-      const scRoom = rooms[this.randomRange(1, rooms.length - 2)];
-      spellCenter = { x: scRoom.centerX, y: scRoom.centerY };
-      if (map[spellCenter.y][spellCenter.x] === TILE_TYPES.TRANSITION) {
-        spellCenter.x++;
-      }
-      map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
+    // Every area now has a SpellCenter in the entry room for easy access
+    const scRoom = entryRoom;
+    spellCenter = { x: scRoom.centerX, y: scRoom.centerY };
+    // Offset from transition if they land on same tile
+    if (map[spellCenter.y][spellCenter.x] === TILE_TYPES.TRANSITION) {
+      if (spellCenter.x + 1 < scRoom.x + scRoom.w) spellCenter.x++;
+      else if (spellCenter.x - 1 >= scRoom.x) spellCenter.x--;
+      else if (spellCenter.y + 1 < scRoom.y + scRoom.h) spellCenter.y++;
+      else if (spellCenter.y - 1 >= scRoom.y) spellCenter.y--;
     }
+    map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
 
     const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter);
 

@@ -12,10 +12,10 @@ export const usePlayerStore = defineStore('player', {
     const saved = storage.load(STORAGE_KEYS.PLAYER_STATE);
     const defaultState = {
       party: [],
-      position: { x: 5, y: 5 },
+      position: null,
       unlockedAreas: [1],
       currentArea: 1,
-      lastSpellCenter: { x: 5, y: 5, area: 1 },
+      lastSpellCenter: null,
       isStarterSelected: false,
       gameStarted: false,
       ttsVerified: false,
@@ -84,8 +84,10 @@ export const usePlayerStore = defineStore('player', {
     handleWhiteout() {
       // If we white out, we must go back to the last visited Spellcenter
       // Even if it was in a previous area.
-      this.currentArea = this.lastSpellCenter.area;
-      this.position = { x: this.lastSpellCenter.x, y: this.lastSpellCenter.y };
+      if (this.lastSpellCenter) {
+        this.currentArea = this.lastSpellCenter.area;
+        this.position = { x: this.lastSpellCenter.x, y: this.lastSpellCenter.y };
+      }
       this.healParty();
       this.saveState();
     },
@@ -181,10 +183,10 @@ export const usePlayerStore = defineStore('player', {
       // Reset state to defaults (excluding ttsVerified which is transient anyway)
       const defaults = {
         party: [],
-        position: { x: 5, y: 5 },
+        position: null,
         unlockedAreas: [1],
         currentArea: 1,
-        lastSpellCenter: { x: 5, y: 5, area: 1 },
+        lastSpellCenter: null,
         isStarterSelected: false,
         gameStarted: false,
         defeatedTrainers: [],

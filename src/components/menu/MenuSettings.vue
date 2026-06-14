@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-6">
     <!-- Audio Settings -->
-    <div>
+    <div :ref="el => { if (el) itemRefs[1] = el }">
       <label class="font-black uppercase text-gray-600 block mb-2 text-xs">Sound Settings</label>
       <div
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 1 || selectedIndex === 2 }"
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div>
+    <div :ref="el => { if (el) itemRefs[0] = el }">
       <label class="font-black uppercase text-gray-600 block mb-2 text-xs">TTS Voice Configuration</label>
       <select
         v-model="settingsStore.selectedVoiceName"
@@ -47,6 +47,7 @@
 
     <div class="grid grid-cols-2 gap-4">
       <button
+        :ref="el => { if (el) itemRefs[3] = el }"
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 3 }"
         class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black uppercase tracking-wider active:translate-y-1 text-xs"
         @click="testVoice"
@@ -54,6 +55,7 @@
         Test Voice
       </button>
       <button
+        :ref="el => { if (el) itemRefs[4] = el }"
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 4 }"
         class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black uppercase tracking-wider active:translate-y-1 text-xs"
         @click="testSFX"
@@ -65,6 +67,7 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { speech } from '../../utils/speech';
@@ -74,6 +77,7 @@ import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../../utils/constants';
 const settingsStore = useSettingsStore();
 
 const emit = defineEmits(['back']);
+const itemRefs = ref([]);
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-settings',
@@ -85,6 +89,13 @@ const { selectedIndex } = useKeyboardNavigation({
     if (idx === 4) testSFX();
   },
   onCancel: () => emit('back')
+});
+
+watch(selectedIndex, (newIdx) => {
+  const el = itemRefs.value[newIdx] || itemRefs.value[1]; // Fallback for 1/2 both being in same div
+  if (el) {
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
 });
 
 const updateVoice = (e) => {

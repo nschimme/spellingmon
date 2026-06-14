@@ -7,6 +7,7 @@
       <div
         v-for="i in GAME_CONSTANTS.MAX_AREAS"
         :key="i"
+        :ref="el => { if (el) itemRefs[i-1] = el }"
         class="p-4 border-4 border-gray-800 rounded-xl font-bold flex justify-between items-center bg-white transition-all"
         :class="[
           playerStore.unlockedAreas.includes(i) ? 'border-green-400 bg-green-50/30' : 'text-gray-400 grayscale opacity-60',
@@ -35,7 +36,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, INPUT_PRIORITIES } from '../../utils/constants';
@@ -44,6 +45,7 @@ import { AREA_CONFIGS } from '../../utils/gameData';
 const playerStore = usePlayerStore();
 
 const emit = defineEmits(['back']);
+const itemRefs = ref([]);
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-progress',
@@ -51,5 +53,11 @@ const { selectedIndex } = useKeyboardNavigation({
   maxIndex: computed(() => GAME_CONSTANTS.MAX_AREAS),
   onConfirm: () => {},
   onCancel: () => emit('back')
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (itemRefs.value[newIdx]) {
+    itemRefs.value[newIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
 });
 </script>

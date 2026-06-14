@@ -37,7 +37,10 @@ export function useKeyboardNavigation({
 
     let newIndex = selectedIndex.value;
 
-    if (e.key === 'ArrowUp') {
+    const key = e.key.toLowerCase();
+    const isInput = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+
+    if (e.key === 'ArrowUp' || (!isInput && key === 'w')) {
       if (selectedIndex.value - gridColumns >= 0) {
         newIndex = selectedIndex.value - gridColumns;
       } else if (loop) {
@@ -47,13 +50,13 @@ export function useKeyboardNavigation({
         newIndex = (rows - 1) * gridColumns + col;
         if (newIndex >= max) newIndex -= gridColumns;
       }
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === 'ArrowDown' || (!isInput && key === 's')) {
       if (selectedIndex.value + gridColumns < max) {
         newIndex = selectedIndex.value + gridColumns;
       } else if (loop) {
         newIndex = selectedIndex.value % gridColumns;
       }
-    } else if (e.key === 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft' || (!isInput && key === 'a')) {
       if (selectedIndex.value % gridColumns > 0) {
         newIndex = selectedIndex.value - 1;
       } else if (loop) {
@@ -61,7 +64,7 @@ export function useKeyboardNavigation({
         const rowStart = Math.floor(selectedIndex.value / gridColumns) * gridColumns;
         newIndex = Math.min(max - 1, rowStart + gridColumns - 1);
       }
-    } else if (e.key === 'ArrowRight') {
+    } else if (e.key === 'ArrowRight' || (!isInput && key === 'd')) {
       const rowStart = Math.floor(selectedIndex.value / gridColumns) * gridColumns;
       if (selectedIndex.value < rowStart + gridColumns - 1 && selectedIndex.value + 1 < max) {
         newIndex = selectedIndex.value + 1;

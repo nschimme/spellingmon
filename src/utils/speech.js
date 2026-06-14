@@ -68,7 +68,13 @@ export const speech = {
               if (preferred) this.selectedVoice = preferred;
             }
             if (!this.selectedVoice) {
-              this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+              // Prioritize Google US English
+              const googleVoice = this.voices.find(v => v.name === 'Google US English');
+              if (googleVoice) {
+                this.selectedVoice = googleVoice;
+              } else {
+                this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+              }
             }
             finishInit();
           }

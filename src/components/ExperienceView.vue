@@ -7,11 +7,11 @@
         </h2>
       </div>
 
-      <div class="flex-1 p-8 space-y-6 bg-gray-50 overflow-y-auto">
+      <div class="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 overflow-y-auto">
         <div
           v-for="mon in results"
           :key="mon.id"
-          class="bg-white border-4 border-gray-800 p-4 rounded-2xl shadow-md"
+          class="bg-white border-4 border-gray-800 p-3 sm:p-4 rounded-2xl shadow-md h-fit"
         >
           <div class="flex items-center gap-4 mb-3">
             <div class="text-4xl">

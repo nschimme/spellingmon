@@ -10,6 +10,7 @@
       <div
         v-for="(mon, i) in playerStore.party"
         :key="mon.id"
+        :ref="el => { if (el) itemRefs[i] = el }"
         :class="[
           selectedIndex === i ? 'ring-8 ring-yellow-400 border-blue-500 bg-blue-50 -translate-y-1 shadow-lg' : 'bg-white border-gray-800 shadow-md',
           i === 0 ? 'border-l-[12px] border-l-yellow-400' : 'border-4'
@@ -116,7 +117,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { INPUT_PRIORITIES } from '../../utils/constants';
@@ -126,6 +127,7 @@ import { getHPColorClass } from '../../utils/visuals';
 const playerStore = usePlayerStore();
 
 const emit = defineEmits(['back']);
+const itemRefs = ref([]);
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-party',
@@ -137,5 +139,11 @@ const { selectedIndex } = useKeyboardNavigation({
     }
   },
   onCancel: () => emit('back')
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (itemRefs.value[newIdx]) {
+    itemRefs.value[newIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
 });
 </script>

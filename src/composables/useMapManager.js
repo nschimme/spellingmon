@@ -30,7 +30,7 @@ export function useMapManager(playerStore) {
           newY = entry.y;
         }
       }
-    } else if (playerStore.position && (playerStore.position.x !== 5 || playerStore.position.y !== 5)) {
+    } else if (playerStore.position) {
       newX = playerStore.position.x;
       newY = playerStore.position.y;
     } else {

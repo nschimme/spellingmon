@@ -17,6 +17,7 @@
           <button
             v-for="(item, i) in menuItems"
             :key="item.id"
+            :ref="el => { if (el) itemRefs[i] = el }"
             class="group flex items-center justify-between p-4 rounded-2xl transition-all duration-200 font-black uppercase tracking-widest text-left"
             :class="[
               selectedIndex === i ? 'bg-blue-600 text-white translate-x-2 ring-8 ring-yellow-400' : 'bg-white text-gray-700 hover:bg-gray-100 border-4 border-gray-800',
@@ -75,7 +76,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { MENU_TABS, INPUT_PRIORITIES } from '../utils/constants';
@@ -91,6 +92,7 @@ const playerStore = usePlayerStore();
 const emit = defineEmits(['close']);
 
 const activeDetailTab = ref(null);
+const itemRefs = ref([]);
 
 const menuItems = [
   { id: MENU_TABS.PARTY, label: 'Party', icon: '🎒', component: MenuParty },
@@ -124,7 +126,7 @@ const { selectedIndex } = useKeyboardNavigation({
   id: 'main-menu',
   priority: INPUT_PRIORITIES.MENU,
   maxIndex: menuItems.length,
-  isActive: computed(() => true),
+  isActive: computed(() => !activeDetailTab.value),
   onConfirm: (idx) => {
     if (!activeDetailTab.value) {
       handleMenuClick(menuItems[idx]);
@@ -136,6 +138,12 @@ const { selectedIndex } = useKeyboardNavigation({
     } else {
       emit('close');
     }
+  }
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (!activeDetailTab.value && itemRefs.value[newIdx]) {
+    itemRefs.value[newIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 });
 </script>

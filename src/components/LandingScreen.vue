@@ -11,9 +11,9 @@
       🌿
     </div>
 
-    <div class="z-10 flex flex-col items-center max-w-lg w-full">
-      <div class="bg-white border-8 border-gray-800 p-4 md:p-12 rounded-[3rem] shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500 w-full">
-        <h1 class="text-2xl leading-none md:text-6xl font-black text-center mb-4 uppercase tracking-tight text-orange-500 drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
+    <div class="z-10 flex flex-col items-center max-w-xl w-full">
+      <div class="bg-white border-8 border-gray-800 p-6 md:p-12 rounded-[3rem] shadow-2xl transform -rotate-1 sm:-rotate-2 hover:rotate-0 transition-transform duration-500 w-full">
+        <h1 class="text-xl min-[360px]:text-2xl min-[400px]:text-3xl sm:text-4xl md:text-6xl font-black text-center mb-4 uppercase tracking-tighter sm:tracking-tight text-orange-500 drop-shadow-[2px_2px_0_rgba(0,0,0,1)] sm:drop-shadow-[4px_4px_0_rgba(0,0,0,1)] whitespace-nowrap overflow-visible">
           SPELLINGMON
         </h1>
         <p class="text-gray-600 font-bold text-center mb-8 md:mb-12 uppercase tracking-widest text-[10px] md:text-sm">

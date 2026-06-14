@@ -186,10 +186,11 @@
           <p class="text-xs font-bold text-center mb-1">
             Switch to who?
           </p>
-          <div class="flex-1 overflow-y-auto pr-1">
+          <div class="flex-1 overflow-y-auto pr-1 scroll-smooth">
             <button
               v-for="(mon, i) in playerStore.party"
               :key="i"
+              :ref="el => { if (el) switchButtons[i] = el }"
               :disabled="mon.hp <= 0 || mon.id === battleStore.playerMon.id"
               class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold disabled:opacity-50"
               :class="[
@@ -200,15 +201,16 @@
             >
               {{ mon.name }} (HP: {{ mon.hp }})
             </button>
+            <button
+              v-show="battleStore.playerMon.hp > 0"
+              :ref="el => { if (el) switchButtons[playerStore.party.length] = el }"
+              :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
+              class="w-full text-xs text-red-500 font-bold mt-1 p-1"
+              @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
+            >
+              Cancel
+            </button>
           </div>
-          <button
-            v-show="battleStore.playerMon.hp > 0"
-            :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
-            class="text-xs text-red-500 font-bold mt-1"
-            @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
-          >
-            Cancel
-          </button>
         </template>
 
         <template v-if="battleStore.currentWord">
@@ -412,6 +414,7 @@ const participatingMons = ref([]);
 const thrownWord = ref('');
 const mistakeWord = ref('');
 const spellingInput = ref(null);
+const switchButtons = ref([]);
 
 const triggerShake = (isEnemy) => {
   if (isEnemy) {
@@ -865,6 +868,13 @@ const handleReleaseNewMon = () => {
 watch(() => battleStore.isSwitching, (newVal) => {
   if (newVal) {
     switchingSelectedIndex.value = 0;
+    switchButtons.value = [];
+  }
+});
+
+watch(switchingSelectedIndex, (newIdx) => {
+  if (battleStore.isSwitching && switchButtons.value[newIdx]) {
+    switchButtons.value[newIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 });
 

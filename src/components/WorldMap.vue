@@ -97,8 +97,8 @@ const props = defineProps({
 
 defineEmits(['toggle-menu']);
 
-const playerX = ref(playerStore.position.x);
-const playerY = ref(playerStore.position.y);
+const playerX = ref(playerStore.position?.x ?? 0);
+const playerY = ref(playerStore.position?.y ?? 0);
 
 const {
   MAP_WIDTH, MAP_HEIGHT, currentMapData, areaConfig,
@@ -133,11 +133,13 @@ const handleInput = (e) => {
   playerY.value = newY;
   playerStore.updatePosition({ x: newX, y: newY });
 
-  checkTriggers(newX, newY);
-
+  // 1. Check for Trainers FIRST - they have priority
   const triggeredTrainer = checkTrainerLOS(engagedTrainers);
   if (triggeredTrainer) {
     initiateTrainerApproach(triggeredTrainer.trainer, triggeredTrainer.trainerId, engagedTrainers, triggerTrainerBattle);
+  } else {
+    // 2. Only check for wild battles if no trainer is engaging
+    checkTriggers(newX, newY);
   }
 
   updateDiscovery(newX, newY);
@@ -163,10 +165,20 @@ const playerEmoji = computed(() => {
 watch(() => playerStore.currentArea, (newArea, oldArea) => {
   const direction = newArea > oldArea ? 'next' : 'prev';
   generateMap(true, direction, playerX, playerY);
+
+  // Auto-set last spell center on area transition
+  if (currentMapData.value?.spellCenter) {
+    playerStore.lastSpellCenter = {
+      x: currentMapData.value.spellCenter.x,
+      y: currentMapData.value.spellCenter.y,
+      area: newArea
+    };
+    playerStore.saveState();
+  }
 });
 
 watch(() => playerStore.position, (newPos) => {
-  if (battleStore.inBattle) return;
+  if (battleStore.inBattle || !newPos || !playerStore.lastSpellCenter) return;
   if (newPos.x === playerStore.lastSpellCenter.x && newPos.y === playerStore.lastSpellCenter.y && playerStore.currentArea === playerStore.lastSpellCenter.area) {
      if (playerX.value !== newPos.x || playerY.value !== newPos.y) {
         playerX.value = newPos.x;
@@ -252,7 +264,13 @@ const checkTriggers = (x, y) => {
 
   if (type === TILE_TYPES.GRASS) {
     if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
-      triggerWildBattle();
+      // Small delay before wild battle starts after movement
+      setTimeout(() => {
+        // Re-check conditions: ensure not already in battle and no trainer is approaching
+        if (!battleStore.inBattle && !alertingTrainer.value) {
+          triggerWildBattle();
+        }
+      }, 300);
     }
   }
 };
@@ -278,6 +296,17 @@ const triggerTrainerBattle = async (trainer, trainerId) => {
 onMounted(() => {
   generateMap(false, null, playerX, playerY);
   updateDiscovery(playerX.value, playerY.value);
+
+  // Ensure initial lastSpellCenter is set if we spawn on one
+  if (!playerStore.lastSpellCenter && getTileType(playerX.value, playerY.value) === TILE_TYPES.SPELL_CENTER) {
+    playerStore.lastSpellCenter = {
+      x: playerX.value,
+      y: playerY.value,
+      area: playerStore.currentArea
+    };
+    playerStore.saveState();
+  }
+
   inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput, 5);
 });
 
