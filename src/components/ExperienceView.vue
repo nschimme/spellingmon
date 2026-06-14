@@ -37,6 +37,7 @@
 
       <div class="p-6 bg-gray-100 border-t-8 border-gray-800 flex justify-center">
         <button @click="$emit('continue')"
+                :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
                 class="bg-green-500 text-white px-12 py-4 rounded-2xl border-b-8 border-green-700 font-black uppercase text-xl tracking-widest hover:bg-green-600 active:translate-y-2 transition-all shadow-xl">
           Continue
         </button>
@@ -46,10 +47,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useInputStore } from '../stores/inputStore';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS } from '../utils/constants';
+import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
 
 const props = defineProps({
   participatingMons: {
@@ -96,22 +98,14 @@ const animateExp = async (mon) => {
   mon.displayExpPercent = (mon.exp / mon.expToNext) * 100;
 };
 
-const handleKeyDown = (e) => {
-  if (e.key === 'Enter') {
-    emit('continue');
-    return true;
-  }
-  return false;
-};
-
-onUnmounted(() => {
-  const inputStore = useInputStore();
-  inputStore.removeListener('experience');
+const { selectedIndex } = useKeyboardNavigation({
+  id: 'experience-view',
+  priority: INPUT_PRIORITIES.MODAL,
+  maxIndex: 1,
+  onConfirm: () => emit('continue')
 });
 
 onMounted(() => {
-  const inputStore = useInputStore();
-  inputStore.addListener('experience', handleKeyDown, 20);
 
   // Initialize display data
   results.value = props.participatingMons.map(mon => ({

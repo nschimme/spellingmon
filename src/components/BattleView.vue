@@ -105,18 +105,18 @@
         <template v-if="battleStore.isPlayerTurn && !battleStore.currentWord && !isSwitching">
           <div class="grid grid-cols-2 gap-2">
             <button @click="prepareAttack"
-                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 0 }"
+                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
                     class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg">Attack</button>
             <button @click="tryCapture"
                     :disabled="isCapturing"
-                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 1 }"
+                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
                     class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs">Capture</button>
-            <button @click="isSwitching = true"
-                    :class="{ 'ring-4 ring-yellow-400': selectedIndex === 2 }"
+            <button @click="isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
+                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
                     class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs">Switch</button>
           </div>
           <button @click="tryRun"
-                  :class="{ 'ring-4 ring-yellow-400': selectedIndex === 3 }"
+                  :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
                   class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs">Run</button>
         </template>
 
@@ -129,14 +129,14 @@
                     class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold disabled:opacity-50"
                     :class="[
                       mon.id === battleStore.playerMon.id ? 'bg-blue-100' : 'bg-white',
-                      switchingSelectedIndex === i ? 'ring-4 ring-yellow-400 border-yellow-400' : ''
+                      switchingSelectedIndex === i ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
                     ]">
               {{ mon.name }} (HP: {{ mon.hp }})
             </button>
           </div>
           <button v-show="battleStore.playerMon.hp > 0"
-                  @click="isSwitching = false"
-                  :class="{ 'ring-4 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
+                  @click="isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
+                  :class="{ 'ring-8 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
                   class="text-xs text-red-500 font-bold mt-1">Cancel</button>
         </template>
 
@@ -194,8 +194,9 @@ import { useInputStore } from '../stores/inputStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
-import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES } from '../utils/constants';
+import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES, INPUT_PRIORITIES, BATTLE_PHASES } from '../utils/constants';
 import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, MONS } from '../utils/gameData';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
 const battleStore = useBattleStore();
@@ -220,8 +221,6 @@ const playerFainted = ref(false);
 const isFlashing = ref(false);
 const showResults = ref(false);
 const participatingMons = ref([]);
-const selectedIndex = ref(0);
-const switchingSelectedIndex = ref(0);
 const thrownWord = ref('');
 const mistakeWord = ref('');
 const spellingInput = ref(null);
@@ -254,6 +253,7 @@ const startTimer = (seconds) => {
 
 const prepareAttack = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
+  battleStore.setPhase(BATTLE_PHASES.SPELLING);
   const wordObj = vocabStore.getRandomWord(playerStore.currentArea);
   if (!wordObj) {
     battleStore.log("Error: No words available!");
@@ -325,6 +325,7 @@ const tryCapture = () => {
     return;
   }
 
+  battleStore.setPhase(BATTLE_PHASES.SPELLING);
   battleStore.setCurrentWord(wordObj);
 
   const baseTime = wordObj.difficulty === 2 ? 5 : 8; // Slightly harder for capture
@@ -417,6 +418,7 @@ const submitSpelling = () => {
 };
 
 const handleAttackSuccess = (isPower) => {
+  battleStore.setPhase(BATTLE_PHASES.PLAYER_ATTACK);
   battleStore.processAttack(isPower);
 
   audio.playSound(SOUND_EFFECTS.HIT);
@@ -424,6 +426,7 @@ const handleAttackSuccess = (isPower) => {
 
   if (battleStore.enemyMon.hp <= 0) {
     battleStore.setTurn(false);
+    battleStore.setPhase(BATTLE_PHASES.END);
     enemyFainted.value = true;
     audio.playSound(SOUND_EFFECTS.FAINT);
     battleStore.log(`${battleStore.enemyMon.name} fainted!`);
@@ -443,6 +446,7 @@ const handleAttackSuccess = (isPower) => {
           battleStore.log(`Trainer sent out ${nextMon.name}!`);
           battleStore.saveState();
           battleStore.setTurn(true);
+          battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
         }, 1500);
         return;
       }
@@ -454,6 +458,7 @@ const handleAttackSuccess = (isPower) => {
     setTimeout(() => {
       audio.playSound(SOUND_EFFECTS.VICTORY);
       setTimeout(() => {
+        battleStore.setPhase(BATTLE_PHASES.RESULTS);
         showResults.value = true;
       }, ANIMATION_DURATIONS.BATTLE_END_DELAY_MS - 1000);
     }, ANIMATION_DURATIONS.VICTORY_SOUND_DELAY_MS);
@@ -502,74 +507,84 @@ const handleCaptureSuccess = (isPower) => {
   }, ANIMATION_DURATIONS.CAPTURE_PROCESS_MS);
 };
 
-const handleKeyDown = (e) => {
-  if (!battleStore.inBattle || showResults.value) return false;
+// --- Action Selection Navigation ---
+const { selectedIndex, reset: resetActionNav } = useKeyboardNavigation({
+  id: 'battle-actions',
+  maxIndex: 4,
+  priority: INPUT_PRIORITIES.BATTLE,
+  isActive: computed(() => battleStore.inBattle && battleStore.phase === BATTLE_PHASES.SELECT_ACTION && !isSwitching.value),
+  onConfirm: (idx) => {
+    if (idx === 0) prepareAttack();
+    else if (idx === 1) tryCapture();
+    else if (idx === 2) { isSwitching.value = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING); }
+    else if (idx === 3) tryRun();
+  }
+});
 
-  // If spelling word
-  if (battleStore.currentWord) {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-      // Prevent cancellation - word entry must be completed or timer must run out
-      return true;
-    }
-    // Left/Right handled by input default behavior
+// Custom override for 2x2-ish grid navigation
+const handleActionKeyDown = (e) => {
+  if (battleStore.phase !== BATTLE_PHASES.SELECT_ACTION || isSwitching.value) return false;
+
+  let newIdx = selectedIndex.value;
+  if (e.key === 'ArrowUp') {
+    if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 0;
+    else if (selectedIndex.value === 3) newIdx = 1;
+  } else if (e.key === 'ArrowDown') {
+    if (selectedIndex.value === 0) newIdx = 1;
+    else if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 3;
+  } else if (e.key === 'ArrowLeft') {
+    if (selectedIndex.value === 2) newIdx = 1;
+  } else if (e.key === 'ArrowRight') {
+    if (selectedIndex.value === 1) newIdx = 2;
+  } else if (e.key === 'Enter') {
+    // Handled by composable
+    return false;
+  } else {
     return false;
   }
 
-  if (isSwitching.value) {
-    if (e.key === 'ArrowUp') {
-      switchingSelectedIndex.value = (switchingSelectedIndex.value - 1 + (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0))) % (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0));
-      audio.playSound(SOUND_EFFECTS.CLICK);
-      return true;
-    } else if (e.key === 'ArrowDown') {
-      switchingSelectedIndex.value = (switchingSelectedIndex.value + 1) % (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0));
-      audio.playSound(SOUND_EFFECTS.CLICK);
-      return true;
-    } else if (e.key === 'Enter') {
-      if (switchingSelectedIndex.value < playerStore.party.length) {
-        const mon = playerStore.party[switchingSelectedIndex.value];
-        if (mon.hp > 0 && mon.id !== battleStore.playerMon.id) {
-          handleSwitch(mon);
-        }
-      } else {
-        isSwitching.value = false;
-      }
-      return true;
-    }
-    return true;
-  }
-
-  if (e.key === 'ArrowUp') {
-    if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 0;
-    else if (selectedIndex.value === 3) selectedIndex.value = 1;
+  if (newIdx !== selectedIndex.value) {
+    selectedIndex.value = newIdx;
     audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  } else if (e.key === 'ArrowDown') {
-    if (selectedIndex.value === 0) selectedIndex.value = 1;
-    else if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 3;
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  } else if (e.key === 'ArrowLeft') {
-    if (selectedIndex.value === 2) selectedIndex.value = 1;
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  } else if (e.key === 'ArrowRight') {
-    if (selectedIndex.value === 1) selectedIndex.value = 2;
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  } else if (e.key === 'Enter') {
-    if (selectedIndex.value === 0) prepareAttack();
-    else if (selectedIndex.value === 1) tryCapture();
-    else if (selectedIndex.value === 2) isSwitching.value = true;
-    else if (selectedIndex.value === 3) tryRun();
     return true;
   }
   return false;
 };
 
+// --- Switching Navigation ---
+const { selectedIndex: switchingSelectedIndex } = useKeyboardNavigation({
+  id: 'battle-switching',
+  maxIndex: computed(() => playerStore.party.length + (battleStore.playerMon?.hp > 0 ? 1 : 0)),
+  priority: INPUT_PRIORITIES.MODAL,
+  isActive: computed(() => isSwitching.value),
+  onConfirm: (idx) => {
+    if (idx < playerStore.party.length) {
+      const mon = playerStore.party[idx];
+      if (mon.hp > 0 && mon.id !== battleStore.playerMon?.id) {
+        handleSwitch(mon);
+      }
+    } else {
+      isSwitching.value = false;
+      battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
+    }
+  },
+  onCancel: () => {
+    if (battleStore.playerMon?.hp > 0) {
+      isSwitching.value = false;
+      battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
+    }
+  }
+});
+
 const enemyTurn = () => {
   if (!battleStore.inBattle || !battleStore.enemyMon || battleStore.enemyMon.hp <= 0) return;
   battleStore.setTurn(false);
+  battleStore.setPhase(BATTLE_PHASES.ENEMY_TURN);
+
   setTimeout(() => {
+    // Re-check fainted status after delay
+    if (!battleStore.inBattle || battleStore.enemyMon.hp <= 0) return;
+
     const { damage, typeMod } = calculateDamage(battleStore.enemyMon, battleStore.playerMon, 30);
     battleStore.damagePlayer(damage);
     battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
@@ -589,7 +604,9 @@ const enemyTurn = () => {
         battleStore.log("Choose another Spellingmon!");
         isSwitching.value = true;
         isForcedSwitch.value = true;
+        battleStore.setPhase(BATTLE_PHASES.SWITCHING);
       } else {
+        battleStore.setPhase(BATTLE_PHASES.END);
         battleStore.log('You whited out! Teleporting to SpellCenter.');
         setTimeout(() => {
           playerStore.handleWhiteout();
@@ -598,6 +615,7 @@ const enemyTurn = () => {
       }
     } else {
       battleStore.setTurn(true);
+      battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
     }
   }, 1500);
 };
@@ -616,7 +634,8 @@ watch(isSwitching, (newVal) => {
 });
 
 onMounted(async () => {
-  inputStore.addListener(INPUT_CONTEXTS.BATTLE, handleKeyDown, 10);
+  // Override the default grid/list nav for action selection to handle the custom layout
+  inputStore.addListener('battle-actions-grid', handleActionKeyDown, INPUT_PRIORITIES.BATTLE + 1);
 
   // Re-sync playerMon with playerStore party to avoid desync after reload
   if (battleStore.playerMon) {
@@ -632,13 +651,21 @@ onMounted(async () => {
 
   await vocabStore.loadVocab(playerStore.currentArea);
 
-  if (!battleStore.isPlayerTurn && battleStore.inBattle && !battleStore.currentWord) {
-    enemyTurn();
+  // If it's the enemy's turn to start, make sure they do!
+  if (battleStore.inBattle) {
+    if (!battleStore.isPlayerTurn && !battleStore.currentWord) {
+      // Add a slight delay to let the battle start animation finish
+      setTimeout(() => {
+        enemyTurn();
+      }, ANIMATION_DURATIONS.FLASH_MS + 500);
+    } else {
+      battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
+    }
   }
 });
 
 onUnmounted(() => {
-  inputStore.removeListener(INPUT_CONTEXTS.BATTLE);
+  inputStore.removeListener('battle-actions-grid');
 });
 </script>
 

@@ -3,10 +3,13 @@
     <div class="bg-white border-8 border-gray-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh]">
       <!-- Header Tabs -->
       <div class="flex bg-gray-100 border-b-8 border-gray-800 font-bold uppercase text-xs">
-        <button v-for="tab in Object.values(MENU_TABS)" :key="tab"
+        <button v-for="(tab, i) in Object.values(MENU_TABS)" :key="tab"
                 @click="activeTab = tab"
                 class="flex-1 py-4 transition-colors"
-                :class="activeTab === tab ? 'bg-white text-blue-600' : 'text-gray-500 hover:bg-gray-200'">
+                :class="[
+                  activeTab === tab ? 'bg-white text-blue-600' : 'text-gray-500 hover:bg-gray-200',
+                  tabSelectedIndex === i ? 'ring-inset ring-4 ring-yellow-400' : ''
+                ]">
           {{ tab }}
         </button>
       </div>
@@ -16,6 +19,7 @@
         <!-- Party Tab -->
         <div v-if="activeTab === MENU_TABS.PARTY" class="grid gap-4">
           <div v-for="(mon, i) in playerStore.party" :key="mon.id"
+               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': contentSelectedIndex === i }"
                class="bg-white border-4 border-gray-800 p-4 rounded-xl flex flex-col gap-2 shadow-md relative overflow-hidden">
             <div class="flex items-center gap-4">
               <div class="text-4xl flex items-center gap-1">
@@ -85,7 +89,10 @@
           <div class="grid grid-cols-1 gap-2">
             <div v-for="i in GAME_CONSTANTS.MAX_AREAS" :key="i"
                  class="p-4 border-4 border-gray-800 rounded-xl font-bold flex justify-between items-center"
-                 :class="playerStore.unlockedAreas.includes(i) ? 'bg-green-100' : 'bg-gray-200 text-gray-400'">
+                 :class="[
+                   playerStore.unlockedAreas.includes(i) ? 'bg-green-100' : 'bg-gray-200 text-gray-400',
+                   contentSelectedIndex === (i-1) ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
+                 ]">
               <span>Route {{ i }}</span>
               <span v-if="playerStore.unlockedAreas.includes(i)" class="text-green-600 text-xl">✓</span>
               <span v-else class="text-xl">🔒</span>
@@ -101,13 +108,17 @@
           <!-- Audio Settings -->
           <div>
             <label class="font-black uppercase text-gray-800 block mb-2">Sound Settings</label>
-            <div class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner">
-              <button @click="toggleMute" class="text-3xl hover:scale-110 transition-transform">
+            <div :class="{ 'ring-8 ring-yellow-400 border-yellow-400': contentSelectedIndex === 1 || contentSelectedIndex === 2 }"
+                 class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner">
+              <button @click="toggleMute"
+                      :class="{ 'ring-4 ring-yellow-400 rounded-full': contentSelectedIndex === 2 }"
+                      class="text-3xl hover:scale-110 transition-transform">
                 {{ settingsStore.isMuted ? '🔇' : '🔊' }}
               </button>
               <input type="range" min="0" max="1" step="0.01"
                      :value="settingsStore.volume"
                      @input="updateVolume"
+                     :class="{ 'ring-4 ring-yellow-400': contentSelectedIndex === 1 }"
                      class="flex-1 h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500" />
             </div>
           </div>
@@ -115,6 +126,7 @@
           <div>
             <label class="font-black uppercase text-gray-800 block mb-2">TTS Voice Configuration</label>
             <select v-model="settingsStore.selectedVoiceName" @change="updateVoice"
+                    :class="{ 'ring-8 ring-yellow-400 border-yellow-400': contentSelectedIndex === 0 }"
                     class="w-full border-4 border-gray-800 p-3 rounded-xl bg-white font-bold text-gray-700 outline-none focus:ring-4 focus:ring-blue-300">
               <option v-for="voice in settingsStore.voices" :key="voice.name" :value="voice.name">
                 {{ voice.name }} ({{ voice.lang }})
@@ -122,10 +134,14 @@
             </select>
           </div>
           <div class="grid grid-cols-2 gap-4">
-            <button @click="testVoice" class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
+            <button @click="testVoice"
+                    :class="{ 'ring-8 ring-yellow-400': contentSelectedIndex === 3 }"
+                    class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
               Test Voice
             </button>
-            <button @click="testSFX" class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
+            <button @click="testSFX"
+                    :class="{ 'ring-8 ring-yellow-400': contentSelectedIndex === 4 }"
+                    class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black uppercase tracking-wider active:translate-y-1 text-xs">
               Test SFX
             </button>
           </div>
@@ -134,10 +150,20 @@
 
       <!-- Footer -->
       <div class="p-6 border-t-8 border-gray-800 bg-gray-100 flex justify-between">
-        <button @click="playerStore.logout()" class="bg-gray-500 text-white px-6 py-3 rounded-xl border-b-4 border-gray-700 font-black uppercase tracking-widest hover:bg-gray-600 active:translate-y-1 text-xs">
+        <button @click="playerStore.logout()"
+                :class="{ 'ring-8 ring-yellow-400': (activeTab === MENU_TABS.PARTY && contentSelectedIndex === playerStore.party.length) ||
+                                                 (activeTab === MENU_TABS.PROGRESS && contentSelectedIndex === GAME_CONSTANTS.MAX_AREAS) ||
+                                                 (activeTab === MENU_TABS.MAP && contentSelectedIndex === 0) ||
+                                                 (activeTab === MENU_TABS.SETTINGS && contentSelectedIndex === 5) }"
+                class="bg-gray-500 text-white px-6 py-3 rounded-xl border-b-4 border-gray-700 font-black uppercase tracking-widest hover:bg-gray-600 active:translate-y-1 text-xs">
           Log Out
         </button>
-        <button @click="$emit('close')" class="bg-red-500 text-white px-8 py-3 rounded-xl border-b-4 border-red-700 font-black uppercase tracking-widest hover:bg-red-600 active:translate-y-1">
+        <button @click="$emit('close')"
+                :class="{ 'ring-8 ring-yellow-400': (activeTab === MENU_TABS.PARTY && contentSelectedIndex === playerStore.party.length + 1) ||
+                                                 (activeTab === MENU_TABS.PROGRESS && contentSelectedIndex === GAME_CONSTANTS.MAX_AREAS + 1) ||
+                                                 (activeTab === MENU_TABS.MAP && contentSelectedIndex === 1) ||
+                                                 (activeTab === MENU_TABS.SETTINGS && contentSelectedIndex === 6) }"
+                class="bg-red-500 text-white px-8 py-3 rounded-xl border-b-4 border-red-700 font-black uppercase tracking-widest hover:bg-red-600 active:translate-y-1">
           Back to Game
         </button>
       </div>
@@ -146,13 +172,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onUnmounted } from 'vue';
+import { ref, onMounted, watch, onUnmounted, computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS, INPUT_CONTEXTS } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, MENU_TABS, INPUT_CONTEXTS, INPUT_PRIORITIES } from '../utils/constants';
 import { TYPE_EMOJIS } from '../utils/gameData';
 import { getHPColorClass } from '../utils/visuals';
 import { TILE_TYPES, MapGenerator } from '../utils/mapGenerator';
@@ -212,31 +239,67 @@ watch(activeTab, (newTab) => {
   }
 });
 
-const handleKeyDown = (e) => {
-  const tabs = Object.values(MENU_TABS);
-  const currentIndex = tabs.indexOf(activeTab.value);
+const tabs = Object.values(MENU_TABS);
+const currentTabIndex = computed(() => tabs.indexOf(activeTab.value));
 
-  if (e.key === 'ArrowRight') {
-    activeTab.value = tabs[(currentIndex + 1) % tabs.length];
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  } else if (e.key === 'ArrowLeft') {
-    activeTab.value = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  }
-  return false;
-};
+// Tab Navigation (Highest Priority in Menu)
+const { selectedIndex: tabSelectedIndex } = useKeyboardNavigation({
+  id: 'menu-tabs',
+  priority: INPUT_PRIORITIES.MENU + 5,
+  maxIndex: tabs.length,
+  gridColumns: tabs.length,
+  onConfirm: (idx) => { activeTab.value = tabs[idx]; },
+  isActive: computed(() => true) // Always active when menu is open
+});
 
-onMounted(() => {
-  inputStore.addListener(INPUT_CONTEXTS.MENU, handleKeyDown, 10);
-  if (activeTab.value === MENU_TABS.MAP) {
-    setTimeout(drawMap, 0);
+// Watch tab index and sync with tabSelectedIndex
+watch(currentTabIndex, (newIdx) => {
+  if (tabSelectedIndex.value !== newIdx) {
+    tabSelectedIndex.value = newIdx;
   }
 });
 
-onUnmounted(() => {
-  inputStore.removeListener(INPUT_CONTEXTS.MENU);
+// Content Navigation
+const { selectedIndex: contentSelectedIndex, reset: resetContentNav } = useKeyboardNavigation({
+  id: 'menu-content',
+  priority: INPUT_PRIORITIES.MENU,
+  maxIndex: computed(() => {
+    if (activeTab.value === MENU_TABS.PARTY) return playerStore.party.length + 2; // + Logout + Close
+    if (activeTab.value === MENU_TABS.PROGRESS) return GAME_CONSTANTS.MAX_AREAS + 2;
+    if (activeTab.value === MENU_TABS.MAP) return 2;
+    if (activeTab.value === MENU_TABS.SETTINGS) return 7; // Voice, Volume, Mute, Test Voice, Test SFX, + Logout/Close
+    return 2;
+  }),
+  onConfirm: (idx) => {
+    const logoutIdx = (activeTab.value === MENU_TABS.PARTY ? playerStore.party.length :
+                      (activeTab.value === MENU_TABS.PROGRESS ? GAME_CONSTANTS.MAX_AREAS :
+                      (activeTab.value === MENU_TABS.MAP ? 0 :
+                      (activeTab.value === MENU_TABS.SETTINGS ? 5 : 0))));
+    const closeIdx = logoutIdx + 1;
+
+    if (idx === logoutIdx) playerStore.logout();
+    else if (idx === closeIdx) emit('close');
+    else {
+      // Tab specific actions
+      if (activeTab.value === MENU_TABS.PARTY && idx < playerStore.party.length) {
+        if (idx > 0) playerStore.moveMonToFront(idx);
+      } else if (activeTab.value === MENU_TABS.SETTINGS) {
+        if (idx === 0) {/* Voice select - maybe just focus? */}
+        if (idx === 1) {/* Volume - maybe handled by left/right? */}
+        if (idx === 2) toggleMute();
+        if (idx === 3) testVoice();
+        if (idx === 4) testSFX();
+      }
+    }
+  }
+});
+
+const emit = defineEmits(['close']);
+
+onMounted(() => {
+  if (activeTab.value === MENU_TABS.MAP) {
+    setTimeout(drawMap, 0);
+  }
 });
 
 const updateVoice = (e) => {

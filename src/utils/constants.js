@@ -44,6 +44,17 @@ export const BATTLE_TYPES = {
   TRAINER: 'trainer',
 };
 
+export const BATTLE_PHASES = {
+  START: 'start',
+  SELECT_ACTION: 'select_action',
+  SPELLING: 'spelling',
+  PLAYER_ATTACK: 'player_attack',
+  ENEMY_TURN: 'enemy_turn',
+  SWITCHING: 'switching',
+  END: 'end',
+  RESULTS: 'results',
+};
+
 export const GENDERS = {
   BOY: 'Boy',
   GIRL: 'Girl',
@@ -61,6 +72,16 @@ export const INPUT_CONTEXTS = {
   WORLD: 'world',
   BATTLE: 'battle',
   MENU: 'menu',
+  GLOBAL: 'global',
+  MODAL: 'modal',
+};
+
+export const INPUT_PRIORITIES = {
+  GLOBAL: 100,
+  MODAL: 80,
+  MENU: 50,
+  BATTLE: 40,
+  WORLD: 10,
 };
 
 export const BIOMES = {

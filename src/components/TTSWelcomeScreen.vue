@@ -12,6 +12,7 @@
       <div class="space-y-6">
         <button @click="testVoice"
                 :disabled="isInitializing"
+                :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
                 class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1">
           {{ isInitializing ? 'Loading...' : 'Test Voice' }}
         </button>
@@ -22,10 +23,12 @@
           </p>
           <div class="flex gap-4">
             <button @click="confirmSuccess"
+                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
                     class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1">
               Yes
             </button>
             <button @click="handleNo"
+                    :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
                     class="flex-1 bg-red-500 hover:bg-red-600 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase text-sm active:border-b-0 active:translate-y-1">
               No
             </button>
@@ -56,7 +59,8 @@ import { ref, onMounted, computed } from 'vue';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { useSettingsStore } from '../stores/settingsStore';
-import { SOUND_EFFECTS } from '../utils/constants';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
+import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
 
 const emit = defineEmits(['verified']);
 const settingsStore = useSettingsStore();
@@ -98,6 +102,17 @@ const confirmSuccess = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   emit('verified');
 };
+
+const { selectedIndex } = useKeyboardNavigation({
+  id: 'tts-welcome',
+  priority: INPUT_PRIORITIES.GLOBAL,
+  maxIndex: computed(() => hasTested.value ? 3 : 1),
+  onConfirm: (idx) => {
+    if (idx === 0) testVoice();
+    else if (idx === 1) confirmSuccess();
+    else if (idx === 2) handleNo();
+  }
+});
 
 const reinitSpeech = async () => {
   audio.playSound(SOUND_EFFECTS.CLICK);

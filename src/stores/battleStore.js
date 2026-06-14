@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
+import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, SOUND_EFFECTS, BATTLE_PHASES } from '../utils/constants';
 import { usePlayerStore } from './playerStore';
 import { calculateDamage, calculateExpGain, createMon } from '../utils/gameData';
 import { audio } from '../utils/audio';
@@ -9,6 +9,7 @@ export const useBattleStore = defineStore('battle', {
   state: () => {
     const defaults = {
       inBattle: false,
+      phase: BATTLE_PHASES.START,
       playerMon: null,
       enemyMon: null,
       battleLog: [],
@@ -63,6 +64,10 @@ export const useBattleStore = defineStore('battle', {
       validated.isPlayerTurn = saved.isPlayerTurn;
     }
 
+    if (saved.phase && Object.values(BATTLE_PHASES).includes(saved.phase)) {
+      validated.phase = saved.phase;
+    }
+
     // Current word should be an object, string, or null/undefined
     if (typeof saved.currentWord === 'object' || typeof saved.currentWord === 'string' || saved.currentWord === null) {
       validated.currentWord = saved.currentWord;
@@ -93,14 +98,15 @@ export const useBattleStore = defineStore('battle', {
     saveState() {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
-        const { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty } = this.$state;
-        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty });
+        const { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty } = this.$state;
+        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
     startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null, trainerParty = []) {
       this.playerMon = playerMon;
       this.enemyMon = enemyMon;
       this.inBattle = true;
+      this.phase = BATTLE_PHASES.START;
       this.battleType = type;
       this.trainerId = trainerId;
       this.trainerParty = trainerParty;
@@ -154,12 +160,19 @@ export const useBattleStore = defineStore('battle', {
     },
     endBattle() {
       this.inBattle = false;
+      this.phase = BATTLE_PHASES.END;
       this.playerMon = null;
       this.enemyMon = null;
       this.currentWord = null;
       this.trainerId = null;
       this.battleType = BATTLE_TYPES.WILD;
       this.saveState();
+    },
+    setPhase(phase) {
+      if (Object.values(BATTLE_PHASES).includes(phase)) {
+        this.phase = phase;
+        this.saveState();
+      }
     },
     setTurn(isPlayerTurn) {
       this.isPlayerTurn = isPlayerTurn;
@@ -198,6 +211,7 @@ export const useBattleStore = defineStore('battle', {
       storage.remove(STORAGE_KEYS.BATTLE_STATE);
       const defaults = {
         inBattle: false,
+        phase: BATTLE_PHASES.START,
         playerMon: null,
         enemyMon: null,
         battleLog: [],

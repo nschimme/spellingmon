@@ -23,6 +23,7 @@
 
       <button v-if="isComplete"
               @click="finish"
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
               class="mt-4 bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1">
         Awesome!
       </button>
@@ -33,8 +34,9 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS } from '../utils/constants';
+import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
 import { TYPE_EMOJIS, MONS } from '../utils/gameData';
 
 const playerStore = usePlayerStore();
@@ -55,6 +57,14 @@ const currentEmoji = computed(() => {
 const finish = () => {
   playerStore.completeEvolution();
 };
+
+const { selectedIndex } = useKeyboardNavigation({
+  id: 'evolution-view',
+  priority: INPUT_PRIORITIES.MODAL,
+  maxIndex: 1,
+  isActive: isComplete,
+  onConfirm: () => finish()
+});
 
 onMounted(() => {
   audio.playSound(SOUND_EFFECTS.EVOLUTION);

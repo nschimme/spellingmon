@@ -5,10 +5,12 @@
       <h2 class="text-xs md:text-sm font-bold text-center mb-6 md:mb-10 text-gray-600 uppercase">Choose your partner!</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-        <div v-for="mon in starters" :key="mon.name"
+        <div v-for="(mon, i) in starters" :key="mon.name"
              @click="selectStarter(mon)"
+             :class="{ 'ring-8 ring-yellow-400 border-yellow-400 -translate-y-2 shadow-xl': selectedIndex === i }"
              class="group cursor-pointer bg-white border-4 border-gray-200 hover:border-blue-500 p-4 rounded-2xl transition-all hover:-translate-y-2 hover:shadow-xl flex flex-col items-center">
-          <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">{{ mon.icon }}</div>
+          <div class="text-6xl mb-4 group-hover:scale-110 transition-transform"
+               :class="{ 'scale-110': selectedIndex === i }">{{ mon.icon }}</div>
           <h3 class="text-sm font-black uppercase mb-2">{{ mon.name }}</h3>
           <div :class="typeColor(mon.type)" class="text-[8px] px-2 py-1 rounded-full text-white font-bold mb-2 uppercase">
             {{ mon.type }}
@@ -28,8 +30,11 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { createMon, SPECIES } from '../utils/gameData';
+import { INPUT_PRIORITIES } from '../utils/constants';
 
 const playerStore = usePlayerStore();
 
@@ -43,6 +48,14 @@ const selectStarter = (mon) => {
   const fullMon = createMon(mon.name, 1);
   playerStore.setStarter(fullMon);
 };
+
+const { selectedIndex } = useKeyboardNavigation({
+  id: 'starter-selection',
+  priority: INPUT_PRIORITIES.GLOBAL,
+  maxIndex: 3,
+  gridColumns: 3,
+  onConfirm: (idx) => selectStarter(starters[idx])
+});
 
 const typeColor = (type) => {
   switch (type) {
