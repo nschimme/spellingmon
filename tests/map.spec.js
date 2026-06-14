@@ -27,12 +27,9 @@ test('map renders correctly in menu', async ({ page }) => {
 
   // Go to Map tab using keyboard - this is more reliable for our custom implementation
   // We use ArrowRight to navigate tabs.
-  // Order: PARTY -> PROGRESS -> MAP -> SETTINGS
-  // NOTE: We click the tabs directly to avoid flaky keyboard navigation in tests
-  await page.click('button:has-text("progress")');
-  await page.waitForSelector('text=Unlocked Areas');
-  await page.click('button:has-text("map")');
-  await page.waitForSelector('text=Area Map (Discovered)');
+  // Order: Party -> Spellingdex -> Area Map -> Progress -> Settings
+  // NOTE: We click the buttons directly to avoid flaky keyboard navigation in tests
+  await page.click('button:has-text("Area Map")');
 
   const canvas = page.locator('[data-testid="map-canvas"]');
   await expect(canvas).toBeVisible({ timeout: 15000 });
