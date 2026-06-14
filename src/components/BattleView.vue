@@ -452,12 +452,12 @@ const prepareAttack = () => {
   // Record as discovered
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
-  // Timer based on difficulty and length
-  // Difficulty scale: 1 (Easy) to 3 (Hard)
-  // Base time: 10s (Easy), 7s (Medium), 5s (Hard)
-  const baseTime = wordObj.difficulty === 3 ? 5 : (wordObj.difficulty === 2 ? 7 : 10);
-  const wordTime = wordObj.word.length * 0.8;
-  const time = Math.round(baseTime + wordTime);
+  // Linear timer algorithm: Base + (Difficulty * Multiplier) + (Length * Multiplier)
+  // Harder words (higher difficulty) get MORE time.
+  const baseTime = 8;
+  const difficultyBonus = (wordObj.difficulty || 1) * 2;
+  const wordLengthBonus = wordObj.word.length * 0.6;
+  const time = Math.round(baseTime + difficultyBonus + wordLengthBonus);
 
   startTimer(time);
   battleStore.log(`Spellingmon Attack!`);
@@ -518,9 +518,11 @@ const tryCapture = () => {
   // Record as discovered
   playerStore.recordDiscoveredWord(playerStore.currentArea, wordObj.word);
 
-  const baseTime = wordObj.difficulty === 3 ? 4 : (wordObj.difficulty === 2 ? 6 : 8); // Slightly harder for capture
-  const wordTime = wordObj.word.length * 0.6;
-  const time = Math.round(baseTime + wordTime);
+  // Capture is slightly tighter: 70% of standard time
+  const baseTime = 6;
+  const difficultyBonus = (wordObj.difficulty || 1) * 1.5;
+  const wordLengthBonus = wordObj.word.length * 0.4;
+  const time = Math.round(baseTime + difficultyBonus + wordLengthBonus);
 
   startTimer(time);
   battleStore.log(`Attempting to capture!`);
