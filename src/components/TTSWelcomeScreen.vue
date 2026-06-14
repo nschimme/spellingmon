@@ -9,6 +9,13 @@
         Spellingmon requires Text-to-Speech to play. Please test your audio below.
       </p>
 
+      <p
+        v-if="!ttsSupported"
+        class="text-[10px] text-red-600 text-center mb-3"
+      >
+        Text-to-Speech not supported in this browser/environment.
+      </p>
+
       <div class="space-y-6">
         <button
           :disabled="isInitializing"
@@ -23,6 +30,12 @@
           v-if="hasTested && !isInitializing"
           class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500"
         >
+          <p
+            v-if="speech.lastError"
+            class="text-[10px] text-red-600 text-center"
+          >
+            Speak failed ({{ speech.lastError }}).
+          </p>
           <p class="text-xs font-bold text-center uppercase text-gray-500">
             Did you hear the voice?
           </p>
@@ -58,6 +71,7 @@
             <li v-if="isChrome">
               Chrome may need a moment to load voices.
             </li>
+            <li>On Linux, ensure speech-dispatcher + a voice engine (e.g. espeak-ng) is installed</li>
           </ul>
           <button
             :disabled="isInitializing"
@@ -92,6 +106,8 @@ const isChrome = computed(() => {
   return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 });
 
+const ttsSupported = computed(() => speech.isSupported());
+
 const ensureSpeechInitialized = async (force = false) => {
   if (force || !speech.isInitialized()) {
     isInitializing.value = true;
@@ -106,8 +122,11 @@ const ensureSpeechInitialized = async (force = false) => {
 
 const testVoice = async () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  await ensureSpeechInitialized();
+  // Refresh + speak synchronously relative to the click to preserve user activation for TTS.
+  // Full init (which may take time) runs in background.
+  speech.refreshVoices();
   speech.speak('Welcome to Spellingmon. Can you hear me?');
+  ensureSpeechInitialized();
   hasTested.value = true;
 };
 
@@ -135,6 +154,7 @@ const { selectedIndex } = useKeyboardNavigation({
 const reinitSpeech = async () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   await ensureSpeechInitialized(true);
+  speech.refreshVoices();
   speech.speak('Welcome to Spellingmon. Can you hear me?');
   hasTested.value = true;
 };

@@ -25,6 +25,7 @@ export const useSettingsStore = defineStore('settings', {
 
       audio.setVolume(this.volume);
       audio.setMuted(this.isMuted);
+      speech.setVolume(this.volume);
 
       await speech.init();
 
@@ -37,6 +38,7 @@ export const useSettingsStore = defineStore('settings', {
       // Use addEventListener to avoid overriding speech.js handler
       if (window.speechSynthesis && window.speechSynthesis.addEventListener) {
         window.speechSynthesis.addEventListener('voiceschanged', () => {
+          speech.refreshVoices();
           this.updateVoices();
         });
       }
@@ -54,6 +56,7 @@ export const useSettingsStore = defineStore('settings', {
     setVolume(val) {
       this.volume = val;
       audio.setVolume(val);
+      speech.setVolume(val);
       storage.save(STORAGE_KEYS.VOLUME, val.toString());
     },
     setMuted(muted) {

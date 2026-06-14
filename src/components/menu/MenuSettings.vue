@@ -29,6 +29,12 @@
 
     <div :ref="el => { if (el) itemRefs[0] = el }">
       <label class="font-black uppercase text-gray-600 block mb-2 text-xs">TTS Voice Configuration</label>
+      <p
+        v-if="settingsStore.voices.length === 0"
+        class="text-[9px] text-amber-600 mb-1"
+      >
+        No voices loaded — try Test Voice or return to Audio Check.
+      </p>
       <select
         v-model="settingsStore.selectedVoiceName"
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 0 }"
@@ -115,6 +121,7 @@ const toggleMute = () => {
 };
 
 const testVoice = () => {
+  speech.refreshVoices();
   speech.speak('This is a test of the spelling notification system.');
 };
 
