@@ -106,11 +106,17 @@
                     @click="handleSwitch(mon)"
                     :disabled="mon.hp <= 0 || mon.id === battleStore.playerMon.id"
                     class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold disabled:opacity-50"
-                    :class="mon.id === battleStore.playerMon.id ? 'bg-blue-100' : 'bg-white'">
+                    :class="[
+                      mon.id === battleStore.playerMon.id ? 'bg-blue-100' : 'bg-white',
+                      switchingSelectedIndex === i ? 'ring-4 ring-yellow-400 border-yellow-400' : ''
+                    ]">
               {{ mon.name }} (HP: {{ mon.hp }})
             </button>
           </div>
-          <button v-show="battleStore.playerMon.hp > 0" @click="isSwitching = false" class="text-xs text-red-500 font-bold mt-1">Cancel</button>
+          <button v-show="battleStore.playerMon.hp > 0"
+                  @click="isSwitching = false"
+                  :class="{ 'ring-4 ring-yellow-400': switchingSelectedIndex === playerStore.party.length }"
+                  class="text-xs text-red-500 font-bold mt-1">Cancel</button>
         </template>
 
         <template v-if="battleStore.currentWord">
@@ -134,7 +140,7 @@
             </div>
             <div>
               <button @click="repeatWord" class="text-blue-500 text-[10px] underline mb-1 block w-full">Listen Again</button>
-              <input v-model="userInput" @keyup.enter="submitSpelling"
+              <input v-model="userInput" @keydown.enter="submitSpelling"
                      ref="spellingInput"
                      @paste.prevent
                      class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
@@ -192,6 +198,7 @@ const isFlashing = ref(false);
 const showResults = ref(false);
 const participatingMons = ref([]);
 const selectedIndex = ref(0);
+const switchingSelectedIndex = ref(0);
 const spellingInput = ref(null);
 
 const triggerShake = (isEnemy) => {
@@ -483,44 +490,67 @@ const handleCaptureSuccess = (isPower) => {
 };
 
 const handleKeyDown = (e) => {
-  if (!battleStore.inBattle || showResults.value) return;
+  if (!battleStore.inBattle || showResults.value) return false;
 
   // If spelling word
   if (battleStore.currentWord) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       // Prevent cancellation - word entry must be completed or timer must run out
-      e.preventDefault();
+      return true;
     }
     // Left/Right handled by input default behavior
-    return;
+    return false;
   }
 
-  if (isSwitching.value) return;
+  if (isSwitching.value) {
+    if (e.key === 'ArrowUp') {
+      switchingSelectedIndex.value = (switchingSelectedIndex.value - 1 + (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0))) % (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0));
+      audio.playSound(SOUND_EFFECTS.CLICK);
+      return true;
+    } else if (e.key === 'ArrowDown') {
+      switchingSelectedIndex.value = (switchingSelectedIndex.value + 1) % (playerStore.party.length + (battleStore.playerMon.hp > 0 ? 1 : 0));
+      audio.playSound(SOUND_EFFECTS.CLICK);
+      return true;
+    } else if (e.key === 'Enter') {
+      if (switchingSelectedIndex.value < playerStore.party.length) {
+        const mon = playerStore.party[switchingSelectedIndex.value];
+        if (mon.hp > 0 && mon.id !== battleStore.playerMon.id) {
+          handleSwitch(mon);
+        }
+      } else {
+        isSwitching.value = false;
+      }
+      return true;
+    }
+    return true;
+  }
 
   if (e.key === 'ArrowUp') {
     if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 0;
     else if (selectedIndex.value === 3) selectedIndex.value = 1;
     audio.playSound(SOUND_EFFECTS.CLICK);
-    e.preventDefault();
+    return true;
   } else if (e.key === 'ArrowDown') {
     if (selectedIndex.value === 0) selectedIndex.value = 1;
     else if (selectedIndex.value === 1 || selectedIndex.value === 2) selectedIndex.value = 3;
     audio.playSound(SOUND_EFFECTS.CLICK);
-    e.preventDefault();
+    return true;
   } else if (e.key === 'ArrowLeft') {
     if (selectedIndex.value === 2) selectedIndex.value = 1;
     audio.playSound(SOUND_EFFECTS.CLICK);
-    e.preventDefault();
+    return true;
   } else if (e.key === 'ArrowRight') {
     if (selectedIndex.value === 1) selectedIndex.value = 2;
     audio.playSound(SOUND_EFFECTS.CLICK);
-    e.preventDefault();
+    return true;
   } else if (e.key === 'Enter') {
     if (selectedIndex.value === 0) prepareAttack();
     else if (selectedIndex.value === 1) tryCapture();
     else if (selectedIndex.value === 2) isSwitching.value = true;
     else if (selectedIndex.value === 3) tryRun();
+    return true;
   }
+  return false;
 };
 
 const enemyTurn = () => {
@@ -566,8 +596,14 @@ watch(() => battleStore.currentWord, async (newVal) => {
   }
 });
 
+watch(isSwitching, (newVal) => {
+  if (newVal) {
+    switchingSelectedIndex.value = 0;
+  }
+});
+
 onMounted(async () => {
-  window.addEventListener('keydown', handleKeyDown);
+  inputStore.addListener(INPUT_CONTEXTS.BATTLE, handleKeyDown, 10);
 
   // Re-sync playerMon with playerStore party to avoid desync after reload
   if (battleStore.playerMon) {
@@ -589,7 +625,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown);
+  inputStore.removeListener(INPUT_CONTEXTS.BATTLE);
 });
 </script>
 

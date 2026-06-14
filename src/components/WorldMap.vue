@@ -29,6 +29,7 @@
     </div>
 
     <MapHUD :areaName="areaConfig.name"
+            :biome="currentMapData?.biome"
             :leaderName="playerStore.party[0]?.name"
             :leaderLevel="playerStore.party[0]?.level" />
 

@@ -59,6 +59,8 @@ export const SKIN_TONES = {
 
 export const INPUT_CONTEXTS = {
   WORLD: 'world',
+  BATTLE: 'battle',
+  MENU: 'menu',
 };
 
 export const BIOMES = {

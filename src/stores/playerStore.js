@@ -61,7 +61,7 @@ export const usePlayerStore = defineStore('player', {
         }
       });
 
-      mergedState.ttsVerified = false; // Explicitly set to false every load
+      mergedState.gameStarted = false; // Always start at LandingScreen on refresh
       return mergedState;
     }
     return defaultState;
@@ -100,7 +100,6 @@ export const usePlayerStore = defineStore('player', {
         const cleanState = { ...this.$state };
         delete cleanState.notification;
         delete cleanState.notificationId;
-        delete cleanState.ttsVerified;
         storage.save(STORAGE_KEYS.PLAYER_STATE, cleanState);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
