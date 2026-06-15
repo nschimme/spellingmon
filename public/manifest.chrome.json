@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Spellingmon - Gotta Spell 'Em All!",
+  "description": "Fun spelling RPG for kids! Battle monsters, learn new words, and become a Spelling Master on your Chromebook.",
+  "version": "1.0.0",
+  "action": {
+    "default_title": "Spellingmon",
+    "default_icon": "favicon.svg"
+  },
+  "icons": {
+    "128": "favicon.svg"
+  },
+  "permissions": ["storage"],
+  "offline_enabled": true
+}
