@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS } from '../utils/constants';
+import { STORAGE_KEYS, SUPPORTED_LANGUAGES } from '../utils/constants';
 import i18n, { loadLocaleMessages } from '../i18n';
 
 export const useSettingsStore = defineStore('settings', {
@@ -25,8 +25,11 @@ export const useSettingsStore = defineStore('settings', {
 
       if (savedVolume !== null) this.volume = parseFloat(savedVolume);
       if (savedMuted !== null) this.isMuted = savedMuted === 'true';
+
       if (savedLocale !== null) {
-        this.setLocale(savedLocale);
+        await this.setLocale(savedLocale);
+      } else {
+        await this.detectAndSetLocale();
       }
 
       audio.setVolume(this.volume);
@@ -72,6 +75,26 @@ export const useSettingsStore = defineStore('settings', {
       // Update TTS voice for new locale
       speech.refreshVoices(locale);
       this.updateVoices();
+    },
+    async detectAndSetLocale() {
+      if (typeof navigator === 'undefined') return;
+
+      const browserLocales = navigator.languages || [navigator.language];
+      let bestMatch = 'en-US';
+
+      for (const bLoc of browserLocales) {
+        const match = SUPPORTED_LANGUAGES.find(lang =>
+          lang.code.toLowerCase() === bLoc.toLowerCase() ||
+          lang.code.split('-')[0].toLowerCase() === bLoc.split('-')[0].toLowerCase()
+        );
+
+        if (match && speech.isLanguageSupported(match.code)) {
+          bestMatch = match.code;
+          break;
+        }
+      }
+
+      await this.setLocale(bestMatch);
     },
     setVolume(val) {
       this.volume = val;

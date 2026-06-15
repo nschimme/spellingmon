@@ -243,6 +243,19 @@ const reinitSpeech = async () => {
 
 onMounted(async () => {
   await ensureSpeechInitialized();
+
+  // Set initial selection based on detected/stored locale
+  const initialIndex = SUPPORTED_LANGUAGES.findIndex(l => l.code === settingsStore.locale);
+  if (initialIndex !== -1) {
+    selectedIndex.value = initialIndex;
+
+    // Briefly wait to ensure voices are ready before announcing the default
+    setTimeout(() => {
+      if (phase.value === 'language') {
+        speech.speak(SUPPORTED_LANGUAGES[initialIndex].native);
+      }
+    }, 500);
+  }
 });
 </script>
 
