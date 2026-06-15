@@ -578,9 +578,10 @@ const submitSpelling = () => {
   const isPower = timeLeft.value > (totalTime.value / 2);
 
   const normalize = (str) => {
-    return str.toLowerCase().trim()
+    return (str || '').toLowerCase().trim()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/[-\s]/g, ''); // Remove hyphens and spaces
   };
 
   const isCorrect = normalize(userInput.value) === normalize(word);
