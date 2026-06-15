@@ -580,6 +580,7 @@ const submitSpelling = () => {
   const normalize = (str) => {
     return (str || '').toLowerCase().trim()
       .normalize('NFD')
+      .replace(/ß/g, 'ss') // Allow German ss for ß
       .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
       .replace(/[-\s]/g, ''); // Remove hyphens and spaces
   };
