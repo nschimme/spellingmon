@@ -107,7 +107,8 @@
     "currentParty": "当前队伍",
     "releaseNew": "放生",
     "whitedOutTitle": "战败！",
-    "whitedOutDesc": "你没有可以战斗的萌宠了！赶快去医疗中心。"
+    "whitedOutDesc": "你没有可以战斗的萌宠了！赶快去医疗中心。",
+    "timeBonus": "时间奖励！"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

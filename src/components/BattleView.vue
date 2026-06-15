@@ -133,6 +133,21 @@
           </p>
         </div>
       </div>
+
+      <!-- Perfect Bonus Feedback -->
+      <div
+        v-if="isPerfectFeedback"
+        class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
+      >
+        <div class="bg-yellow-400 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce">
+          <p class="text-white font-black uppercase text-3xl italic tracking-tighter drop-shadow-md">
+            {{ $t('battle.perfect') }}
+          </p>
+          <p class="text-white font-bold text-center text-xs uppercase -mt-1">
+            {{ $t('battle.timeBonus') }}
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Battle Log & Input -->
@@ -417,6 +432,7 @@ const showResults = ref(false);
 const participatingMons = ref([]);
 const thrownWord = ref('');
 const mistakeWord = ref('');
+const isPerfectFeedback = ref(false);
 const spellingInput = ref(null);
 const switchButtons = ref([]);
 
@@ -575,8 +591,6 @@ const submitSpelling = () => {
     timerInterval = null;
   }
 
-  const isPower = timeLeft.value > (totalTime.value / 2);
-
   const normalize = (str) => {
     return (str || '').toLowerCase().trim()
       .normalize('NFD')
@@ -585,7 +599,22 @@ const submitSpelling = () => {
       .replace(/[-\s]/g, ''); // Remove hyphens and spaces
   };
 
-  const isCorrect = normalize(userInput.value) === normalize(word);
+  const normalizedInput = normalize(userInput.value);
+  const normalizedWord = normalize(word);
+  const isCorrect = normalizedInput === normalizedWord;
+
+  // Perfect check: Exact match (capitalization and diacritics)
+  const isPerfect = isCorrect && (userInput.value.trim() === word.trim());
+
+  if (isPerfect && isCorrect) {
+    // Reward perfection: add 20% of total time back to timeLeft
+    // This can push a slow-but-perfect entry into the "Power" bracket!
+    timeLeft.value = Math.min(totalTime.value, timeLeft.value + (totalTime.value * 0.2));
+    isPerfectFeedback.value = true;
+    setTimeout(() => { isPerfectFeedback.value = false; }, 1500);
+  }
+
+  const isPower = timeLeft.value > (totalTime.value / 2);
 
   // Disable turn immediately to prevent double-actions during animations
   battleStore.setTurn(false);
@@ -604,7 +633,7 @@ const submitSpelling = () => {
     if (battleStore.isCapturing) {
       handleCaptureSuccess(isPower);
     } else {
-      handleAttackSuccess(isPower);
+      handleAttackSuccess(isPower, isPerfect);
     }
   } else {
     mistakeWord.value = word.toUpperCase();
@@ -620,9 +649,9 @@ const submitSpelling = () => {
   userInput.value = '';
 };
 
-const handleAttackSuccess = (isPower) => {
+const handleAttackSuccess = (isPower, isPerfect = false) => {
   battleStore.setPhase(BATTLE_PHASES.PLAYER_ATTACK);
-  battleStore.processAttack(isPower);
+  battleStore.processAttack(isPower, isPerfect);
 
   audio.playSound(SOUND_EFFECTS.HIT);
   triggerShake(true);

@@ -107,7 +107,8 @@
     "correctSpelling": "Correct spelling: {word}",
     "asIn": "As in...",
     "timesUp": "Time's up! Type fast next time!",
-    "items": "Items"
+    "items": "Items",
+    "timeBonus": "Time Bonus!"
   },
   "menu": {
     "items": "Items",

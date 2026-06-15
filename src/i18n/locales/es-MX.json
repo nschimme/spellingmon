@@ -107,7 +107,8 @@
     "currentParty": "Tu equipo",
     "releaseNew": "Soltar",
     "whitedOutTitle": "¡Derrotado!",
-    "whitedOutDesc": "¡No te quedan Spellingmon! Corriste al Centro de Hechizos."
+    "whitedOutDesc": "¡No te quedan Spellingmon! Corriste al Centro de Hechizos.",
+    "timeBonus": "¡Bonificación de tiempo!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

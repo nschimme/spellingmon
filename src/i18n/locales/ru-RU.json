@@ -107,7 +107,8 @@
     "currentParty": "Твоя команда",
     "releaseNew": "Отпустить",
     "whitedOutTitle": "Проигрыш!",
-    "whitedOutDesc": "Нет готовых к бою! Бегом в Спелл-Центр."
+    "whitedOutDesc": "Нет готовых к бою! Бегом в Спелл-Центр.",
+    "timeBonus": "Временной бонус!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

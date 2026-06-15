@@ -107,7 +107,8 @@
     "currentParty": "Ton équipe",
     "releaseNew": "Relâcher",
     "whitedOutTitle": "Équipe KO !",
-    "whitedOutDesc": "Plus aucun Spellingmon n'est apte au combat ! Retour au centre de soin."
+    "whitedOutDesc": "Plus aucun Spellingmon n'est apte au combat ! Retour au centre de soin.",
+    "timeBonus": "Bonus de temps !"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

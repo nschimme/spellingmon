@@ -107,7 +107,8 @@
     "currentParty": "Sua Equipe",
     "releaseNew": "Soltar",
     "whitedOutTitle": "Derrotado!",
-    "whitedOutDesc": "Sem Spellingmon para lutar! Você correu para o Centro de Magia."
+    "whitedOutDesc": "Sem Spellingmon para lutar! Você correu para o Centro de Magia.",
+    "timeBonus": "Bônus de tempo!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

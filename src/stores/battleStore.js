@@ -140,17 +140,29 @@ export const useBattleStore = defineStore('battle', {
       this.saveState();
     },
     // New action to centralize damage processing
-    processAttack(isPower) {
-      const basePower = isPower ? 60 : 30;
+    processAttack(isPower, isPerfect = false) {
+      // Tiers of Power:
+      // 30 (Correct), 45 (Correct+Fast), 60 (Perfect), 75 (Perfect+Fast)
+      let basePower = 30;
+      if (isPerfect && isPower) basePower = 75;
+      else if (isPerfect) basePower = 60;
+      else if (isPower) basePower = 45;
+
       const wordDifficulty = this.currentWord?.difficulty || 1;
       const { damage, typeMod } = calculateDamage(this.playerMon, this.enemyMon, basePower, wordDifficulty);
 
-      if (isPower) {
-        this.log("Super fast! Critical hit!");
+      if (isPerfect && isPower) {
+        this.log("Perfect & Fast! Ultimate Hit!");
+      } else if (isPerfect) {
+        this.log("Perfect! Great Hit!");
+      } else if (isPower) {
+        this.log("Correct & Fast! Good Hit!");
+      } else {
+        this.log("Correct! Dealt damage.");
       }
 
       this.damageEnemy(damage);
-      this.log(`Correct! Dealt ${damage} damage.`);
+      this.log(`Dealt ${damage} damage.`);
       if (typeMod > 1) this.log("It's super effective!");
       if (typeMod < 1 && typeMod > 0) this.log("It's not very effective...");
       if (typeMod === 0) this.log("It had no effect!");
