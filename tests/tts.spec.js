@@ -14,7 +14,7 @@ test.describe('TTS Verification Flow', () => {
     await newGameButton.click();
 
     // 2. Language Selection
-    await page.getByRole('button').filter({ hasText: 'English' }).click();
+    await page.getByRole('button').filter({ hasText: /English/i }).click();
 
     // 3. Audio Check
     const testVoiceButton = page.getByRole('button', { name: 'Test Voice' });
@@ -26,7 +26,7 @@ test.describe('TTS Verification Flow', () => {
     await yesButton.click();
 
     // 4. Character Creation
-    await expect(page.getByText('New Trainer')).toBeVisible();
+    await expect(page.getByText(/Character Creation/i)).toBeVisible();
     await page.getByPlaceholder('Enter your name').fill('Tester');
     await page.getByRole('button', { name: 'Confirm' }).click();
 
@@ -38,7 +38,7 @@ test.describe('TTS Verification Flow', () => {
     await page.goto('/');
     await page.click('text=Start Game');
     await page.click('text=New Game');
-    await page.getByRole('button').filter({ hasText: 'English' }).click();
+    await page.getByRole('button').filter({ hasText: /English/i }).click();
 
     const testVoiceButton = page.getByRole('button', { name: 'Test Voice' });
     await testVoiceButton.click();

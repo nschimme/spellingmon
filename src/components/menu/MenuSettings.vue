@@ -55,7 +55,7 @@
         v-if="settingsStore.voices.length === 0"
         class="text-[9px] text-amber-600 mb-1"
       >
-        No voices loaded — try Test Voice or return to Audio Check.
+        {{ $t('settings.noVoices') }}
       </p>
       <select
         v-model="settingsStore.selectedVoiceName"
@@ -88,7 +88,7 @@
         class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black uppercase tracking-wider active:translate-y-1 text-xs"
         @click="testSFX"
       >
-        Test SFX
+        {{ $t('settings.testSFX') }}
       </button>
     </div>
   </div>
@@ -96,6 +96,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { speech } from '../../utils/speech';
@@ -149,9 +150,11 @@ const toggleMute = () => {
   }
 };
 
+const { t } = useI18n();
+
 const testVoice = () => {
   speech.refreshVoices(settingsStore.locale);
-  speech.speak('This is a test of the spelling notification system.');
+  speech.speak(t('tts.testPhrase'));
 };
 
 const testSFX = () => {

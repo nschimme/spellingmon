@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "Continuar",
     "yes": "Sim",
     "no": "Não",
     "cancel": "Cancelar",
@@ -33,7 +34,8 @@
     "allowAudio": "Permita áudio no navegador",
     "differentVoice": "Mude a voz nas configurações",
     "chromeNote": "Chrome pode demorar um pouco.",
-    "linuxNote": "No Linux instale o speech-dispatcher."
+    "linuxNote": "No Linux instale o speech-dispatcher.",
+    "testPhrase": "Bem-vindo ao Spellingmon. Você consegue me ouvir?"
   },
   "character": {
     "title": "Criação de Personagem",
@@ -56,6 +58,23 @@
     "hp": "PS"
   },
   "battle": {
+    "experience": "Experiência",
+    "expGainedShort": "EXP Ganho: +{n}",
+    "levelUpNotification": "Subiu de nível!",
+    "capture": "Capturar",
+    "spellForPower": "Soletre para ganhar poder!",
+    "gainedExp": "Ganhou {exp} EXP!",
+    "cannotRun": "Você não pode fugir de uma batalha de treinador!",
+    "released": "{name} foi libertado.",
+    "joinedParty": "{name} entrou para a equipe!",
+    "releasedWild": "Libertou o {name} selvagem.",
+    "trainerSentOut": "Treinador enviou {name}!",
+    "defeatedTrainer": "Você derrotou o treinador!",
+    "spellingmonAttack": "Ataque Spellingmon!",
+    "attemptingCapture": "Tentando capturar!",
+    "correctSpelling": "Ortografia correta: {word}",
+    "asIn": "Como em...",
+    "timesUp": "Tempo esgotado! Digite mais rápido da próxima vez!",
     "wildAppeared": "Um {name} selvagem apareceu!",
     "trainerWantsToBattle": "Treinador {name} quer batalhar!",
     "whatWillDo": "O que {name} fará?",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "Sem Spellingmon para lutar! Você correu para o Centro de Magia."
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "Áreas desbloqueadas",
+    "badgesEarned": "Total de Insígnias: {n}",
     "items": "Itens",
     "party": "Equipe",
     "spellingdex": "Spellingdex",
@@ -131,6 +153,8 @@
     "setLeader": "Mudar Líder"
   },
   "settings": {
+    "testSFX": "Testar SFX",
+    "noVoices": "Nenhuma voz carregada — tente Testar Voz ou volte para Verificação de Áudio.",
     "language": "Idioma",
     "voice": "Voz TTS",
     "volume": "Volume",

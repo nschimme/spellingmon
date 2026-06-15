@@ -1,29 +1,27 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Internationalization and TTS Flow', () => {
-  test('should allow selecting a language and proceeding through audio check', async ({ page }) => {
-    await page.goto('/');
+test('Internationalization and TTS Flow', async ({ page }) => {
+  await page.goto('/');
+  await page.click('text=Start Game');
+  await page.click('text=New Game');
 
-    // 1. Landing Screen
-    await page.getByRole('button', { name: /Start Game/i }).click();
-    await page.getByRole('button', { name: /New Game/i }).click();
+  // Verify presence of flag emojis in language selection
+  await expect(page.getByText('🇺🇸')).toBeVisible();
+  await expect(page.getByText('🇲🇽')).toBeVisible();
 
-    // 2. Language Selection
-    await expect(page.getByText(/Select Language/i)).toBeVisible();
-    await page.getByText('Español').click();
+  // Select Spanish
+  await page.getByRole('button').filter({ hasText: /Español/i }).click();
 
-    // 3. Audio Check
-    // Language should have changed to Spanish
-    await expect(page.getByText(/VERIFICACIÓN DE AUDIO/i)).toBeVisible();
-    await page.getByRole('button', { name: /PROBAR VOZ/i }).click();
-    await page.getByRole('button', { name: /Sí/i }).click();
+  // Audio Check Screen (Spanish)
+  await expect(page.getByText(/Verificación de audio/i)).toBeVisible();
+  await page.getByRole('button', { name: /Probar voz/i }).click();
+  await page.getByRole('button', { name: /Sí/i }).click();
 
-    // 4. Character Creation
-    await expect(page.getByText(/NUEVO ENTRENADOR/i)).toBeVisible();
-    await page.getByPlaceholder(/Tu nombre/i).fill('Tester');
-    await page.getByRole('button', { name: /Confirmar/i }).click();
+  // Character Creation (Spanish)
+  await expect(page.getByText(/Creación de personaje/i)).toBeVisible();
+  await page.getByPlaceholder(/Tu nombre/i).fill('Tester');
+  await page.getByRole('button', { name: /Confirmar/i }).click();
 
-    // 5. Starter Selection
-    await expect(page.getByText(/Elige tu compañero/i)).toBeVisible();
-  });
+  // Starter Selection (Spanish)
+  await expect(page.getByText(/Elige tu compañero/i)).toBeVisible();
 });

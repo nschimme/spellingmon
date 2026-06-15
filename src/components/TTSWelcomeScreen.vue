@@ -1,7 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col items-center justify-center bg-gray-900 p-4 md:p-8 relative overflow-hidden text-white font-['Press_Start_2P']">
     <div class="z-10 bg-white border-8 border-gray-800 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-2xl w-full text-gray-800 overflow-y-auto max-h-full">
-
       <!-- Phase 1: Language Selection -->
       <template v-if="phase === 'language'">
         <h2 class="text-xl md:text-2xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
@@ -23,10 +22,17 @@
           >
             <span class="text-3xl">{{ lang.flag }}</span>
             <div class="text-left">
-              <div class="text-xs font-black uppercase">{{ lang.native }}</div>
-              <div class="text-[8px] opacity-80">{{ lang.name }}</div>
+              <div class="text-xs font-black uppercase">
+                {{ lang.native }}
+              </div>
+              <div class="text-[8px] opacity-80">
+                {{ lang.name }}
+              </div>
             </div>
-            <div v-if="!isLangSupported(lang.code)" class="ml-auto text-[8px] font-bold text-red-200">
+            <div
+              v-if="!isLangSupported(lang.code)"
+              class="ml-auto text-[8px] font-bold text-red-200"
+            >
               {{ $t('settings.unusable') }}
             </div>
           </button>
@@ -57,7 +63,10 @@
             v-if="hasTested && !isInitializing"
             class="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500"
           >
-            <p v-if="speech.lastError" class="text-[10px] text-red-600 text-center">
+            <p
+              v-if="speech.lastError"
+              class="text-[10px] text-red-600 text-center"
+            >
               {{ $t('tts.speakFailed', { error: speech.lastError }) }}
             </p>
             <p class="text-xs font-bold text-center uppercase text-gray-500">
@@ -81,7 +90,10 @@
             </div>
           </div>
 
-          <div v-if="showTroubleshooting" class="p-4 bg-gray-100 border-4 border-gray-300 rounded-xl space-y-2">
+          <div
+            v-if="showTroubleshooting"
+            class="p-4 bg-gray-100 border-4 border-gray-300 rounded-xl space-y-2"
+          >
             <p class="text-[10px] font-bold text-red-600 uppercase">
               {{ $t('tts.troubleshooting') }}
             </p>
@@ -89,7 +101,9 @@
               <li>{{ $t('tts.checkVolume') }}</li>
               <li>{{ $t('tts.allowAudio') }}</li>
               <li>{{ $t('tts.differentVoice') }}</li>
-              <li v-if="isChrome">{{ $t('tts.chromeNote') }}</li>
+              <li v-if="isChrome">
+                {{ $t('tts.chromeNote') }}
+              </li>
               <li>{{ $t('tts.linuxNote') }}</li>
             </ul>
             <button
@@ -115,6 +129,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { useSettingsStore } from '../stores/settingsStore';
@@ -122,6 +137,7 @@ import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { SOUND_EFFECTS, INPUT_PRIORITIES, SUPPORTED_LANGUAGES } from '../utils/constants';
 
 const emit = defineEmits(['verified']);
+const { t } = useI18n();
 const settingsStore = useSettingsStore();
 
 const phase = ref('language'); // 'language' or 'audio-check'
@@ -166,7 +182,7 @@ const ensureSpeechInitialized = async (force = false) => {
 const testVoice = async () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   speech.refreshVoices(settingsStore.locale);
-  speech.speak(settingsStore.locale === 'en' ? 'Welcome to Spellingmon. Can you hear me?' : 'Welcome to Spellingmon.');
+  speech.speak(t('tts.testPhrase'));
   ensureSpeechInitialized();
   hasTested.value = true;
 };

@@ -3,7 +3,7 @@
     <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
       <div class="bg-blue-600 p-6 text-center border-b-8 border-gray-800">
         <h2 class="text-3xl font-black text-white uppercase tracking-widest">
-          Experience
+          {{ $t('battle.experience') }}
         </h2>
       </div>
 
@@ -25,7 +25,7 @@
                 <span class="font-bold text-blue-600">Lv {{ mon.displayLevel }}</span>
               </div>
               <div class="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">
-                EXP Gained: +{{ mon.expGained }}
+                {{ $t('battle.expGainedShort', { n: mon.expGained }) }}
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
             v-if="mon.leveledUp"
             class="mt-2 text-center text-green-600 font-black uppercase text-xs animate-bounce"
           >
-            Level Up!
+            {{ $t('battle.levelUpNotification') }}
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
           class="bg-green-500 text-white px-12 py-4 rounded-2xl border-b-8 border-green-700 font-black uppercase text-xl tracking-widest hover:bg-green-600 active:translate-y-2 transition-all shadow-xl"
           @click="$emit('continue')"
         >
-          Continue
+          {{ $t('common.continue') }}
         </button>
       </div>
     </div>

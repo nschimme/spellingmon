@@ -51,7 +51,7 @@
             ◀
           </button>
           <div class="flex flex-col">
-            <span class="text-[10px] uppercase font-bold text-gray-400 leading-none">Menu</span>
+            <span class="text-[10px] uppercase font-bold text-gray-400 leading-none">{{ $t('menu.title') }}</span>
             <h2 class="text-xl font-black uppercase tracking-tight leading-none">
               {{ activeItemLabel }}
             </h2>

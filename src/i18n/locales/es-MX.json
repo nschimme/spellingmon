@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "Continuar",
     "yes": "Sí",
     "no": "No",
     "cancel": "Cancelar",
@@ -33,7 +34,8 @@
     "allowAudio": "Permite audio en el navegador",
     "differentVoice": "Cambia la voz en ajustes",
     "chromeNote": "Chrome puede tardar un poco.",
-    "linuxNote": "En Linux instala speech-dispatcher."
+    "linuxNote": "En Linux instala speech-dispatcher.",
+    "testPhrase": "Bienvenido a Spellingmon. ¿Puedes oírme?"
   },
   "character": {
     "title": "Creación de personaje",
@@ -56,6 +58,23 @@
     "hp": "PS"
   },
   "battle": {
+    "experience": "Experiencia",
+    "expGainedShort": "EXP Ganada: +{n}",
+    "levelUpNotification": "¡Subió de nivel!",
+    "capture": "Captura",
+    "spellForPower": "¡Deletrea para ganar fuerza!",
+    "gainedExp": "¡Ganaste {exp} EXP!",
+    "cannotRun": "¡No puedes huir de un entrenador!",
+    "released": "{name} fue liberado.",
+    "joinedParty": "¡{name} se unió al equipo!",
+    "releasedWild": "Liberaste al {name} salvaje.",
+    "trainerSentOut": "¡El entrenador envió a {name}!",
+    "defeatedTrainer": "¡Derrotaste al entrenador!",
+    "spellingmonAttack": "¡Ataque Spellingmon!",
+    "attemptingCapture": "¡Intentando capturar!",
+    "correctSpelling": "Ortografía correcta: {word}",
+    "asIn": "Como en...",
+    "timesUp": "¡Se acabó el tiempo! ¡Escribe más rápido!",
     "wildAppeared": "¡Un {name} salvaje apareció!",
     "trainerWantsToBattle": "¡Entrenador {name} quiere luchar!",
     "whatWillDo": "¿Qué hará {name}?",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "¡No te quedan Spellingmon! Corriste al Centro de Hechizos."
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "Áreas desbloqueadas",
+    "badgesEarned": "Medallas ganadas: {n}",
     "items": "Objetos",
     "party": "Equipo",
     "spellingdex": "Spellingdex",
@@ -131,6 +153,8 @@
     "setLeader": "Cambiar Líder"
   },
   "settings": {
+    "testSFX": "Probar SFX",
+    "noVoices": "No hay voces cargadas — prueba Probar voz o vuelve a Verificación de audio.",
     "language": "Idioma",
     "voice": "Voz TTS",
     "volume": "Volumen",

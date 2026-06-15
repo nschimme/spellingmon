@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "继续",
     "yes": "是",
     "no": "否",
     "cancel": "取消",
@@ -33,7 +34,8 @@
     "allowAudio": "允许浏览器音频",
     "differentVoice": "在设置中更换声音",
     "chromeNote": "Chrome 需要一点时间。",
-    "linuxNote": "Linux 需要安装 speech-dispatcher。"
+    "linuxNote": "在 Linux 上请安装 speech-dispatcher。",
+    "testPhrase": "欢迎来到 Spellingmon。你能听见我说话吗？"
   },
   "character": {
     "title": "创建角色",
@@ -56,6 +58,23 @@
     "hp": "体力"
   },
   "battle": {
+    "experience": "经验",
+    "expGainedShort": "获得经验: +{n}",
+    "levelUpNotification": "等级提升！",
+    "capture": "捕捉",
+    "spellForPower": "正确拼写获得力量！",
+    "gainedExp": "获得了 {exp} 经验！",
+    "cannotRun": "无法逃离训练家对战！",
+    "released": "释放了 {name}。",
+    "joinedParty": "{name} 加入了队伍！",
+    "releasedWild": "释放了野生的 {name}。",
+    "trainerSentOut": "训练家派出了 {name}！",
+    "defeatedTrainer": "你击败了训练家！",
+    "spellingmonAttack": "Spellingmon 攻击！",
+    "attemptingCapture": "尝试捕捉！",
+    "correctSpelling": "正确拼写: {word}",
+    "asIn": "例如...",
+    "timesUp": "时间到！下次请提高打字速度！",
     "wildAppeared": "野生的 {name} 出现了！",
     "trainerWantsToBattle": "训练家 {name} 想和你对战！",
     "whatWillDo": "{name} 要做什么？",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "你没有可以战斗的萌宠了！赶快去医疗中心。"
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "已解锁区域",
+    "badgesEarned": "获得徽章总数: {n}",
     "items": "道具",
     "party": "队伍",
     "spellingdex": "拼写图鉴",
@@ -131,6 +153,8 @@
     "setLeader": "设为队长"
   },
   "settings": {
+    "testSFX": "测试音效",
+    "noVoices": "未加载语音 — 请尝试测试语音或返回音频检查。",
     "language": "语言",
     "voice": "语音",
     "volume": "音量",

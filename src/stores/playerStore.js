@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { GAME_CONSTANTS, GENDERS, SKIN_TONES, STORAGE_KEYS } from '../utils/constants';
-import { calculateExpToNext, calculateStat, MONS } from '../utils/gameData';
+import { calculateExpToNext, calculateStat, MONS, createMon, SPECIES } from '../utils/gameData';
 import { useBattleStore } from './battleStore';
+import { useSettingsStore } from './settingsStore';
 
 let saveTimeout = null;
 let notificationCounter = 0;
@@ -234,7 +235,25 @@ export const usePlayerStore = defineStore('player', {
     },
     confirmTtsVerified() {
       this.ttsVerified = true;
-      // We don't saveState() here because ttsVerified is deliberately excluded from persistence
+      this.saveState();
+    },
+    debugInit(params) {
+      if (params.name) this.playerName = params.name;
+      if (params.locale) {
+        const settingsStore = useSettingsStore();
+        settingsStore.setLocale(params.locale);
+      }
+      this.gameStarted = true;
+      this.ttsVerified = true;
+      this.characterCreationComplete = true;
+
+      if (params.starter) {
+        const speciesName = Object.values(SPECIES).find(s => s.toLowerCase() === params.starter.toLowerCase()) || SPECIES.Grammander;
+        const mon = createMon(speciesName, 5);
+        this.party = [mon];
+        this.isStarterSelected = true;
+      }
+      this.saveState();
     },
     moveMonToFront(index) {
       if (index > 0 && index < this.party.length) {

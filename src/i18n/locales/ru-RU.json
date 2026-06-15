@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "Продолжить",
     "yes": "Да",
     "no": "Нет",
     "cancel": "Отмена",
@@ -33,7 +34,8 @@
     "allowAudio": "Разреши звук в браузере",
     "differentVoice": "Смени голос в настройках",
     "chromeNote": "Chrome может тупить.",
-    "linuxNote": "В Linux нужен speech-dispatcher."
+    "linuxNote": "В Linux нужен speech-dispatcher.",
+    "testPhrase": "Добро пожаловать в Spellingmon. Вы меня слышите?"
   },
   "character": {
     "title": "Создание персонажа",
@@ -56,6 +58,23 @@
     "hp": "ОЗ"
   },
   "battle": {
+    "experience": "Опыт",
+    "expGainedShort": "Опыт: +{n}",
+    "levelUpNotification": "Новый уровень!",
+    "capture": "Поймать",
+    "spellForPower": "Пиши правильно для силы!",
+    "gainedExp": "Получено {exp} опыта!",
+    "cannotRun": "Нельзя сбежать из битвы с тренером!",
+    "released": "{name} отпущен(а).",
+    "joinedParty": "{name} в команде!",
+    "releasedWild": "Дикий {name} отпущен.",
+    "trainerSentOut": "Тренер выставляет {name}!",
+    "defeatedTrainer": "Вы победили тренера!",
+    "spellingmonAttack": "Атака Spellingmon!",
+    "attemptingCapture": "Попытка поимки!",
+    "correctSpelling": "Правильно: {word}",
+    "asIn": "Как в слове...",
+    "timesUp": "Время вышло! В следующий раз печатай быстрее!",
     "wildAppeared": "Появился дикий {name}!",
     "trainerWantsToBattle": "Тренер {name} хочет драться!",
     "whatWillDo": "Что сделает {name}?",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "Нет готовых к бою! Бегом в Спелл-Центр."
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "Открытые зоны",
+    "badgesEarned": "Всего значков: {n}",
     "items": "Вещи",
     "party": "Команда",
     "spellingdex": "Словарь",
@@ -131,6 +153,8 @@
     "setLeader": "Выбрать лидера"
   },
   "settings": {
+    "testSFX": "Тест звука",
+    "noVoices": "Голоса не загружены — попробуйте Проверить голос или вернитесь к Проверке аудио.",
     "language": "Язык",
     "voice": "Голос",
     "volume": "Громкость",

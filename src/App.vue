@@ -42,6 +42,16 @@ onMounted(async () => {
   await settingsStore.init();
   inputStore.init();
   inputStore.addListener('global', handleGlobalInput, 10);
+
+  // Debug/E2E Test Mode initialization
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('debug') === 'true') {
+    playerStore.debugInit({
+      name: urlParams.get('name'),
+      starter: urlParams.get('starter'),
+      locale: urlParams.get('locale')
+    });
+  }
 });
 
 onUnmounted(() => {

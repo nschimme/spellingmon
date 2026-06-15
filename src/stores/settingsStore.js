@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, SUPPORTED_LANGUAGES } from '../utils/constants';
+import { STORAGE_KEYS } from '../utils/constants';
 import i18n from '../i18n';
 
 export const useSettingsStore = defineStore('settings', {
@@ -11,7 +11,7 @@ export const useSettingsStore = defineStore('settings', {
     selectedVoiceName: '',
     volume: 1.0,
     isMuted: false,
-    locale: 'en',
+    locale: 'en-US',
   }),
   actions: {
     async init() {

@@ -73,12 +73,12 @@ export const speech = {
               if (preferred) this.selectedVoice = preferred;
             }
             if (!this.selectedVoice) {
-              // Prioritize Google US English
+              // Default to Google US English if available, or any English voice
               const googleVoice = this.voices.find(v => v.name === 'Google US English');
               if (googleVoice) {
                 this.selectedVoice = googleVoice;
               } else {
-                this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
+                this.selectedVoice = this.voices.find(v => v.lang.toLowerCase().startsWith('en')) || this.voices[0];
               }
             }
             finishInit();
@@ -125,12 +125,30 @@ export const speech = {
 
         // If langCode is provided, try to find a matching voice
         if (langCode) {
-           const code = langCode.split('-')[0].toLowerCase();
-           const match = this.voices.find(v => v.lang.toLowerCase().startsWith(code));
-           if (match) {
-             this.selectedVoice = match;
-             return true;
-           }
+          const code = langCode.split('-')[0].toLowerCase();
+          const voicesForLang = this.voices.filter(v => v.lang.toLowerCase().startsWith(code));
+
+          // 1. Try to find a Google voice for this language
+          const googleMatch = voicesForLang.find(v => v.name.includes('Google'));
+          if (googleMatch) {
+            this.selectedVoice = googleMatch;
+            return true;
+          }
+
+          // 2. Try to find an exact locale match if langCode is full (e.g. en-US)
+          if (langCode.includes('-')) {
+            const exactMatch = voicesForLang.find(v => v.lang.toLowerCase() === langCode.toLowerCase());
+            if (exactMatch) {
+              this.selectedVoice = exactMatch;
+              return true;
+            }
+          }
+
+          // 3. Fallback to any voice for this language
+          if (voicesForLang.length > 0) {
+            this.selectedVoice = voicesForLang[0];
+            return true;
+          }
         }
 
         if (!this.selectedVoice) {
@@ -139,7 +157,7 @@ export const speech = {
             if (preferred) this.selectedVoice = preferred;
           }
           if (!this.selectedVoice) {
-            this.selectedVoice = available.find(v => v.lang.startsWith('en')) || available[0];
+            this.selectedVoice = available.find(v => v.lang.toLowerCase().startsWith('en')) || available[0];
           }
         }
       }
@@ -155,7 +173,7 @@ export const speech = {
     }
     if (!this.voices.length) this.refreshVoices();
     // Default to English if no voices are loaded yet or supported
-    if (langCode === 'en' && this.voices.length === 0) return true;
+    if (langCode.startsWith('en') && this.voices.length === 0) return true;
 
     const code = langCode.split('-')[0].toLowerCase();
     return this.voices.some(v => v.lang.toLowerCase().startsWith(code));

@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-8 text-white font-['Press_Start_2P']">
     <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] shadow-2xl max-w-lg w-full text-gray-800">
       <h2 class="text-xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
-        {{ $t('character.newTrainer') }}
+        {{ $t('character.title') }}
       </h2>
 
       <div class="space-y-6">

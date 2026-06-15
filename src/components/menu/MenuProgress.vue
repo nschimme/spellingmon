@@ -40,7 +40,6 @@ import { computed, ref, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, INPUT_PRIORITIES } from '../../utils/constants';
-import { AREA_CONFIGS } from '../../utils/gameData';
 
 const playerStore = usePlayerStore();
 

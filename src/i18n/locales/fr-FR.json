@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "Continuer",
     "yes": "Oui",
     "no": "Non",
     "cancel": "Annuler",
@@ -33,7 +34,8 @@
     "allowAudio": "Autorisez le son",
     "differentVoice": "Changez de voix dans les options",
     "chromeNote": "Chrome peut être lent.",
-    "linuxNote": "Installez speech-dispatcher sur Linux."
+    "linuxNote": "Sur Linux, installez speech-dispatcher.",
+    "testPhrase": "Bienvenue sur Spellingmon. Peux-tu m'entendre ?"
   },
   "character": {
     "title": "Création de personnage",
@@ -56,6 +58,23 @@
     "hp": "PV"
   },
   "battle": {
+    "experience": "Expérience",
+    "expGainedShort": "EXP Gagné : +{n}",
+    "levelUpNotification": "Niveau supérieur !",
+    "capture": "Capturer",
+    "spellForPower": "Épelez pour la puissance !",
+    "gainedExp": "{exp} EXP gagnés !",
+    "cannotRun": "Vous ne pouvez pas fuir un combat de dresseur !",
+    "released": "{name} a été relâché.",
+    "joinedParty": "{name} a rejoint l équipe !",
+    "releasedWild": "{name} sauvage a été relâché.",
+    "trainerSentOut": "Le dresseur envoie {name} !",
+    "defeatedTrainer": "Vous avez vaincu le dresseur !",
+    "spellingmonAttack": "Attaque Spellingmon !",
+    "attemptingCapture": "Tentative de capture !",
+    "correctSpelling": "Orthographe correcte : {word}",
+    "asIn": "Comme dans...",
+    "timesUp": "Temps écoulé ! Tapez plus vite la prochaine fois !",
     "wildAppeared": "Un {name} sauvage apparaît !",
     "trainerWantsToBattle": "Dresseur {name} veut se battre !",
     "whatWillDo": "Que va faire {name} ?",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "Plus aucun Spellingmon n'est apte au combat ! Retour au centre de soin."
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "Zones débloquées",
+    "badgesEarned": "Badges gagnés : {n}",
     "items": "Objets",
     "party": "Équipe",
     "spellingdex": "Lexique",
@@ -131,6 +153,8 @@
     "setLeader": "Changer Leader"
   },
   "settings": {
+    "testSFX": "Tester SFX",
+    "noVoices": "Aucune voix chargée — essayez Tester la voix ou revenez à la vérification audio.",
     "language": "Langue",
     "voice": "Voix TTS",
     "volume": "Volume",

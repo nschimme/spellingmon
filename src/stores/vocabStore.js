@@ -5,7 +5,7 @@ export const useVocabStore = defineStore('vocab', {
     vocabData: {}, // area -> words
   }),
   actions: {
-    async loadVocab(area, lang = 'en') {
+    async loadVocab(area, lang = 'en-US') {
       const cacheKey = `${lang}_${area}`;
       if (this.vocabData[cacheKey]) return;
       try {
@@ -18,7 +18,7 @@ export const useVocabStore = defineStore('vocab', {
         console.error(`Failed to load vocab for area ${area} in ${lang}:`, error);
       }
     },
-    getRandomWord(area, lang = 'en') {
+    getRandomWord(area, lang = 'en-US') {
       const cacheKey = `${lang}_${area}`;
       const words = this.vocabData[cacheKey] || [];
       if (words.length === 0) {

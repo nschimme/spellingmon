@@ -1,5 +1,6 @@
 {
   "common": {
+    "continue": "Weiter",
     "yes": "Ja",
     "no": "Nein",
     "cancel": "Abbrechen",
@@ -33,7 +34,8 @@
     "allowAudio": "Erlaube Audio im Browser",
     "differentVoice": "Wähle eine andere Stimme in den Einstellungen",
     "chromeNote": "Chrome braucht manchmal einen Moment.",
-    "linuxNote": "Unter Linux speech-dispatcher installieren."
+    "linuxNote": "Unter Linux installiere speech-dispatcher.",
+    "testPhrase": "Willkommen bei Spellingmon. Kannst du mich hören?"
   },
   "character": {
     "title": "Charaktererstellung",
@@ -56,6 +58,23 @@
     "hp": "KP"
   },
   "battle": {
+    "experience": "Erfahrung",
+    "expGainedShort": "EXP erhalten: +{n}",
+    "levelUpNotification": "Level Up!",
+    "capture": "Fangen",
+    "spellForPower": "Buchstabiere für Power!",
+    "gainedExp": "{exp} EXP erhalten!",
+    "cannotRun": "Du kannst nicht aus einem Trainerkampf fliehen!",
+    "released": "{name} wurde freigelassen.",
+    "joinedParty": "{name} ist dem Team beigetreten!",
+    "releasedWild": "Das wilde {name} wurde freigelassen.",
+    "trainerSentOut": "Trainer schickt {name} in den Kampf!",
+    "defeatedTrainer": "Du hast den Trainer besiegt!",
+    "spellingmonAttack": "Spellingmon-Angriff!",
+    "attemptingCapture": "Fangversuch!",
+    "correctSpelling": "Richtige Schreibweise: {word}",
+    "asIn": "Wie in...",
+    "timesUp": "Zeit abgelaufen! Tippe beim nächsten Mal schneller!",
     "wildAppeared": "Ein wildes {name} erscheint!",
     "trainerWantsToBattle": "Trainer {name} möchte kämpfen!",
     "whatWillDo": "Was wird {name} tun?",
@@ -91,6 +110,9 @@
     "whitedOutDesc": "Du hast keine kampffähigen Spellingmon mehr! Du eilst zum nächsten Heilzentrum."
   },
   "menu": {
+    "monCount": "{n} / 6 MONS",
+    "unlockedAreas": "Freigeschaltete Gebiete",
+    "badgesEarned": "Gesammelte Orden: {n}",
     "items": "Items",
     "party": "Team",
     "spellingdex": "Spellingdex",
@@ -131,6 +153,8 @@
     "setLeader": "Als Anführer setzen"
   },
   "settings": {
+    "testSFX": "SFX testen",
+    "noVoices": "Keine Stimmen geladen — versuche Stimme testen oder kehre zum Audio-Check zurück.",
     "language": "Sprache",
     "voice": "Stimme",
     "volume": "Lautstärke",

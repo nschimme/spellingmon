@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-6 max-w-xl mx-auto">
     <div class="flex justify-end items-center px-2">
       <div class="bg-gray-800 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-        {{ playerStore.party.length }} / 6 MONS
+        {{ $t('menu.monCount', { n: playerStore.party.length }) }}
       </div>
     </div>
 
@@ -43,7 +43,7 @@
             <!-- HP Bar -->
             <div class="space-y-1">
               <div class="flex justify-between text-[10px] font-black uppercase text-gray-500">
-                <span>HP</span>
+                <span>{{ $t('menu.hp') }}</span>
                 <span>{{ mon.hp }} / {{ mon.maxHp }}</span>
               </div>
               <div class="w-full bg-gray-200 h-4 border-2 border-gray-800 rounded-full overflow-hidden shadow-inner">
@@ -58,7 +58,7 @@
             <!-- EXP Bar -->
             <div class="mt-2 space-y-1">
               <div class="flex justify-between text-[8px] font-black uppercase text-blue-400">
-                <span>EXP</span>
+                <span>{{ $t('menu.exp') }}</span>
                 <span>{{ mon.exp }} / {{ mon.expToNext }}</span>
               </div>
               <div class="w-full bg-blue-50 h-1.5 border border-blue-200 rounded-full overflow-hidden">
@@ -74,15 +74,15 @@
         <div class="flex justify-between items-center mt-2 relative z-10">
           <div class="flex gap-4">
             <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Attack</span>
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.atk') }}</span>
               <span class="text-sm font-black text-gray-700">{{ mon.atk }}</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Defense</span>
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.def') }}</span>
               <span class="text-sm font-black text-gray-700">{{ mon.def }}</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">Speed</span>
+              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.spd') }}</span>
               <span class="text-sm font-black text-gray-700">{{ mon.spd }}</span>
             </div>
           </div>
@@ -94,12 +94,12 @@
             <span
               v-if="selectedIndex === i"
               class="text-[10px] font-bold text-blue-500 uppercase animate-pulse"
-            >Press ENTER to Swap</span>
+            >{{ $t('menu.pressEnterToSwap') }}</span>
             <button
               class="bg-blue-500 hover:bg-blue-600 text-white text-[10px] px-4 py-2 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1 transition-all"
               @click="playerStore.moveMonToFront(i)"
             >
-              Set Leader
+              {{ $t('menu.setLeader') }}
             </button>
           </div>
           <div
@@ -107,7 +107,7 @@
             class="flex items-center gap-2"
           >
             <div class="bg-yellow-400 text-gray-900 text-[10px] px-3 py-1 rounded-full font-black uppercase border-2 border-gray-800 shadow-sm">
-              ★ Active Leader
+              ★ {{ $t('menu.activeLeader') }}
             </div>
           </div>
         </div>

@@ -6,7 +6,8 @@
     "loading": "Loading...",
     "error": "Error",
     "confirm": "Confirm",
-    "back": "Back"
+    "back": "Back",
+    "continue": "Continue"
   },
   "landing": {
     "title": "SPELLINGMON",
@@ -33,7 +34,8 @@
     "allowAudio": "Ensure your browser allows site audio",
     "differentVoice": "Try selecting a different voice in settings (once game starts)",
     "chromeNote": "Chrome may need a moment to load voices.",
-    "linuxNote": "On Linux, ensure speech-dispatcher + a voice engine (e.g. espeak-ng) is installed"
+    "linuxNote": "On Linux, ensure speech-dispatcher + a voice engine (e.g. espeak-ng) is installed",
+    "testPhrase": "Welcome to Spellingmon. Can you hear me?"
   },
   "character": {
     "title": "Character Creation",
@@ -56,6 +58,9 @@
     "hp": "HP"
   },
   "battle": {
+    "experience": "Experience",
+    "expGainedShort": "EXP Gained: +{n}",
+    "levelUpNotification": "Level Up!",
     "wildAppeared": "A wild {name} appeared!",
     "trainerWantsToBattle": "Trainer {name} wants to battle!",
     "whatWillDo": "What will {name} do?",
@@ -139,6 +144,7 @@
     "atk": "Attack",
     "def": "Defense",
     "spd": "Speed",
+    "monCount": "{n} / 6 MONS",
     "pressEnterToSwap": "Press ENTER to Swap",
     "activeLeader": "Active Leader",
     "setLeader": "Set Leader",

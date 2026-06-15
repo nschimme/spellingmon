@@ -383,6 +383,7 @@ import { useI18n } from 'vue-i18n';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
@@ -396,6 +397,7 @@ const { t } = useI18n();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 const playerStore = usePlayerStore();
+const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 
 const userInput = ref('');
