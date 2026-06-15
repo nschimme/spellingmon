@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w3_1",
+    "word": "chuva",
+    "definition": "Água que cai das nuvens.",
+    "sentence_context": "A chuva molhou a rua.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_2",
+    "word": "olho",
+    "definition": "Órgão usado para ver.",
+    "sentence_context": "Feche o olho esquerdo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_3",
+    "word": "ninho",
+    "definition": "Casa construída por pássaros.",
+    "sentence_context": "Há um ninho na árvore.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_4",
+    "word": "carro",
+    "definition": "Veículo com quatro rodas.",
+    "sentence_context": "O meu carro é vermelho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_5",
+    "word": "passo",
+    "definition": "Movimento de uma perna ao andar.",
+    "sentence_context": "Dei um passo em frente.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_6",
+    "word": "colher",
+    "definition": "Utensílio para comer sopa.",
+    "sentence_context": "Uso a colher para comer.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_7",
+    "word": "chave",
+    "definition": "Objeto para abrir portas.",
+    "sentence_context": "Perdi a chave de casa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_8",
+    "word": "milho",
+    "definition": "Cereal de cor amarela.",
+    "sentence_context": "Gosto de milho cozido.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_9",
+    "word": "sonho",
+    "definition": "Imagens que vemos ao dormir.",
+    "sentence_context": "Tive um sonho bonito.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_10",
+    "word": "ferro",
+    "definition": "Metal muito duro e resistente.",
+    "sentence_context": "O portão é de ferro.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_11",
+    "word": "massa",
+    "definition": "Alimento feito de farinha e água.",
+    "sentence_context": "Comi massa com molho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_12",
+    "word": "filho",
+    "definition": "Criança em relação aos pais.",
+    "sentence_context": "O meu filho está a crescer.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_13",
+    "word": "chão",
+    "definition": "Superfície onde pisamos.",
+    "sentence_context": "O brinquedo caiu no chão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_14",
+    "word": "velho",
+    "definition": "Que tem muita idade.",
+    "sentence_context": "O meu avô é um homem velho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_15",
+    "word": "unha",
+    "definition": "Parte dura na ponta dos dedos.",
+    "sentence_context": "Cortei a unha hoje.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_16",
+    "word": "burro",
+    "definition": "Animal parecido com o cavalo.",
+    "sentence_context": "O burro carrega o fardo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_17",
+    "word": "nosso",
+    "definition": "Que pertence a nós.",
+    "sentence_context": "Este é o nosso jardim.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_18",
+    "word": "folha",
+    "definition": "Parte verde das árvores.",
+    "sentence_context": "A folha caiu do galho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_19",
+    "word": "chique",
+    "definition": "Que tem muita elegância.",
+    "sentence_context": "Ela usa uma roupa chique.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_20",
+    "word": "coelho",
+    "definition": "Animal de orelhas longas.",
+    "sentence_context": "O coelho come cenoura.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_21",
+    "word": "vinho",
+    "definition": "Bebida feita de uva.",
+    "sentence_context": "O vinho está na garrafa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_22",
+    "word": "serra",
+    "definition": "Montanha ou ferramenta de corte.",
+    "sentence_context": "Subimos a serra nevada.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_23",
+    "word": "osso",
+    "definition": "Parte dura do esqueleto.",
+    "sentence_context": "O cão roeu o osso.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_24",
+    "word": "ilha",
+    "definition": "Terra cercada de água por todos os lados.",
+    "sentence_context": "A ilha é um paraíso.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_25",
+    "word": "cheiro",
+    "definition": "Odor que sentimos pelo nariz.",
+    "sentence_context": "Senti um cheiro de flores.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_26",
+    "word": "palha",
+    "definition": "Caule seco de cereais.",
+    "sentence_context": "O chapéu é de palha.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_27",
+    "word": "manhã",
+    "definition": "Parte inicial do dia.",
+    "sentence_context": "Acordei cedo de manhã.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_28",
+    "word": "torre",
+    "definition": "Construção muito alta.",
+    "sentence_context": "A torre do sino tocou.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_29",
+    "word": "disso",
+    "definition": "De essa coisa.",
+    "sentence_context": "Não gosto nada disso.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_30",
+    "word": "telha",
+    "definition": "Peça usada para cobrir casas.",
+    "sentence_context": "A telha do telhado partiu.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w3_31",
+    "word": "chuchu",
+    "definition": "Legume de cor verde clara.",
+    "sentence_context": "O chuchu está no ensopado.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_32",
+    "word": "bilhete",
+    "definition": "Papel usado para entrar em sítios.",
+    "sentence_context": "Comprei um bilhete de cinema.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_33",
+    "word": "banho",
+    "definition": "Ato de lavar o corpo.",
+    "sentence_context": "Vou tomar um banho morno.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_34",
+    "word": "correr",
+    "definition": "Andar muito depressa.",
+    "sentence_context": "Gosto de correr na pista.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_35",
+    "word": "pássaro",
+    "definition": "Animal que voa e tem penas.",
+    "sentence_context": "O pássaro canta na janela.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_36",
+    "word": "agulha",
+    "definition": "Peça de metal para costurar.",
+    "sentence_context": "Piquei o dedo na agulha.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_37",
+    "word": "cheque",
+    "definition": "Papel usado para pagar dinheiro.",
+    "sentence_context": "Assinei o cheque no banco.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_38",
+    "word": "orelha",
+    "definition": "Parte externa do ouvido.",
+    "sentence_context": "A minha orelha está fria.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_39",
+    "word": "linha",
+    "definition": "Fio usado para costurar.",
+    "sentence_context": "Enfiei a linha na agulha.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w3_40",
+    "word": "morro",
+    "definition": "Pequena montanha ou colina.",
+    "sentence_context": "Subi o morro para ver a vista.",
+    "difficulty": 2
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w8_1",
+    "word": "Bahn",
+    "definition": "Damit fährt der Zug.",
+    "sentence_context": "Die Bahn kommt pünktlich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_2",
+    "word": "Stuhl",
+    "definition": "Darauf sitzt man.",
+    "sentence_context": "Setz dich auf den Stuhl.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_3",
+    "word": "Lehrer",
+    "definition": "Er arbeitet in der Schule.",
+    "sentence_context": "Mein Lehrer erklärt die Aufgabe.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_4",
+    "word": "kommen",
+    "definition": "Hierher laufen.",
+    "sentence_context": "Willst du heute zu mir kommen?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_5",
+    "word": "rennen",
+    "definition": "Sehr schnell laufen.",
+    "sentence_context": "Wir rennen um die Wette.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_6",
+    "word": "lachen",
+    "definition": "Wenn man fröhlich ist.",
+    "sentence_context": "Ich muss über den Witz lachen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_7",
+    "word": "wichtig",
+    "definition": "Nicht egal.",
+    "sentence_context": "Das ist ein wichtiges Buch.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_8",
+    "word": "fahren",
+    "definition": "Mit dem Auto reisen.",
+    "sentence_context": "Wir fahren in den Urlaub.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_9",
+    "word": "Zahn",
+    "definition": "Er ist im Mund.",
+    "sentence_context": "Ich putze mir die Zähne.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_10",
+    "word": "Sohn",
+    "definition": "Ein Junge von Eltern.",
+    "sentence_context": "Er ist der Sohn meiner Tante.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_11",
+    "word": "Hahn",
+    "definition": "Er kräht am Morgen.",
+    "sentence_context": "Der Hahn weckt uns auf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_12",
+    "word": "Ohr",
+    "definition": "Damit hört man Töne.",
+    "sentence_context": "Halt dir die Ohren zu.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_13",
+    "word": "Uhr",
+    "definition": "Sie zeigt die Stunden.",
+    "sentence_context": "Die Uhr tickt ganz leise.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_14",
+    "word": "Zahl",
+    "definition": "Eins, zwei oder drei.",
+    "sentence_context": "Welche Zahl kommt nach der vier?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_15",
+    "word": "Mehl",
+    "definition": "Daraus macht man Kuchen.",
+    "sentence_context": "Wir brauchen Mehl zum Backen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_16",
+    "word": "Stall",
+    "definition": "Da schlafen die Kühe.",
+    "sentence_context": "Der Stall riecht nach Heu.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_17",
+    "word": "hell",
+    "definition": "Nicht dunkel.",
+    "sentence_context": "In der Sonne ist es hell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_18",
+    "word": "schnell",
+    "definition": "Nicht langsam.",
+    "sentence_context": "Das Auto fährt sehr schnell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_19",
+    "word": "wollen",
+    "definition": "Einen Wunsch haben.",
+    "sentence_context": "Ich will ein Eis haben.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_20",
+    "word": "können",
+    "definition": "Etwas gut machen.",
+    "sentence_context": "Ich kann schon gut schwimmen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_21",
+    "word": "schwimmen",
+    "definition": "Im Wasser bleiben.",
+    "sentence_context": "Wir schwimmen im großen Pool.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_22",
+    "word": "klettern",
+    "definition": "Auf einen Baum gehen.",
+    "sentence_context": "Vögel klettern nicht, sie fliegen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_23",
+    "word": "flattern",
+    "definition": "Flügel schnell bewegen.",
+    "sentence_context": "Der Schmetterling flattert weg.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_24",
+    "word": "Zimmer",
+    "definition": "Ein Raum im Haus.",
+    "sentence_context": "In meinem Zimmer spiele ich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_25",
+    "word": "Sommer",
+    "definition": "Die heiße Jahreszeit.",
+    "sentence_context": "Im Sommer essen wir viel Eis.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_26",
+    "word": "Winter",
+    "definition": "Die kalte Jahreszeit.",
+    "sentence_context": "Im Winter bauen wir Schneemänner.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_27",
+    "word": "Mutter",
+    "definition": "Die Mama vom Kind.",
+    "sentence_context": "Meine Mutter kocht sehr gut.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_28",
+    "word": "Bruder",
+    "definition": "Ein Junge in der Familie.",
+    "sentence_context": "Mein Bruder ist älter als ich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_29",
+    "word": "Wasser",
+    "definition": "Es regnet aus den Wolken.",
+    "sentence_context": "Pass auf, das Wasser spritzt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_30",
+    "word": "Fenster",
+    "definition": "Man kann durchsehen.",
+    "sentence_context": "Mach bitte das Fenster auf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w8_31",
+    "word": "Wetter",
+    "definition": "Sonne oder Regen.",
+    "sentence_context": "Heute ist das Wetter schön.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_32",
+    "word": "Retter",
+    "definition": "Er hilft in der Not.",
+    "sentence_context": "Die Feuerwehr ist unser Retter.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_33",
+    "word": "Messer",
+    "definition": "Damit schneidet man Brot.",
+    "sentence_context": "Das Messer ist sehr scharf.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_34",
+    "word": "Besser",
+    "definition": "Nicht schlechter.",
+    "sentence_context": "Ich kann das schon besser.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_35",
+    "word": "Löffel",
+    "definition": "Damit isst man Suppe.",
+    "sentence_context": "Nimm den großen Löffel.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_36",
+    "word": "Schüssel",
+    "definition": "Darin ist der Salat.",
+    "sentence_context": "Stell die Schüssel auf den Tisch.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_37",
+    "word": "Pfanne",
+    "definition": "Darin brät man Eier.",
+    "sentence_context": "Die Pfanne ist sehr heiß.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_38",
+    "word": "Tanne",
+    "definition": "Ein grüner Baum im Wald.",
+    "sentence_context": "Die Tanne hat viele Nadeln.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_39",
+    "word": "Kanne",
+    "definition": "Darin ist der Tee.",
+    "sentence_context": "Gieß den Tee aus der Kanne.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w8_40",
+    "word": "Sonne",
+    "definition": "Sie macht den Tag hell.",
+    "sentence_context": "Die Sonne geht heute unter.",
+    "difficulty": 2
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w2_1",
+    "word": "Stein",
+    "definition": "Ein harter Brocken Erde.",
+    "sentence_context": "Ich werfe einen Stein ins Wasser.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_2",
+    "word": "Spiel",
+    "definition": "Etwas, das Spaß macht.",
+    "sentence_context": "Komm, wir machen ein Spiel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_3",
+    "word": "Schiff",
+    "definition": "Ein großes Boot auf dem Meer.",
+    "sentence_context": "Das Schiff fährt weit weg.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_4",
+    "word": "Straße",
+    "definition": "Darauf fahren Autos.",
+    "sentence_context": "Guck links und rechts an der Straße.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_5",
+    "word": "Sprache",
+    "definition": "Was wir zum Reden brauchen.",
+    "sentence_context": "Deutsch ist eine schwere Sprache.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_6",
+    "word": "Stadt",
+    "definition": "Ein Ort mit vielen Häusern.",
+    "sentence_context": "Wir wohnen in einer großen Stadt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_7",
+    "word": "Sport",
+    "definition": "Bewegung für den Körper.",
+    "sentence_context": "Ich mache gerne Sport.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_8",
+    "word": "Schule",
+    "definition": "Da lernt man lesen und schreiben.",
+    "sentence_context": "Ich gehe gerne in die Schule.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_9",
+    "word": "Stuhl",
+    "definition": "Darauf kann man sitzen.",
+    "sentence_context": "Setz dich auf den Stuhl.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_10",
+    "word": "Spiegel",
+    "definition": "Darin sieht man sich selbst.",
+    "sentence_context": "Ich gucke in den Spiegel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_11",
+    "word": "Stern",
+    "definition": "Ein Licht am Nachthimmel.",
+    "sentence_context": "Ein Stern leuchtet sehr hell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_12",
+    "word": "Schlaf",
+    "definition": "Was man nachts macht.",
+    "sentence_context": "Ich brauche viel Schlaf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_13",
+    "word": "Schnee",
+    "definition": "Weißer Regen im Winter.",
+    "sentence_context": "Wir bauen einen Mann aus Schnee.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_14",
+    "word": "Spur",
+    "definition": "Ein Abdruck im Sand.",
+    "sentence_context": "Ich sehe die Spur vom Hund.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_15",
+    "word": "Stall",
+    "definition": "Da schlafen die Pferde.",
+    "sentence_context": "Die Pferde stehen im Stall.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_16",
+    "word": "Schuh",
+    "definition": "Was man an den Füßen trägt.",
+    "sentence_context": "Zieh dir deine Schuhe an.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_17",
+    "word": "Stift",
+    "definition": "Damit kann man malen.",
+    "sentence_context": "Gib mir mal den roten Stift.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_18",
+    "word": "Schatz",
+    "definition": "Gold und Silber in einer Kiste.",
+    "sentence_context": "Piraten suchen einen Schatz.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_19",
+    "word": "Sprung",
+    "definition": "Wenn man in die Luft geht.",
+    "sentence_context": "Das war ein weiter Sprung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_20",
+    "word": "Stand",
+    "definition": "Wo man etwas kaufen kann.",
+    "sentence_context": "Wir kaufen Äpfel am Stand.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_21",
+    "word": "Schatten",
+    "definition": "Wo die Sonne nicht scheint.",
+    "sentence_context": "Im Schatten ist es kühl.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_22",
+    "word": "Sturm",
+    "definition": "Sehr starker Wind.",
+    "sentence_context": "Der Sturm weht sehr fest.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_23",
+    "word": "Schale",
+    "definition": "Die Haut von einem Apfel.",
+    "sentence_context": "Iss den Apfel mit Schale.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_24",
+    "word": "Spange",
+    "definition": "Damit hält man Haare fest.",
+    "sentence_context": "Trägst du heute eine Haarspange?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_25",
+    "word": "Stimme",
+    "definition": "Damit kann man singen.",
+    "sentence_context": "Deine Stimme klingt schön.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_26",
+    "word": "Schirm",
+    "definition": "Er schützt vor Regen.",
+    "sentence_context": "Nimm den Schirm mit nach draußen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_27",
+    "word": "Schild",
+    "definition": "Da steht ein Name drauf.",
+    "sentence_context": "An der Tür hängt ein Schild.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_28",
+    "word": "Stein",
+    "definition": "Ein Kiesel vom Weg.",
+    "sentence_context": "Der Stein ist ganz glatt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_29",
+    "word": "Schnitt",
+    "definition": "Wenn man sich weh getan hat.",
+    "sentence_context": "Ich habe einen kleinen Schnitt am Finger.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_30",
+    "word": "Schrank",
+    "definition": "Da liegen die Sachen drin.",
+    "sentence_context": "Leg das Hemd in den Schrank.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w2_31",
+    "word": "Spinne",
+    "definition": "Ein Tier mit acht Beinen.",
+    "sentence_context": "Die Spinne baut ein Netz.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_32",
+    "word": "Spitze",
+    "definition": "Das oberste Ende vom Berg.",
+    "sentence_context": "Wir stehen auf der Spitze.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_33",
+    "word": "Stolz",
+    "definition": "Wenn man sich über etwas freut.",
+    "sentence_context": "Ich bin stolz auf dich.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_34",
+    "word": "Strom",
+    "definition": "Energie für das Licht.",
+    "sentence_context": "Ohne Strom bleibt es dunkel.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_35",
+    "word": "Stück",
+    "definition": "Ein Teil von einem Ganzen.",
+    "sentence_context": "Ich möchte ein Stück Kuchen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_36",
+    "word": "Stufe",
+    "definition": "Ein Teil von einer Treppe.",
+    "sentence_context": "Geh eine Stufe höher.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_37",
+    "word": "Schere",
+    "definition": "Damit kann man Papier schneiden.",
+    "sentence_context": "Pass auf mit der Schere.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_38",
+    "word": "Schleife",
+    "definition": "Ein Knoten am Geschenk.",
+    "sentence_context": "Mach eine schöne Schleife.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_39",
+    "word": "Schlüssel",
+    "definition": "Damit macht man Türen auf.",
+    "sentence_context": "Ich finde meinen Schlüssel nicht.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w2_40",
+    "word": "Schwan",
+    "definition": "Ein schöner weißer Vogel.",
+    "sentence_context": "Der Schwan schwimmt auf dem See.",
+    "difficulty": 2
+  }
+]

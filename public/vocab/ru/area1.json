@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w1_1",
+    "word": "кот",
+    "definition": "Домашнее животное, которое мяукает.",
+    "sentence_context": "Мой кот спит на ковре.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_2",
+    "word": "дом",
+    "definition": "Место, где живут люди.",
+    "sentence_context": "Это наш новый дом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_3",
+    "word": "мама",
+    "definition": "Самый близкий человек.",
+    "sentence_context": "Мама варит вкусный суп.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_4",
+    "word": "папа",
+    "definition": "Отец в семье.",
+    "sentence_context": "Папа читает мне сказку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_5",
+    "word": "стул",
+    "definition": "Мебель, на которой сидят.",
+    "sentence_context": "Сядь на этот удобный стул.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_6",
+    "word": "рыба",
+    "definition": "Животное, которое живет в воде.",
+    "sentence_context": "В реке плавает большая рыба.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_7",
+    "word": "шар",
+    "definition": "Круглый предмет, наполненный воздухом.",
+    "sentence_context": "Красный шар улетел в небо.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_8",
+    "word": "жук",
+    "definition": "Маленькое насекомое.",
+    "sentence_context": "По траве ползет зеленый жук.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_9",
+    "word": "нос",
+    "definition": "Часть лица, которой мы дышим.",
+    "sentence_context": "У слона очень длинный нос.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_10",
+    "word": "рот",
+    "definition": "Часть лица, которой мы едим.",
+    "sentence_context": "Открой рот и скажи а.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_11",
+    "word": "лес",
+    "definition": "Много деревьев вместе.",
+    "sentence_context": "Мы ходили в лес за грибами.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_12",
+    "word": "сад",
+    "definition": "Место, где растут цветы и фрукты.",
+    "sentence_context": "В нашем саду поспели яблоки.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_13",
+    "word": "мяч",
+    "definition": "Игрушка для игры в футбол.",
+    "sentence_context": "Мальчик бьет мяч ногой.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_14",
+    "word": "мир",
+    "definition": "Наша планета или жизнь без войны.",
+    "sentence_context": "Мы хотим, чтобы был мир.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_15",
+    "word": "час",
+    "definition": "Мера времени.",
+    "sentence_context": "Я гулял один час.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_16",
+    "word": "сыр",
+    "definition": "Продукт, сделанный из молока.",
+    "sentence_context": "Мышка очень любит сыр.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_17",
+    "word": "суп",
+    "definition": "Жидкая горячая еда.",
+    "sentence_context": "На обед у нас вкусный суп.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_18",
+    "word": "луна",
+    "definition": "Спутник Земли.",
+    "sentence_context": "Луна ярко светит ночью.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_19",
+    "word": "вода",
+    "definition": "Жидкость, которую мы пьем.",
+    "sentence_context": "Налей мне стакан воды.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_20",
+    "word": "рука",
+    "definition": "Часть тела человека.",
+    "sentence_context": "Дай мне свою руку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_21",
+    "word": "нога",
+    "definition": "Часть тела, на которой мы ходим.",
+    "sentence_context": "У меня болит левая нога.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_22",
+    "word": "лиса",
+    "definition": "Рыжее лесное животное.",
+    "sentence_context": "Лиса хитрая и красивая.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_23",
+    "word": "мыло",
+    "definition": "Средство для мытья рук.",
+    "sentence_context": "Мой руки с мылом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_24",
+    "word": "небо",
+    "definition": "То, что над нами.",
+    "sentence_context": "На небе плывут облака.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_25",
+    "word": "море",
+    "definition": "Большое количество соленой воды.",
+    "sentence_context": "Летом мы поедем на море.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_26",
+    "word": "поле",
+    "definition": "Открытое место за городом.",
+    "sentence_context": "В поле растут цветы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_27",
+    "word": "лето",
+    "definition": "Самое теплое время года.",
+    "sentence_context": "Летом всегда каникулы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_28",
+    "word": "зима",
+    "definition": "Самое холодное время года.",
+    "sentence_context": "Зимой выпадает белый снег.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_29",
+    "word": "утро",
+    "definition": "Начало дня.",
+    "sentence_context": "Доброе утро всем друзьям.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_30",
+    "word": "ночь",
+    "definition": "Время, когда все спят.",
+    "sentence_context": "Наступила темная ночь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w1_31",
+    "word": "еда",
+    "definition": "То, что мы едим.",
+    "sentence_context": "На столе стоит вкусная еда.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_32",
+    "word": "кит",
+    "definition": "Самое большое морское животное.",
+    "sentence_context": "В океане плавает синий кит.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_33",
+    "word": "рак",
+    "definition": "Животное с клешнями.",
+    "sentence_context": "Рак живет под камнем.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_34",
+    "word": "меч",
+    "definition": "Старинное оружие рыцаря.",
+    "sentence_context": "Рыцарь взял острый меч.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_35",
+    "word": "сок",
+    "definition": "Напиток из фруктов.",
+    "sentence_context": "Я пью яблочный сок.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_36",
+    "word": "бор",
+    "definition": "Хвойный лес.",
+    "sentence_context": "В бору пахнет смолой.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_37",
+    "word": "дым",
+    "definition": "То, что идет из трубы.",
+    "sentence_context": "Из трубы идет серый дым.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_38",
+    "word": "дуб",
+    "definition": "Большое старое дерево.",
+    "sentence_context": "Под дубом лежат желуди.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_39",
+    "word": "зуб",
+    "definition": "То, чем мы кусаем еду.",
+    "sentence_context": "У ребенка выпал молочный зуб.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w1_40",
+    "word": "куб",
+    "definition": "Геометрическая фигура.",
+    "sentence_context": "Мальчик построил домик из кубов.",
+    "difficulty": 2
+  }
+]

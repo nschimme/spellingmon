@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w3_1",
+    "word": "день",
+    "definition": "Время, когда светло.",
+    "sentence_context": "Сегодня был солнечный день.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_2",
+    "word": "мальчик",
+    "definition": "Маленький мужчина.",
+    "sentence_context": "Мальчик играет с машинкой.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_3",
+    "word": "чай",
+    "definition": "Горячий напиток.",
+    "sentence_context": "Я пью чай с лимоном.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_4",
+    "word": "медведь",
+    "definition": "Большой лесной зверь.",
+    "sentence_context": "Медведь зимой спит.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_5",
+    "word": "соль",
+    "definition": "Ее добавляют в еду.",
+    "sentence_context": "Не забудь положить соль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_6",
+    "word": "майка",
+    "definition": "Одежда без рукавов.",
+    "sentence_context": "Летом я ношу майку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_7",
+    "word": "конь",
+    "definition": "Лошадь.",
+    "sentence_context": "Конь скачет по полю.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_8",
+    "word": "тень",
+    "definition": "Темное место от предмета.",
+    "sentence_context": "В тени дерева прохладно.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_9",
+    "word": "пни",
+    "definition": "Остатки срубленных деревьев.",
+    "sentence_context": "В лесу стояли старые пни.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_10",
+    "word": "лейка",
+    "definition": "Предмет для полива цветов.",
+    "sentence_context": "Возьми лейку и полей розы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_11",
+    "word": "огонь",
+    "definition": "То, что горит.",
+    "sentence_context": "Огонь в камине греет нас.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_12",
+    "word": "зайка",
+    "definition": "Ласковое имя для зайца.",
+    "sentence_context": "Зайка спрятался под кустом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_13",
+    "word": "дождь",
+    "definition": "Вода, падающая с неба.",
+    "sentence_context": "На улице идет сильный дождь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_14",
+    "word": "гусь",
+    "definition": "Большая домашняя птица.",
+    "sentence_context": "Гусь важно шагает к пруду.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_15",
+    "word": "зверь",
+    "definition": "Животное.",
+    "sentence_context": "Лев — сильный зверь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_16",
+    "word": "мышь",
+    "definition": "Маленький грызун.",
+    "sentence_context": "Мышь юркнула в норку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_17",
+    "word": "ноль",
+    "definition": "Цифра перед единицей.",
+    "sentence_context": "На градуснике ровно ноль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_18",
+    "word": "пыль",
+    "definition": "Мелкая грязь.",
+    "sentence_context": "Вытри пыль на полке.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_19",
+    "word": "руль",
+    "definition": "То, чем управляют машиной.",
+    "sentence_context": "Водитель держит руль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_20",
+    "word": "уголь",
+    "definition": "Черное топливо для печи.",
+    "sentence_context": "В костре догорает уголь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_21",
+    "word": "цепь",
+    "definition": "Скрепленные кольца из металла.",
+    "sentence_context": "Собака сидит на цепи.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_22",
+    "word": "шмель",
+    "definition": "Большое мохнатое насекомое.",
+    "sentence_context": "Шмель гудит над цветком.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_23",
+    "word": "лось",
+    "definition": "Лесной великан с рогами.",
+    "sentence_context": "Лось вышел на дорогу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_24",
+    "word": "роль",
+    "definition": "Часть актера в спектакле.",
+    "sentence_context": "Я играю роль принца.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_25",
+    "word": "боль",
+    "definition": "Неприятное чувство.",
+    "sentence_context": "Врач унял мою боль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_26",
+    "word": "даль",
+    "definition": "Место далеко отсюда.",
+    "sentence_context": "Корабль уплыл в голубую даль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_27",
+    "word": "сойка",
+    "definition": "Лесная птица.",
+    "sentence_context": "На ветку села сойка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_28",
+    "word": "тройка",
+    "definition": "Цифра три или три коня.",
+    "sentence_context": "По небу мчится тройка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_29",
+    "word": "двойка",
+    "definition": "Плохая оценка или цифра два.",
+    "sentence_context": "Я не хочу получать двойку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_30",
+    "word": "мойка",
+    "definition": "Место для мытья посуды.",
+    "sentence_context": "Положи тарелку в мойку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w3_31",
+    "word": "камень",
+    "definition": "Твердая горная порода.",
+    "sentence_context": "Я бросил камень в воду.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_32",
+    "word": "корень",
+    "definition": "Подземная часть растения.",
+    "sentence_context": "У дерева длинный корень.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_33",
+    "word": "олень",
+    "definition": "Животное с красивыми рогами.",
+    "sentence_context": "В лесу живет благородный олень.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_34",
+    "word": "парень",
+    "definition": "Молодой человек.",
+    "sentence_context": "Тот парень — мой сосед.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_35",
+    "word": "якорь",
+    "definition": "Держит корабль на месте.",
+    "sentence_context": "Матрос бросил тяжелый якорь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_36",
+    "word": "банька",
+    "definition": "Маленькая русская баня.",
+    "sentence_context": "Мы парились в жаркой баньке.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_37",
+    "word": "гирька",
+    "definition": "Небольшой груз.",
+    "sentence_context": "На весах стоит гирька.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_38",
+    "word": "килька",
+    "definition": "Маленькая рыбка.",
+    "sentence_context": "В банке была вкусная килька.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_39",
+    "word": "полька",
+    "definition": "Веселый танец.",
+    "sentence_context": "Мы танцевали польку на празднике.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w3_40",
+    "word": "филька",
+    "definition": "Простое имя.",
+    "sentence_context": "Филька — так зовут щенка.",
+    "difficulty": 2
+  }
+]

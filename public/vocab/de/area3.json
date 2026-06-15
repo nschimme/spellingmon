@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w3_1",
+    "word": "Eis",
+    "definition": "Gefrorenes Wasser oder süße Speise.",
+    "sentence_context": "Ich möchte eine Kugel Eis.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_2",
+    "word": "Auge",
+    "definition": "Damit kann man sehen.",
+    "sentence_context": "Mein rechtes Auge juckt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_3",
+    "word": "Freund",
+    "definition": "Ein Mensch, den man sehr mag.",
+    "sentence_context": "Lukas ist mein bester Freund.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_4",
+    "word": "Biene",
+    "definition": "Ein Insekt, das Honig macht.",
+    "sentence_context": "Die Biene fliegt zur Blume.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_5",
+    "word": "Wein",
+    "definition": "Ein Getränk aus Trauben.",
+    "sentence_context": "Opa trinkt gerne ein Glas Wein.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_6",
+    "word": "Liebe",
+    "definition": "Ein sehr schönes Gefühl.",
+    "sentence_context": "Ich habe meine Eltern lieb.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_7",
+    "word": "Haus",
+    "definition": "Dort wohnen wir.",
+    "sentence_context": "Das Haus ist sehr groß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_8",
+    "word": "Maus",
+    "definition": "Sie wohnt in der Wand.",
+    "sentence_context": "Die Maus huscht durch die Küche.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_9",
+    "word": "Baum",
+    "definition": "Er wächst im Park.",
+    "sentence_context": "Der Baum verliert seine Blätter.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_10",
+    "word": "Traum",
+    "definition": "Was wir im Schlaf sehen.",
+    "sentence_context": "Ich hatte einen schönen Traum.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_11",
+    "word": "Feuer",
+    "definition": "Es ist hell und heiß.",
+    "sentence_context": "Das Feuer brennt im Kamin.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_12",
+    "word": "Eule",
+    "definition": "Ein Vogel, der nachts jagt.",
+    "sentence_context": "Die Eule sitzt auf dem Ast.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_13",
+    "word": "Beule",
+    "definition": "Eine dicke Stelle am Kopf.",
+    "sentence_context": "Ich habe eine Beule am Knie.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_14",
+    "word": "Heu",
+    "definition": "Getrocknetes Gras für Tiere.",
+    "sentence_context": "Das Pferd frisst gerne Heu.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_15",
+    "word": "Neu",
+    "definition": "Nicht alt.",
+    "sentence_context": "Ich habe ein neues Fahrrad.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_16",
+    "word": "Tier",
+    "definition": "Hund, Katze oder Vogel.",
+    "sentence_context": "Welches Tier magst du am liebsten?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_17",
+    "word": "Hier",
+    "definition": "An dieser Stelle.",
+    "sentence_context": "Komm bitte mal kurz hierher.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_18",
+    "word": "Bier",
+    "definition": "Ein Getränk für Erwachsene.",
+    "sentence_context": "Papa trinkt manchmal ein Bier.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_19",
+    "word": "Viel",
+    "definition": "Nicht wenig.",
+    "sentence_context": "Ich habe heute viel gelernt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_20",
+    "word": "Ziel",
+    "definition": "Das Ende vom Rennen.",
+    "sentence_context": "Ich bin als Erster im Ziel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_21",
+    "word": "Reise",
+    "definition": "Wenn man wegfährt.",
+    "sentence_context": "Wir machen eine Reise ans Meer.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_22",
+    "word": "Leise",
+    "definition": "Nicht laut.",
+    "sentence_context": "Sei bitte ganz leise.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_23",
+    "word": "Weise",
+    "definition": "Wenn man sehr schlau ist.",
+    "sentence_context": "Die alte Frau ist sehr weise.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_24",
+    "word": "Eimer",
+    "definition": "Darin trägt man Wasser.",
+    "sentence_context": "Hol mir bitte einen Eimer Wasser.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_25",
+    "word": "Beide",
+    "definition": "Zwei zusammen.",
+    "sentence_context": "Wir gehen beide in den Zoo.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_26",
+    "word": "Heide",
+    "definition": "Eine Landschaft mit Blumen.",
+    "sentence_context": "In der Heide ist es schön.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_27",
+    "word": "Kleid",
+    "definition": "Ein Kleidungsstück für Frauen.",
+    "sentence_context": "Das Kleid steht dir gut.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_28",
+    "word": "Zeit",
+    "definition": "Was die Uhr anzeigt.",
+    "sentence_context": "Wie viel Zeit haben wir noch?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_29",
+    "word": "Brei",
+    "definition": "Weiches Essen für Babys.",
+    "sentence_context": "Das Baby isst seinen Brei.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_30",
+    "word": "Drei",
+    "definition": "Die Zahl nach zwei.",
+    "sentence_context": "Ich habe drei Geschwister.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w3_31",
+    "word": "Eisbär",
+    "definition": "Ein weißer Bär.",
+    "sentence_context": "Der Eisbär lebt am Nordpol.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_32",
+    "word": "Freude",
+    "definition": "Wenn man glücklich ist.",
+    "sentence_context": "Ich habe viel Freude am Spielen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_33",
+    "word": "Haut",
+    "definition": "Sie bedeckt den Körper.",
+    "sentence_context": "Die Sonne brennt auf der Haut.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_34",
+    "word": "Keule",
+    "definition": "Ein schwerer Stock.",
+    "sentence_context": "Der Riese hat eine Keule.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_35",
+    "word": "Leute",
+    "definition": "Andere Menschen.",
+    "sentence_context": "Dort stehen viele Leute.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_36",
+    "word": "Meile",
+    "definition": "Ein Wegmaß.",
+    "sentence_context": "Das ist noch eine weite Meile.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_37",
+    "word": "Neid",
+    "definition": "Wenn man auch etwas will.",
+    "sentence_context": "Lass den Neid lieber sein.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_38",
+    "word": "Pfeil",
+    "definition": "Man schießt ihn mit dem Bogen.",
+    "sentence_context": "Der Pfeil trifft die Scheibe.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_39",
+    "word": "Saite",
+    "definition": "Ein Draht an der Gitarre.",
+    "sentence_context": "Die Saite ist gerissen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w3_40",
+    "word": "Teich",
+    "definition": "Ein kleiner See.",
+    "sentence_context": "Im Teich schwimmen Enten.",
+    "difficulty": 2
+  }
+]

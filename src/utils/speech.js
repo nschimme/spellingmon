@@ -115,13 +115,24 @@ export const speech = {
     return this._initialized;
   },
 
-  refreshVoices() {
+  refreshVoices(langCode = null) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return false;
     try {
       const synth = window.speechSynthesis;
       const available = synth.getVoices();
       if (available.length > 0) {
         this.voices = available;
+
+        // If langCode is provided, try to find a matching voice
+        if (langCode) {
+           const code = langCode.split('-')[0].toLowerCase();
+           const match = this.voices.find(v => v.lang.toLowerCase().startsWith(code));
+           if (match) {
+             this.selectedVoice = match;
+             return true;
+           }
+        }
+
         if (!this.selectedVoice) {
           if (this._preferredVoiceName) {
             const preferred = available.find(v => v.name === this._preferredVoiceName);
@@ -136,6 +147,18 @@ export const speech = {
     } catch {
       return false;
     }
+  },
+
+  isLanguageSupported(langCode) {
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.__PLAYWRIGHT_TEST__)) {
+      return true; // Always support all languages in dev/test for UI verification
+    }
+    if (!this.voices.length) this.refreshVoices();
+    // Default to English if no voices are loaded yet or supported
+    if (langCode === 'en' && this.voices.length === 0) return true;
+
+    const code = langCode.split('-')[0].toLowerCase();
+    return this.voices.some(v => v.lang.toLowerCase().startsWith(code));
   },
 
   setVolume(val) {

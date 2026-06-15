@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w3_1",
+    "word": "bàba",
+    "spoken_version": "爸爸",
+    "definition": "对父亲的称呼。",
+    "sentence_context": "爸爸每天去工作。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_2",
+    "word": "māma",
+    "spoken_version": "妈妈",
+    "definition": "对母亲的称呼。",
+    "sentence_context": "妈妈爱做饭。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_3",
+    "word": "fēijī",
+    "spoken_version": "飞机",
+    "definition": "在天上飞的交通工具。",
+    "sentence_context": "我看见一架大飞机。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_4",
+    "word": "lǎoshī",
+    "spoken_version": "老师",
+    "definition": "在学校教书的人。",
+    "sentence_context": "老师好！",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_5",
+    "word": "shúshu",
+    "spoken_version": "叔叔",
+    "definition": "比爸爸小的男性。",
+    "sentence_context": "叔叔帮我修玩具。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_6",
+    "word": "yéye",
+    "spoken_version": "爷爷",
+    "definition": "爸爸的父亲。",
+    "sentence_context": "爷爷在公园打太极。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_7",
+    "word": "nǎinai",
+    "spoken_version": "奶奶",
+    "definition": "爸爸的母亲。",
+    "sentence_context": "奶奶缝补衣服。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_8",
+    "word": "gēge",
+    "spoken_version": "哥哥",
+    "definition": "同父母年长的男孩。",
+    "sentence_context": "哥哥带我玩球。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_9",
+    "word": "jiějie",
+    "spoken_version": "姐姐",
+    "definition": "同父母年长的女孩。",
+    "sentence_context": "姐姐在画画。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_10",
+    "word": "dìdi",
+    "spoken_version": "弟弟",
+    "definition": "同父母年幼的男孩。",
+    "sentence_context": "弟弟刚学会走路。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_11",
+    "word": "mèimei",
+    "spoken_version": "妹妹",
+    "definition": "同父母年幼的女孩。",
+    "sentence_context": "妹妹在唱歌。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_12",
+    "word": "tóngxué",
+    "spoken_version": "同学",
+    "definition": "在一起学习的人。",
+    "sentence_context": "他们是我的同学。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_13",
+    "word": "péngyou",
+    "spoken_version": "朋友",
+    "definition": "志同道合的人。",
+    "sentence_context": "我们是好朋友。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_14",
+    "word": "xuéxi",
+    "spoken_version": "学习",
+    "definition": "获取知识的过程。",
+    "sentence_context": "我们要努力学习。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_15",
+    "word": "yīshēng",
+    "spoken_version": "医生",
+    "definition": "治病救人的人。",
+    "sentence_context": "医生帮我检查身体。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_16",
+    "word": "hùshi",
+    "spoken_version": "护士",
+    "definition": "在医院照顾病人的人。",
+    "sentence_context": "护士阿姨很温柔。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_17",
+    "word": "píngguǒ",
+    "spoken_version": "苹果",
+    "definition": "一种圆圆的水果。",
+    "sentence_context": "我每天吃一个苹果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_18",
+    "word": "xiāngjiāo",
+    "spoken_version": "香蕉",
+    "definition": "黄黄的长弯水果。",
+    "sentence_context": "香蕉吃起来很甜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_19",
+    "word": "xigua",
+    "spoken_version": "西瓜",
+    "definition": "大大的绿皮水果。",
+    "sentence_context": "夏天吃西瓜很凉快。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_20",
+    "word": "dianshi",
+    "spoken_version": "电视",
+    "definition": "可以看节目的电器。",
+    "sentence_context": "吃完饭看会儿电视。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_21",
+    "word": "shǒujī",
+    "spoken_version": "手机",
+    "definition": "可以打电话的工具。",
+    "sentence_context": "爸爸在用手机发消息。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_22",
+    "word": "diǎnnǎo",
+    "spoken_version": "电脑",
+    "definition": "可以上网的工具。",
+    "sentence_context": "我在电脑上查资料。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_23",
+    "word": "zhuōzi",
+    "spoken_version": "桌子",
+    "definition": "家具，用来放东西。",
+    "sentence_context": "书放在桌子上。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_24",
+    "word": "yǐzi",
+    "spoken_version": "椅子",
+    "definition": "家具，用来坐。",
+    "sentence_context": "请坐在椅子上。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_25",
+    "word": "yifu",
+    "spoken_version": "衣服",
+    "definition": "穿在身上的。",
+    "sentence_context": "今天穿这件新衣服。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_26",
+    "word": "xiézi",
+    "spoken_version": "鞋子",
+    "definition": "穿在脚上的。",
+    "sentence_context": "这双鞋子很合脚。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_27",
+    "word": "wàzi",
+    "spoken_version": "袜子",
+    "definition": "穿在脚上里面。",
+    "sentence_context": "袜子要天天换洗。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_28",
+    "word": "shūbāo",
+    "spoken_version": "书包",
+    "definition": "装书的袋子。",
+    "sentence_context": "背起书包上学校。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_29",
+    "word": "qiānbǐ",
+    "spoken_version": "铅笔",
+    "definition": "写字用的笔。",
+    "sentence_context": "我用铅笔写字。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_30",
+    "word": "chǐzi",
+    "spoken_version": "尺子",
+    "definition": "量长度的工具。",
+    "sentence_context": "用尺子画一条直线。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w3_31",
+    "word": "xuexiao",
+    "spoken_version": "学校",
+    "definition": "读书的地方。",
+    "sentence_context": "学校里有很多学生。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_32",
+    "word": "gongyuan",
+    "spoken_version": "公园",
+    "definition": "玩耍的地方。",
+    "sentence_context": "公园里有很多花草。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_33",
+    "word": "huāduǒ",
+    "spoken_version": "花朵",
+    "definition": "植物的美丽部分。",
+    "sentence_context": "花朵散发着香味。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_34",
+    "word": "shùmu",
+    "spoken_version": "树木",
+    "definition": "高大的植物。",
+    "sentence_context": "树木可以净化空气。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_35",
+    "word": "xiǎoniǎo",
+    "spoken_version": "小鸟",
+    "definition": "会飞的小动物。",
+    "sentence_context": "小鸟在树上叫。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_36",
+    "word": "xiǎogǒu",
+    "spoken_version": "小狗",
+    "definition": "可爱的家畜。",
+    "sentence_context": "小狗对着我摇尾巴。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_37",
+    "word": "xiǎomāo",
+    "spoken_version": "小猫",
+    "definition": "爱干净的家畜。",
+    "sentence_context": "小猫在捉蝴蝶。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_38",
+    "word": "taiyang",
+    "spoken_version": "太阳",
+    "definition": "发光发热的恒星。",
+    "sentence_context": "太阳从东方升起。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_39",
+    "word": "yueliang",
+    "spoken_version": "月亮",
+    "definition": "晚上的卫星。",
+    "sentence_context": "月亮弯弯像小船。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w3_40",
+    "word": "xingxing",
+    "spoken_version": "星星",
+    "definition": "夜空中的光点。",
+    "sentence_context": "天上的星星亮晶晶。",
+    "difficulty": 2
+  }
+]

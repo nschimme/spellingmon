@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w4_1",
+    "word": "домик",
+    "definition": "Маленький дом.",
+    "sentence_context": "У меня есть игрушечный домик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_2",
+    "word": "замочек",
+    "definition": "Маленький замок.",
+    "sentence_context": "Я повесил замочек на шкатулку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_3",
+    "word": "кошка",
+    "definition": "Домашнее животное.",
+    "sentence_context": "Наша кошка ловит мышей.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_4",
+    "word": "собачка",
+    "definition": "Маленькая собака.",
+    "sentence_context": "У соседки живет белая собачка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_5",
+    "word": "рот",
+    "definition": "Часть тела.",
+    "sentence_context": "У него маленький рот.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_6",
+    "word": "ножка",
+    "definition": "Маленькая нога или ножка стола.",
+    "sentence_context": "У стула сломалась ножка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_7",
+    "word": "ручка",
+    "definition": "Маленькая рука или предмет для письма.",
+    "sentence_context": "Дай мне синюю ручку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_8",
+    "word": "глазик",
+    "definition": "Маленький глаз.",
+    "sentence_context": "У куклы закрылся один глазик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_9",
+    "word": "зубик",
+    "definition": "Маленький зуб.",
+    "sentence_context": "У малыша прорезался первый зубик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_10",
+    "word": "носик",
+    "definition": "Маленький нос.",
+    "sentence_context": "У него забавный носик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_11",
+    "word": "ёлочка",
+    "definition": "Маленькая ель.",
+    "sentence_context": "Мы нарядили ёлочку к празднику.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_12",
+    "word": "цветочек",
+    "definition": "Маленький цветок.",
+    "sentence_context": "Я сорвал красивый цветочек.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_13",
+    "word": "листочек",
+    "definition": "Маленький лист дерева.",
+    "sentence_context": "На землю упал желтый листочек.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_14",
+    "word": "грибок",
+    "definition": "Маленький гриб.",
+    "sentence_context": "В лесу вырос маленький грибок.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_15",
+    "word": "лесник",
+    "definition": "Человек, который охраняет лес.",
+    "sentence_context": "Лесник живет в лесной хижине.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_16",
+    "word": "моряк",
+    "definition": "Тот, кто служит на флоте.",
+    "sentence_context": "Моряк ушел в дальнее плавание.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_17",
+    "word": "летчик",
+    "definition": "Тот, кто управляет самолетом.",
+    "sentence_context": "Мой папа — отважный летчик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_18",
+    "word": "сад",
+    "definition": "Место с деревьями.",
+    "sentence_context": "В саду поспели вишни.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_19",
+    "word": "садик",
+    "definition": "Детский сад или маленький сад.",
+    "sentence_context": "Дети идут в детский садик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_20",
+    "word": "мячик",
+    "definition": "Маленький мяч.",
+    "sentence_context": "Собака принесла мне мячик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_21",
+    "word": "столик",
+    "definition": "Маленький стол.",
+    "sentence_context": "Мы пили чай за столиком.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_22",
+    "word": "коврик",
+    "definition": "Маленький ковер.",
+    "sentence_context": "Положи коврик у двери.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_23",
+    "word": "шкафчик",
+    "definition": "Маленький шкаф.",
+    "sentence_context": "Положи одежду в свой шкафчик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_24",
+    "word": "ключик",
+    "definition": "Маленький ключ.",
+    "sentence_context": "Золотой ключик открыл дверь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_25",
+    "word": "коробка",
+    "definition": "Предмет для хранения вещей.",
+    "sentence_context": "Игрушки лежат в коробке.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_26",
+    "word": "игрушка",
+    "definition": "Предмет для игры.",
+    "sentence_context": "Моя любимая игрушка — медвежонок.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_27",
+    "word": "зверушка",
+    "definition": "Маленький зверь.",
+    "sentence_context": "В клетке сидела забавная зверушка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_28",
+    "word": "травинка",
+    "definition": "Маленькая трава.",
+    "sentence_context": "На травинке блестела роса.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_29",
+    "word": "снежинка",
+    "definition": "Маленький кристалл снега.",
+    "sentence_context": "На ладонь упала снежинка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_30",
+    "word": "дождик",
+    "definition": "Небольшой дождь.",
+    "sentence_context": "Грибной дождик прошел быстро.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w4_31",
+    "word": "заинька",
+    "definition": "Ласково о зайце.",
+    "sentence_context": "Заинька прыгает под кустом.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_32",
+    "word": "солнышко",
+    "definition": "Ласково о солнце.",
+    "sentence_context": "Солнышко светит в окно.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_33",
+    "word": "облачко",
+    "definition": "Маленькое облако.",
+    "sentence_context": "На небе плывет белое облачко.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_34",
+    "word": "реченька",
+    "definition": "Маленькая река.",
+    "sentence_context": "Реченька течет через лес.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_35",
+    "word": "берёзка",
+    "definition": "Маленькая береза.",
+    "sentence_context": "Белая берёзка под моим окном.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_36",
+    "word": "окно",
+    "definition": "Проем в стене.",
+    "sentence_context": "Окно выходит во двор.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_37",
+    "word": "окошко",
+    "definition": "Маленькое окно.",
+    "sentence_context": "Посмотри в маленькое окошко.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_38",
+    "word": "сердце",
+    "definition": "Орган человека.",
+    "sentence_context": "Сердце бьется в груди.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_39",
+    "word": "солнце",
+    "definition": "Звезда.",
+    "sentence_context": "Солнце греет землю.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w4_40",
+    "word": "крыльцо",
+    "definition": "Часть дома у входа.",
+    "sentence_context": "Дедушка сидел на крыльце.",
+    "difficulty": 2
+  }
+]

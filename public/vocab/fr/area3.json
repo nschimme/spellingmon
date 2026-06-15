@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w3_1",
+    "word": "souris",
+    "definition": "Petit animal gris qui aime le fromage.",
+    "sentence_context": "La souris s'est cachée dans un trou.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_2",
+    "word": "jaune",
+    "definition": "La couleur du soleil.",
+    "sentence_context": "Le citron est jaune.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_3",
+    "word": "oiseau",
+    "definition": "Animal qui a des plumes et qui vole.",
+    "sentence_context": "L'oiseau chante sur la branche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_4",
+    "word": "chaise",
+    "definition": "Meuble pour s'asseoir.",
+    "sentence_context": "Assieds-toi sur la chaise bleue.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_5",
+    "word": "chat",
+    "definition": "Petit animal domestique.",
+    "sentence_context": "Le chat fait ronron.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_6",
+    "word": "chaton",
+    "definition": "Le petit du chat.",
+    "sentence_context": "Le chaton joue avec une pelote de laine.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_7",
+    "word": "bouche",
+    "definition": "Partie du visage pour manger et parler.",
+    "sentence_context": "Ouvre grand la bouche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_8",
+    "word": "chaud",
+    "definition": "Le contraire de froid.",
+    "sentence_context": "Le soleil est très chaud aujourd'hui.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_9",
+    "word": "chien",
+    "definition": "Le meilleur ami de l'homme.",
+    "sentence_context": "Le chien remue la queue.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_10",
+    "word": "jouet",
+    "definition": "Objet pour s'amuser.",
+    "sentence_context": "Je range mon jouet dans le coffre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_11",
+    "word": "maison",
+    "definition": "Lieu où l'on habite.",
+    "sentence_context": "La maison a des volets rouges.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_12",
+    "word": "soupe",
+    "definition": "Aliment liquide chaud.",
+    "sentence_context": "Je mange de la soupe de légumes.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_13",
+    "word": "bijou",
+    "definition": "Objet précieux que l'on porte.",
+    "sentence_context": "Elle a un joli bijou autour du cou.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_14",
+    "word": "chemin",
+    "definition": "Petite route pour marcher.",
+    "sentence_context": "Nous suivons le chemin dans la forêt.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_15",
+    "word": "chose",
+    "definition": "Un objet dont on ne connaît pas le nom.",
+    "sentence_context": "C'est une drôle de chose.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_16",
+    "word": "genou",
+    "definition": "Partie du corps entre la cuisse et la jambe.",
+    "sentence_context": "Je suis tombé sur le genou.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_17",
+    "word": "main",
+    "definition": "Partie du corps au bout du bras.",
+    "sentence_context": "Donne-moi la main pour traverser.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_18",
+    "word": "pain",
+    "definition": "Aliment fait avec de la farine.",
+    "sentence_context": "Je vais chercher du pain à la boulangerie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_19",
+    "word": "poche",
+    "definition": "Petit sac cousu dans un vêtement.",
+    "sentence_context": "J'ai mis mes clés dans ma poche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_20",
+    "word": "train",
+    "definition": "Moyen de transport sur rails.",
+    "sentence_context": "Le train siffle en arrivant.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_21",
+    "word": "boule",
+    "definition": "Objet rond.",
+    "sentence_context": "On a fait une grosse boule de neige.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_22",
+    "word": "cheval",
+    "definition": "Animal que l'on peut monter.",
+    "sentence_context": "Le cheval galope dans le pré.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_23",
+    "word": "chou",
+    "definition": "Légume rond à feuilles.",
+    "sentence_context": "J'aime bien le chou rouge.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_24",
+    "word": "gâteau",
+    "definition": "Dessert sucré et bon.",
+    "sentence_context": "C'est mon gâteau d'anniversaire.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_25",
+    "word": "neige",
+    "definition": "Eau gelée blanche qui tombe du ciel.",
+    "sentence_context": "La neige recouvre le sol.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_26",
+    "word": "poulet",
+    "definition": "Petit de la poule que l'on mange.",
+    "sentence_context": "On mange du poulet rôti à midi.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_27",
+    "word": "roue",
+    "definition": "Objet rond qui permet de rouler.",
+    "sentence_context": "La roue du vélo est cassée.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_28",
+    "word": "bouton",
+    "definition": "Petit objet pour fermer un vêtement.",
+    "sentence_context": "Il manque un bouton à ma veste.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_29",
+    "word": "chiffre",
+    "definition": "Signe pour écrire les nombres.",
+    "sentence_context": "Huit est un chiffre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_30",
+    "word": "mouche",
+    "definition": "Petit insecte qui vole.",
+    "sentence_context": "Il y a une mouche dans la cuisine.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w3_31",
+    "word": "douche",
+    "definition": "Façon de se laver debout.",
+    "sentence_context": "Je prends une douche tous les matins.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_32",
+    "word": "épaule",
+    "definition": "Partie du corps qui joint le bras au buste.",
+    "sentence_context": "Il porte son sac sur l'épaule.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_33",
+    "word": "louche",
+    "definition": "Grosse cuillère pour la soupe.",
+    "sentence_context": "Prends la louche pour servir.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_34",
+    "word": "oreille",
+    "definition": "Partie du visage pour entendre.",
+    "sentence_context": "Il m'a parlé à l'oreille.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_35",
+    "word": "savon",
+    "definition": "Produit pour se laver.",
+    "sentence_context": "Lave-toi bien les mains avec du savon.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_36",
+    "word": "bougie",
+    "definition": "Objet qui donne de la lumière.",
+    "sentence_context": "On souffle les bougies sur le gâteau.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_37",
+    "word": "étoile",
+    "definition": "Petit point brillant dans le ciel de nuit.",
+    "sentence_context": "Je regarde l'étoile polaire.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_38",
+    "word": "loups",
+    "definition": "Animaux sauvages qui hurlent.",
+    "sentence_context": "On entend les loups dans la forêt.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_39",
+    "word": "poupée",
+    "definition": "Jouet en forme de petit enfant.",
+    "sentence_context": "Ma sœur joue à la poupée.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w3_40",
+    "word": "valise",
+    "definition": "Grand sac pour partir en voyage.",
+    "sentence_context": "J'ai fait ma valise pour les vacances.",
+    "difficulty": 2
+  }
+]

@@ -60,11 +60,11 @@ onUnmounted(() => {
         @continue="playerStore.startGame"
         @new-game="playerStore.startGame"
       />
-      <template v-else-if="!playerStore.characterCreationComplete">
-        <CharacterCreation />
-      </template>
       <template v-else-if="!playerStore.ttsVerified">
         <TTSWelcomeScreen @verified="playerStore.confirmTtsVerified" />
+      </template>
+      <template v-else-if="!playerStore.characterCreationComplete">
+        <CharacterCreation />
       </template>
       <template v-else>
         <StarterSelection v-if="!playerStore.isStarterSelected" />

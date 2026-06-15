@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w9_1",
+    "word": "quincaillerie",
+    "definition": "Magasin d'outils et de ferraille.",
+    "sentence_context": "On a acheté des vis à la quincaillerie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_2",
+    "word": "asymétrique",
+    "definition": "Qui n'est pas pareil des deux côtés.",
+    "sentence_context": "Ta coupe de cheveux est asymétrique.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_3",
+    "word": "hippopotame",
+    "definition": "Gros animal qui vit dans l'eau.",
+    "sentence_context": "L'hippopotame baille très fort.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_4",
+    "word": "idiosyncrasie",
+    "definition": "Façon d'être propre à quelqu'un.",
+    "sentence_context": "C'est une petite idiosyncrasie chez lui.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_5",
+    "word": "bibliothèque",
+    "definition": "Lieu avec beaucoup de livres.",
+    "sentence_context": "On va chercher des livres à la bibliothèque.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_6",
+    "word": "caractéristique",
+    "definition": "Ce qui permet de reconnaître une chose.",
+    "sentence_context": "Dis-moi une caractéristique du lion.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_7",
+    "word": "dictionnaire",
+    "definition": "Livre pour apprendre les mots.",
+    "sentence_context": "Cherche la définition dans le dictionnaire.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_8",
+    "word": "électronique",
+    "definition": "Qui fonctionne avec de l'électricité.",
+    "sentence_context": "Mon jeu est électronique.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_9",
+    "word": "géographie",
+    "definition": "Étude de la Terre.",
+    "sentence_context": "On apprend les pays en géographie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_10",
+    "word": "hélicoptère",
+    "definition": "Appareil qui vole avec des hélices.",
+    "sentence_context": "L'hélicoptère a atterri sur le toit.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_11",
+    "word": "imagination",
+    "definition": "Capacité à créer des images dans sa tête.",
+    "sentence_context": "Tu as une grande imagination.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_12",
+    "word": "journaliste",
+    "definition": "Personne qui écrit pour un journal.",
+    "sentence_context": "Le journaliste a posé des questions.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_13",
+    "word": "kilomètre",
+    "definition": "Mesure de distance.",
+    "sentence_context": "Il a couru un kilomètre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_14",
+    "word": "littérature",
+    "definition": "Ensemble des livres écrits.",
+    "sentence_context": "On étudie la littérature à l'école.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_15",
+    "word": "mathématiques",
+    "definition": "Étude des nombres.",
+    "sentence_context": "J'aime faire des mathématiques.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_16",
+    "word": "nourriture",
+    "definition": "Ce que l'on mange.",
+    "sentence_context": "La nourriture est prête, venez manger !",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_17",
+    "word": "observation",
+    "definition": "Action de regarder attentivement.",
+    "sentence_context": "On a fait une séance d'observation des oiseaux.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_18",
+    "word": "philosophie",
+    "definition": "Réflexion sur la vie.",
+    "sentence_context": "C'est un livre de philosophie pour enfants.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_19",
+    "word": "qualité",
+    "definition": "Ce qui est bien chez quelqu'un ou quelque chose.",
+    "sentence_context": "La patience est une grande qualité.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_20",
+    "word": "république",
+    "definition": "Forme de gouvernement.",
+    "sentence_context": "La France est une république.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_21",
+    "word": "scientifique",
+    "definition": "Personne qui étudie les sciences.",
+    "sentence_context": "Le scientifique fait des expériences.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_22",
+    "word": "télévision",
+    "definition": "Appareil pour regarder des films.",
+    "sentence_context": "On regarde la télévision le soir.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_23",
+    "word": "université",
+    "definition": "École après le lycée.",
+    "sentence_context": "Ma grande sœur va à l'université.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_24",
+    "word": "vocabulaire",
+    "definition": "Ensemble des mots connus.",
+    "sentence_context": "On apprend du vocabulaire nouveau chaque jour.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_25",
+    "word": "wagon",
+    "definition": "Voiture d'un train.",
+    "sentence_context": "On est monté dans le premier wagon.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_26",
+    "word": "xylophone",
+    "definition": "Instrument de musique.",
+    "sentence_context": "Le xylophone fait des sons joyeux.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_27",
+    "word": "yaourt",
+    "definition": "Spécialité laitière.",
+    "sentence_context": "Je mange un yaourt après le repas.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_28",
+    "word": "zoologie",
+    "definition": "Étude des animaux.",
+    "sentence_context": "Mon rêve est de faire de la zoologie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_29",
+    "word": "aquarium",
+    "definition": "Bac à poissons.",
+    "sentence_context": "On a vu des requins dans l'aquarium.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_30",
+    "word": "boulangerie",
+    "definition": "Lieu où l'on achète le pain.",
+    "sentence_context": "La boulangerie sent bon le pain chaud.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w9_31",
+    "word": "conscience",
+    "definition": "Sentiment du bien et du mal.",
+    "sentence_context": "Il a eu mauvaise conscience après sa bêtise.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_32",
+    "word": "développement",
+    "definition": "Action de grandir ou de changer.",
+    "sentence_context": "C'est un beau développement pour ton projet.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_33",
+    "word": "environnement",
+    "definition": "La nature qui nous entoure.",
+    "sentence_context": "Il faut protéger l'environnement.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_34",
+    "word": "fréquentation",
+    "definition": "Action d'aller souvent dans un lieu.",
+    "sentence_context": "La fréquentation de ce parc est importante.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_35",
+    "word": "générosité",
+    "definition": "Action de donner sans attendre.",
+    "sentence_context": "Sa générosité est bien connue de tous.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_36",
+    "word": "horizontal",
+    "definition": "Qui est couché, parallèle au sol.",
+    "sentence_context": "Trace une ligne horizontale sur ton cahier.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_37",
+    "word": "intelligent",
+    "definition": "Qui comprend vite et bien.",
+    "sentence_context": "Mon chien est très intelligent.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_38",
+    "word": "justification",
+    "definition": "Explication pour prouver qu'on a raison.",
+    "sentence_context": "Il a donné une bonne justification.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_39",
+    "word": "km",
+    "definition": "Abréviation de kilomètre.",
+    "sentence_context": "On a fait dix km à pied.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w9_40",
+    "word": "labyrinthe",
+    "definition": "Chemin compliqué où l'on se perd.",
+    "sentence_context": "On s'est perdu dans le labyrinthe de maïs.",
+    "difficulty": 2
+  }
+]

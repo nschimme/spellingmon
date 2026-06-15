@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w4_1",
+    "word": "casita",
+    "definition": "Una casa pequeña.",
+    "sentence_context": "El pájaro tiene una casita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_2",
+    "word": "barquito",
+    "definition": "Un barco pequeño.",
+    "sentence_context": "Hice un barquito de papel.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_3",
+    "word": "amiguito",
+    "definition": "Un amigo pequeño.",
+    "sentence_context": "Juego con mi amiguito Pedro.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_4",
+    "word": "perrazo",
+    "definition": "Un perro muy grande.",
+    "sentence_context": "¡Vaya perrazo tiene mi vecino!",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_5",
+    "word": "ratoncito",
+    "definition": "Un ratón pequeño.",
+    "sentence_context": "El ratoncito Pérez me trajo un regalo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_6",
+    "word": "mesita",
+    "definition": "Una mesa pequeña.",
+    "sentence_context": "Puse el libro en la mesita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_7",
+    "word": "sillita",
+    "definition": "Una silla pequeña.",
+    "sentence_context": "La muñeca está en su sillita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_8",
+    "word": "gatito",
+    "definition": "Un gato pequeño.",
+    "sentence_context": "El gatito maúlla por comida.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_9",
+    "word": "perrito",
+    "definition": "Un perro pequeño.",
+    "sentence_context": "Saqué a pasear al perrito.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_10",
+    "word": "librito",
+    "definition": "Un libro pequeño.",
+    "sentence_context": "Leí un librito de cuentos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_11",
+    "word": "bolsita",
+    "definition": "Una bolsa pequeña.",
+    "sentence_context": "Guarda las canicas en la bolsita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_12",
+    "word": "pelotita",
+    "definition": "Una pelota pequeña.",
+    "sentence_context": "El perro juega con la pelotita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_13",
+    "word": "florecita",
+    "definition": "Una flor pequeña.",
+    "sentence_context": "Corté una florecita del campo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_14",
+    "word": "naricita",
+    "definition": "Una nariz pequeña.",
+    "sentence_context": "El bebé tiene una naricita mona.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_15",
+    "word": "manita",
+    "definition": "Una mano pequeña.",
+    "sentence_context": "Dame la manita para cruzar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_16",
+    "word": "carroza",
+    "definition": "Coche grande y lujoso.",
+    "sentence_context": "La princesa va en su carroza.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_17",
+    "word": "golazo",
+    "definition": "Un gol muy espectacular.",
+    "sentence_context": "¡Qué golazo marcó mi equipo!",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_18",
+    "word": "manaza",
+    "definition": "Una mano muy grande.",
+    "sentence_context": "Tiene unas manazas de gigante.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_19",
+    "word": "portón",
+    "definition": "Una puerta muy grande.",
+    "sentence_context": "Entramos por el portón del garaje.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_20",
+    "word": "sillón",
+    "definition": "Una silla grande y cómoda.",
+    "sentence_context": "Abuelo duerme en el sillón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_21",
+    "word": "patadita",
+    "definition": "Un golpe suave con el pie.",
+    "sentence_context": "Le di una patadita al balón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_22",
+    "word": "copita",
+    "definition": "Un vaso pequeño.",
+    "sentence_context": "Bebí zumo en una copita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_23",
+    "word": "lapicito",
+    "definition": "Un lápiz pequeño.",
+    "sentence_context": "Escribo con mi lapicito azul.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_24",
+    "word": "cajita",
+    "definition": "Una caja pequeña.",
+    "sentence_context": "Guardo mis tesoros en la cajita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_25",
+    "word": "puertita",
+    "definition": "Una puerta pequeña.",
+    "sentence_context": "El ratón entró por la puertita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_26",
+    "word": "camita",
+    "definition": "Una cama pequeña.",
+    "sentence_context": "El osito está en su camita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_27",
+    "word": "ventanita",
+    "definition": "Una ventana pequeña.",
+    "sentence_context": "Miro por la ventanita del avión.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_28",
+    "word": "zapatito",
+    "definition": "Un zapato pequeño.",
+    "sentence_context": "El bebé perdió su zapatito.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_29",
+    "word": "sombrerito",
+    "definition": "Un sombrero pequeño.",
+    "sentence_context": "Lleva un sombrerito de paja.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_30",
+    "word": "bolsón",
+    "definition": "Una bolsa muy grande.",
+    "sentence_context": "Llevo los libros en un bolsón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w4_31",
+    "word": "narizota",
+    "definition": "Una nariz muy grande.",
+    "sentence_context": "El payaso tiene una narizota roja.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_32",
+    "word": "bocaza",
+    "definition": "Una boca muy grande.",
+    "sentence_context": "¡No seas bocaza y calla!",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_33",
+    "word": "ojazos",
+    "definition": "Unos ojos muy grandes y bonitos.",
+    "sentence_context": "Ella tiene unos ojazos azules.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_34",
+    "word": "chiquetito",
+    "definition": "Algo muy, muy pequeño.",
+    "sentence_context": "Es un juguete chiquetito.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_35",
+    "word": "cuerpecito",
+    "definition": "Un cuerpo pequeño.",
+    "sentence_context": "El pajarillo tiene un cuerpecito frágil.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_36",
+    "word": "carita",
+    "definition": "Una cara pequeña y bonita.",
+    "sentence_context": "Lávate la carita con agua.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_37",
+    "word": "ojito",
+    "definition": "Un ojo pequeño.",
+    "sentence_context": "Ten mucho ojito con el perro.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_38",
+    "word": "cabezón",
+    "definition": "Persona con la cabeza grande.",
+    "sentence_context": "Mi hermano es un poco cabezón.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_39",
+    "word": "panzón",
+    "definition": "Persona con mucha barriga.",
+    "sentence_context": "Ese señor es muy panzón.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w4_40",
+    "word": "platito",
+    "definition": "Un plato pequeño.",
+    "sentence_context": "Puse el pan en el platito.",
+    "difficulty": 2
+  }
+]

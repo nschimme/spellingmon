@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w5_1",
+    "word": "deshacer",
+    "definition": "Quitar la forma de algo.",
+    "sentence_context": "Voy a deshacer el nudo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_2",
+    "word": "inmortal",
+    "definition": "Que nunca muere.",
+    "sentence_context": "Los dioses son inmortales.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_3",
+    "word": "subrayar",
+    "definition": "Poner una línea debajo.",
+    "sentence_context": "Tienes que subrayar el título.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_4",
+    "word": "precalentar",
+    "definition": "Calentar antes de usar.",
+    "sentence_context": "Hay que precalentar el horno.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_5",
+    "word": "reescribir",
+    "definition": "Escribir otra vez.",
+    "sentence_context": "Tengo que reescribir la tarea.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_6",
+    "word": "desorden",
+    "definition": "Falta de orden.",
+    "sentence_context": "Mi cuarto es un desorden.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_7",
+    "word": "infeliz",
+    "definition": "Que no es feliz.",
+    "sentence_context": "Se siente infeliz porque perdió su juguete.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_8",
+    "word": "subsuelo",
+    "definition": "Parte debajo del suelo.",
+    "sentence_context": "El metro va por el subsuelo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_9",
+    "word": "predecir",
+    "definition": "Decir algo antes de que pase.",
+    "sentence_context": "Nadie puede predecir el futuro.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_10",
+    "word": "releer",
+    "definition": "Leer otra vez.",
+    "sentence_context": "Voy a releer mi cuento favorito.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_11",
+    "word": "despegar",
+    "definition": "Separar algo pegado.",
+    "sentence_context": "Ayúdame a despegar el cromo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_12",
+    "word": "invisible",
+    "definition": "Que no se puede ver.",
+    "sentence_context": "El aire es invisible.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_13",
+    "word": "submarino",
+    "definition": "Barco que va bajo el agua.",
+    "sentence_context": "Vimos un submarino en el puerto.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_14",
+    "word": "preparar",
+    "definition": "Hacer lo necesario para algo.",
+    "sentence_context": "Voy a preparar la mochila.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_15",
+    "word": "reaparecer",
+    "definition": "Aparecer de nuevo.",
+    "sentence_context": "El sol volvió a reaparecer.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_16",
+    "word": "desconfiar",
+    "definition": "No tener confianza.",
+    "sentence_context": "No hay que desconfiar de los amigos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_17",
+    "word": "incapaz",
+    "definition": "Que no puede hacer algo.",
+    "sentence_context": "Soy incapaz de saltar tan alto.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_18",
+    "word": "subtítulo",
+    "definition": "Título secundario.",
+    "sentence_context": "Lee el subtítulo de la noticia.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_19",
+    "word": "preescolar",
+    "definition": "Antes de la escuela primaria.",
+    "sentence_context": "Mi hermanito va a preescolar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_20",
+    "word": "reutilizar",
+    "definition": "Usar algo de nuevo.",
+    "sentence_context": "Debemos reutilizar las bolsas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_21",
+    "word": "desmontar",
+    "definition": "Separar las piezas de algo.",
+    "sentence_context": "Voy a desmontar el juguete.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_22",
+    "word": "increíble",
+    "definition": "Que cuesta creer.",
+    "sentence_context": "Es una historia increíble.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_23",
+    "word": "subcampeón",
+    "definition": "El que queda segundo.",
+    "sentence_context": "Mi equipo fue subcampeón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_24",
+    "word": "prevenir",
+    "definition": "Evitar que algo pase.",
+    "sentence_context": "Lavarse las manos ayuda a prevenir enfermedades.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_25",
+    "word": "reorganizar",
+    "definition": "Organizar de nuevo.",
+    "sentence_context": "Voy a reorganizar mis libros.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_26",
+    "word": "desaparecer",
+    "definition": "Dejar de verse.",
+    "sentence_context": "Vimos al mago desaparecer.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_27",
+    "word": "injusto",
+    "definition": "Que no es justo.",
+    "sentence_context": "Es injusto que no me dejes jugar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_28",
+    "word": "subasta",
+    "definition": "Venta al mejor postor.",
+    "sentence_context": "Vendieron el cuadro en una subasta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_29",
+    "word": "prehistoria",
+    "definition": "Época muy antigua.",
+    "sentence_context": "Los dinosaurios vivieron en la prehistoria.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_30",
+    "word": "reconstruir",
+    "definition": "Construir de nuevo.",
+    "sentence_context": "Vamos a reconstruir el castillo de arena.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w5_31",
+    "word": "desarmar",
+    "definition": "Quitar las piezas.",
+    "sentence_context": "No debes desarmar el reloj.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_32",
+    "word": "insatisfecho",
+    "definition": "Que no está contento.",
+    "sentence_context": "Estoy insatisfecho con mi nota.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_33",
+    "word": "subdirector",
+    "definition": "El que ayuda al director.",
+    "sentence_context": "Hablamos con el subdirector.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_34",
+    "word": "preocupar",
+    "definition": "Sentir inquietud.",
+    "sentence_context": "No te debes preocupar por nada.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_35",
+    "word": "reemplazar",
+    "definition": "Poner una cosa por otra.",
+    "sentence_context": "Tengo que reemplazar la bombilla.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_36",
+    "word": "desagradecido",
+    "definition": "Que no da las gracias.",
+    "sentence_context": "No seas desagradecido con tus padres.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_37",
+    "word": "innecesario",
+    "definition": "Que no hace falta.",
+    "sentence_context": "Es innecesario traer paraguas hoy.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_38",
+    "word": "subestimar",
+    "definition": "Dar menos valor del que tiene.",
+    "sentence_context": "No hay que subestimar al rival.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_39",
+    "word": "predominar",
+    "definition": "Tener más fuerza o abundancia.",
+    "sentence_context": "El color verde suele predominar en el bosque.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w5_40",
+    "word": "reivindicar",
+    "definition": "Reclamar algo a lo que se tiene derecho.",
+    "sentence_context": "Vinieron a reivindicar sus derechos.",
+    "difficulty": 2
+  }
+]

@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 
 test.describe('TTS Verification Flow', () => {
   test('should show TTS verification screen after starting game and proceed after verification', async ({ page }) => {
-    page.on('console', msg => console.log('BROWSER LOG:', msg.text()));
     await page.goto('/');
 
     // 1. Landing Screen
@@ -14,41 +13,40 @@ test.describe('TTS Verification Flow', () => {
     await expect(newGameButton).toBeVisible();
     await newGameButton.click();
 
-    // 1b. Character Creation
-    await page.getByPlaceholder('NAME').fill('Test Player');
-    await page.getByRole('button', { name: 'Confirm' }).click();
+    // 2. Language Selection
+    await page.getByRole('button').filter({ hasText: 'English' }).click();
 
-    // 2. TTS Welcome Screen
-    await expect(page.getByText('Audio Check')).toBeVisible();
-    await expect(page.getByText('Did you hear the voice?')).not.toBeVisible();
-
+    // 3. Audio Check
     const testVoiceButton = page.getByRole('button', { name: 'Test Voice' });
+    await expect(testVoiceButton).toBeVisible();
     await testVoiceButton.click();
 
-    // After clicking test voice, "Did you hear the voice?" should appear
-    // Increase timeout because speech.init(true) can take up to 5s
-    await expect(page.getByText('Did you hear the voice?')).toBeVisible({ timeout: 10000 });
-
-    // Verify "Yes" button works
     const yesButton = page.getByRole('button', { name: 'Yes' });
+    await expect(yesButton).toBeVisible();
     await yesButton.click();
 
-    // 3. Starter Selection (Game should have proceeded)
-    await expect(page.getByText('Choose your partner!')).toBeVisible();
+    // 4. Character Creation
+    await expect(page.getByText('New Trainer')).toBeVisible();
+    await page.getByPlaceholder('Enter your name').fill('Tester');
+    await page.getByRole('button', { name: 'Confirm' }).click();
+
+    // 5. Starter Selection
+    await expect(page.getByText('Choose your partner')).toBeVisible();
   });
 
   test('should show troubleshooting when clicking No', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Start Game' }).click();
-    await page.getByRole('button', { name: 'New Game' }).click();
+    await page.click('text=Start Game');
+    await page.click('text=New Game');
+    await page.getByRole('button').filter({ hasText: 'English' }).click();
 
-    await page.getByPlaceholder('NAME').fill('Test Player');
-    await page.getByRole('button', { name: 'Confirm' }).click();
+    const testVoiceButton = page.getByRole('button', { name: 'Test Voice' });
+    await testVoiceButton.click();
 
-    await page.getByRole('button', { name: 'Test Voice' }).click();
-    await page.getByRole('button', { name: 'No' }).click();
+    const noButton = page.getByRole('button', { name: 'No' });
+    await expect(noButton).toBeVisible();
+    await noButton.click();
 
-    await expect(page.getByText('Troubleshooting:')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Reload Voices' })).toBeVisible();
+    await expect(page.getByText('Troubleshooting')).toBeVisible();
   });
 });

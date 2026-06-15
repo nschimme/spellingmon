@@ -123,10 +123,10 @@
       >
         <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2 animate-bounce">
           <p class="text-red-600 font-black uppercase text-xl mb-2">
-            Incorrect!
+            {{ $t('battle.incorrect') }}
           </p>
           <p class="text-gray-500 font-bold uppercase text-[10px] mb-1">
-            Should have been:
+            {{ $t('battle.shouldHaveBeen') }}
           </p>
           <p class="text-4xl font-black uppercase tracking-widest text-gray-800">
             {{ mistakeWord }}
@@ -155,7 +155,7 @@
               class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg"
               @click="prepareAttack"
             >
-              Attack
+              {{ $t('battle.attack') }}
             </button>
             <button
               :disabled="battleStore.isCapturing"
@@ -163,14 +163,14 @@
               class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs"
               @click="tryCapture"
             >
-              Capture
+              {{ $t('battle.capture') }}
             </button>
             <button
               :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
               class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs"
               @click="battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
             >
-              Switch
+              {{ $t('battle.switch') }}
             </button>
           </div>
           <button
@@ -178,13 +178,13 @@
             class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs"
             @click="tryRun"
           >
-            Run
+            {{ $t('battle.run') }}
           </button>
         </template>
 
         <template v-if="battleStore.isSwitching">
           <p class="text-xs font-bold text-center mb-1">
-            Switch to who?
+            {{ $t('battle.switchWho') }}
           </p>
           <div class="flex-1 overflow-y-auto pr-1 scroll-smooth">
             <button
@@ -208,7 +208,7 @@
               class="w-full text-xs text-red-500 font-bold mt-1 p-1"
               @click="battleStore.isSwitching = false; battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);"
             >
-              Cancel
+              {{ $t('common.cancel') }}
             </button>
           </div>
         </template>
@@ -245,13 +245,13 @@
                 class="text-blue-500 text-[10px] underline mb-1 block w-full"
                 @click="repeatWord"
               >
-                Listen Again
+                {{ $t('battle.listenAgain') }}
               </button>
               <input
                 ref="spellingInput"
                 v-model="userInput"
                 class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
-                placeholder="TYPE HERE"
+                :placeholder="$t('battle.typeHere')"
                 autocomplete="off"
                 autocorrect="off"
                 autocapitalize="off"
@@ -263,7 +263,7 @@
                 @paste.prevent
               >
               <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">
-                Spell for Power!
+                {{ $t('battle.spellForPower') }}
               </p>
             </div>
           </div>
@@ -284,10 +284,10 @@
       <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
         <div class="bg-yellow-500 p-6 text-center border-b-8 border-gray-800">
           <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">
-            Party Full!
+            {{ $t('battle.partyFull') }}
           </h2>
           <p class="text-white font-bold text-xs uppercase opacity-90">
-            Choose someone to replace or release new Spellingmon
+            {{ $t('battle.partyFullDesc') }}
           </p>
         </div>
 
@@ -298,7 +298,7 @@
             </div>
             <div class="flex-1">
               <p class="text-[10px] font-black text-yellow-700 uppercase">
-                New Capture
+                {{ $t('battle.newCapture') }}
               </p>
               <h3 class="text-2xl font-black text-gray-800 uppercase">
                 {{ battleStore.pendingCapture.name }}
@@ -310,7 +310,7 @@
           </div>
 
           <p class="text-center font-black text-gray-400 uppercase text-xs tracking-widest">
-            Your Current Party
+            {{ $t('battle.currentParty') }}
           </p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -346,7 +346,7 @@
             class="flex-1 bg-gray-400 text-white py-4 rounded-xl border-b-8 border-gray-600 font-black uppercase text-lg tracking-widest hover:bg-gray-500 active:translate-y-2 transition-all shadow-lg"
             @click="handleReleaseNewMon"
           >
-            Release New
+            {{ $t('battle.releaseNew') }}
           </button>
         </div>
       </div>
@@ -361,17 +361,17 @@
         🏥
       </div>
       <h2 class="text-6xl font-black text-gray-800 mb-4 uppercase tracking-tighter italic">
-        Whited Out!
+        {{ $t('battle.whitedOutTitle') }}
       </h2>
       <p class="text-xl font-bold text-gray-600 mb-12 max-w-md">
-        You have no more Spellingmon able to battle! You rushed to the nearest SpellCenter to heal.
+        {{ $t('battle.whitedOutDesc') }}
       </p>
       <button
         :class="{ 'ring-8 ring-yellow-400': whitedOutSelectedIndex === 0 }"
         class="bg-red-600 text-white px-16 py-6 rounded-2xl border-b-8 border-red-800 font-black uppercase text-2xl tracking-widest hover:bg-red-700 active:translate-y-2 transition-all shadow-2xl"
         @click="handleWhiteoutConfirm"
       >
-        Continue
+        {{ $t('common.confirm') }}
       </button>
     </div>
   </div>
@@ -379,6 +379,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick, watch, onUnmounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
 import { usePlayerStore } from '../stores/playerStore';
@@ -391,6 +392,7 @@ import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, calculateTim
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
+const { t } = useI18n();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
 const playerStore = usePlayerStore();
@@ -437,7 +439,7 @@ const startTimer = (seconds) => {
       clearInterval(timerInterval);
       // Timer expired, but we don't auto-submit.
       // User must still type and press Enter.
-      battleStore.log("Time's up! Type fast next time!");
+      battleStore.log(t('battle.timesUp'));
     }
   }, 100);
 };
@@ -445,9 +447,9 @@ const startTimer = (seconds) => {
 const prepareAttack = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   battleStore.setPhase(BATTLE_PHASES.SPELLING);
-  const wordObj = vocabStore.getRandomWord(playerStore.currentArea);
+  const wordObj = vocabStore.getRandomWord(playerStore.currentArea, settingsStore.locale);
   if (!wordObj) {
-    battleStore.log("Error: No words available!");
+    battleStore.log(t('common.error'));
     return;
   }
   battleStore.setCurrentWord(wordObj);
@@ -457,7 +459,7 @@ const prepareAttack = () => {
 
   const time = calculateTimerDuration(wordObj, false);
   startTimer(time);
-  battleStore.log(`Spellingmon Attack!`);
+  battleStore.log(t('battle.spellingmonAttack'));
   speakFullHint(wordObj);
   userInput.value = '';
   battleStore.isCapturing = false;
@@ -466,17 +468,17 @@ const prepareAttack = () => {
 const tryRun = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
-    battleStore.log("You can't run from a trainer battle!");
+    battleStore.log(t('battle.cannotRun'));
     return;
   }
 
   const successChance = (battleStore.playerMon.level / battleStore.enemyMon.level) * 0.5;
   const clampedChance = Math.max(0.1, Math.min(0.95, successChance));
   if (Math.random() < clampedChance) {
-    battleStore.log("Got away safely!");
+    battleStore.log(t('battle.fled'));
     setTimeout(() => battleStore.endBattle(), 1000);
   } else {
-    battleStore.log("Couldn't get away!");
+    battleStore.log(t('battle.cannotEscape'));
     enemyTurn();
   }
 };
@@ -499,13 +501,13 @@ const tryCapture = () => {
 
   audio.playSound(SOUND_EFFECTS.CLICK);
   if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
-    battleStore.log("You can't capture a trainer's Spellingmon!");
+    battleStore.log(t('battle.cannotRun'));
     return;
   }
 
-  const wordObj = vocabStore.getRandomWord(playerStore.currentArea);
+  const wordObj = vocabStore.getRandomWord(playerStore.currentArea, settingsStore.locale);
   if (!wordObj) {
-    battleStore.log("Error: No words available!");
+    battleStore.log(t('common.error'));
     return;
   }
 
@@ -517,7 +519,7 @@ const tryCapture = () => {
 
   const time = calculateTimerDuration(wordObj, true);
   startTimer(time);
-  battleStore.log(`Attempting to capture!`);
+  battleStore.log(t('battle.attemptingCapture'));
   speakFullHint(wordObj);
   userInput.value = '';
   battleStore.isCapturing = true;
@@ -535,7 +537,7 @@ const speakFullHint = (wordObj) => {
 
   if (wordObj.sentence_context) {
     const t1 = setTimeout(() => {
-      speech.speak(`As in... ${wordObj.sentence_context}`);
+      speech.speak(`${t('battle.asIn')} ${wordObj.sentence_context}`);
       const t2 = setTimeout(() => {
         speech.speak(spokenVersion);
       }, 3000); // Estimated duration of sentence
@@ -586,7 +588,7 @@ const submitSpelling = () => {
     const isNewMastery = playerStore.recordMasteredWord(playerStore.currentArea, word);
     if (isNewMastery) {
       audio.playSound(SOUND_EFFECTS.DISCOVERY);
-      playerStore.notify(`Newly mastered word: ${word.toUpperCase()}!`);
+      playerStore.notify(`${t('menu.mastered')}: ${word.toUpperCase()}!`);
     }
 
     if (battleStore.isCapturing) {
@@ -598,8 +600,8 @@ const submitSpelling = () => {
     mistakeWord.value = word.toUpperCase();
     setTimeout(() => mistakeWord.value = '', 2000);
 
-    battleStore.log(`Incorrect!`);
-    battleStore.log(`Correct spelling: ${word.toUpperCase()}`);
+    battleStore.log(t('battle.incorrect'));
+    battleStore.log(t('battle.correctSpelling', { word: word.toUpperCase() }));
     battleStore.isCapturing = false;
     enemyTurn();
   }
@@ -620,12 +622,12 @@ const handleAttackSuccess = (isPower) => {
     battleStore.setPhase(BATTLE_PHASES.END);
     enemyFainted.value = true;
     audio.playSound(SOUND_EFFECTS.FAINT);
-    battleStore.log(`${battleStore.enemyMon.name} fainted!`);
+    battleStore.log(t('battle.win', { name: battleStore.enemyMon.name }));
 
     const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === BATTLE_TYPES.TRAINER);
     const results = playerStore.awardExp(exp);
     participatingMons.value = results;
-    battleStore.log(`Gained ${exp} EXP!`);
+    battleStore.log(t('battle.gainedExp', { exp }));
 
       const hasExp = results.some(r => r.expGained > 0);
 
@@ -636,7 +638,7 @@ const handleAttackSuccess = (isPower) => {
           const nextMon = createMon(nextMonCfg.species, nextMonCfg.level);
           battleStore.enemyMon = nextMon;
           enemyFainted.value = false;
-          battleStore.log(`Trainer sent out ${nextMon.name}!`);
+          battleStore.log(t('battle.trainerSentOut', { name: nextMon.name }));
           battleStore.saveState();
           battleStore.setTurn(true);
           battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
@@ -645,7 +647,7 @@ const handleAttackSuccess = (isPower) => {
       }
 
       playerStore.markTrainerDefeated(battleStore.trainerId);
-      battleStore.log('You defeated the trainer!');
+      battleStore.log(t('battle.defeatedTrainer'));
     }
 
     setTimeout(() => {
@@ -681,7 +683,7 @@ const handleCaptureSuccess = (isPower) => {
 
     if (Math.random() < successChance) {
       audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
-      battleStore.log(`Gotcha! ${battleStore.enemyMon.name} was caught!`);
+      battleStore.log(t('battle.catchSuccess', { name: battleStore.enemyMon.name }));
 
       const newMon = { ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp };
 
@@ -702,7 +704,7 @@ const handleCaptureSuccess = (isPower) => {
     } else {
       audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
       battleStore.isCapturing = false;
-      battleStore.log(`${battleStore.enemyMon.name} broke free!`);
+      battleStore.log(t('battle.catchFail', { name: battleStore.enemyMon.name }));
       enemyTurn();
     }
   }, ANIMATION_DURATIONS.CAPTURE_PROCESS_MS);
@@ -798,11 +800,11 @@ const enemyTurn = () => {
     if (battleStore.playerMon.hp <= 0) {
       playerFainted.value = true;
       audio.playSound(SOUND_EFFECTS.FAINT);
-      battleStore.log(`${battleStore.playerMon.name} fainted!`);
+      battleStore.log(t('battle.lose', { name: battleStore.playerMon.name }));
 
       const hasHealthyMon = playerStore.party.some(m => m.hp > 0);
       if (hasHealthyMon) {
-        battleStore.log("Choose another Spellingmon!");
+        battleStore.log(t('battle.switchWho'));
         battleStore.isSwitching = true;
         isForcedSwitch.value = true;
         battleStore.setPhase(BATTLE_PHASES.SWITCHING);
@@ -852,8 +854,8 @@ const handleReplaceMon = (index) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   const replacedMonName = playerStore.party[index].name;
   playerStore.replaceSpellingmon(index, battleStore.pendingCapture);
-  battleStore.log(`${replacedMonName} was released.`);
-  battleStore.log(`${battleStore.pendingCapture.name} joined the party!`);
+  battleStore.log(t('battle.released', { name: replacedMonName }));
+  battleStore.log(t('battle.joinedParty', { name: battleStore.pendingCapture.name }));
 
   // Finish battle
   battleStore.endBattle();
@@ -861,7 +863,7 @@ const handleReplaceMon = (index) => {
 
 const handleReleaseNewMon = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  battleStore.log(`Released the wild ${battleStore.pendingCapture.name}.`);
+  battleStore.log(t('battle.releasedWild', { name: battleStore.pendingCapture.name }));
   battleStore.endBattle();
 };
 
@@ -909,7 +911,7 @@ onMounted(async () => {
     audio.playSound(SOUND_EFFECTS.BATTLE_START);
     setTimeout(() => isFlashing.value = false, ANIMATION_DURATIONS.FLASH_MS);
 
-    await vocabStore.loadVocab(playerStore.currentArea).catch(err => {
+    await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale).catch(err => {
       console.error('Failed to load vocab during battle init', err);
       // We still proceed, but prepareAttack might fail later.
     });

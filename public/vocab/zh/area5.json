@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w5_1",
+    "word": "dìyī",
+    "spoken_version": "第一",
+    "definition": "排在最前面的。",
+    "sentence_context": "他跑了第一名。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_2",
+    "word": "dì'èr",
+    "spoken_version": "第二",
+    "definition": "排在第一之后。",
+    "sentence_context": "我是第二排的学生。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_3",
+    "word": "xiǎomāo",
+    "spoken_version": "小猫",
+    "definition": "幼小的猫。",
+    "sentence_context": "这只小猫真可爱。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_4",
+    "word": "lǎohǔ",
+    "spoken_version": "老虎",
+    "definition": "百兽之王。",
+    "sentence_context": "动物园里有老虎。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_5",
+    "word": "lǎoshī",
+    "spoken_version": "老师",
+    "definition": "传授知识的人。",
+    "sentence_context": "老师正在讲课。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_6",
+    "word": "dìsān",
+    "spoken_version": "第三",
+    "definition": "排在第二之后。",
+    "sentence_context": "这是第三个苹果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_7",
+    "word": "dìsì",
+    "spoken_version": "第四",
+    "definition": "排在第三之后。",
+    "sentence_context": "翻到第四页开始看。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_8",
+    "word": "dìwǔ",
+    "spoken_version": "第五",
+    "definition": "排在第四之后。",
+    "sentence_context": "第五组同学请起立。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_9",
+    "word": "xiǎomǎ",
+    "spoken_version": "小马",
+    "definition": "幼小的马。",
+    "sentence_context": "小马在草原上跑。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_10",
+    "word": "xiǎoyáng",
+    "spoken_version": "小羊",
+    "definition": "幼小的羊。",
+    "sentence_context": "小羊在吃青草。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_11",
+    "word": "xiǎoniú",
+    "spoken_version": "小牛",
+    "definition": "幼小的牛。",
+    "sentence_context": "小牛跟着老牛。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_12",
+    "word": "xiǎojī",
+    "spoken_version": "小鸡",
+    "definition": "幼小的鸡。",
+    "sentence_context": "小鸡叽叽叫。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_13",
+    "word": "xiǎoyā",
+    "spoken_version": "小鸭",
+    "definition": "幼小的鸭。",
+    "sentence_context": "小鸭在水里游泳。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_14",
+    "word": "xiǎotù",
+    "spoken_version": "小兔",
+    "definition": "幼小的兔。",
+    "sentence_context": "小兔爱吃萝卜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_15",
+    "word": "xiǎomǐ",
+    "spoken_version": "小米",
+    "definition": "一种粮食。",
+    "sentence_context": "小米粥很有营养。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_16",
+    "word": "xiǎohé",
+    "spoken_version": "小河",
+    "definition": "窄长的水流。",
+    "sentence_context": "小河水哗哗流。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_17",
+    "word": "xiǎoshù",
+    "spoken_version": "小树",
+    "definition": "幼小的木本植物。",
+    "sentence_context": "我们要爱护小树。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_18",
+    "word": "xiǎocǎo",
+    "spoken_version": "小草",
+    "definition": "幼小的草本植物。",
+    "sentence_context": "小草绿油油的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_19",
+    "word": "lǎoshu",
+    "spoken_version": "老鼠",
+    "definition": "一种有害的小动物。",
+    "sentence_context": "小猫在捉老鼠。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_20",
+    "word": "lǎoyīng",
+    "spoken_version": "老鹰",
+    "definition": "一种凶猛的鸟。",
+    "sentence_context": "老鹰在空中盘旋。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_21",
+    "word": "lǎoniú",
+    "spoken_version": "老牛",
+    "definition": "年长的牛。",
+    "sentence_context": "老牛在耕田。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_22",
+    "word": "lǎomǎ",
+    "spoken_version": "老马",
+    "definition": "年长的马。",
+    "sentence_context": "老马识途。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_23",
+    "word": "lǎoyé",
+    "spoken_version": "老爷",
+    "definition": "旧时的称呼或尊称。",
+    "sentence_context": "这位老爷爷很慈祥。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_24",
+    "word": "lǎopo",
+    "spoken_version": "老婆",
+    "definition": "妻子的俗称。",
+    "sentence_context": "我的老婆很贤惠。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_25",
+    "word": "lǎobǎn",
+    "spoken_version": "老板",
+    "definition": "商店的主人。",
+    "sentence_context": "书店老板人很好。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_26",
+    "word": "lǎowáng",
+    "spoken_version": "老王",
+    "definition": "姓王的熟人。",
+    "sentence_context": "老王是我们邻居。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_27",
+    "word": "āyí",
+    "spoken_version": "阿姨",
+    "definition": "妈妈的姐妹或称呼女性。",
+    "sentence_context": "阿姨送我一颗糖。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_28",
+    "word": "ābà",
+    "spoken_version": "阿爸",
+    "definition": "对爸爸的亲昵称呼。",
+    "sentence_context": "阿爸带我去钓鱼。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_29",
+    "word": "āmā",
+    "spoken_version": "阿妈",
+    "definition": "对妈妈的亲昵称呼。",
+    "sentence_context": "阿妈给我织毛衣。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_30",
+    "word": "āgē",
+    "spoken_version": "阿哥",
+    "definition": "对哥哥的亲昵称呼。",
+    "sentence_context": "阿哥长得真高。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w5_31",
+    "word": "xiǎoyú",
+    "spoken_version": "小鱼",
+    "definition": "幼小的鱼。",
+    "sentence_context": "小鱼在鱼缸里玩。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_32",
+    "word": "xiǎobird",
+    "spoken_version": "小鸟",
+    "definition": "幼小的鸟。",
+    "sentence_context": "小鸟飞回来了。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_33",
+    "word": "xiǎopéngyou",
+    "spoken_version": "小朋友",
+    "definition": "对孩子的称呼。",
+    "sentence_context": "小朋友们手拉手。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_34",
+    "word": "lǎoxiāng",
+    "spoken_version": "老乡",
+    "definition": "同乡的人。",
+    "sentence_context": "在这里遇见了老乡。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_35",
+    "word": "lǎodà",
+    "spoken_version": "老大",
+    "definition": "排在第一的孩子。",
+    "sentence_context": "我是家里的老大。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_36",
+    "word": "lǎorén",
+    "spoken_version": "老人",
+    "definition": "年纪大的人。",
+    "sentence_context": "我们要关爱老人。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_37",
+    "word": "lǎojiā",
+    "spoken_version": "老家",
+    "definition": "出生或祖籍的地方。",
+    "sentence_context": "我老家在南方。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_38",
+    "word": "lǎoshí",
+    "spoken_version": "老实",
+    "definition": "诚实不虚伪。",
+    "sentence_context": "他是个老实的孩子。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_39",
+    "word": "lǎotào",
+    "spoken_version": "老套",
+    "definition": "陈旧的形式。",
+    "sentence_context": "这个故事太老套了。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w5_40",
+    "word": "lǎomǎ",
+    "spoken_version": "老妈",
+    "definition": "对妈妈的俗称。",
+    "sentence_context": "老妈做的饭最香。",
+    "difficulty": 2
+  }
+]

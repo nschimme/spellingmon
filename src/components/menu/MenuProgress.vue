@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4">
     <h3 class="font-black uppercase text-gray-600 text-sm">
-      Unlocked Areas
+      {{ $t('menu.unlockedAreas') }}
     </h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
       <div
@@ -15,8 +15,8 @@
         ]"
       >
         <div class="flex flex-col">
-          <span class="text-[8px] uppercase text-gray-500 opacity-70">Area {{ i }}</span>
-          <span class="text-xs sm:text-sm truncate max-w-[120px]">{{ AREA_CONFIGS[i]?.name || `Area ${i}` }}</span>
+          <span class="text-[8px] uppercase text-gray-500 opacity-70">{{ $t('menu.area', { n: i }) }}</span>
+          <span class="text-xs sm:text-sm truncate max-w-[120px]">{{ $t(`menu.areaNames.${i}`) }}</span>
         </div>
         <span
           v-if="playerStore.unlockedAreas.includes(i)"
@@ -30,7 +30,7 @@
     </div>
 
     <div class="mt-4 p-4 bg-blue-50 border-4 border-blue-800 rounded-xl text-blue-800 text-xs font-bold uppercase leading-relaxed">
-      Total Badges Earned: {{ playerStore.defeatedTrainers.length }}
+      {{ $t('menu.badgesEarned', { n: playerStore.defeatedTrainers.length }) }}
     </div>
   </div>
 </template>

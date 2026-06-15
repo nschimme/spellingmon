@@ -4,7 +4,7 @@
       <div class="flex justify-end items-center mb-4">
         <div class="text-right">
           <div class="text-[10px] font-bold text-blue-600 uppercase">
-            Global Progress
+            {{ $t('menu.globalProgress') }}
           </div>
           <div class="text-lg font-black text-blue-800">
             {{ totalMastered }} / {{ totalWords }}
@@ -26,14 +26,14 @@
     >
       <div class="bg-gray-800 p-3 flex justify-between items-center">
         <h3 class="font-black uppercase text-white text-sm tracking-widest">
-          {{ AREA_CONFIGS[area]?.name || `Area ${area}` }}
+          {{ $t(`menu.areaNames.${area}`) }}
         </h3>
         <div class="flex gap-3 items-center">
           <div class="bg-gray-700 px-2 py-1 rounded text-[8px] font-bold text-gray-300 uppercase">
-            Seen: {{ playerStore.discoveredWords[area]?.length || 0 }}
+            {{ $t('menu.seen') }}: {{ playerStore.discoveredWords[area]?.length || 0 }}
           </div>
           <div class="bg-green-600 px-2 py-1 rounded text-[8px] font-bold text-white uppercase shadow-inner">
-            Mastered: {{ playerStore.masteredWords[area]?.length || 0 }}
+            {{ $t('menu.mastered') }}: {{ playerStore.masteredWords[area]?.length || 0 }}
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
           class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2"
         >
           <div
-            v-for="(word, idx) in vocabStore.vocabData[area] || []"
+            v-for="(word, idx) in vocabStore.vocabData[`${settingsStore.locale}_${area}`] || []"
             :key="idx"
             class="group relative p-3 border-2 rounded-xl text-xs font-black uppercase text-center transition-all duration-200"
             :class="getWordDexClass(area, word.word)"
@@ -58,10 +58,10 @@
             </div>
           </div>
           <div
-            v-if="!vocabStore.vocabData[area]"
+            v-if="!vocabStore.vocabData[`${settingsStore.locale}_${area}`]"
             class="col-span-full text-center py-6 text-gray-400 text-xs italic"
           >
-            Loading word list...
+            {{ $t('menu.loadingWords') }}
           </div>
         </div>
         <div
@@ -70,8 +70,8 @@
         >
           <span class="text-4xl">🔒</span>
           <span class="font-black text-xs text-gray-500 uppercase tracking-widest text-center">
-            Area Information Locked<br>
-            <span class="text-[10px] font-bold">Discover this route to unlock</span>
+            {{ $t('menu.locked') }}<br>
+            <span class="text-[10px] font-bold">{{ $t('menu.discoverToUnlock') }}</span>
           </span>
         </div>
       </div>
@@ -83,12 +83,13 @@
 import { onMounted, computed } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useVocabStore } from '../../stores/vocabStore';
+import { useSettingsStore } from '../../stores/settingsStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, INPUT_PRIORITIES } from '../../utils/constants';
-import { AREA_CONFIGS } from '../../utils/gameData';
 
 const playerStore = usePlayerStore();
 const vocabStore = useVocabStore();
+const settingsStore = useSettingsStore();
 
 const emit = defineEmits(['back']);
 
@@ -101,7 +102,12 @@ useKeyboardNavigation({
 });
 
 const totalWords = computed(() => {
-  return Object.values(vocabStore.vocabData).reduce((sum, words) => sum + words.length, 0) || 1;
+  let count = 0;
+  for (let i = 1; i <= GAME_CONSTANTS.MAX_AREAS; i++) {
+    const cacheKey = `${settingsStore.locale}_${i}`;
+    count += (vocabStore.vocabData[cacheKey] || []).length;
+  }
+  return count || 1;
 });
 
 const totalMastered = computed(() => {
@@ -133,9 +139,9 @@ const getWordDexClass = (area, word) => {
 };
 
 onMounted(() => {
-  // Load vocab for ALL areas to calculate total progress correctly
+  // Load vocab for ALL areas in current locale to calculate total progress correctly
   for (let i = 1; i <= GAME_CONSTANTS.MAX_AREAS; i++) {
-    vocabStore.loadVocab(i);
+    vocabStore.loadVocab(i, settingsStore.locale);
   }
 });
 </script>

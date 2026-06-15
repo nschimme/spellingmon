@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w4_1",
+    "word": "báizi",
+    "spoken_version": "白字",
+    "definition": "写错的字。",
+    "sentence_context": "这篇作文里没有白字。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_2",
+    "word": "hǎizi",
+    "spoken_version": "孩子",
+    "definition": "年幼的人。",
+    "sentence_context": "孩子们在草地上玩。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_3",
+    "word": "fángzi",
+    "spoken_version": "房子",
+    "definition": "居住的建筑。",
+    "sentence_context": "这栋房子很漂亮。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_4",
+    "word": "wánr",
+    "spoken_version": "玩儿",
+    "definition": "娱乐活动。",
+    "sentence_context": "我们去外边玩儿吧。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_5",
+    "word": "wǒmen",
+    "spoken_version": "我们",
+    "definition": "包括说话人在内的人。",
+    "sentence_context": "我们是一家人。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_6",
+    "word": "tāmen",
+    "spoken_version": "他们",
+    "definition": "指代复数男性。",
+    "sentence_context": "他们正在踢足球。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_7",
+    "word": "tāmen",
+    "spoken_version": "她们",
+    "definition": "指代复数女性。",
+    "sentence_context": "她们在跳舞。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_8",
+    "word": "nǐmen",
+    "spoken_version": "你们",
+    "definition": "说话对方复数。",
+    "sentence_context": "你们好吗？",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_9",
+    "word": "bēizi",
+    "spoken_version": "杯子",
+    "definition": "装水的容器。",
+    "sentence_context": "杯子里装满了牛奶。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_10",
+    "word": "píngzi",
+    "spoken_version": "瓶子",
+    "definition": "长颈的容器。",
+    "sentence_context": "瓶子里装着果汁。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_11",
+    "word": "hézi",
+    "spoken_version": "盒子",
+    "definition": "盛放东西的器具。",
+    "sentence_context": "把玩具放进盒子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_12",
+    "word": "kùzi",
+    "spoken_version": "裤子",
+    "definition": "穿在下身的衣服。",
+    "sentence_context": "这条裤子太长了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_13",
+    "word": "qúnzi",
+    "spoken_version": "裙子",
+    "definition": "女孩穿的连体衣。",
+    "sentence_context": "她穿着漂亮的红裙子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_14",
+    "word": "màozi",
+    "spoken_version": "帽子",
+    "definition": "戴在头上的。",
+    "sentence_context": "遮阳帽可以挡太阳。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_15",
+    "word": "běnzi",
+    "spoken_version": "本子",
+    "definition": "写字的册子。",
+    "sentence_context": "我的本子用完了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_16",
+    "word": "dāozi",
+    "spoken_version": "刀子",
+    "definition": "切东西的工具。",
+    "sentence_context": "用刀子切开西瓜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_17",
+    "word": "chāzi",
+    "spoken_version": "叉子",
+    "definition": "餐具之一。",
+    "sentence_context": "用叉子吃面条。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_18",
+    "word": "sháozi",
+    "spoken_version": "勺子",
+    "definition": "舀汤的工具。",
+    "sentence_context": "用勺子喝粥。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_19",
+    "word": "kuàizi",
+    "spoken_version": "筷子",
+    "definition": "两根细长餐具。",
+    "sentence_context": "中国人喜欢用筷子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_20",
+    "word": "pánzi",
+    "spoken_version": "盘子",
+    "definition": "盛菜的浅容器。",
+    "sentence_context": "菜放在大盘子里。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_21",
+    "word": "shànzi",
+    "spoken_version": "扇子",
+    "definition": "扇风的工具。",
+    "sentence_context": "夏天扇扇子很凉快。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_22",
+    "word": "shūzi",
+    "spoken_version": "梳子",
+    "definition": "理发的工具。",
+    "sentence_context": "用梳子把头梳顺。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_23",
+    "word": "jìngzi",
+    "spoken_version": "镜子",
+    "definition": "反射像的工具。",
+    "sentence_context": "照镜子整理衣服。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_24",
+    "word": "huāzi",
+    "spoken_version": "花子",
+    "definition": "乞丐或某些花的代称。",
+    "sentence_context": "这个叫花子很可怜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_25",
+    "word": "mǎnr",
+    "spoken_version": "满儿",
+    "definition": "形容满的样子。",
+    "sentence_context": "这碗饭盛得满满儿的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_26",
+    "word": "diǎnr",
+    "spoken_version": "点儿",
+    "definition": "稍微一点。",
+    "sentence_context": "请声音小一点儿。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_27",
+    "word": "zhèr",
+    "spoken_version": "这儿",
+    "definition": "指代这里。",
+    "sentence_context": "你就坐在这儿吧。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_28",
+    "word": "nàr",
+    "spoken_version": "那儿",
+    "definition": "指代那里。",
+    "sentence_context": "小猫在那儿睡觉。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_29",
+    "word": "huār",
+    "spoken_version": "花儿",
+    "definition": "植物的花。",
+    "sentence_context": "花儿开得真红。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_30",
+    "word": "niǎor",
+    "spoken_version": "鸟儿",
+    "definition": "会飞的禽类。",
+    "sentence_context": "鸟儿飞向蓝天。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w4_31",
+    "word": "yúnr",
+    "spoken_version": "云儿",
+    "definition": "天上的云。",
+    "sentence_context": "白云儿飘飘。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_32",
+    "word": "shùr",
+    "spoken_version": "树儿",
+    "definition": "植物树。",
+    "sentence_context": "小树儿长高了。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_33",
+    "word": "mènr",
+    "spoken_version": "闷儿",
+    "definition": "心里不舒服。",
+    "sentence_context": "他心里有点纳闷儿。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_34",
+    "word": "xìnr",
+    "spoken_version": "信儿",
+    "definition": "消息。",
+    "sentence_context": "给我捎个信儿。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_35",
+    "word": "míngr",
+    "spoken_version": "明儿",
+    "definition": "明天。",
+    "sentence_context": "明儿我们去郊游。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_36",
+    "word": "jinr",
+    "spoken_version": "今儿",
+    "definition": "今天。",
+    "sentence_context": "今儿天气不错。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_37",
+    "word": "yuánr",
+    "spoken_version": "圆儿",
+    "definition": "圆的东西。",
+    "sentence_context": "这个球真圆儿。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_38",
+    "word": "shǎr",
+    "spoken_version": "色儿",
+    "definition": "颜色。",
+    "sentence_context": "这花是什么色儿的？",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_39",
+    "word": "shìr",
+    "spoken_version": "事儿",
+    "definition": "事情。",
+    "sentence_context": "你有什么事儿吗？",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w4_40",
+    "word": "pèr",
+    "spoken_version": "份儿",
+    "definition": "一份。",
+    "sentence_context": "给我留一份儿饭。",
+    "difficulty": 2
+  }
+]

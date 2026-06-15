@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w7_1",
+    "word": "компьютер",
+    "definition": "Электронное устройство.",
+    "sentence_context": "Я играю в игры на компьютере.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_2",
+    "word": "бутерброд",
+    "definition": "Хлеб с маслом и колбасой.",
+    "sentence_context": "Я съел вкусный бутерброд.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_3",
+    "word": "рюкзак",
+    "definition": "Сумка, которую носят на спине.",
+    "sentence_context": "Я положил учебники в рюкзак.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_4",
+    "word": "троллейбус",
+    "definition": "Машина, которая едет по проводам.",
+    "sentence_context": "Мы едем в школу на троллейбусе.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_5",
+    "word": "пляж",
+    "definition": "Место у воды для отдыха.",
+    "sentence_context": "Летом мы ходим на пляж.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_6",
+    "word": "режиссёр",
+    "definition": "Главный человек в кино.",
+    "sentence_context": "Режиссёр снимает новый фильм.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_7",
+    "word": "телефон",
+    "definition": "Устройство для связи.",
+    "sentence_context": "Мой телефон разрядился.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_8",
+    "word": "метро",
+    "definition": "Поезд под землей.",
+    "sentence_context": "В Москве очень красивое метро.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_9",
+    "word": "футбол",
+    "definition": "Спортивная игра с мячом.",
+    "sentence_context": "Мальчики играют в футбол.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_10",
+    "word": "хоккей",
+    "definition": "Игра на льду с шайбой.",
+    "sentence_context": "Зимой мы играем в хоккей.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_11",
+    "word": "радио",
+    "definition": "Слушаем музыку и новости.",
+    "sentence_context": "По радио передавали прогноз погоды.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_12",
+    "word": "такси",
+    "definition": "Машина, которую вызывают по адресу.",
+    "sentence_context": "Мы вызвали такси до вокзала.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_13",
+    "word": "кино",
+    "definition": "Фильмы на большом экране.",
+    "sentence_context": "Мы ходили в кино на мультики.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_14",
+    "word": "парк",
+    "definition": "Место для прогулок.",
+    "sentence_context": "В парке много аттракционов.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_15",
+    "word": "спорт",
+    "definition": "Физические упражнения.",
+    "sentence_context": "Спорт помогает быть сильным.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_16",
+    "word": "торт",
+    "definition": "Сладкий десерт.",
+    "sentence_context": "На день рождения купили большой торт.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_17",
+    "word": "цирк",
+    "definition": "Место, где выступают клоуны.",
+    "sentence_context": "В цирке были дрессированные львы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_18",
+    "word": "театр",
+    "definition": "Место, где показывают спектакли.",
+    "sentence_context": "Мы смотрели сказку в театре.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_19",
+    "word": "музей",
+    "definition": "Место, где хранят старые вещи.",
+    "sentence_context": "В музее стоят кости динозавра.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_20",
+    "word": "автобус",
+    "definition": "Транспорт для многих людей.",
+    "sentence_context": "Автобус приехал на остановку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_21",
+    "word": "трамвай",
+    "definition": "Поезд, который едет по улице.",
+    "sentence_context": "По рельсам гремит трамвай.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_22",
+    "word": "шоколад",
+    "definition": "Сладкое лакомство.",
+    "sentence_context": "Я очень люблю молочный шоколад.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_23",
+    "word": "банан",
+    "definition": "Желтый южный фрукт.",
+    "sentence_context": "Обезьяна ест спелый банан.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_24",
+    "word": "лимон",
+    "definition": "Кислый желтый фрукт.",
+    "sentence_context": "Чай с лимоном очень полезен.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_25",
+    "word": "кофе",
+    "definition": "Бодрящий напиток.",
+    "sentence_context": "Папа пьет кофе по утрам.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_26",
+    "word": "пицца",
+    "definition": "Итальянское блюдо.",
+    "sentence_context": "Мы заказали пиццу с грибами.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_27",
+    "word": "джинсы",
+    "definition": "Брюки из плотной ткани.",
+    "sentence_context": "Я надел свои новые джинсы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_28",
+    "word": "интернет",
+    "definition": "Всемирная компьютерная сеть.",
+    "sentence_context": "Я ищу информацию в интернете.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_29",
+    "word": "робот",
+    "definition": "Умная машина.",
+    "sentence_context": "У меня есть робот на пульте.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_30",
+    "word": "космос",
+    "definition": "Все звезды и планеты.",
+    "sentence_context": "Гагарин первым полетел в космос.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w7_31",
+    "word": "мармелад",
+    "definition": "Сладкие жевательные конфеты.",
+    "sentence_context": "Я люблю разноцветный мармелад.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_32",
+    "word": "мороженое",
+    "definition": "Холодный десерт.",
+    "sentence_context": "Купи мне клубничное мороженое.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_33",
+    "word": "билет",
+    "definition": "Бумага для входа куда-то.",
+    "sentence_context": "Я купил билет на поезд.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_34",
+    "word": "вокзал",
+    "definition": "Место, куда приходят поезда.",
+    "sentence_context": "На вокзале было много людей.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_35",
+    "word": "багаж",
+    "definition": "Вещи в дорогу.",
+    "sentence_context": "Мы сдали свой багаж в самолет.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_36",
+    "word": "каюта",
+    "definition": "Комната на корабле.",
+    "sentence_context": "Наша каюта была очень уютной.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_37",
+    "word": "портфель",
+    "definition": "Сумка для школы.",
+    "sentence_context": "Сложи тетрадки в портфель.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_38",
+    "word": "альбом",
+    "definition": "Место для рисунков или фото.",
+    "sentence_context": "Я рисую в новом альбоме.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_39",
+    "word": "планета",
+    "definition": "Земля или Марс.",
+    "sentence_context": "Наша планета называется Земля.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w7_40",
+    "word": "солдат",
+    "definition": "Человек в армии.",
+    "sentence_context": "Мой дедушка был бравым солдатом.",
+    "difficulty": 2
+  }
+]

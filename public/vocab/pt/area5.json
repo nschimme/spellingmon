@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w5_1",
+    "word": "desfazer",
+    "definition": "Quitar a forma ou o nó.",
+    "sentence_context": "Vou desfazer a mala agora.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_2",
+    "word": "infeliz",
+    "definition": "Que não se sente feliz.",
+    "sentence_context": "Ele ficou infeliz com a notícia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_3",
+    "word": "subestimar",
+    "definition": "Dar menos valor do que o real.",
+    "sentence_context": "Não deves subestimar o teu adversário.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_4",
+    "word": "contrarregra",
+    "definition": "Pessoa que ajuda no teatro.",
+    "sentence_context": "O contrarregra preparou o palco.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_5",
+    "word": "antissocial",
+    "definition": "Que não gosta de conviver.",
+    "sentence_context": "Ele está muito antissocial hoje.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_6",
+    "word": "desordem",
+    "definition": "Falta de organização.",
+    "sentence_context": "O quarto está em total desordem.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_7",
+    "word": "inativo",
+    "definition": "Que não está em ação.",
+    "sentence_context": "O vulcão está inativo há anos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_8",
+    "word": "subsolo",
+    "definition": "Parte abaixo do nível do chão.",
+    "sentence_context": "O metro circula no subsolo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_9",
+    "word": "contramão",
+    "definition": "Sentido oposto ao trânsito.",
+    "sentence_context": "O carro entrou na contramão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_10",
+    "word": "antisséptico",
+    "definition": "Que previne infeções.",
+    "sentence_context": "Pus antisséptico na ferida.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_11",
+    "word": "desligar",
+    "definition": "Interromper o funcionamento.",
+    "sentence_context": "Não te esqueças de desligar a luz.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_12",
+    "word": "indireto",
+    "definition": "Que não vai em linha reta.",
+    "sentence_context": "Ele seguiu um caminho indireto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_13",
+    "word": "submarino",
+    "definition": "Embarcação que vai sob a água.",
+    "sentence_context": "Vimos um submarino no porto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_14",
+    "word": "contraproposta",
+    "definition": "Nova proposta após uma anterior.",
+    "sentence_context": "Eles fizeram uma contraproposta justa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_15",
+    "word": "antirroubo",
+    "definition": "Sistema para evitar furtos.",
+    "sentence_context": "O carro tem alarme antirroubo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_16",
+    "word": "desmontar",
+    "definition": "Separar em peças.",
+    "sentence_context": "Vou desmontar o meu brinquedo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_17",
+    "word": "injusto",
+    "definition": "Que não respeita a justiça.",
+    "sentence_context": "Achei o resultado muito injusto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_18",
+    "word": "subtítulo",
+    "definition": "Título secundário de um texto.",
+    "sentence_context": "Lê o subtítulo da notícia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_19",
+    "word": "contrapeso",
+    "definition": "Peso que equilibra outro.",
+    "sentence_context": "A balança usa um contrapeso.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_20",
+    "word": "antivírus",
+    "definition": "Programa para proteger computadores.",
+    "sentence_context": "Instalei um antivírus novo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_21",
+    "word": "desaparecer",
+    "definition": "Deixar de ser visto.",
+    "sentence_context": "O sol começou a desaparecer.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_22",
+    "word": "incomum",
+    "definition": "Que não acontece sempre.",
+    "sentence_context": "Tive uma ideia muito incomum.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_23",
+    "word": "subdiretor",
+    "definition": "Pessoa que ajuda o diretor.",
+    "sentence_context": "Falei com o subdiretor da escola.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_24",
+    "word": "contratempo",
+    "definition": "Problema inesperado.",
+    "sentence_context": "Houve um contratempo na viagem.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_25",
+    "word": "anti-inflamatório",
+    "definition": "Medicamento contra inflamações.",
+    "sentence_context": "O médico receitou um anti-inflamatório.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_26",
+    "word": "desprezar",
+    "definition": "Não dar importância ou valor.",
+    "sentence_context": "Não deves desprezar ninguém.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_27",
+    "word": "incapaz",
+    "definition": "Que não consegue fazer algo.",
+    "sentence_context": "Sinto-me incapaz de resolver isto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_28",
+    "word": "subchefe",
+    "definition": "Pessoa que substitui o chefe.",
+    "sentence_context": "O subchefe deu as ordens.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_29",
+    "word": "contraste",
+    "definition": "Diferença clara entre duas coisas.",
+    "sentence_context": "Há um grande contraste de cores.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_30",
+    "word": "antibiótico",
+    "definition": "Remédio para matar bactérias.",
+    "sentence_context": "Tomei o antibiótico por sete dias.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w5_31",
+    "word": "desleal",
+    "definition": "Que não é fiel ou honesto.",
+    "sentence_context": "Ele foi desleal com o amigo.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_32",
+    "word": "impossível",
+    "definition": "Que não pode ser feito.",
+    "sentence_context": "Nada é impossível para quem tenta.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_33",
+    "word": "subconjunto",
+    "definition": "Conjunto dentro de outro maior.",
+    "sentence_context": "Estudámos o subconjunto em matemática.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_34",
+    "word": "contradição",
+    "definition": "Afirmação oposta a outra.",
+    "sentence_context": "As tuas palavras entraram em contradição.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_35",
+    "word": "antepassado",
+    "definition": "Pessoa de quem se descende.",
+    "sentence_context": "O meu antepassado era marinheiro.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_36",
+    "word": "desconfiar",
+    "definition": "Não ter confiança.",
+    "sentence_context": "Comecei a desconfiar da história.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_37",
+    "word": "impuro",
+    "definition": "Que tem misturas ou não é limpo.",
+    "sentence_context": "A água do rio está impura.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_38",
+    "word": "subnutrido",
+    "definition": "Que não tem alimentação suficiente.",
+    "sentence_context": "A criança parecia estar subnutrida.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_39",
+    "word": "contrariar",
+    "definition": "Agir contra a vontade de alguém.",
+    "sentence_context": "Não quero contrariar os meus pais.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w5_40",
+    "word": "antiguidade",
+    "definition": "Tempo muito remoto.",
+    "sentence_context": "Vimos objetos da antiguidade.",
+    "difficulty": 2
+  }
+]

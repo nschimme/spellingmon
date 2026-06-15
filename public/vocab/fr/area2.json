@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w2_1",
+    "word": "bras",
+    "definition": "Partie du corps entre l'épaule et la main.",
+    "sentence_context": "Il a mal au bras droit.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_2",
+    "word": "crocodile",
+    "definition": "Gros animal avec des dents pointues.",
+    "sentence_context": "Le crocodile vit dans le fleuve.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_3",
+    "word": "drapeau",
+    "definition": "Morceau de tissu aux couleurs d'un pays.",
+    "sentence_context": "Le drapeau français est bleu, blanc, rouge.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_4",
+    "word": "fruit",
+    "definition": "Partie d'une plante que l'on mange.",
+    "sentence_context": "La pomme est mon fruit préféré.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_5",
+    "word": "classe",
+    "definition": "Salle de l'école où l'on travaille.",
+    "sentence_context": "Le professeur entre dans la classe.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_6",
+    "word": "plage",
+    "definition": "Bord de mer avec du sable.",
+    "sentence_context": "Nous jouons sur la plage.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_7",
+    "word": "bleu",
+    "definition": "Couleur du ciel quand il fait beau.",
+    "sentence_context": "Le ciel est tout bleu aujourd'hui.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_8",
+    "word": "cloche",
+    "definition": "Objet en métal qui fait du bruit.",
+    "sentence_context": "La cloche de l'église sonne.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_9",
+    "word": "fleur",
+    "definition": "Jolie partie colorée d'une plante.",
+    "sentence_context": "J'ai cueilli une fleur jaune.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_10",
+    "word": "glace",
+    "definition": "Eau gelée ou dessert froid.",
+    "sentence_context": "Je veux une glace à la fraise.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_11",
+    "word": "place",
+    "definition": "Espace libre ou endroit pour s'asseoir.",
+    "sentence_context": "Il n'y a plus de place dans la voiture.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_12",
+    "word": "train",
+    "definition": "Véhicule qui roule sur des rails.",
+    "sentence_context": "Nous prenons le train pour Paris.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_13",
+    "word": "bruit",
+    "definition": "Ce que l'on entend avec les oreilles.",
+    "sentence_context": "Il y a trop de bruit dans la rue.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_14",
+    "word": "crème",
+    "definition": "Produit doux pour la peau ou dessert.",
+    "sentence_context": "Je mets de la crème sur mon gâteau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_15",
+    "word": "frère",
+    "definition": "Garçon né des mêmes parents.",
+    "sentence_context": "Mon frère joue au foot.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_16",
+    "word": "gros",
+    "definition": "Qui a beaucoup de volume ou de poids.",
+    "sentence_context": "C'est un gros chien.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_17",
+    "word": "plat",
+    "definition": "Récipient pour servir à manger ou surface horizontale.",
+    "sentence_context": "Le plat est sur la table.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_18",
+    "word": "trou",
+    "definition": "Ouverture dans quelque chose.",
+    "sentence_context": "Il y a un trou dans ma chaussette.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_19",
+    "word": "blanc",
+    "definition": "La couleur de la neige.",
+    "sentence_context": "Le lapin est tout blanc.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_20",
+    "word": "clou",
+    "definition": "Petit objet en métal pour fixer.",
+    "sentence_context": "J'ai enfoncé un clou avec un marteau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_21",
+    "word": "flûte",
+    "definition": "Instrument de musique.",
+    "sentence_context": "Elle joue de la flûte à l'école.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_22",
+    "word": "gris",
+    "definition": "Couleur entre le noir et le blanc.",
+    "sentence_context": "Le ciel est gris, il va pleuvoir.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_23",
+    "word": "plan",
+    "definition": "Dessin d'un lieu.",
+    "sentence_context": "Regarde le plan de la ville.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_24",
+    "word": "vrai",
+    "definition": "Ce qui n'est pas faux.",
+    "sentence_context": "C'est une histoire vraie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_25",
+    "word": "blonde",
+    "definition": "Personne qui a les cheveux jaunes.",
+    "sentence_context": "Ma cousine est blonde.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_26",
+    "word": "froid",
+    "definition": "Le contraire de chaud.",
+    "sentence_context": "J'ai froid aux mains en hiver.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_27",
+    "word": "grand",
+    "definition": "Le contraire de petit.",
+    "sentence_context": "Mon papa est très grand.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_28",
+    "word": "pli",
+    "definition": "Marque faite en pliant quelque chose.",
+    "sentence_context": "Il y a un pli sur ma feuille.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_29",
+    "word": "très",
+    "definition": "Mot pour dire beaucoup.",
+    "sentence_context": "Il fait très beau aujourd'hui.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_30",
+    "word": "blouse",
+    "definition": "Vêtement de travail.",
+    "sentence_context": "Le docteur porte une blouse blanche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w2_31",
+    "word": "croix",
+    "definition": "Signe formé par deux traits croisés.",
+    "sentence_context": "Fais une croix sur la case.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_32",
+    "word": "front",
+    "definition": "Partie haute du visage.",
+    "sentence_context": "Le bébé a le front chaud.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_33",
+    "word": "pluie",
+    "definition": "Eau qui tombe du ciel.",
+    "sentence_context": "Prends ton parapluie, il y a de la pluie.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_34",
+    "word": "trois",
+    "definition": "Le nombre après deux.",
+    "sentence_context": "J'ai trois ans.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_35",
+    "word": "bruler",
+    "definition": "Détruire par le feu.",
+    "sentence_context": "Fais attention à ne pas te bruler.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_36",
+    "word": "flamme",
+    "definition": "Le feu qui danse.",
+    "sentence_context": "La flamme de la bougie bouge.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_37",
+    "word": "griffe",
+    "definition": "Ongle pointu des animaux.",
+    "sentence_context": "Le chat a sorti une griffe.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_38",
+    "word": "prier",
+    "definition": "Parler à Dieu ou demander poliment.",
+    "sentence_context": "Je vais te prier de te taire.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_39",
+    "word": "trompe",
+    "definition": "Le long nez de l'éléphant.",
+    "sentence_context": "L'éléphant utilise sa trompe pour boire.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w2_40",
+    "word": "fluide",
+    "definition": "Qui coule facilement.",
+    "sentence_context": "L'eau est un liquide fluide.",
+    "difficulty": 2
+  }
+]

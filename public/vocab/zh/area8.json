@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w8_1",
+    "word": "zhīshi",
+    "spoken_version": "知识",
+    "definition": "学到的东西。",
+    "sentence_context": "我们要多读书增长知识。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_2",
+    "word": "nǚrén",
+    "spoken_version": "女人",
+    "definition": "成年女性。",
+    "sentence_context": "女人们在公园里聊天。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_3",
+    "word": "lùjūn",
+    "spoken_version": "陆军",
+    "definition": "在地上的军队。",
+    "sentence_context": "他是一名陆军士兵。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_4",
+    "word": "zhēnshi",
+    "spoken_version": "真实",
+    "definition": "不虚假。",
+    "sentence_context": "这是一个真实的故事。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_5",
+    "word": "chēzi",
+    "spoken_version": "车子",
+    "definition": "交通工具。",
+    "sentence_context": "车子停在路边。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_6",
+    "word": "shāshǒu",
+    "spoken_version": "杀手",
+    "definition": "危险的人物。",
+    "sentence_context": "这个刺客是个杀手。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_7",
+    "word": "rèqì",
+    "spoken_version": "热气",
+    "definition": "暖暖的空气。",
+    "sentence_context": "杯子里冒着热气。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_8",
+    "word": "zìjǐ",
+    "spoken_version": "自己",
+    "definition": "本人。",
+    "sentence_context": "自己的事情自己做。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_9",
+    "word": "cǎodì",
+    "spoken_version": "草地",
+    "definition": "长满草的地方。",
+    "sentence_context": "大家在草地上野餐。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_10",
+    "word": "sēnlín",
+    "spoken_version": "森林",
+    "definition": "大片树木。",
+    "sentence_context": "森林里住着很多动物。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_11",
+    "word": "zhǔrén",
+    "spoken_version": "主人",
+    "definition": "所属者。",
+    "sentence_context": "小狗找到了它的主人。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_12",
+    "word": "chuānghu",
+    "spoken_version": "窗户",
+    "definition": "透光的墙洞。",
+    "sentence_context": "打开窗户透透气。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_13",
+    "word": "shǒubiǎo",
+    "spoken_version": "手表",
+    "definition": "手腕上的钟。",
+    "sentence_context": "我的手表走得很准。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_14",
+    "word": "rénmín",
+    "spoken_version": "人民",
+    "definition": "一个国家的人。",
+    "sentence_context": "我们要为人民服务。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_15",
+    "word": "zìxíngchē",
+    "spoken_version": "自行车",
+    "definition": "人踩的两轮车。",
+    "sentence_context": "我学会了骑自行车。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_16",
+    "word": "cǎi-hóng",
+    "spoken_version": "彩虹",
+    "definition": "雨后的彩桥。",
+    "sentence_context": "天空中挂着一道彩虹。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_17",
+    "word": "sǎn-bù",
+    "spoken_version": "散步",
+    "definition": "悠闲地走。",
+    "sentence_context": "饭后去公园散步。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_18",
+    "word": "zhùzhǐ",
+    "spoken_version": "住址",
+    "definition": "住的地方。",
+    "sentence_context": "请写下你的详细住址。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_19",
+    "word": "cháyè",
+    "spoken_version": "茶叶",
+    "definition": "泡茶的叶子。",
+    "sentence_context": "这些茶叶很香。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_20",
+    "word": "shíhou",
+    "spoken_version": "时候",
+    "definition": "时间点。",
+    "sentence_context": "什么时候开始开会？",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_21",
+    "word": "rénlèi",
+    "spoken_version": "人类",
+    "definition": "全世界的人。",
+    "sentence_context": "保护环境是人类的责任。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_22",
+    "word": "zìyuán",
+    "spoken_version": "自愿",
+    "definition": "自己愿意。",
+    "sentence_context": "大家自愿参加活动。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_23",
+    "word": "cāi-cè",
+    "spoken_version": "猜测",
+    "definition": "推测想法。",
+    "sentence_context": "你可以猜测一下结果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_24",
+    "word": "sōngshǔ",
+    "spoken_version": "松鼠",
+    "definition": "树上的小动物。",
+    "sentence_context": "松鼠在找松果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_25",
+    "word": "nǚ'ér",
+    "spoken_version": "女儿",
+    "definition": "女性的孩子。",
+    "sentence_context": "她是家里的独生女儿。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_26",
+    "word": "jùzi",
+    "spoken_version": "句子",
+    "definition": "言语单位。",
+    "sentence_context": "把这个句子读通顺。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_27",
+    "word": "qùnián",
+    "spoken_version": "去年",
+    "definition": "过去的一年。",
+    "sentence_context": "我去年去过北京。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_28",
+    "word": "xuéxí",
+    "spoken_version": "学习",
+    "definition": "获取新知。",
+    "sentence_context": "努力学习才能进步。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_29",
+    "word": "yún-duǒ",
+    "spoken_version": "云朵",
+    "definition": "天上的水汽。",
+    "sentence_context": "白云朵朵飘。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_30",
+    "word": "nüè-dài",
+    "spoken_version": "虐待",
+    "definition": "残酷对待。",
+    "sentence_context": "我们不能虐待小动物。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w8_31",
+    "word": "zhī-zhū",
+    "spoken_version": "蜘蛛",
+    "definition": "八条腿的昆虫。",
+    "sentence_context": "蜘蛛在角落里织网。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_32",
+    "word": "shū-shu",
+    "spoken_version": "叔叔",
+    "definition": "爸爸的弟弟。",
+    "sentence_context": "叔叔带我去看电影。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_33",
+    "word": "zhǔ-yì",
+    "spoken_version": "注意",
+    "definition": "集中精力。",
+    "sentence_context": "过马路要多注意安全。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_34",
+    "word": "cì-shī",
+    "spoken_version": "刺狮",
+    "definition": "音译相关的词。",
+    "sentence_context": "这个故事很感人。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_35",
+    "word": "rè-ài",
+    "spoken_version": "热爱",
+    "definition": "非常喜爱。",
+    "sentence_context": "我热爱我的家乡。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_36",
+    "word": "zǒng-shì",
+    "spoken_version": "总是",
+    "definition": "经常如此。",
+    "sentence_context": "他总是第一个到学校。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_37",
+    "word": "jì-lù",
+    "spoken_version": "纪录",
+    "definition": "记下来的东西。",
+    "sentence_context": "他打破了跑步纪录。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_38",
+    "word": "qū-yù",
+    "spoken_version": "区域",
+    "definition": "一个地方。",
+    "sentence_context": "这里是办公区域。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_39",
+    "word": "xī-shōu",
+    "spoken_version": "吸收",
+    "definition": "摄取养分。",
+    "sentence_context": "植物通过根吸收水分。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w8_40",
+    "word": "yún-tī",
+    "spoken_version": "云梯",
+    "definition": "登高的梯子。",
+    "sentence_context": "消防员架起云梯救人。",
+    "difficulty": 2
+  }
+]

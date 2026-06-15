@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w5_1",
+    "word": "défaire",
+    "definition": "Le contraire de faire.",
+    "sentence_context": "Je vais défaire mes lacets.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_2",
+    "word": "impossible",
+    "definition": "Ce que l'on ne peut pas faire.",
+    "sentence_context": "C'est impossible de sauter si haut !",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_3",
+    "word": "inconnu",
+    "definition": "Une personne que l'on ne connaît pas.",
+    "sentence_context": "Il ne faut pas parler aux inconnus.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_4",
+    "word": "réécrire",
+    "definition": "Écrire une deuxième fois.",
+    "sentence_context": "Tu dois réécrire ton texte proprement.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_5",
+    "word": "malheureux",
+    "definition": "Le contraire d'heureux.",
+    "sentence_context": "Il est malheureux car il a perdu son doudou.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_6",
+    "word": "décoller",
+    "definition": "Le contraire de coller.",
+    "sentence_context": "Le timbre s'est décollé de l'enveloppe.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_7",
+    "word": "impatient",
+    "definition": "Qui ne veut pas attendre.",
+    "sentence_context": "Je suis impatient de recevoir mon cadeau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_8",
+    "word": "incapable",
+    "definition": "Qui ne peut pas faire quelque chose.",
+    "sentence_context": "Je suis incapable de porter ce gros sac.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_9",
+    "word": "répéter",
+    "definition": "Dire une deuxième fois.",
+    "sentence_context": "Peux-tu répéter ta question ?",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_10",
+    "word": "malhonnête",
+    "definition": "Une personne qui n'est pas honnête.",
+    "sentence_context": "Ce n'est pas bien d'être malhonnête.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_11",
+    "word": "démonter",
+    "definition": "Séparer les pièces d'un objet.",
+    "sentence_context": "Il va démonter le jouet pour le réparer.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_12",
+    "word": "impoli",
+    "definition": "Qui n'est pas poli.",
+    "sentence_context": "Dire des gros mots est impoli.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_13",
+    "word": "invisible",
+    "definition": "Que l'on ne peut pas voir.",
+    "sentence_context": "L'air est invisible.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_14",
+    "word": "revoir",
+    "definition": "Voir une deuxième fois.",
+    "sentence_context": "Je suis content de te revoir !",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_15",
+    "word": "malchance",
+    "definition": "Le contraire de chance.",
+    "sentence_context": "Quel dommage, c'est de la malchance.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_16",
+    "word": "déplier",
+    "definition": "Le contraire de plier.",
+    "sentence_context": "On va déplier la nappe sur la table.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_17",
+    "word": "impur",
+    "definition": "Qui n'est pas propre.",
+    "sentence_context": "L'eau de ce ruisseau est impure.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_18",
+    "word": "incroyable",
+    "definition": "Que l'on a du mal à croire.",
+    "sentence_context": "C'est une histoire incroyable !",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_19",
+    "word": "refaire",
+    "definition": "Faire une deuxième fois.",
+    "sentence_context": "Je dois refaire mon dessin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_20",
+    "word": "maladresse",
+    "definition": "Manque d'adresse.",
+    "sentence_context": "Quelle maladresse, il a cassé le vase.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_21",
+    "word": "désordre",
+    "definition": "Manque d'ordre.",
+    "sentence_context": "Ta chambre est en désordre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_22",
+    "word": "imparfait",
+    "definition": "Qui n'est pas parfait.",
+    "sentence_context": "Mon travail est encore imparfait.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_23",
+    "word": "inutile",
+    "definition": "Qui ne sert à rien.",
+    "sentence_context": "C'est inutile de crier.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_24",
+    "word": "revenir",
+    "definition": "Venir une deuxième fois.",
+    "sentence_context": "Il va revenir demain matin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_25",
+    "word": "malade",
+    "definition": "Qui n'est pas en bonne santé.",
+    "sentence_context": "Je suis malade, j'ai de la fièvre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_26",
+    "word": "déboucher",
+    "definition": "Enlever le bouchon.",
+    "sentence_context": "Il faut déboucher la bouteille.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_27",
+    "word": "imprudent",
+    "definition": "Qui ne fait pas attention.",
+    "sentence_context": "Il est imprudent de courir sur la route.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_28",
+    "word": "indirect",
+    "definition": "Qui ne va pas tout droit.",
+    "sentence_context": "On a pris un chemin indirect.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_29",
+    "word": "relire",
+    "definition": "Lire une deuxième fois.",
+    "sentence_context": "N'oublie pas de relire ton travail.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_30",
+    "word": "maltraiter",
+    "definition": "Traiter méchamment.",
+    "sentence_context": "Il ne faut jamais maltraiter les animaux.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w5_31",
+    "word": "déshabiller",
+    "definition": "Enlever ses vêtements.",
+    "sentence_context": "Il faut se déshabiller pour aller au bain.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_32",
+    "word": "immense",
+    "definition": "Très, très grand.",
+    "sentence_context": "L'océan est immense.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_33",
+    "word": "indispensable",
+    "definition": "Absolument nécessaire.",
+    "sentence_context": "L'eau est indispensable à la vie.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_34",
+    "word": "raconter",
+    "definition": "Dire une histoire.",
+    "sentence_context": "Grand-père va nous raconter une histoire.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_35",
+    "word": "malfaisant",
+    "definition": "Qui fait du mal.",
+    "sentence_context": "C'est un personnage malfaisant dans le conte.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_36",
+    "word": "désobéir",
+    "definition": "Ne pas écouter les ordres.",
+    "sentence_context": "Il ne faut pas désobéir à tes parents.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_37",
+    "word": "immobile",
+    "definition": "Qui ne bouge pas.",
+    "sentence_context": "Reste immobile pour la photo.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_38",
+    "word": "injustice",
+    "definition": "Ce qui n'est pas juste.",
+    "sentence_context": "C'est une injustice de ne pas pouvoir jouer.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_39",
+    "word": "réfléchir",
+    "definition": "Penser avec attention.",
+    "sentence_context": "Prends le temps de réfléchir avant de répondre.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w5_40",
+    "word": "malformation",
+    "definition": "Forme qui n'est pas normale.",
+    "sentence_context": "Il est né avec une petite malformation.",
+    "difficulty": 2
+  }
+]

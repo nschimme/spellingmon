@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w2_1",
+    "word": "стол",
+    "definition": "Мебель для еды или работы.",
+    "sentence_context": "Положи книгу на стол.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_2",
+    "word": "брат",
+    "definition": "Мальчик по отношению к другим детям.",
+    "sentence_context": "Мой брат старше меня.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_3",
+    "word": "книга",
+    "definition": "То, что мы читаем.",
+    "sentence_context": "В книге много картинок.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_4",
+    "word": "трава",
+    "definition": "Зеленые растения на земле.",
+    "sentence_context": "Корова ест сочную траву.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_5",
+    "word": "флаг",
+    "definition": "Символ страны на ткани.",
+    "sentence_context": "Над зданием висит наш флаг.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_6",
+    "word": "пламя",
+    "definition": "Огонь в костре.",
+    "sentence_context": "В печи горит яркое пламя.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_7",
+    "word": "хлеб",
+    "definition": "Еда из муки.",
+    "sentence_context": "Отрежь кусочек черного хлеба.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_8",
+    "word": "слон",
+    "definition": "Самое большое сухопутное животное.",
+    "sentence_context": "У слона большие уши.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_9",
+    "word": "врач",
+    "definition": "Человек, который лечит людей.",
+    "sentence_context": "Врач выписал мне витамины.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_10",
+    "word": "двор",
+    "definition": "Место около дома.",
+    "sentence_context": "Дети играют во дворе.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_11",
+    "word": "гриб",
+    "definition": "Растет в лесу под деревом.",
+    "sentence_context": "Мы нашли белый гриб.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_12",
+    "word": "краб",
+    "definition": "Морской житель с клешнями.",
+    "sentence_context": "Краб ползет по песку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_13",
+    "word": "тигр",
+    "definition": "Большая полосатая кошка.",
+    "sentence_context": "Тигр живет в джунглях.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_14",
+    "word": "волк",
+    "definition": "Серый хищник из леса.",
+    "sentence_context": "Волк воет на луну.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_15",
+    "word": "крот",
+    "definition": "Зверек, который живет под землей.",
+    "sentence_context": "Крот вырыл глубокую нору.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_16",
+    "word": "гном",
+    "definition": "Маленький сказочный человечек.",
+    "sentence_context": "Добрый гном живет в пещере.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_17",
+    "word": "краска",
+    "definition": "Ее используют для рисования.",
+    "sentence_context": "Мне нужна синяя краска.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_18",
+    "word": "стена",
+    "definition": "Часть дома.",
+    "sentence_context": "На стене висит картина.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_19",
+    "word": "плита",
+    "definition": "На ней готовят еду.",
+    "sentence_context": "Мама включила плиту.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_20",
+    "word": "плод",
+    "definition": "Фрукт или овощ на растении.",
+    "sentence_context": "На дереве созрел сладкий плод.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_21",
+    "word": "груша",
+    "definition": "Сладкий фрукт.",
+    "sentence_context": "Я съел сочную грушу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_22",
+    "word": "слива",
+    "definition": "Фиолетовый фрукт.",
+    "sentence_context": "В саду растет слива.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_23",
+    "word": "крыша",
+    "definition": "Верхняя часть дома.",
+    "sentence_context": "На крыше сидит птица.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_24",
+    "word": "стакан",
+    "definition": "Посуда для воды.",
+    "sentence_context": "Налей сок в стакан.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_25",
+    "word": "кресло",
+    "definition": "Мягкий стул с подлокотниками.",
+    "sentence_context": "Дедушка спит в кресле.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_26",
+    "word": "дверь",
+    "definition": "Ее открывают, чтобы войти.",
+    "sentence_context": "Закрой за собой дверь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_27",
+    "word": "экран",
+    "definition": "Часть телевизора или компьютера.",
+    "sentence_context": "На экране идет мультик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_28",
+    "word": "класс",
+    "definition": "Комната в школе.",
+    "sentence_context": "Наш класс очень светлый.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_29",
+    "word": "спорт",
+    "definition": "Занятия для здоровья.",
+    "sentence_context": "Я люблю заниматься спортом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_30",
+    "word": "звук",
+    "definition": "То, что мы слышим.",
+    "sentence_context": "В тишине раздался звук.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w2_31",
+    "word": "враг",
+    "definition": "Тот, кто хочет причинить вред.",
+    "sentence_context": "Герой победил врага.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_32",
+    "word": "внук",
+    "definition": "Мальчик для дедушки и бабушки.",
+    "sentence_context": "Внук приехал в гости.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_33",
+    "word": "гроза",
+    "definition": "Дождь с громом и молнией.",
+    "sentence_context": "Началась сильная гроза.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_34",
+    "word": "плащ",
+    "definition": "Одежда от дождя.",
+    "sentence_context": "Надень плащ, на улице сыро.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_35",
+    "word": "ключ",
+    "definition": "Им открывают замок.",
+    "sentence_context": "Где мой ключ от дома?",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_36",
+    "word": "кран",
+    "definition": "Из него течет вода.",
+    "sentence_context": "Не забудь закрыть кран.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_37",
+    "word": "кросс",
+    "definition": "Бег на длинную дистанцию.",
+    "sentence_context": "Мы бежали кросс в парке.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_38",
+    "word": "приз",
+    "definition": "Награда за победу.",
+    "sentence_context": "Я получил главный приз.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_39",
+    "word": "свет",
+    "definition": "То, что дает солнце или лампа.",
+    "sentence_context": "Включи в комнате свет.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w2_40",
+    "word": "труд",
+    "definition": "Работа человека.",
+    "sentence_context": "Всякий труд почетен.",
+    "difficulty": 2
+  }
+]

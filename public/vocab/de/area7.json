@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w7_1",
+    "word": "Computer",
+    "definition": "Ein Gerät zum Arbeiten und Spielen.",
+    "sentence_context": "Ich schreibe auf dem Computer.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_2",
+    "word": "Restaurant",
+    "definition": "Da kann man Essen gehen.",
+    "sentence_context": "Wir gehen heute ins Restaurant.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_3",
+    "word": "Büro",
+    "definition": "Da arbeiten Erwachsene.",
+    "sentence_context": "Mein Papa arbeitet im Büro.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_4",
+    "word": "Chef",
+    "definition": "Der Bestimmer in der Arbeit.",
+    "sentence_context": "Mein Chef ist heute im Urlaub.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_5",
+    "word": "Ingenieur",
+    "definition": "Ein Fachmann für Technik.",
+    "sentence_context": "Der Ingenieur baut eine Brücke.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_6",
+    "word": "Team",
+    "definition": "Viele Leute arbeiten zusammen.",
+    "sentence_context": "Wir sind ein starkes Team.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_7",
+    "word": "Baby",
+    "definition": "Ein ganz kleines Kind.",
+    "sentence_context": "Das Baby schläft in der Wiege.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_8",
+    "word": "Auto",
+    "definition": "Fahrzeug mit vier Rädern.",
+    "sentence_context": "Unser Auto ist silbern.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_9",
+    "word": "Garage",
+    "definition": "Haus für das Auto.",
+    "sentence_context": "Das Auto steht in der Garage.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_10",
+    "word": "Hotel",
+    "definition": "Haus zum Schlafen im Urlaub.",
+    "sentence_context": "Wir übernachten im Hotel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_11",
+    "word": "Kamera",
+    "definition": "Damit macht man Fotos.",
+    "sentence_context": "Nimm die Kamera mit in den Zoo.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_12",
+    "word": "Radio",
+    "definition": "Damit hört man Musik.",
+    "sentence_context": "Wir hören Radio in der Küche.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_13",
+    "word": "Taxi",
+    "definition": "Ein Auto, das einen fährt.",
+    "sentence_context": "Wir nehmen ein Taxi zum Bahnhof.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_14",
+    "word": "Telefon",
+    "definition": "Damit kann man sprechen.",
+    "sentence_context": "Gib mir mal das Telefon.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_15",
+    "word": "Video",
+    "definition": "Ein Film zum Angucken.",
+    "sentence_context": "Wir schauen uns ein Video an.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_16",
+    "word": "Camping",
+    "definition": "Urlaub im Zelt.",
+    "sentence_context": "Wir gehen im Sommer Camping machen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_17",
+    "word": "Falle",
+    "definition": "Damit fängt man Mäuse.",
+    "sentence_context": "Stell eine Falle in den Keller.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_18",
+    "word": "Keks",
+    "definition": "Etwas Süßes zum Essen.",
+    "sentence_context": "Ich möchte einen Schokokeks.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_19",
+    "word": "Park",
+    "definition": "Grüne Wiese mit Bäumen.",
+    "sentence_context": "Im Park stehen viele Bänke.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_20",
+    "word": "Sofa",
+    "definition": "Darauf kann man liegen.",
+    "sentence_context": "Die Katze schläft auf dem Sofa.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_21",
+    "word": "Sport",
+    "definition": "Fußball oder Schwimmen.",
+    "sentence_context": "Ich mache jeden Tag Sport.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_22",
+    "word": "Ticket",
+    "definition": "Damit darf man mitfahren.",
+    "sentence_context": "Wo ist mein Ticket für den Bus?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_23",
+    "word": "Internet",
+    "definition": "Viele Informationen im Netz.",
+    "sentence_context": "Ich suche das im Internet.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_24",
+    "word": "Pizza",
+    "definition": "Essen mit Käse und Tomaten.",
+    "sentence_context": "Wir essen heute Pizza.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_25",
+    "word": "Party",
+    "definition": "Ein Fest mit Freunden.",
+    "sentence_context": "Morgen feiern wir eine Party.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_26",
+    "word": "Club",
+    "definition": "Eine Gruppe von Leuten.",
+    "sentence_context": "Ich bin im Fußball-Club.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_27",
+    "word": "Jeans",
+    "definition": "Blaue Hosen aus festem Stoff.",
+    "sentence_context": "Ich trage heute meine Jeans.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_28",
+    "word": "T-Shirt",
+    "definition": "Oberteil mit kurzen Ärmeln.",
+    "sentence_context": "Dein T-Shirt ist gelb.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_29",
+    "word": "Check",
+    "definition": "Etwas prüfen.",
+    "sentence_context": "Mach mal einen kurzen Check.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_30",
+    "word": "Cool",
+    "definition": "Wenn etwas toll ist.",
+    "sentence_context": "Das Spiel ist echt cool.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w7_31",
+    "word": "Hobby",
+    "definition": "Was man in der Freizeit macht.",
+    "sentence_context": "Mein Hobby ist Malen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_32",
+    "word": "Job",
+    "definition": "Was man als Arbeit macht.",
+    "sentence_context": "Ich suche einen kleinen Ferien-Job.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_33",
+    "word": "Manager",
+    "definition": "Eine Person, die leitet.",
+    "sentence_context": "Der Manager plant das Projekt.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_34",
+    "word": "Niveau",
+    "definition": "Wie gut etwas ist.",
+    "sentence_context": "Das Spiel hat ein hohes Niveau.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_35",
+    "word": "Service",
+    "definition": "Wenn man bedient wird.",
+    "sentence_context": "Der Service im Hotel ist gut.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_36",
+    "word": "Show",
+    "definition": "Ein Auftritt mit Musik.",
+    "sentence_context": "Wir sehen uns die Show an.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_37",
+    "word": "Test",
+    "definition": "Eine kleine Prüfung.",
+    "sentence_context": "Heute schreiben wir einen Test.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_38",
+    "word": "Trend",
+    "definition": "Was gerade viele mögen.",
+    "sentence_context": "Das neue Spiel ist ein Trend.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_39",
+    "word": "Uniform",
+    "definition": "Kleidung für die Arbeit.",
+    "sentence_context": "Der Polizist trägt eine Uniform.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w7_40",
+    "word": "Zentrum",
+    "definition": "In der Mitte der Stadt.",
+    "sentence_context": "Wir treffen uns im Zentrum.",
+    "difficulty": 2
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w2_1",
+    "word": "braço",
+    "definition": "Parte do corpo entre o ombro e a mão.",
+    "sentence_context": "Dobre o braço devagar.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_2",
+    "word": "cravo",
+    "definition": "Tipo de flor perfumada.",
+    "sentence_context": "O cravo é uma flor linda.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_3",
+    "word": "dragão",
+    "definition": "Ser mítico que cospe fogo.",
+    "sentence_context": "O dragão voou sobre a torre.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_4",
+    "word": "fruta",
+    "definition": "Parte comestível das plantas.",
+    "sentence_context": "Como fruta todos os dias.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_5",
+    "word": "grito",
+    "definition": "Som alto feito pela voz.",
+    "sentence_context": "Ouvi um grito na rua.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_6",
+    "word": "prato",
+    "definition": "Objeto usado para colocar a comida.",
+    "sentence_context": "Pus a sopa no prato.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_7",
+    "word": "trevo",
+    "definition": "Planta pequena com três ou quatro folhas.",
+    "sentence_context": "Encontrei um trevo de sorte.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_8",
+    "word": "bloco",
+    "definition": "Pedaço sólido de algum material.",
+    "sentence_context": "O bloco de gelo derreteu.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_9",
+    "word": "clara",
+    "definition": "Parte branca do ovo.",
+    "sentence_context": "Bati a clara em castelo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_10",
+    "word": "flauta",
+    "definition": "Instrumento musical de sopro.",
+    "sentence_context": "Ela toca flauta na banda.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_11",
+    "word": "globo",
+    "definition": "Objeto redondo que representa a Terra.",
+    "sentence_context": "O globo terrestre girou.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_12",
+    "word": "placa",
+    "definition": "Objeto plano com informações.",
+    "sentence_context": "A placa indica o caminho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_13",
+    "word": "brisa",
+    "definition": "Vento suave e fresco.",
+    "sentence_context": "A brisa do mar é boa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_14",
+    "word": "creme",
+    "definition": "Substância pastosa e suave.",
+    "sentence_context": "Pus creme nas mãos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_15",
+    "word": "drama",
+    "definition": "Situação triste ou peça de teatro.",
+    "sentence_context": "O filme foi um grande drama.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_16",
+    "word": "frase",
+    "definition": "Conjunto de palavras com sentido.",
+    "sentence_context": "Escrevi uma frase curta.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_17",
+    "word": "grade",
+    "definition": "Armação de barras de metal.",
+    "sentence_context": "A janela tem uma grade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_18",
+    "word": "preço",
+    "definition": "Valor de uma coisa em dinheiro.",
+    "sentence_context": "Qual é o preço disto?",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_19",
+    "word": "troca",
+    "definition": "Substituição de uma coisa por outra.",
+    "sentence_context": "Fizemos uma troca justa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_20",
+    "word": "clima",
+    "definition": "Condições do tempo num lugar.",
+    "sentence_context": "O clima está muito seco.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_21",
+    "word": "fluxo",
+    "definition": "Movimento contínuo de algo.",
+    "sentence_context": "O fluxo da água é rápido.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_22",
+    "word": "glória",
+    "definition": "Grande honra ou fama.",
+    "sentence_context": "O atleta alcançou a glória.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_23",
+    "word": "plano",
+    "definition": "Projeto ou ideia para fazer algo.",
+    "sentence_context": "Tenho um plano secreto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_24",
+    "word": "bruxa",
+    "definition": "Personagem mágica dos contos.",
+    "sentence_context": "A bruxa voa na vassoura.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_25",
+    "word": "crise",
+    "definition": "Momento difícil ou perigoso.",
+    "sentence_context": "A empresa superou a crise.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_26",
+    "word": "droga",
+    "definition": "Substância química ou gíria para algo ruim.",
+    "sentence_context": "Isso é uma droga!",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_27",
+    "word": "freio",
+    "definition": "Peça para parar veículos.",
+    "sentence_context": "Pise no freio do carro.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_28",
+    "word": "graça",
+    "definition": "Qualidade de quem é engraçado.",
+    "sentence_context": "A piada não teve graça.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_29",
+    "word": "prata",
+    "definition": "Metal precioso de cor cinzenta.",
+    "sentence_context": "Ganhei uma medalha de prata.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_30",
+    "word": "tribo",
+    "definition": "Grupo de pessoas com a mesma origem.",
+    "sentence_context": "A tribo vive na floresta.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w2_31",
+    "word": "clube",
+    "definition": "Associação de pessoas com interesses comuns.",
+    "sentence_context": "Vou ao clube no sábado.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_32",
+    "word": "flora",
+    "definition": "Conjunto de plantas de uma região.",
+    "sentence_context": "A flora local é diversa.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_33",
+    "word": "gruta",
+    "definition": "Caverna ou cavidade natural.",
+    "sentence_context": "Entramos numa gruta escura.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_34",
+    "word": "pluma",
+    "definition": "Pena muito leve e macia.",
+    "sentence_context": "A almofada é de pluma.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_35",
+    "word": "trela",
+    "definition": "Corda usada para levar cães.",
+    "sentence_context": "Pus a trela no meu cão.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_36",
+    "word": "cloro",
+    "definition": "Substância para limpar a água.",
+    "sentence_context": "Puseram cloro na piscina.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_37",
+    "word": "flito",
+    "definition": "Conflito ou luta pequena.",
+    "sentence_context": "Houve um pequeno flito ali.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_38",
+    "word": "grama",
+    "definition": "Relva curta de jardins.",
+    "sentence_context": "Sentei-me na grama verde.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_39",
+    "word": "plenó",
+    "definition": "Que está totalmente cheio.",
+    "sentence_context": "O estádio estava pleno.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w2_40",
+    "word": "truta",
+    "definition": "Tipo de peixe de água doce.",
+    "sentence_context": "Comi uma truta grelhada.",
+    "difficulty": 2
+  }
+]

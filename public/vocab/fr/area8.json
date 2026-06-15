@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w8_1",
+    "word": "bateau",
+    "definition": "Véhicule sur l'eau.",
+    "sentence_context": "Le bateau navigue sur l'océan.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_2",
+    "word": "gâteau",
+    "definition": "Dessert sucré.",
+    "sentence_context": "J'ai mangé une part de gâteau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_3",
+    "word": "printemps",
+    "definition": "Saison entre l'hiver et l'été.",
+    "sentence_context": "Les fleurs poussent au printemps.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_4",
+    "word": "main",
+    "definition": "Au bout du bras.",
+    "sentence_context": "Lave-toi la main avant de manger.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_5",
+    "word": "faim",
+    "definition": "Envie de manger.",
+    "sentence_context": "J'ai très faim ce midi.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_6",
+    "word": "peinture",
+    "definition": "Tableau ou action de peindre.",
+    "sentence_context": "C'est une très belle peinture.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_7",
+    "word": "emmener",
+    "definition": "Prendre quelqu'un avec soi.",
+    "sentence_context": "Maman va m'emmener au parc.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_8",
+    "word": "eau",
+    "definition": "Liquide vital.",
+    "sentence_context": "Je bois beaucoup d'eau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_9",
+    "word": "beau",
+    "definition": "Très joli.",
+    "sentence_context": "C'est un beau paysage.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_10",
+    "word": "oiseau",
+    "definition": "Animal volant.",
+    "sentence_context": "L'oiseau chante dans l'arbre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_11",
+    "word": "peau",
+    "definition": "Surface du corps.",
+    "sentence_context": "Mets de la crème sur ta peau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_12",
+    "word": "train",
+    "definition": "Transport sur rails.",
+    "sentence_context": "Le train arrive à l'heure.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_13",
+    "word": "faim",
+    "definition": "Besoin de manger.",
+    "sentence_context": "Il a faim, il veut son goûter.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_14",
+    "word": "peintre",
+    "definition": "Personne qui peint.",
+    "sentence_context": "Le peintre a utilisé beaucoup de couleurs.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_15",
+    "word": "matin",
+    "definition": "Début du jour.",
+    "sentence_context": "Le soleil se lève le matin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_16",
+    "word": "lapin",
+    "definition": "Animal aux longues oreilles.",
+    "sentence_context": "Le lapin mange du trèfle.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_17",
+    "word": "sapin",
+    "definition": "Arbre de Noël.",
+    "sentence_context": "On a décoré le sapin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_18",
+    "word": "chemin",
+    "definition": "Petite route.",
+    "sentence_context": "Suis le chemin dans le bois.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_19",
+    "word": "jardin",
+    "definition": "Espace vert.",
+    "sentence_context": "On joue dans le jardin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_20",
+    "word": "singe",
+    "definition": "Animal qui grimpe aux arbres.",
+    "sentence_context": "Le singe mange une banane.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_21",
+    "word": "manger",
+    "definition": "Action de se nourrir.",
+    "sentence_context": "C'est l'heure de manger.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_22",
+    "word": "danser",
+    "definition": "Bouger en musique.",
+    "sentence_context": "J'aime beaucoup danser.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_23",
+    "word": "chanter",
+    "definition": "Faire de la musique avec sa voix.",
+    "sentence_context": "On va chanter tous ensemble.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_24",
+    "word": "jouer",
+    "definition": "S'amuser.",
+    "sentence_context": "Je veux jouer avec toi.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_25",
+    "word": "marcher",
+    "definition": "Avancer avec ses pieds.",
+    "sentence_context": "Il faut marcher sur le trottoir.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_26",
+    "word": "fleur",
+    "definition": "Plante colorée.",
+    "sentence_context": "C'est une jolie fleur rouge.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_27",
+    "word": "couleur",
+    "definition": "Le rouge, le bleu, le vert sont des couleurs.",
+    "sentence_context": "Quelle est ta couleur préférée ?",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_28",
+    "word": "bonheur",
+    "definition": "État de joie.",
+    "sentence_context": "Le bonheur, c'est d'être avec ses amis.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_29",
+    "word": "peur",
+    "definition": "Crainte.",
+    "sentence_context": "J'ai eu peur du gros chien.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_30",
+    "word": "heure",
+    "definition": "Temps qui passe.",
+    "sentence_context": "Quelle heure est-il ?",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w8_31",
+    "word": "château",
+    "definition": "Grande maison ancienne.",
+    "sentence_context": "Le roi habite dans son château.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_32",
+    "word": "marteau",
+    "definition": "Outil pour taper.",
+    "sentence_context": "Utilise le marteau pour le clou.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_33",
+    "word": "couteau",
+    "definition": "Outil pour couper.",
+    "sentence_context": "Fais attention avec le couteau.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_34",
+    "word": "moineau",
+    "definition": "Petit oiseau gris.",
+    "sentence_context": "Le moineau mange des miettes.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_35",
+    "word": "rideau",
+    "definition": "Tissu devant la fenêtre.",
+    "sentence_context": "Ferme le rideau, il y a trop de soleil.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_36",
+    "word": "tableau",
+    "definition": "Support pour écrire à l'école.",
+    "sentence_context": "Regarde bien ce qui est écrit au tableau.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_37",
+    "word": "chapeau",
+    "definition": "Vêtement sur la tête.",
+    "sentence_context": "Mets ton chapeau pour sortir.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_38",
+    "word": "cadeau",
+    "definition": "Objet que l'on offre.",
+    "sentence_context": "J'ai un cadeau pour toi.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_39",
+    "word": "bureau",
+    "definition": "Meuble pour travailler.",
+    "sentence_context": "Je fais mes devoirs sur mon bureau.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w8_40",
+    "word": "niveau",
+    "definition": "Hauteur ou grade.",
+    "sentence_context": "J'ai atteint le niveau suivant dans le jeu.",
+    "difficulty": 2
+  }
+]

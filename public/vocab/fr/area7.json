@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w7_1",
+    "word": "weekend",
+    "definition": "Fin de la semaine.",
+    "sentence_context": "Je pars en weekend à la campagne.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_2",
+    "word": "parking",
+    "definition": "Endroit pour garer les voitures.",
+    "sentence_context": "On a garé la voiture au parking.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_3",
+    "word": "pizza",
+    "definition": "Plat italien rond.",
+    "sentence_context": "J'aime la pizza au fromage.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_4",
+    "word": "chouquette",
+    "definition": "Petit chou au sucre.",
+    "sentence_context": "J'ai acheté des chouquettes pour le goûter.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_5",
+    "word": "algèbre",
+    "definition": "Partie des mathématiques.",
+    "sentence_context": "On commence l'algèbre en classe.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_6",
+    "word": "kermesse",
+    "definition": "Fête de l'école.",
+    "sentence_context": "On s'est bien amusé à la kermesse.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_7",
+    "word": "sandwich",
+    "definition": "Pain avec de la garniture.",
+    "sentence_context": "J'ai un sandwich au jambon.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_8",
+    "word": "tennis",
+    "definition": "Sport avec une raquette.",
+    "sentence_context": "Je joue au tennis le mercredi.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_9",
+    "word": "pyjama",
+    "definition": "Vêtement pour dormir.",
+    "sentence_context": "J'ai mis mon pyjama propre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_10",
+    "word": "shampooing",
+    "definition": "Savon pour les cheveux.",
+    "sentence_context": "Lave-toi bien la tête avec le shampooing.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_11",
+    "word": "yogourt",
+    "definition": "Produit à base de lait.",
+    "sentence_context": "Je mange un yogourt à la fraise.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_12",
+    "word": "camping",
+    "definition": "Vacances sous la tente.",
+    "sentence_context": "On va faire du camping cet été.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_13",
+    "word": "ordinateur",
+    "definition": "Appareil pour travailler ou jouer.",
+    "sentence_context": "J'utilise l'ordinateur pour faire mes devoirs.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_14",
+    "word": "puzzle",
+    "definition": "Jeu de patience.",
+    "sentence_context": "J'ai fini mon puzzle de mille pièces.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_15",
+    "word": "weekend",
+    "definition": "Fin de semaine.",
+    "sentence_context": "Passe un bon weekend !",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_16",
+    "word": "ketchup",
+    "definition": "Sauce à la tomate sucrée.",
+    "sentence_context": "Je mets du ketchup sur mes frites.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_17",
+    "word": "karaoké",
+    "definition": "Chanter sur de la musique.",
+    "sentence_context": "On a fait un karaoké pour mon anniversaire.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_18",
+    "word": "kangourou",
+    "definition": "Animal qui saute avec une poche.",
+    "sentence_context": "Le kangourou vit en Australie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_19",
+    "word": "kayak",
+    "definition": "Petit bateau pour une personne.",
+    "sentence_context": "On fait du kayak sur la rivière.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_20",
+    "word": "kiwi",
+    "definition": "Fruit vert avec des poils.",
+    "sentence_context": "Le kiwi est plein de vitamines.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_21",
+    "word": "clown",
+    "definition": "Personnage qui fait rire au cirque.",
+    "sentence_context": "Le clown a un gros nez rouge.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_22",
+    "word": "poney",
+    "definition": "Petit cheval.",
+    "sentence_context": "Je fais du poney au centre équestre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_23",
+    "word": "taxi",
+    "definition": "Voiture qui transporte des gens.",
+    "sentence_context": "On a pris un taxi pour aller à la gare.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_24",
+    "word": "t-shirt",
+    "definition": "Vêtement à manches courtes.",
+    "sentence_context": "J'ai un t-shirt bleu avec un dessin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_25",
+    "word": "basket",
+    "definition": "Sport ou chaussure de sport.",
+    "sentence_context": "J'adore jouer au basket.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_26",
+    "word": "photo",
+    "definition": "Image prise avec un appareil.",
+    "sentence_context": "J'ai pris une photo de mon chat.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_27",
+    "word": "radio",
+    "definition": "Appareil pour écouter de la musique.",
+    "sentence_context": "Maman écoute la radio le matin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_28",
+    "word": "zèbre",
+    "definition": "Animal blanc avec des rayures noires.",
+    "sentence_context": "Le zèbre court dans la savane.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_29",
+    "word": "vidéo",
+    "definition": "Film que l'on regarde.",
+    "sentence_context": "J'ai regardé une vidéo drôle.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_30",
+    "word": "wifi",
+    "definition": "Connexion internet sans fil.",
+    "sentence_context": "Donne-moi le code du wifi, s'il te plaît.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w7_31",
+    "word": "basketball",
+    "definition": "Sport collectif.",
+    "sentence_context": "Le basketball est mon sport préféré.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_32",
+    "word": "football",
+    "definition": "Sport avec un ballon rond.",
+    "sentence_context": "On a fait un match de football.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_33",
+    "word": "volleyball",
+    "definition": "Sport avec un filet.",
+    "sentence_context": "On joue au volleyball sur la plage.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_34",
+    "word": "skate",
+    "definition": "Planche à roulettes.",
+    "sentence_context": "Il fait du skate dans le skatepark.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_35",
+    "word": "surf",
+    "definition": "Sport sur l'eau.",
+    "sentence_context": "Il va faire du surf sur les vagues.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_36",
+    "word": "laser",
+    "definition": "Rayon de lumière.",
+    "sentence_context": "Le sabre laser est une arme de cinéma.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_37",
+    "word": "robot",
+    "definition": "Machine intelligente.",
+    "sentence_context": "J'ai un robot qui sait marcher.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_38",
+    "word": "métro",
+    "definition": "Train sous la ville.",
+    "sentence_context": "On prend le métro pour traverser Paris.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_39",
+    "word": "piano",
+    "definition": "Instrument de musique à touches.",
+    "sentence_context": "Elle joue du piano très bien.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w7_40",
+    "word": "micro",
+    "definition": "Appareil pour parler plus fort.",
+    "sentence_context": "Il a pris le micro pour chanter.",
+    "difficulty": 2
+  }
+]
