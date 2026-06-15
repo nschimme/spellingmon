@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w1_1",
+    "word": "Ball",
+    "definition": "Ein rundes Spielzeug.",
+    "sentence_context": "Ich spiele mit dem Ball.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_2",
+    "word": "Hund",
+    "definition": "Ein Haustier, das bellt.",
+    "sentence_context": "Mein Hund ist sehr lieb.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_3",
+    "word": "Katze",
+    "definition": "Ein Tier, das Mäuse fängt.",
+    "sentence_context": "Die Katze schläft auf dem Sofa.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_4",
+    "word": "rot",
+    "definition": "Die Farbe von Tomaten.",
+    "sentence_context": "Mein Apfel ist rot.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_5",
+    "word": "blau",
+    "definition": "Die Farbe des Himmels.",
+    "sentence_context": "Das Meer ist heute blau.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_6",
+    "word": "Haus",
+    "definition": "Ein Ort, in dem man wohnt.",
+    "sentence_context": "Unser Haus hat ein rotes Dach.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_7",
+    "word": "Baum",
+    "definition": "Eine große Pflanze im Wald.",
+    "sentence_context": "Der Baum hat grüne Blätter.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_8",
+    "word": "Brot",
+    "definition": "Ein Lebensmittel vom Bäcker.",
+    "sentence_context": "Ich esse Brot zum Frühstück.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_9",
+    "word": "Buch",
+    "definition": "Man kann es lesen.",
+    "sentence_context": "Ich lese ein spannendes Buch.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_10",
+    "word": "Kind",
+    "definition": "Ein junger Mensch.",
+    "sentence_context": "Das Kind spielt im Garten.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_11",
+    "word": "Maus",
+    "definition": "Ein kleines graues Tier.",
+    "sentence_context": "Die Maus isst gerne Käse.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_12",
+    "word": "Nase",
+    "definition": "Damit kann man riechen.",
+    "sentence_context": "Meine Nase ist im Gesicht.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_13",
+    "word": "Ohr",
+    "definition": "Damit kann man hören.",
+    "sentence_context": "Ich habe zwei Ohren.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_14",
+    "word": "Park",
+    "definition": "Ein Ort mit vielen Bäumen.",
+    "sentence_context": "Wir gehen im Park spazieren.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_15",
+    "word": "Rad",
+    "definition": "Ein Teil am Fahrrad.",
+    "sentence_context": "Das Rad dreht sich schnell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_16",
+    "word": "Sonne",
+    "definition": "Sie scheint am Himmel.",
+    "sentence_context": "Die Sonne ist sehr warm.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_17",
+    "word": "Tisch",
+    "definition": "Daran kann man essen.",
+    "sentence_context": "Der Tisch ist aus Holz.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_18",
+    "word": "Uhr",
+    "definition": "Damit sieht man die Zeit.",
+    "sentence_context": "Die Uhr schlägt zwölf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_19",
+    "word": "Vogel",
+    "definition": "Ein Tier, das fliegen kann.",
+    "sentence_context": "Der Vogel singt ein Lied.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_20",
+    "word": "Wald",
+    "definition": "Viele Bäume zusammen.",
+    "sentence_context": "Im Wald ist es sehr ruhig.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_21",
+    "word": "Zug",
+    "definition": "Ein langes Fahrzeug auf Schienen.",
+    "sentence_context": "Der Zug fährt in den Bahnhof ein.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_22",
+    "word": "Arm",
+    "definition": "Ein Teil des Körpers.",
+    "sentence_context": "Mein Arm ist stark.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_23",
+    "word": "Bein",
+    "definition": "Damit kann man laufen.",
+    "sentence_context": "Mein Bein tut weh.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_24",
+    "word": "Dorf",
+    "definition": "Ein kleiner Ort.",
+    "sentence_context": "Ich wohne in einem kleinen Dorf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_25",
+    "word": "Ei",
+    "definition": "Das legt das Huhn.",
+    "sentence_context": "Ich esse ein Ei am Sonntag.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_26",
+    "word": "Fisch",
+    "definition": "Er schwimmt im Wasser.",
+    "sentence_context": "Der Fisch schwimmt im Teich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_27",
+    "word": "Gras",
+    "definition": "Es wächst im Garten.",
+    "sentence_context": "Das Gras ist heute sehr nass.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_28",
+    "word": "Hand",
+    "definition": "Damit kann man greifen.",
+    "sentence_context": "Gib mir deine Hand.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_29",
+    "word": "Insel",
+    "definition": "Land mitten im Meer.",
+    "sentence_context": "Wir machen Urlaub auf einer Insel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_30",
+    "word": "Kuh",
+    "definition": "Sie gibt uns Milch.",
+    "sentence_context": "Die Kuh steht auf der Wiese.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w1_31",
+    "word": "Lampe",
+    "definition": "Sie macht helles Licht.",
+    "sentence_context": "Mach bitte die Lampe an.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_32",
+    "word": "Mond",
+    "definition": "Er leuchtet nachts.",
+    "sentence_context": "Der Mond ist heute rund.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_33",
+    "word": "Nest",
+    "definition": "Darin wohnen Vögel.",
+    "sentence_context": "Im Nest liegen drei Eier.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_34",
+    "word": "Ofen",
+    "definition": "Darin backt man Kuchen.",
+    "sentence_context": "Der Kuchen ist im Ofen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_35",
+    "word": "Post",
+    "definition": "Da bringt man Briefe hin.",
+    "sentence_context": "Ich bringe das Paket zur Post.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_36",
+    "word": "Rock",
+    "definition": "Ein Kleidungsstück für Mädchen.",
+    "sentence_context": "Dein Rock ist sehr hübsch.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_37",
+    "word": "Saft",
+    "definition": "Ein Getränk aus Früchten.",
+    "sentence_context": "Ich trinke gerne Apfelsaft.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_38",
+    "word": "Turm",
+    "definition": "Ein sehr hohes Gebäude.",
+    "sentence_context": "Der Turm ist sehr alt.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_39",
+    "word": "Ufer",
+    "definition": "Der Rand von einem Fluss.",
+    "sentence_context": "Wir sitzen am Ufer vom Bach.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w1_40",
+    "word": "Wurm",
+    "definition": "Er lebt in der Erde.",
+    "sentence_context": "Der Wurm kriecht langsam.",
+    "difficulty": 2
+  }
+]

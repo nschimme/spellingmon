@@ -124,7 +124,18 @@ export const STORAGE_KEYS = {
   SELECTED_VOICE: 'selected_voice_name',
   VOLUME: 'volume',
   IS_MUTED: 'is_muted',
+  LOCALE: 'locale',
 };
+
+export const SUPPORTED_LANGUAGES = [
+  { code: 'en-US', name: 'English', flag: '🇺🇸', native: 'English' },
+  { code: 'de-DE', name: 'German', flag: '🇩🇪', native: 'Deutsch' },
+  { code: 'es-MX', name: 'Spanish', flag: '🇲🇽', native: 'Español' },
+  { code: 'fr-FR', name: 'French', flag: '🇫🇷', native: 'Français' },
+  { code: 'pt-BR', name: 'Portuguese', flag: '🇧🇷', native: 'Português' },
+  { code: 'ru-RU', name: 'Russian', flag: '🇷🇺', native: 'Русский' },
+  { code: 'zh-CN', name: 'Mandarin', flag: '🇨🇳', native: '普通话' }
+];
 
 export const MENU_TABS = {
   PARTY: 'party',

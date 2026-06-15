@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w8_1",
+    "word": "gente",
+    "definition": "Grupo de personas.",
+    "sentence_context": "Hay mucha gente en la calle.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_2",
+    "word": "jirafa",
+    "definition": "Animal de cuello muy largo.",
+    "sentence_context": "La jirafa come hojas de los árboles.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_3",
+    "word": "equipaje",
+    "definition": "Maletas para viajar.",
+    "sentence_context": "Llevamos mucho equipaje al viaje.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_4",
+    "word": "cerrajería",
+    "definition": "Lugar donde hacen llaves.",
+    "sentence_context": "Fui a la cerrajería a hacer una copia.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_5",
+    "word": "sí",
+    "definition": "Afirmación.",
+    "sentence_context": "Él dijo que sí quería venir.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_6",
+    "word": "si",
+    "definition": "Condición.",
+    "sentence_context": "Si llueve, no saldremos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_7",
+    "word": "más",
+    "definition": "Cantidad superior.",
+    "sentence_context": "Quiero más chocolate, por favor.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_8",
+    "word": "mas",
+    "definition": "Pero.",
+    "sentence_context": "Quiso ir, mas no pudo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_9",
+    "word": "mágico",
+    "definition": "Que tiene magia.",
+    "sentence_context": "Es un bosque muy mágico.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_10",
+    "word": "ejercicio",
+    "definition": "Actividad física o tarea.",
+    "sentence_context": "Hice ejercicio en el gimnasio.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_11",
+    "word": "gemelo",
+    "definition": "Hermano nacido a la vez.",
+    "sentence_context": "Mi hermano es mi gemelo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_12",
+    "word": "jugar",
+    "definition": "Hacer algo para divertirse.",
+    "sentence_context": "Me gusta jugar al escondite.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_13",
+    "word": "guisante",
+    "definition": "Semilla verde redonda.",
+    "sentence_context": "No me gustan los guisantes.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_14",
+    "word": "zapato",
+    "definition": "Calzado para el pie.",
+    "sentence_context": "Me puse el zapato izquierdo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_15",
+    "word": "cinco",
+    "definition": "Número después del cuatro.",
+    "sentence_context": "Tengo cinco dedos en la mano.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_16",
+    "word": "queso",
+    "definition": "Alimento de leche.",
+    "sentence_context": "Dame un trozo de queso.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_17",
+    "word": "guitarra",
+    "definition": "Instrumento de cuerda.",
+    "sentence_context": "Él toca muy bien la guitarra.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_18",
+    "word": "jardín",
+    "definition": "Lugar con flores y plantas.",
+    "sentence_context": "Las flores crecen en el jardín.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_19",
+    "word": "gigante",
+    "definition": "Persona o cosa muy grande.",
+    "sentence_context": "El ogro es un gigante malo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_20",
+    "word": "joven",
+    "definition": "Persona de poca edad.",
+    "sentence_context": "Es un chico muy joven.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_21",
+    "word": "conocer",
+    "definition": "Tener relación con alguien.",
+    "sentence_context": "Quiero conocer a tus amigos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_22",
+    "word": "cero",
+    "definition": "Número que indica nada.",
+    "sentence_context": "Tengo cero ganas de estudiar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_23",
+    "word": "quince",
+    "definition": "Número después de catorce.",
+    "sentence_context": "Mi hermana tiene quince años.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_24",
+    "word": "geografía",
+    "definition": "Ciencia de la Tierra.",
+    "sentence_context": "Estudiamos geografía en el cole.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_25",
+    "word": "juez",
+    "definition": "Persona que juzga.",
+    "sentence_context": "El juez dictó la sentencia.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_26",
+    "word": "coraje",
+    "definition": "Valor y fuerza.",
+    "sentence_context": "Hay que tener coraje para saltar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_27",
+    "word": "cereza",
+    "definition": "Fruta pequeña y roja.",
+    "sentence_context": "Comimos cerezas en el postre.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_28",
+    "word": "quién",
+    "definition": "Pregunta por una persona.",
+    "sentence_context": "¿Quién es ese niño nuevo?",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_29",
+    "word": "té",
+    "definition": "Bebida de hojas secas.",
+    "sentence_context": "Mi madre toma té con limón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_30",
+    "word": "te",
+    "definition": "Pronombre personal.",
+    "sentence_context": "Te dije que no vinieras.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w8_31",
+    "word": "tú",
+    "definition": "Pronombre personal.",
+    "sentence_context": "Tú eres mi mejor amigo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_32",
+    "word": "tu",
+    "definition": "Posesivo.",
+    "sentence_context": "Ese es tu libro de lengua.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_33",
+    "word": "él",
+    "definition": "Pronombre personal.",
+    "sentence_context": "Él es muy alto y guapo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_34",
+    "word": "el",
+    "definition": "Artículo.",
+    "sentence_context": "El perro corre por el campo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_35",
+    "word": "mí",
+    "definition": "Pronombre personal.",
+    "sentence_context": "Este regalo es para mí.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_36",
+    "word": "mi",
+    "definition": "Posesivo.",
+    "sentence_context": "Esa es mi casa blanca.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_37",
+    "word": "dé",
+    "definition": "Del verbo dar.",
+    "sentence_context": "Espero que me dé el premio.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_38",
+    "word": "de",
+    "definition": "Preposición.",
+    "sentence_context": "La mesa es de madera.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_39",
+    "word": "sé",
+    "definition": "Del verbo saber o ser.",
+    "sentence_context": "Yo ya sé toda la lección.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w8_40",
+    "word": "se",
+    "definition": "Pronombre personal.",
+    "sentence_context": "Él se lava las manos.",
+    "difficulty": 2
+  }
+]

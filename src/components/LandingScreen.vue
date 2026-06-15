@@ -14,10 +14,10 @@
     <div class="z-10 flex flex-col items-center max-w-lg w-full">
       <div class="bg-white border-8 border-gray-800 p-4 md:p-12 rounded-[3rem] shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500 w-full">
         <h1 class="text-xl leading-none md:text-4xl font-black text-center mb-4 uppercase tracking-tight text-orange-500 drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
-          SPELLINGMON
+          {{ $t('landing.title') }}
         </h1>
         <p class="text-gray-600 font-bold text-center mb-8 md:mb-12 uppercase tracking-widest text-[10px] md:text-sm">
-          Gotta Spell 'Em All!
+          {{ $t('landing.subtitle') }}
         </p>
 
         <div
@@ -29,7 +29,7 @@
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 md:py-6 px-6 md:px-12 rounded-2xl border-b-8 border-blue-800 text-xl md:text-2xl uppercase tracking-widest transition-all active:border-b-0 active:translate-y-2 group"
             @click="handleInitialClick"
           >
-            <span class="group-hover:scale-110 inline-block transition-transform">Start Game</span>
+            <span class="group-hover:scale-110 inline-block transition-transform">{{ $t('landing.startGame') }}</span>
           </button>
         </div>
 
@@ -43,14 +43,14 @@
             class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-4 rounded-xl border-b-4 border-green-800 uppercase text-sm active:translate-y-1"
             @click="handleContinue"
           >
-            Continue ({{ playerName }})
+            {{ $t('landing.continue', { name: playerName }) }}
           </button>
           <button
             :class="{ 'ring-8 ring-yellow-400': showSaveOptions && !confirmDelete && ((hasSave && selectedIndex === 1) || (!hasSave && selectedIndex === 0)) }"
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 rounded-xl border-b-4 border-blue-800 uppercase text-sm active:translate-y-1"
             @click="handleNewGame"
           >
-            New Game
+            {{ $t('landing.newGame') }}
           </button>
           <button
             v-if="hasSave"
@@ -58,7 +58,7 @@
             class="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 rounded-xl border-b-4 border-red-800 uppercase text-sm active:translate-y-1"
             @click="confirmDelete = true"
           >
-            Delete Save
+            {{ $t('landing.deleteSave') }}
           </button>
         </div>
       </div>
@@ -70,7 +70,7 @@
       >
         <div class="bg-white border-8 border-gray-800 p-8 rounded-2xl max-w-sm w-full text-center">
           <p class="font-black uppercase text-red-600 mb-6">
-            Delete all progress? This cannot be undone!
+            {{ $t('landing.deleteConfirm') }}
           </p>
           <div class="flex gap-4">
             <button
@@ -78,21 +78,21 @@
               class="flex-1 bg-red-500 text-white py-3 rounded-lg font-bold uppercase text-xs border-b-4 border-red-800 active:translate-y-1"
               @click="handleDelete"
             >
-              Yes, Delete
+              {{ $t('landing.yesDelete') }}
             </button>
             <button
               :class="{ 'ring-8 ring-yellow-400': confirmDelete && deleteSelectedIndex === 1 }"
               class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-bold uppercase text-xs border-b-4 border-gray-400 active:translate-y-1"
               @click="confirmDelete = false"
             >
-              Cancel
+              {{ $t('common.cancel') }}
             </button>
           </div>
         </div>
       </div>
 
       <p class="mt-8 md:mt-12 text-white/50 font-bold uppercase text-[10px] tracking-widest animate-pulse">
-        Press any key or click to begin
+        {{ $t('landing.pressAnyKey') }}
       </p>
     </div>
   </div>

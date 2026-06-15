@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w4_1",
+    "word": "gatinho",
+    "definition": "Um gato pequeno.",
+    "sentence_context": "O gatinho bebe leite.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_2",
+    "word": "caixinha",
+    "definition": "Uma caixa pequena.",
+    "sentence_context": "Guardo anéis na caixinha.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_3",
+    "word": "canção",
+    "definition": "Música para ser cantada.",
+    "sentence_context": "Cantei uma canção de ninar.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_4",
+    "word": "felicidade",
+    "definition": "Estado de quem é feliz.",
+    "sentence_context": "A felicidade está nas pequenas coisas.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_5",
+    "word": "cidade",
+    "definition": "Lugar com muitas casas e ruas.",
+    "sentence_context": "Eu moro numa cidade grande.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_6",
+    "word": "cachorrinho",
+    "definition": "Um cão pequeno.",
+    "sentence_context": "O cachorrinho abanou a cauda.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_7",
+    "word": "portinha",
+    "definition": "Uma porta pequena.",
+    "sentence_context": "O gato passou pela portinha.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_8",
+    "word": "coração",
+    "definition": "Órgão que bombeia o sangue.",
+    "sentence_context": "O meu coração bate forte.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_9",
+    "word": "amizade",
+    "definition": "Sentimento entre amigos.",
+    "sentence_context": "A nossa amizade é eterna.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_10",
+    "word": "unidade",
+    "definition": "Qualidade do que é um.",
+    "sentence_context": "A unidade é importante no grupo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_11",
+    "word": "carrinho",
+    "definition": "Um carro pequeno ou de brincar.",
+    "sentence_context": "O menino brinca com o carrinho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_12",
+    "word": "folhinha",
+    "definition": "Uma folha pequena.",
+    "sentence_context": "Caiu uma folhinha da árvore.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_13",
+    "word": "balão",
+    "definition": "Objeto que flutua no ar.",
+    "sentence_context": "O balão voou para longe.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_14",
+    "word": "bondade",
+    "definition": "Qualidade de quem é bom.",
+    "sentence_context": "A bondade é uma virtude.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_15",
+    "word": "verdade",
+    "definition": "O que é real e sincero.",
+    "sentence_context": "Diga sempre a verdade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_16",
+    "word": "livrinho",
+    "definition": "Um livro pequeno.",
+    "sentence_context": "Li um livrinho de fábulas.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_17",
+    "word": "mesinha",
+    "definition": "Uma mesa pequena.",
+    "sentence_context": "Pus o copo na mesinha.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_18",
+    "word": "avião",
+    "definition": "Meio de transporte que voa.",
+    "sentence_context": "O avião aterrou no aeroporto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_19",
+    "word": "humildade",
+    "definition": "Qualidade de quem é humilde.",
+    "sentence_context": "A humildade é sinal de nobreza.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_20",
+    "word": "faculdade",
+    "definition": "Escola de ensino superior.",
+    "sentence_context": "Meu irmão entrou na faculdade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_21",
+    "word": "copinho",
+    "definition": "Um copo pequeno.",
+    "sentence_context": "Bebi sumo num copinho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_22",
+    "word": "florzinha",
+    "definition": "Uma flor pequena.",
+    "sentence_context": "Colhi uma florzinha no jardim.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_23",
+    "word": "sabão",
+    "definition": "Produto usado para lavar.",
+    "sentence_context": "Lavei as mãos com sabão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_24",
+    "word": "saudade",
+    "definition": "Sentimento de falta de alguém.",
+    "sentence_context": "Sinto saudade da minha avó.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_25",
+    "word": "liberdade",
+    "definition": "Estado de quem é livre.",
+    "sentence_context": "A liberdade é um direito.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_26",
+    "word": "papelzinho",
+    "definition": "Um pedaço de papel pequeno.",
+    "sentence_context": "Escrevi um nome no papelzinho.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_27",
+    "word": "janelinha",
+    "definition": "Uma janela pequena.",
+    "sentence_context": "Olhei pela janelinha do sótão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_28",
+    "word": "limão",
+    "definition": "Fruta cítrica e azeda.",
+    "sentence_context": "Fiz uma limonada com limão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_29",
+    "word": "vaidade",
+    "definition": "Preocupação excessiva com a aparência.",
+    "sentence_context": "A vaidade pode ser perigosa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_30",
+    "word": "dificuldade",
+    "definition": "Qualidade do que é difícil.",
+    "sentence_context": "Superei a dificuldade com esforço.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w4_31",
+    "word": "pezinho",
+    "definition": "Um pé pequeno.",
+    "sentence_context": "O bebé tem um pezinho fofo.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_32",
+    "word": "maoziinha",
+    "definition": "Uma mão pequena.",
+    "sentence_context": "Segurei a mãozinha do menino.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_33",
+    "word": "refeição",
+    "definition": "Ato de comer a horas certas.",
+    "sentence_context": "O almoço é a minha refeição favorita.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_34",
+    "word": "lealdade",
+    "definition": "Qualidade de quem é leal.",
+    "sentence_context": "A lealdade é fundamental entre amigos.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_35",
+    "word": "idade",
+    "definition": "Tempo de vida de uma pessoa.",
+    "sentence_context": "Qual é a tua idade?",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_36",
+    "word": "vozinho",
+    "definition": "Diminutivo carinhoso de avô.",
+    "sentence_context": "O meu vozinho conta histórias.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_37",
+    "word": "bolinha",
+    "definition": "Uma bola pequena.",
+    "sentence_context": "O cão apanhou a bolinha.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_38",
+    "word": "lição",
+    "definition": "Tarefa ou ensinamento.",
+    "sentence_context": "Aprendi a lição de hoje.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_39",
+    "word": "crueldade",
+    "definition": "Qualidade de quem é cruel.",
+    "sentence_context": "A crueldade contra animais é crime.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w4_40",
+    "word": "tranquilidade",
+    "definition": "Estado de calma e paz.",
+    "sentence_context": "Busco tranquilidade no campo.",
+    "difficulty": 2
+  }
+]

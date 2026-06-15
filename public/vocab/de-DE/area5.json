@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w5_1",
+    "word": "besuchen",
+    "definition": "Zu jemandem hingehen.",
+    "sentence_context": "Wir besuchen morgen Oma.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_2",
+    "word": "gewinnen",
+    "definition": "Der Erste beim Spiel sein.",
+    "sentence_context": "Ich möchte das Rennen gewinnen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_3",
+    "word": "erlauben",
+    "definition": "Sagen, dass man etwas darf.",
+    "sentence_context": "Meine Eltern erlauben mir das Fernsehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_4",
+    "word": "vergessen",
+    "definition": "Etwas nicht mehr wissen.",
+    "sentence_context": "Ich habe mein Buch vergessen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_5",
+    "word": "zerstören",
+    "definition": "Etwas kaputt machen.",
+    "sentence_context": "Man darf die Natur nicht zerstören.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_6",
+    "word": "aufstehen",
+    "definition": "Morgens aus dem Bett gehen.",
+    "sentence_context": "Ich muss um sieben Uhr aufstehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_7",
+    "word": "zumachen",
+    "definition": "Eine Tür schließen.",
+    "sentence_context": "Mach bitte das Fenster zu.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_8",
+    "word": "aufmachen",
+    "definition": "Eine Tür öffnen.",
+    "sentence_context": "Kannst du mir die Dose aufmachen?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_9",
+    "word": "ausgehen",
+    "definition": "Abends das Haus verlassen.",
+    "sentence_context": "Heute wollen wir mal ausgehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_10",
+    "word": "anrufen",
+    "definition": "Jemanden am Telefon sprechen.",
+    "sentence_context": "Ich werde dich morgen anrufen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_11",
+    "word": "beginnen",
+    "definition": "Mit einer Sache anfangen.",
+    "sentence_context": "Die Schule wird bald beginnen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_12",
+    "word": "gefallen",
+    "definition": "Wenn man etwas gut findet.",
+    "sentence_context": "Das Kleid wird dir gefallen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_13",
+    "word": "erklären",
+    "definition": "Etwas genau beschreiben.",
+    "sentence_context": "Kannst du mir die Aufgabe erklären?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_14",
+    "word": "verstehen",
+    "definition": "Wissen, was gemeint ist.",
+    "sentence_context": "Ich kann dich gut verstehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_15",
+    "word": "zerreißen",
+    "definition": "Papier in Stücke teilen.",
+    "sentence_context": "Du darfst das Buch nicht zerreißen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_16",
+    "word": "mitkommen",
+    "definition": "Mit einer Person gehen.",
+    "sentence_context": "Willst du mit uns mitkommen?",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_17",
+    "word": "nachsehen",
+    "definition": "In einem Buch suchen.",
+    "sentence_context": "Ich muss im Wörterbuch nachsehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_18",
+    "word": "vorlesen",
+    "definition": "Einen Text laut lesen.",
+    "sentence_context": "Mama wird mir eine Geschichte vorlesen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_19",
+    "word": "wegwerfen",
+    "definition": "In den Müll tun.",
+    "sentence_context": "Wirf den Abfall bitte weg.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_20",
+    "word": "zuhören",
+    "definition": "Genau hinhören.",
+    "sentence_context": "Du musst mir jetzt gut zuhören.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_21",
+    "word": "bekommen",
+    "definition": "Etwas erhalten.",
+    "sentence_context": "Ich bekomme ein Geschenk zum Fest.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_22",
+    "word": "gehören",
+    "definition": "Eigentum von jemandem sein.",
+    "sentence_context": "Das Fahrrad gehört meinem Bruder.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_23",
+    "word": "erzählen",
+    "definition": "Von einem Erlebnis berichten.",
+    "sentence_context": "Erzähl mir mal von deinem Tag.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_24",
+    "word": "verkaufen",
+    "definition": "Etwas gegen Geld geben.",
+    "sentence_context": "Ich möchte meine alten Spielsachen verkaufen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_25",
+    "word": "behalten",
+    "definition": "Etwas nicht weggeben.",
+    "sentence_context": "Diesen Stein möchte ich behalten.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_26",
+    "word": "genießen",
+    "definition": "Etwas sehr schön finden.",
+    "sentence_context": "Wir genießen das gute Wetter.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_27",
+    "word": "erschrecken",
+    "definition": "Plötzlich Angst bekommen.",
+    "sentence_context": "Du darfst mich nicht so erschrecken.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_28",
+    "word": "versprechen",
+    "definition": "Sagen, dass man etwas tut.",
+    "sentence_context": "Ich verspreche dir, dass ich komme.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_29",
+    "word": "bestellen",
+    "definition": "Etwas zum Kaufen aufgeben.",
+    "sentence_context": "Wir bestellen heute eine Pizza.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_30",
+    "word": "gestehen",
+    "definition": "Die Wahrheit sagen.",
+    "sentence_context": "Ich muss dir etwas gestehen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w5_31",
+    "word": "begreifen",
+    "definition": "Etwas ganz genau verstehen.",
+    "sentence_context": "Jetzt kann ich die Sache begreifen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_32",
+    "word": "gelingen",
+    "definition": "Wenn etwas gut klappt.",
+    "sentence_context": "Der Kuchen wird uns gelingen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_33",
+    "word": "erwarten",
+    "definition": "Auf jemanden warten.",
+    "sentence_context": "Wir erwarten heute noch Besuch.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_34",
+    "word": "verändern",
+    "definition": "Etwas anders machen.",
+    "sentence_context": "Du hast dich sehr verändert.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_35",
+    "word": "beschließen",
+    "definition": "Sagen, was man tun will.",
+    "sentence_context": "Wir beschließen, in den Zoo zu gehen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_36",
+    "word": "gehorchen",
+    "definition": "Tun, was man gesagt bekommt.",
+    "sentence_context": "Du musst deinen Eltern gehorchen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_37",
+    "word": "erfinden",
+    "definition": "Etwas ganz Neues machen.",
+    "sentence_context": "Wer hat das Rad erfunden?",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_38",
+    "word": "vertrauen",
+    "definition": "Glauben, dass jemand gut ist.",
+    "sentence_context": "Du kannst deinem Freund vertrauen.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_39",
+    "word": "belohnen",
+    "definition": "Etwas Gutes für Fleiß geben.",
+    "sentence_context": "Wir belohnen dich für deine Hilfe.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w5_40",
+    "word": "gestalten",
+    "definition": "Etwas schön machen.",
+    "sentence_context": "Wir gestalten eine Karte für Oma.",
+    "difficulty": 2
+  }
+]

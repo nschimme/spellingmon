@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w9_1",
+    "word": "объявление",
+    "definition": "Важная информация на стене.",
+    "sentence_context": "Я прочитал объявление о пропаже.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_2",
+    "word": "длинный",
+    "definition": "Имеющий большую протяженность.",
+    "sentence_context": "У жирафа очень длинный язык.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_3",
+    "word": "искусственный",
+    "definition": "Сделанный человеком.",
+    "sentence_context": "В комнате стояла искусственная ёлка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_4",
+    "word": "высокопревосходительство",
+    "definition": "Старинное уважительное обращение.",
+    "sentence_context": "Ваше высокопревосходительство, позвольте доложить.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_5",
+    "word": "здравствуйте",
+    "definition": "Слово приветствия.",
+    "sentence_context": "Здравствуйте, уважаемые гости!",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_6",
+    "word": "до свидания",
+    "definition": "Слова прощания.",
+    "sentence_context": "Скажите всем до свидания.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_7",
+    "word": "благодарность",
+    "definition": "Чувство признательности.",
+    "sentence_context": "Я выражаю вам свою благодарность.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_8",
+    "word": "путешествие",
+    "definition": "Поездка в другие края.",
+    "sentence_context": "Наше путешествие было интересным.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_9",
+    "word": "приключение",
+    "definition": "Необычное событие.",
+    "sentence_context": "Нас ждет новое приключение.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_10",
+    "word": "воображение",
+    "definition": "Способность придумывать.",
+    "sentence_context": "У писателя богатое воображение.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_11",
+    "word": "дружелюбие",
+    "definition": "Свойство доброго человека.",
+    "sentence_context": "Дружелюбие помогает найти друзей.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_12",
+    "word": "ответственность",
+    "definition": "Обязанность отвечать за поступки.",
+    "sentence_context": "Надо нести ответственность за дела.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_13",
+    "word": "самостоятельность",
+    "definition": "Умение делать всё самому.",
+    "sentence_context": "Нужно развивать самостоятельность.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_14",
+    "word": "образование",
+    "definition": "Получение знаний.",
+    "sentence_context": "Образование очень важно в жизни.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_15",
+    "word": "профессия",
+    "definition": "Дело всей жизни.",
+    "sentence_context": "Выбор профессии — трудное дело.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_16",
+    "word": "литература",
+    "definition": "Мир книг и стихов.",
+    "sentence_context": "У нас был урок литературы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_17",
+    "word": "математика",
+    "definition": "Наука о числах.",
+    "sentence_context": "Математика — королева наук.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_18",
+    "word": "география",
+    "definition": "Наука о Земле.",
+    "sentence_context": "На географии мы учили страны.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_19",
+    "word": "биология",
+    "definition": "Наука о живой природе.",
+    "sentence_context": "Мы изучали цветы на биологии.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_20",
+    "word": "астрономия",
+    "definition": "Наука о звездах.",
+    "sentence_context": "В телескоп мы учили астрономию.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_21",
+    "word": "правительство",
+    "definition": "Те, кто управляет страной.",
+    "sentence_context": "Правительство приняло новый закон.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_22",
+    "word": "государство",
+    "definition": "Наша страна.",
+    "sentence_context": "У каждого государства есть флаг.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_23",
+    "word": "конституция",
+    "definition": "Главный закон страны.",
+    "sentence_context": "Конституция защищает наши права.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_24",
+    "word": "демократия",
+    "definition": "Власть народа.",
+    "sentence_context": "В нашей стране строят демократию.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_25",
+    "word": "территория",
+    "definition": "Пространство земли.",
+    "sentence_context": "У леса была большая территория.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_26",
+    "word": "коллектив",
+    "definition": "Группа людей в деле.",
+    "sentence_context": "Наш школьный коллектив очень дружный.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_27",
+    "word": "соревнование",
+    "definition": "Спортивная борьба.",
+    "sentence_context": "Завтра начнется соревнование.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_28",
+    "word": "чемпионат",
+    "definition": "Главный турнир года.",
+    "sentence_context": "Мы смотрим чемпионат по футболу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_29",
+    "word": "победитель",
+    "definition": "Тот, кто занял первое место.",
+    "sentence_context": "Победитель получил золотую медаль.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_30",
+    "word": "участник",
+    "definition": "Тот, кто участвует.",
+    "sentence_context": "Каждый участник получит диплом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w9_31",
+    "word": "совершенство",
+    "definition": "Самый лучший уровень.",
+    "sentence_context": "Он довел свою работу до совершенства.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_32",
+    "word": "вдохновение",
+    "definition": "Желание творить.",
+    "sentence_context": "Поэт ждал своё вдохновение.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_33",
+    "word": "творчество",
+    "definition": "Создание нового.",
+    "sentence_context": "Рисование — это моё творчество.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_34",
+    "word": "искусство",
+    "definition": "Картины, музыка, театр.",
+    "sentence_context": "Мы посетили музей искусства.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_35",
+    "word": "культура",
+    "definition": "Наследие народа.",
+    "sentence_context": "Нужно знать культуру своей страны.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_36",
+    "word": "история",
+    "definition": "События прошлого.",
+    "sentence_context": "У нашего города древняя история.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_37",
+    "word": "традиция",
+    "definition": "Обычаи в семье.",
+    "sentence_context": "У нас есть семейная традиция.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_38",
+    "word": "реликвия",
+    "definition": "Старая святыня.",
+    "sentence_context": "Старый орден — наша реликвия.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_39",
+    "word": "подлинник",
+    "definition": "Настоящая вещь.",
+    "sentence_context": "В музее висел подлинник картины.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w9_40",
+    "word": "экскурсия",
+    "definition": "Поход с рассказом.",
+    "sentence_context": "Мы пошли на экскурсию в замок.",
+    "difficulty": 2
+  }
+]

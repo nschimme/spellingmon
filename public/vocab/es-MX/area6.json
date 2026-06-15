@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w6_1",
+    "word": "hola",
+    "definition": "Saludo amable.",
+    "sentence_context": "¡Hola! ¿Cómo estás?",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_2",
+    "word": "ola",
+    "definition": "Onda de agua en el mar.",
+    "sentence_context": "Me gusta saltar la ola.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_3",
+    "word": "tubo",
+    "definition": "Objeto largo y hueco.",
+    "sentence_context": "El agua pasa por el tubo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_4",
+    "word": "tuvo",
+    "definition": "Del verbo tener.",
+    "sentence_context": "Él tuvo un perro de pequeño.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_5",
+    "word": "haber",
+    "definition": "Existir o ser necesario.",
+    "sentence_context": "Debe haber comida en la nevera.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_6",
+    "word": "a ver",
+    "definition": "Mirar u observar.",
+    "sentence_context": "Voy a ver qué hay en la tele.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_7",
+    "word": "echo",
+    "definition": "Del verbo echar (tirar).",
+    "sentence_context": "Yo echo los papeles a la papelera.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_8",
+    "word": "hecho",
+    "definition": "Del verbo hacer.",
+    "sentence_context": "Ya he hecho los deberes.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_9",
+    "word": "casa",
+    "definition": "Lugar para vivir.",
+    "sentence_context": "Vuelvo a mi casa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_10",
+    "word": "caza",
+    "definition": "Acción de buscar animales.",
+    "sentence_context": "La caza está prohibida aquí.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_11",
+    "word": "vaya",
+    "definition": "Del verbo ir o expresión de sorpresa.",
+    "sentence_context": "Espero que te vaya bien.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_12",
+    "word": "valla",
+    "definition": "Cerca para rodear un sitio.",
+    "sentence_context": "Saltamos la valla del jardín.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_13",
+    "word": "bello",
+    "definition": "Que es muy bonito.",
+    "sentence_context": "Es un paisaje muy bello.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_14",
+    "word": "vello",
+    "definition": "Pelo corto y suave.",
+    "sentence_context": "Tengo vello en los brazos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_15",
+    "word": "hierba",
+    "definition": "Planta pequeña y verde.",
+    "sentence_context": "Las vacas comen hierba.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_16",
+    "word": "hierva",
+    "definition": "Del verbo hervir.",
+    "sentence_context": "Espera a que el agua hierva.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_17",
+    "word": "botar",
+    "definition": "Saltar una pelota.",
+    "sentence_context": "Me gusta botar el balón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_18",
+    "word": "votar",
+    "definition": "Elegir en unas elecciones.",
+    "sentence_context": "Mis padres fueron a votar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_19",
+    "word": "sabia",
+    "definition": "Persona que sabe mucho.",
+    "sentence_context": "Mi abuela es una mujer sabia.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_20",
+    "word": "savia",
+    "definition": "Líquido de las plantas.",
+    "sentence_context": "La savia alimenta al árbol.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_21",
+    "word": "hasta",
+    "definition": "Indica el final de algo.",
+    "sentence_context": "Te espero hasta las cinco.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_22",
+    "word": "asta",
+    "definition": "Cuerno de un animal.",
+    "sentence_context": "El toro tiene un asta rota.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_23",
+    "word": "cocer",
+    "definition": "Cocinar con fuego.",
+    "sentence_context": "Voy a cocer unos huevos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_24",
+    "word": "coser",
+    "definition": "Unir con hilo y aguja.",
+    "sentence_context": "Mi tía sabe coser muy bien.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_25",
+    "word": "rallar",
+    "definition": "Desmenuzar con un rallador.",
+    "sentence_context": "Voy a rallar un poco de queso.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_26",
+    "word": "rayar",
+    "definition": "Hacer rayas en un sitio.",
+    "sentence_context": "No debes rayar la mesa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_27",
+    "word": "halla",
+    "definition": "Del verbo hallar (encontrar).",
+    "sentence_context": "Él halla siempre la solución.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_28",
+    "word": "haya",
+    "definition": "Del verbo haber o tipo de árbol.",
+    "sentence_context": "Espero que haya pastel.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_29",
+    "word": "ablando",
+    "definition": "Del verbo ablandar.",
+    "sentence_context": "Ablando la masa con las manos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_30",
+    "word": "hablando",
+    "definition": "Del verbo hablar.",
+    "sentence_context": "Estamos hablando de la fiesta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w6_31",
+    "word": "as",
+    "definition": "Persona que destaca en algo.",
+    "sentence_context": "Eres un as del fútbol.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_32",
+    "word": "haz",
+    "definition": "Del verbo hacer o conjunto de rayos.",
+    "sentence_context": "Haz la cama, por favor.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_33",
+    "word": "graba",
+    "definition": "Del verbo grabar.",
+    "sentence_context": "Él graba un vídeo con el móvil.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_34",
+    "word": "grava",
+    "definition": "Piedras pequeñas.",
+    "sentence_context": "Caminamos por la grava.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_35",
+    "word": "basta",
+    "definition": "Que es tosca o expresión de parar.",
+    "sentence_context": "¡Basta ya de gritar!",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_36",
+    "word": "vasta",
+    "definition": "Que es muy extensa.",
+    "sentence_context": "La llanura es muy vasta.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_37",
+    "word": "rebelar",
+    "definition": "Sublevarse contra algo.",
+    "sentence_context": "Se quieren rebelar contra el jefe.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_38",
+    "word": "revelar",
+    "definition": "Descubrir un secreto.",
+    "sentence_context": "No me vayas a revelar el final.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_39",
+    "word": "barón",
+    "definition": "Título de nobleza.",
+    "sentence_context": "El barón vive en el castillo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w6_40",
+    "word": "varón",
+    "definition": "Persona de sexo masculino.",
+    "sentence_context": "Tuvo un hijo varón.",
+    "difficulty": 2
+  }
+]

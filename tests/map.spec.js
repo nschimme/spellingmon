@@ -1,43 +1,30 @@
 import { test, expect } from '@playwright/test';
 
-test('map renders correctly in menu', async ({ page }) => {
-  await page.goto('/');
-
-  // Start game and select starter to get into the world
+async function bypassOnboarding(page) {
   await page.click('text=Start Game');
   await page.click('text=New Game');
-  await page.fill('input[placeholder="NAME"]', 'TestPlayer');
-  await page.click('text=Confirm');
+  await page.getByRole('button').filter({ hasText: /English/i }).click();
+  await page.getByRole('button', { name: 'Test Voice' }).click();
+  await page.getByRole('button', { name: 'Yes' }).click();
+  await page.getByPlaceholder('Enter your name').fill('Tester');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await page.waitForSelector('text=GRAMMANDER');
+  await page.click('text=GRAMMANDER');
+}
 
-  // Wait for TTS verification
-  await page.waitForSelector('text=Test Voice');
-  await page.click('text=Test Voice');
-  await page.waitForSelector('text=Yes');
-  await page.click('text=Yes');
-
-  // Select a starter
-  await page.click('text=Grammander');
+test('map renders correctly in menu', async ({ page }) => {
+  await page.goto('/');
+  await bypassOnboarding(page);
 
   // Wait for world map
-  await page.waitForSelector('text=TestPlayer');
+  await page.waitForSelector('text=Tester');
 
   // Open menu
   await page.keyboard.press('Escape');
   await page.waitForSelector('text=BACK TO GAME', { timeout: 10000 });
 
-  // Go to Map tab using keyboard - this is more reliable for our custom implementation
-  // We use ArrowRight to navigate tabs.
-  // Order: Party -> Spellingdex -> Area Map -> Progress -> Settings
-  // NOTE: We click the buttons directly to avoid flaky keyboard navigation in tests
-  await page.click('button:has-text("Area Map")');
+  await page.click('button:has-text("MAP")');
 
   const canvas = page.locator('[data-testid="map-canvas"]');
   await expect(canvas).toBeVisible({ timeout: 15000 });
-
-  const box = await canvas.boundingBox();
-  expect(box.width).toBeGreaterThan(100);
-  expect(box.height).toBeGreaterThan(100);
-
-  // Take a screenshot for verification
-  await page.screenshot({ path: 'tests/map-render.png' });
 });

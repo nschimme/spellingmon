@@ -2,10 +2,10 @@
   <div class="w-full h-full flex flex-col items-center justify-center bg-blue-500 p-4 md:p-8">
     <div class="bg-white border-8 border-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full">
       <h1 class="text-2xl md:text-3xl font-black text-center mb-2 uppercase tracking-tighter text-orange-500 drop-shadow-sm">
-        Spellingmon
+        {{ $t('landing.title') }}
       </h1>
       <h2 class="text-xs md:text-sm font-bold text-center mb-6 md:mb-10 text-gray-600 uppercase">
-        Choose your partner!
+        {{ $t('starter.title') }}
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -35,13 +35,13 @@
             <div class="bg-green-400 h-full w-[80%]" />
           </div>
           <div class="text-[8px] font-bold mt-1 text-gray-400 uppercase">
-            HP: {{ mon.hp }}
+            {{ $t('starter.hp') }}: {{ mon.hp }}
           </div>
         </div>
       </div>
 
       <div class="mt-12 text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest animate-pulse">
-        A new adventure awaits...
+        {{ $t('starter.adventureAwaits') }}
       </div>
     </div>
   </div>

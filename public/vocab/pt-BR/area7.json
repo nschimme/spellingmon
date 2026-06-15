@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w7_1",
+    "word": "show",
+    "definition": "Espetáculo ou concerto.",
+    "sentence_context": "Fui a um show de música ontem.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_2",
+    "word": "marketing",
+    "definition": "Estudo do mercado para vendas.",
+    "sentence_context": "Ele trabalha no setor de marketing.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_3",
+    "word": "basquetebol",
+    "definition": "Desporto de marcar cestas.",
+    "sentence_context": "Gosto de jogar basquetebol.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_4",
+    "word": "futebol",
+    "definition": "Desporto mais popular do mundo.",
+    "sentence_context": "O futebol é a paixão nacional.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_5",
+    "word": "abajur",
+    "definition": "Luminária de mesa.",
+    "sentence_context": "Acendi o abajur para ler.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_6",
+    "word": "sutiã",
+    "definition": "Peça de roupa íntima feminina.",
+    "sentence_context": "Ela comprou um sutiã novo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_7",
+    "word": "deletar",
+    "definition": "Apagar ou remover algo digital.",
+    "sentence_context": "Vou deletar este ficheiro.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_8",
+    "word": "mouse",
+    "definition": "Rato usado no computador.",
+    "sentence_context": "O meu mouse partiu-se.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_9",
+    "word": "site",
+    "definition": "Lugar na internet.",
+    "sentence_context": "Visitei um site de notícias.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_10",
+    "word": "hamburger",
+    "definition": "Sanduíche com carne redonda.",
+    "sentence_context": "Comi um hamburger com batatas.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_11",
+    "word": "jeans",
+    "definition": "Calças de tecido azul forte.",
+    "sentence_context": "Visto jeans quase todos os dias.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_12",
+    "word": "clique",
+    "definition": "Ação de carregar no rato.",
+    "sentence_context": "Dá um clique no botão azul.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_13",
+    "word": "online",
+    "definition": "Ligado à internet.",
+    "sentence_context": "Estou online quase o dia todo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_14",
+    "word": "offline",
+    "definition": "Desligado da rede.",
+    "sentence_context": "Vou ficar offline durante o voo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_15",
+    "word": "e-mail",
+    "definition": "Correio eletrónico.",
+    "sentence_context": "Enviei-te um e-mail importante.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_16",
+    "word": "link",
+    "definition": "Ligação para uma página web.",
+    "sentence_context": "Clica no link para ver o vídeo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_17",
+    "word": "pizza",
+    "definition": "Comida italiana redonda.",
+    "sentence_context": "Pedimos uma pizza para o jantar.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_18",
+    "word": "yakisoba",
+    "definition": "Prato de massa oriental.",
+    "sentence_context": "Gosto de comer yakisoba aos domingos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_19",
+    "word": "kung fu",
+    "definition": "Arte marcial chinesa.",
+    "sentence_context": "Ele pratica kung fu desde criança.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_20",
+    "word": "yoga",
+    "definition": "Prática de exercícios e meditação.",
+    "sentence_context": "A yoga ajuda a relaxar.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_21",
+    "word": "shampoo",
+    "definition": "Produto para lavar o cabelo.",
+    "sentence_context": "Comprei um shampoo de camomila.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_22",
+    "word": "shopping",
+    "definition": "Grande centro comercial.",
+    "sentence_context": "Fui ao shopping comprar sapatos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_23",
+    "word": "notebook",
+    "definition": "Computador portátil.",
+    "sentence_context": "Levei o meu notebook para a escola.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_24",
+    "word": "wi-fi",
+    "definition": "Conexão sem fios à rede.",
+    "sentence_context": "A senha do wi-fi é secreta.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_25",
+    "word": "smartphone",
+    "definition": "Telemóvel inteligente.",
+    "sentence_context": "Perdi o meu smartphone no táxi.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_26",
+    "word": "design",
+    "definition": "Desenho ou projeto visual.",
+    "sentence_context": "O design do carro é moderno.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_27",
+    "word": "layout",
+    "definition": "Esboço ou disposição gráfica.",
+    "sentence_context": "O layout da página ficou bom.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_28",
+    "word": "fitness",
+    "definition": "Atividade física para saúde.",
+    "sentence_context": "Ela frequenta aulas de fitness.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_29",
+    "word": "diet",
+    "definition": "Produto com pouco açúcar.",
+    "sentence_context": "Bebo refrigerante diet.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_30",
+    "word": "delivery",
+    "definition": "Entrega de comida em casa.",
+    "sentence_context": "Pedimos delivery de sushi.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w7_31",
+    "word": "videogame",
+    "definition": "Jogo eletrónico de ecrã.",
+    "sentence_context": "Adoro jogar videogame com amigos.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_32",
+    "word": "cartoon",
+    "definition": "Desenho animado ou caricatura.",
+    "sentence_context": "O cartoon foi muito engraçado.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_33",
+    "word": "fashion",
+    "definition": "Que está na moda.",
+    "sentence_context": "Ela é muito fashion.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_34",
+    "word": "check-in",
+    "definition": "Registo à chegada no hotel.",
+    "sentence_context": "Fizemos o check-in ao meio-dia.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_35",
+    "word": "outdoor",
+    "definition": "Grande cartaz de publicidade na rua.",
+    "sentence_context": "Vi a propaganda num outdoor.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_36",
+    "word": "software",
+    "definition": "Programa de computador.",
+    "sentence_context": "Este software é muito rápido.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_37",
+    "word": "skate",
+    "definition": "Prancha com rodas para deslizar.",
+    "sentence_context": "Ele anda de skate no parque.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_38",
+    "word": "surf",
+    "definition": "Deslizar sobre as ondas do mar.",
+    "sentence_context": "Vou fazer surf amanhã cedo.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_39",
+    "word": "laser",
+    "definition": "Feixe de luz muito forte.",
+    "sentence_context": "A impressora a laser é rápida.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w7_40",
+    "word": "kit",
+    "definition": "Conjunto de peças ou objetos.",
+    "sentence_context": "Tenho um kit de ferramentas.",
+    "difficulty": 2
+  }
+]

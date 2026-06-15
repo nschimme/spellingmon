@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w8_1",
+    "word": "молоко",
+    "definition": "Белый напиток от коровы.",
+    "sentence_context": "Кошка пьет теплое молоко.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_2",
+    "word": "солнце",
+    "definition": "Яркий свет в небе.",
+    "sentence_context": "Летом солнце греет очень сильно.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_3",
+    "word": "честный",
+    "definition": "Тот, кто всегда говорит правду.",
+    "sentence_context": "Мой друг — честный человек.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_4",
+    "word": "собака",
+    "definition": "Верный друг человека.",
+    "sentence_context": "Наша собака громко лает.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_5",
+    "word": "корова",
+    "definition": "Животное, дающее молоко.",
+    "sentence_context": "Корова пасется на лугу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_6",
+    "word": "ворона",
+    "definition": "Черная птица.",
+    "sentence_context": "На дереве сидит старая ворона.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_7",
+    "word": "сорока",
+    "definition": "Белобокая птица.",
+    "sentence_context": "Сорока принесла новость на хвосте.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_8",
+    "word": "воробей",
+    "definition": "Маленькая шустрая птичка.",
+    "sentence_context": "Воробей прыгает по дорожке.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_9",
+    "word": "голова",
+    "definition": "Часть тела, где есть мозг.",
+    "sentence_context": "Надень шапку на голову.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_10",
+    "word": "дорога",
+    "definition": "Путь для машин.",
+    "sentence_context": "Дорога ведет прямо к дому.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_11",
+    "word": "погода",
+    "definition": "Дождь или солнце.",
+    "sentence_context": "Завтра будет хорошая погода.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_12",
+    "word": "работа",
+    "definition": "То, что делают взрослые.",
+    "sentence_context": "Папа уходит на свою работу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_13",
+    "word": "лопата",
+    "definition": "Инструмент для копания земли.",
+    "sentence_context": "Я взял лопату, чтобы копать яму.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_14",
+    "word": "ракета",
+    "definition": "Космический корабль.",
+    "sentence_context": "Ракета летит высоко в небо.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_15",
+    "word": "машина",
+    "definition": "Автомобиль.",
+    "sentence_context": "Машина едет очень быстро.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_16",
+    "word": "колёса",
+    "definition": "Они крутятся у машины.",
+    "sentence_context": "У телеги было четыре колеса.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_17",
+    "word": "берёза",
+    "definition": "Дерево с белым стволом.",
+    "sentence_context": "Берёза растет под окном.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_18",
+    "word": "капуста",
+    "definition": "Овощ для щей.",
+    "sentence_context": "Заяц ест лист капусты.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_19",
+    "word": "огурец",
+    "definition": "Зеленый овощ.",
+    "sentence_context": "В салат порезали свежий огурец.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_20",
+    "word": "морковь",
+    "definition": "Оранжевый овощ.",
+    "sentence_context": "Морковь полезна для зрения.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_21",
+    "word": "горох",
+    "definition": "Мелкие зеленые шарики.",
+    "sentence_context": "Мы сорвали стручок гороха.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_22",
+    "word": "помидор",
+    "definition": "Красный овощ.",
+    "sentence_context": "Помидор вырос в теплице.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_23",
+    "word": "картофель",
+    "definition": "Важный овощ в супе.",
+    "sentence_context": "Надо почистить картофель для супа.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_24",
+    "word": "яблоко",
+    "definition": "Круглый сладкий фрукт.",
+    "sentence_context": "Я съел вкусное красное яблоко.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_25",
+    "word": "ягода",
+    "definition": "Малина или клубника.",
+    "sentence_context": "В лесу поспела лесная ягода.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_26",
+    "word": "грибы",
+    "definition": "Они растут после дождя.",
+    "sentence_context": "Осенью мы собираем грибы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_27",
+    "word": "цветы",
+    "definition": "Красивые растения.",
+    "sentence_context": "На поляне расцвели яркие цветы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_28",
+    "word": "листья",
+    "definition": "Они желтеют осенью.",
+    "sentence_context": "Листья падают на землю.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_29",
+    "word": "трава",
+    "definition": "Она зеленеет весной.",
+    "sentence_context": "На траве сидит кузнечик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_30",
+    "word": "ветка",
+    "definition": "Часть дерева.",
+    "sentence_context": "На ветке сидит синичка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w8_31",
+    "word": "лестница",
+    "definition": "Ступеньки вверх.",
+    "sentence_context": "Мы поднялись по высокой лестнице.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_32",
+    "word": "праздник",
+    "definition": "Веселый день.",
+    "sentence_context": "Скоро наступит наш любимый праздник.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_33",
+    "word": "радость",
+    "definition": "Хорошее настроение.",
+    "sentence_context": "В глазах ребенка была радость.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_34",
+    "word": "грусть",
+    "definition": "Плохое настроение.",
+    "sentence_context": "На душе была легкая грусть.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_35",
+    "word": "здоровье",
+    "definition": "Самое важное для человека.",
+    "sentence_context": "Здоровье нужно беречь с детства.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_36",
+    "word": "счастье",
+    "definition": "Когда всё хорошо.",
+    "sentence_context": "Пусть в вашем доме будет счастье.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_37",
+    "word": "улыбка",
+    "definition": "Радость на лице.",
+    "sentence_context": "Твоя улыбка согревает нас.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_38",
+    "word": "загадка",
+    "definition": "Тайный вопрос.",
+    "sentence_context": "Попробуй отгадать мою загадку.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_39",
+    "word": "сказка",
+    "definition": "Волшебная история.",
+    "sentence_context": "Бабушка прочитала мне сказку.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w8_40",
+    "word": "песня",
+    "definition": "Музыка со словами.",
+    "sentence_context": "Мы запели веселую песню.",
+    "difficulty": 2
+  }
+]

@@ -57,6 +57,7 @@ import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useBattleStore } from '../stores/battleStore';
 import { useVocabStore } from '../stores/vocabStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
@@ -74,6 +75,7 @@ import MobileControls from './map/MobileControls.vue';
 const playerStore = usePlayerStore();
 const battleStore = useBattleStore();
 const vocabStore = useVocabStore();
+const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set();
 
@@ -150,9 +152,10 @@ const playerEmoji = computed(() => {
   return base + (modifiers[tone] || '');
 });
 
-watch(() => playerStore.currentArea, (newArea, oldArea) => {
+watch(() => playerStore.currentArea, async (newArea, oldArea) => {
   const direction = newArea > oldArea ? 'next' : 'prev';
   generateMap(true, direction, playerX, playerY);
+  await vocabStore.loadVocab(newArea, settingsStore.locale);
 
   // Auto-set last spell center on area transition
   if (currentMapData.value?.spellCenter) {
@@ -177,6 +180,10 @@ watch(() => playerStore.position, (newPos) => {
 }, { deep: true });
 
 watch(() => playerStore.mapSeed, () => generateMap(false, null, playerX, playerY));
+
+watch(() => settingsStore.locale, async (newLocale) => {
+  await vocabStore.loadVocab(playerStore.currentArea, newLocale);
+});
 
 const viewportTiles = computed(() => {
   if (!currentMapData.value) return [];
@@ -264,7 +271,7 @@ const checkTriggers = (x, y) => {
 };
 
 const triggerWildBattle = async () => {
-  await vocabStore.loadVocab(playerStore.currentArea);
+  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
   const level = currentMapData.value.levelMap[playerY.value][playerX.value];
   const wildMon = createMon(species, level);
@@ -273,7 +280,7 @@ const triggerWildBattle = async () => {
 };
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
-  await vocabStore.loadVocab(playerStore.currentArea);
+  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
   const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
   const firstMonCfg = party[0];
   const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
@@ -281,7 +288,8 @@ const triggerTrainerBattle = async (trainer, trainerId) => {
   battleStore.startBattle(firstHealthyMon, enemyMon, BATTLE_TYPES.TRAINER, trainer, trainerId, party);
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
   generateMap(false, null, playerX, playerY);
   updateDiscovery(playerX.value, playerY.value);
 

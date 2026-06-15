@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w9_1",
+    "word": "yìmúyíyàng",
+    "spoken_version": "一模一样",
+    "definition": "完全相同。",
+    "sentence_context": "这对双胞胎长得一模一样。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_2",
+    "word": "xíngxíngsèsè",
+    "spoken_version": "形形色色",
+    "definition": "各种各样。",
+    "sentence_context": "大自然里有形形色色的植物。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_3",
+    "word": "zìxiāngmóudùn",
+    "spoken_version": "自相矛盾",
+    "definition": "前后不一致。",
+    "sentence_context": "你的话听起来自相矛盾。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_4",
+    "word": "huàshébāntiān",
+    "spoken_version": "画蛇添足",
+    "definition": "多此一举。",
+    "sentence_context": "写文章要简洁，不要画蛇添足。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_5",
+    "word": "báyáizhùzhǎng",
+    "spoken_version": "拔苗助长",
+    "definition": "急于求成。",
+    "sentence_context": "教育孩子不能拔苗助长。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_6",
+    "word": "jǐnjiǎoyīshān",
+    "spoken_version": "仅角一山",
+    "definition": "比喻部分。",
+    "sentence_context": "我们要看全貌。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_7",
+    "word": "huàlóngdiǎnjīng",
+    "spoken_version": "画龙点睛",
+    "definition": "最关键的一笔。",
+    "sentence_context": "这句话起到了画龙点睛的作用。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_8",
+    "word": "mángrénmōxiàng",
+    "spoken_version": "盲人摸象",
+    "definition": "片面看问题。",
+    "sentence_context": "不能像盲人摸象那样认识世界。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_9",
+    "word": "jǐngdǐzhīwā",
+    "spoken_version": "井底之蛙",
+    "definition": "见识短浅。",
+    "sentence_context": "我们要多出去看看，不做井底之蛙。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_10",
+    "word": "shǒu-zhū-dài-tù",
+    "spoken_version": "守株待兔",
+    "definition": "死守陈规。",
+    "sentence_context": "如果不努力，只会守株待兔，是不会成功的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_11",
+    "word": "wáng-yáng-bǔ-láo",
+    "spoken_version": "亡羊补牢",
+    "definition": "出错后补救。",
+    "sentence_context": "虽然犯了错，但亡羊补牢还不算晚。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_12",
+    "word": "yī-jiàn-zhōng-qíng",
+    "spoken_version": "一见钟情",
+    "definition": "第一次见到就喜欢。",
+    "sentence_context": "他们俩是一见钟情。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_13",
+    "word": "yī-xīn-yī-yì",
+    "spoken_version": "一心一意",
+    "definition": "非常专心。",
+    "sentence_context": "我们要一心一意地学习。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_14",
+    "word": "sān-xīn-èr-yì",
+    "spoken_version": "三心二意",
+    "definition": "不专心。",
+    "sentence_context": "做事不能三心二意。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_15",
+    "word": "wǔ-yán-liù-sè",
+    "spoken_version": "五颜六色",
+    "definition": "颜色很多。",
+    "sentence_context": "花园里开满了五颜六色的花。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_16",
+    "word": "qiān-fāng-bǎi-jì",
+    "spoken_version": "千方百计",
+    "definition": "想尽办法。",
+    "sentence_context": "他千方百计地想完成任务。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_17",
+    "word": "wàn-zǐ-qiān-hóng",
+    "spoken_version": "万紫千红",
+    "definition": "形容百花齐放。",
+    "sentence_context": "春天到了，大地万紫千红。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_18",
+    "word": "qī-shàng-bā-xià",
+    "spoken_version": "七上八下",
+    "definition": "心里不安。",
+    "sentence_context": "我的心里七上八下的，很紧张。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_19",
+    "word": "shí-quán-shí-měi",
+    "spoken_version": "十全十美",
+    "definition": "非常完美。",
+    "sentence_context": "世界上没有十全十美的东西。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_20",
+    "word": "zhī-jǐ-zhī-bǐ",
+    "spoken_version": "知己知彼",
+    "definition": "了解双方。",
+    "sentence_context": "知己知彼，才能百战百胜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_21",
+    "word": "bàn-tú-ér-fèi",
+    "spoken_version": "半途而废",
+    "definition": "做事没做完就停止。",
+    "sentence_context": "我们不能半途而废。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_22",
+    "word": "duì-niú-tán-qín",
+    "spoken_version": "对牛弹琴",
+    "definition": "白费力气。",
+    "sentence_context": "对他讲道理简直是对牛弹琴。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_23",
+    "word": "jīng-pí-lì-jié",
+    "spoken_version": "精疲力竭",
+    "definition": "非常疲累。",
+    "sentence_context": "跑完马拉松，他精疲力竭了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_24",
+    "word": "yí-míng-jīng-rén",
+    "spoken_version": "一鸣惊人",
+    "definition": "平时没名声，一下子出色。",
+    "sentence_context": "他的表现真是一鸣惊人。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_25",
+    "word": "huò-zhēn-jià-shí",
+    "spoken_version": "货真价实",
+    "definition": "真正的，不虚假。",
+    "sentence_context": "这家店的东西货真价实。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_26",
+    "word": "fēng-hé-rì-lì",
+    "spoken_version": "风和日丽",
+    "definition": "天气很好。",
+    "sentence_context": "今天风和日丽，适合郊游。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_27",
+    "word": "niǎo-yǔ-huā-xiāng",
+    "spoken_version": "鸟语花香",
+    "definition": "风景优美。",
+    "sentence_context": "春天的小树林鸟语花香。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_28",
+    "word": "míng-shèng-gǔ-jì",
+    "spoken_version": "名胜古迹",
+    "definition": "著名的古迹。",
+    "sentence_context": "北京有很多名胜古迹。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_29",
+    "word": "huān-tiān-xǐ-dì",
+    "spoken_version": "欢天喜地",
+    "definition": "非常高兴。",
+    "sentence_context": "大家欢天喜地过新年。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_30",
+    "word": "yī-fān-fēng-shùn",
+    "spoken_version": "一帆风顺",
+    "definition": "非常顺利。",
+    "sentence_context": "祝你这次旅行一帆风顺。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w9_31",
+    "word": "zhòng-zhì-chéng-chéng",
+    "spoken_version": "众志成城",
+    "definition": "团结一心。",
+    "sentence_context": "大家众志成城，战胜了困难。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_32",
+    "word": "yī-wǔ-yī-shí",
+    "spoken_version": "一五一十",
+    "definition": "详细地说明。",
+    "sentence_context": "他把事情一五一十地告诉了我。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_33",
+    "word": "shén-cǎi-yì-yì",
+    "spoken_version": "神采奕奕",
+    "definition": "精神很好。",
+    "sentence_context": "爷爷虽然年纪大了，但依然神采奕奕。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_34",
+    "word": "míng-mù-zhāng-dǎn",
+    "spoken_version": "明目张胆",
+    "definition": "毫无顾忌地做坏事。",
+    "sentence_context": "他竟然明目张胆地偷东西。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_35",
+    "word": "yī-jǔ-liǎng-dé",
+    "spoken_version": "一举两得",
+    "definition": "做一件事得两样好处。",
+    "sentence_context": "骑车既环保又健身，真是一举两得。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_36",
+    "word": "tóng-gān-gòng-kǔ",
+    "spoken_version": "同甘共苦",
+    "definition": "一起吃苦享乐。",
+    "sentence_context": "好朋友要同甘共苦。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_37",
+    "word": "jìng-jìng-yè-yè",
+    "spoken_version": "兢兢业业",
+    "definition": "做事谨慎认真。",
+    "sentence_context": "老师工作兢兢业业。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_38",
+    "word": "zì-shí-qí-guǒ",
+    "spoken_version": "自食其果",
+    "definition": "自己做坏事自己受。",
+    "sentence_context": "他这就是自食其果。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_39",
+    "word": "xiào-zhú-yán-kāi",
+    "spoken_version": "笑逐颜开",
+    "definition": "笑容满面。",
+    "sentence_context": "听到好消息，大家都笑逐颜开。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w9_40",
+    "word": "mǎn-miàn-chūn-fēng",
+    "spoken_version": "满面春风",
+    "definition": "形容心情愉悦。",
+    "sentence_context": "他满面春风地走了进来。",
+    "difficulty": 2
+  }
+]

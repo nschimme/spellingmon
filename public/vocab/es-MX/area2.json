@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w2_1",
+    "word": "tren",
+    "definition": "Vehículo que va por vías.",
+    "sentence_context": "El tren llega a la estación.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_2",
+    "word": "blusa",
+    "definition": "Prenda de vestir para el torso.",
+    "sentence_context": "Mi blusa es de seda.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_3",
+    "word": "clara",
+    "definition": "Parte blanca del huevo.",
+    "sentence_context": "La clara de huevo tiene proteínas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_4",
+    "word": "brazo",
+    "definition": "Parte del cuerpo que va del hombro a la mano.",
+    "sentence_context": "Me duele el brazo izquierdo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_5",
+    "word": "flaca",
+    "definition": "Persona que tiene poca grasa.",
+    "sentence_context": "Ella es muy flaca.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_6",
+    "word": "prado",
+    "definition": "Campo con hierba verde.",
+    "sentence_context": "Las vacas pastan en el prado.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_7",
+    "word": "fruta",
+    "definition": "Alimento dulce que crece en árboles.",
+    "sentence_context": "La manzana es una fruta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_8",
+    "word": "clavo",
+    "definition": "Pieza metálica para sujetar.",
+    "sentence_context": "Martillé un clavo en la pared.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_9",
+    "word": "grano",
+    "definition": "Semilla pequeña de cereales.",
+    "sentence_context": "El pollo come grano de maíz.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_10",
+    "word": "plato",
+    "definition": "Recipiente para comer.",
+    "sentence_context": "Puse la comida en el plato.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_11",
+    "word": "freno",
+    "definition": "Dispositivo para parar un vehículo.",
+    "sentence_context": "Usa el freno de la bicicleta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_12",
+    "word": "globo",
+    "definition": "Objeto lleno de aire que flota.",
+    "sentence_context": "El globo se escapó al cielo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_13",
+    "word": "crema",
+    "definition": "Sustancia suave para la piel.",
+    "sentence_context": "Me puse crema en la cara.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_14",
+    "word": "trigo",
+    "definition": "Cereal para hacer harina.",
+    "sentence_context": "El trigo es de color dorado.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_15",
+    "word": "bruma",
+    "definition": "Niebla poco espesa.",
+    "sentence_context": "Había bruma en la montaña.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_16",
+    "word": "clima",
+    "definition": "Tiempo atmosférico de un lugar.",
+    "sentence_context": "El clima es tropical aquí.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_17",
+    "word": "truco",
+    "definition": "Acción para engañar o divertir.",
+    "sentence_context": "El mago hizo un truco.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_18",
+    "word": "pluma",
+    "definition": "Parte que cubre el cuerpo de las aves.",
+    "sentence_context": "La pluma es muy ligera.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_19",
+    "word": "gruta",
+    "definition": "Cueva natural.",
+    "sentence_context": "Entramos en la gruta oscura.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_20",
+    "word": "preso",
+    "definition": "Persona que está en la cárcel.",
+    "sentence_context": "El preso sueña con libertad.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_21",
+    "word": "drama",
+    "definition": "Obra de teatro triste.",
+    "sentence_context": "Vimos un drama muy emotivo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_22",
+    "word": "flota",
+    "definition": "Grupo de barcos.",
+    "sentence_context": "La flota zarpó al amanecer.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_23",
+    "word": "fresa",
+    "definition": "Fruta pequeña y roja.",
+    "sentence_context": "Me gusta el batido de fresa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_24",
+    "word": "grava",
+    "definition": "Piedras pequeñas para caminos.",
+    "sentence_context": "Caminamos sobre la grava.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_25",
+    "word": "plano",
+    "definition": "Dibujo de una casa o ciudad.",
+    "sentence_context": "Miramos el plano del metro.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_26",
+    "word": "trato",
+    "definition": "Acuerdo entre personas.",
+    "sentence_context": "Hicimos un trato justo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_27",
+    "word": "broma",
+    "definition": "Chiste para hacer reír.",
+    "sentence_context": "Me hizo una broma pesada.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_28",
+    "word": "frasco",
+    "definition": "Recipiente de vidrio.",
+    "sentence_context": "La mermelada está en el frasco.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_29",
+    "word": "grillo",
+    "definition": "Insecto que hace ruido de noche.",
+    "sentence_context": "El grillo canta en el jardín.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_30",
+    "word": "plaza",
+    "definition": "Lugar abierto en la ciudad.",
+    "sentence_context": "Jugamos en la plaza central.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w2_31",
+    "word": "flecha",
+    "definition": "Proyectil que se lanza con arco.",
+    "sentence_context": "La flecha dio en el blanco.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_32",
+    "word": "profe",
+    "definition": "Persona que enseña en clase.",
+    "sentence_context": "Mi profe es muy bueno.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_33",
+    "word": "brisa",
+    "definition": "Viento suave.",
+    "sentence_context": "La brisa del mar es fresca.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_34",
+    "word": "clase",
+    "definition": "Grupo de alumnos en la escuela.",
+    "sentence_context": "Mañana no hay clase.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_35",
+    "word": "prisa",
+    "definition": "Rapidez para hacer algo.",
+    "sentence_context": "No tengas prisa por terminar.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_36",
+    "word": "bravo",
+    "definition": "Persona valiente o animal feroz.",
+    "sentence_context": "El perro es muy bravo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_37",
+    "word": "frito",
+    "definition": "Alimento cocinado en aceite.",
+    "sentence_context": "El huevo frito está rico.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_38",
+    "word": "gramo",
+    "definition": "Unidad de peso pequeña.",
+    "sentence_context": "Pesa solo un gramo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_39",
+    "word": "playa",
+    "definition": "Lugar con arena junto al mar.",
+    "sentence_context": "Fuimos a la playa en verano.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w2_40",
+    "word": "traje",
+    "definition": "Ropa elegante.",
+    "sentence_context": "Me puse mi mejor traje.",
+    "difficulty": 2
+  }
+]

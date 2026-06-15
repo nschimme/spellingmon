@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w1_1",
+    "word": "mā",
+    "spoken_version": "妈",
+    "definition": "妈妈的简称。",
+    "sentence_context": "我爱我的妈。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_2",
+    "word": "bā",
+    "spoken_version": "八",
+    "definition": "数字，比七大一。",
+    "sentence_context": "桌上有八个苹果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_3",
+    "word": "bō",
+    "spoken_version": "波",
+    "definition": "水面上的起伏。",
+    "sentence_context": "湖面上起了微波。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_4",
+    "word": "fā",
+    "spoken_version": "发",
+    "definition": "头发或者发出。",
+    "sentence_context": "他的头发很黑。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_5",
+    "word": "tī",
+    "spoken_version": "踢",
+    "definition": "用脚触碰。",
+    "sentence_context": "我们一起踢足球。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_6",
+    "word": "lū",
+    "spoken_version": "噜",
+    "definition": "形容声音。",
+    "sentence_context": "小猪发出噜噜声。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_7",
+    "word": "dā",
+    "spoken_version": "搭",
+    "definition": "配合或者建立。",
+    "sentence_context": "我们要搭积木。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_8",
+    "word": "kā",
+    "spoken_version": "咖",
+    "definition": "咖啡的简称。",
+    "sentence_context": "爸爸在喝咖啡。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_9",
+    "word": "shā",
+    "spoken_version": "沙",
+    "definition": "细小的石粒。",
+    "sentence_context": "海滩上有很多沙。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_10",
+    "word": "tā",
+    "spoken_version": "他",
+    "definition": "指代男性。",
+    "sentence_context": "他是我的好朋友。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_11",
+    "word": "yī",
+    "spoken_version": "一",
+    "definition": "数字的开始。",
+    "sentence_context": "一加一等于二。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_12",
+    "word": "pū",
+    "spoken_version": "铺",
+    "definition": "展开放置。",
+    "sentence_context": "妈妈在铺床单。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_13",
+    "word": "shū",
+    "spoken_version": "书",
+    "definition": "阅读的资料。",
+    "sentence_context": "我喜欢看故事书。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_14",
+    "word": "gū",
+    "spoken_version": "姑",
+    "definition": "爸爸的姐妹。",
+    "sentence_context": "姑姑送我一个玩具。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_15",
+    "word": "pā",
+    "spoken_version": "趴",
+    "definition": "肚子朝下躺着。",
+    "sentence_context": "小猫趴在窗台上。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_16",
+    "word": "tā",
+    "spoken_version": "它",
+    "definition": "指代事物或动物。",
+    "sentence_context": "它是一只小花狗。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_17",
+    "word": "mū",
+    "spoken_version": "哞",
+    "definition": "牛的叫声。",
+    "sentence_context": "大黄牛哞哞叫。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_18",
+    "word": "kū",
+    "spoken_version": "哭",
+    "definition": "伤心流泪。",
+    "sentence_context": "小妹妹别哭了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_19",
+    "word": "cā",
+    "spoken_version": "擦",
+    "definition": "清洁动作。",
+    "sentence_context": "请帮我擦干净桌子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_20",
+    "word": "sā",
+    "spoken_version": "撒",
+    "definition": "散布出去。",
+    "sentence_context": "爷爷在撒种子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_21",
+    "word": "ā",
+    "spoken_version": "啊",
+    "definition": "语气词。",
+    "sentence_context": "啊，这里的风景真美！",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_22",
+    "word": "ō",
+    "spoken_version": "噢",
+    "definition": "表示明白。",
+    "sentence_context": "噢，我知道了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_23",
+    "word": "ē",
+    "spoken_version": "婀",
+    "definition": "形容姿态。",
+    "sentence_context": "垂柳姿态婀娜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_24",
+    "word": "jī",
+    "spoken_version": "鸡",
+    "definition": "一种家禽。",
+    "sentence_context": "公鸡早起打鸣。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_25",
+    "word": "qī",
+    "spoken_version": "七",
+    "definition": "数字，六加一。",
+    "sentence_context": "一周有七天。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_26",
+    "word": "xī",
+    "spoken_version": "西",
+    "definition": "方位词。",
+    "sentence_context": "太阳从西边落下。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_27",
+    "word": "zhī",
+    "spoken_version": "支",
+    "definition": "量词。",
+    "sentence_context": "我有一支铅笔。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_28",
+    "word": "chī",
+    "spoken_version": "吃",
+    "definition": "摄入食物。",
+    "sentence_context": "我们要好好吃饭。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_29",
+    "word": "shī",
+    "spoken_version": "师",
+    "definition": "老师的简称。",
+    "sentence_context": "老师教我们知识。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_30",
+    "word": "zī",
+    "spoken_version": "姿",
+    "definition": "样子的统称。",
+    "sentence_context": "她的坐姿很端正。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w1_31",
+    "word": "cī",
+    "spoken_version": "呲",
+    "definition": "形容声音或动作。",
+    "sentence_context": "水呲地冒了出来。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_32",
+    "word": "sī",
+    "spoken_version": "嘶",
+    "definition": "马的叫声。",
+    "sentence_context": "骏马长嘶一声。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_33",
+    "word": "dī",
+    "spoken_version": "滴",
+    "definition": "液体的量词。",
+    "sentence_context": "流下了一滴汗水。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_34",
+    "word": "lī",
+    "spoken_version": "哩",
+    "definition": "语气词。",
+    "sentence_context": "这里好美哩。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_35",
+    "word": "mī",
+    "spoken_version": "眯",
+    "definition": "眼睛合上一点。",
+    "sentence_context": "他眯着眼看太阳。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_36",
+    "word": "nī",
+    "spoken_version": "妮",
+    "definition": "小女孩的称呼。",
+    "sentence_context": "这妮子真可爱。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_37",
+    "word": "pī",
+    "spoken_version": "批",
+    "definition": "量词或处理。",
+    "sentence_context": "老师在批改作业。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_38",
+    "word": "tī",
+    "spoken_version": "梯",
+    "definition": "上下用的设备。",
+    "sentence_context": "我们要爬楼梯。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_39",
+    "word": "wū",
+    "spoken_version": "屋",
+    "definition": "住人的地方。",
+    "sentence_context": "屋子里很温暖。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w1_40",
+    "word": "yī",
+    "spoken_version": "衣",
+    "definition": "穿在身上的。",
+    "sentence_context": "天冷要多穿衣。",
+    "difficulty": 2
+  }
+]

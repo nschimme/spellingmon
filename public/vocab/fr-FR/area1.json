@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w1_1",
+    "word": "sac",
+    "definition": "Objet pour porter des choses.",
+    "sentence_context": "J'ai mis mes livres dans mon sac.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_2",
+    "word": "papa",
+    "definition": "Le père de famille.",
+    "sentence_context": "Mon papa est très gentil.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_3",
+    "word": "moto",
+    "definition": "Véhicule à deux roues avec un moteur.",
+    "sentence_context": "La moto roule vite sur la route.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_4",
+    "word": "bus",
+    "definition": "Gros véhicule pour transporter des gens.",
+    "sentence_context": "Je prends le bus pour aller à l'école.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_5",
+    "word": "vélo",
+    "definition": "Véhicule à deux roues que l'on fait avancer avec les pieds.",
+    "sentence_context": "Je fais du vélo dans le parc.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_6",
+    "word": "tulipe",
+    "definition": "Une jolie fleur de printemps.",
+    "sentence_context": "Il y a une tulipe rouge dans le jardin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_7",
+    "word": "bol",
+    "definition": "Petit récipient pour manger ou boire.",
+    "sentence_context": "Je mange mon chocolat dans un bol.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_8",
+    "word": "chat",
+    "definition": "Petit animal domestique qui fait miaou.",
+    "sentence_context": "Le chat dort sur le tapis.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_9",
+    "word": "lit",
+    "definition": "Meuble pour dormir.",
+    "sentence_context": "C'est l'heure d'aller au lit.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_10",
+    "word": "mur",
+    "definition": "Paroi d'une maison.",
+    "sentence_context": "Le mur est peint en blanc.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_11",
+    "word": "riz",
+    "definition": "Petit grain blanc que l'on mange.",
+    "sentence_context": "J'aime manger du riz avec du poulet.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_12",
+    "word": "sel",
+    "definition": "Petit grain blanc pour donner du goût.",
+    "sentence_context": "Mets un peu de sel sur les frites.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_13",
+    "word": "sol",
+    "definition": "La surface sur laquelle on marche.",
+    "sentence_context": "Il y a un jouet sur le sol.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_14",
+    "word": "tomate",
+    "definition": "Fruit rouge que l'on mange en salade.",
+    "sentence_context": "La tomate est bien mûre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_15",
+    "word": "vase",
+    "definition": "Objet pour mettre des fleurs.",
+    "sentence_context": "Mets les fleurs dans le vase.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_16",
+    "word": "ami",
+    "definition": "Une personne que l'on aime bien.",
+    "sentence_context": "Mon ami s'appelle Thomas.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_17",
+    "word": "âne",
+    "definition": "Animal qui ressemble à un petit cheval.",
+    "sentence_context": "L'âne porte des paniers.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_18",
+    "word": "été",
+    "definition": "La saison la plus chaude.",
+    "sentence_context": "En été, nous allons à la plage.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_19",
+    "word": "île",
+    "definition": "Terre entourée d'eau.",
+    "sentence_context": "Nous avons visité une île déserte.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_20",
+    "word": "lac",
+    "definition": "Grande étendue d'eau douce.",
+    "sentence_context": "On peut nager dans le lac.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_21",
+    "word": "mer",
+    "definition": "Grande étendue d'eau salée.",
+    "sentence_context": "Le bateau navigue sur la mer.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_22",
+    "word": "nez",
+    "definition": "Partie du visage pour sentir.",
+    "sentence_context": "J'ai le nez bouché.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_23",
+    "word": "os",
+    "definition": "Partie dure du corps.",
+    "sentence_context": "Le chien ronge un os.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_24",
+    "word": "pot",
+    "definition": "Récipient pour mettre de la confiture.",
+    "sentence_context": "Le pot est plein de miel.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_25",
+    "word": "rue",
+    "definition": "Chemin entre les maisons.",
+    "sentence_context": "La voiture roule dans la rue.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_26",
+    "word": "thé",
+    "definition": "Boisson faite avec des feuilles.",
+    "sentence_context": "Maman boit un thé chaud.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_27",
+    "word": "vis",
+    "definition": "Petit objet en métal pour fixer.",
+    "sentence_context": "Il faut serrer la vis.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_28",
+    "word": "zoo",
+    "definition": "Lieu où l'on voit des animaux sauvages.",
+    "sentence_context": "Nous sommes allés au zoo dimanche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_29",
+    "word": "bal",
+    "definition": "Fête où l'on danse.",
+    "sentence_context": "Il y a un bal au village ce soir.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_30",
+    "word": "café",
+    "definition": "Graine ou boisson noire.",
+    "sentence_context": "Le café sent très bon.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w1_31",
+    "word": "date",
+    "definition": "Jour, mois et année.",
+    "sentence_context": "Quelle est la date d'aujourd'hui ?",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_32",
+    "word": "gare",
+    "definition": "Lieu où s'arrêtent les trains.",
+    "sentence_context": "Le train arrive à la gare.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_33",
+    "word": "jupe",
+    "definition": "Vêtement de fille.",
+    "sentence_context": "Ma jupe est bleue.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_34",
+    "word": "lune",
+    "definition": "Astre blanc dans le ciel de nuit.",
+    "sentence_context": "La lune brille très fort.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_35",
+    "word": "midi",
+    "definition": "Le milieu de la journée.",
+    "sentence_context": "Il est midi, on va manger.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_36",
+    "word": "note",
+    "definition": "Petit écrit ou signe de musique.",
+    "sentence_context": "J'ai écrit une note pour maman.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_37",
+    "word": "pile",
+    "definition": "Petit objet qui donne de l'électricité.",
+    "sentence_context": "Il faut changer la pile.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_38",
+    "word": "robe",
+    "definition": "Vêtement de fille d'une seule pièce.",
+    "sentence_context": "Elle porte une jolie robe rose.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_39",
+    "word": "table",
+    "definition": "Meuble pour manger ou travailler.",
+    "sentence_context": "Mets le couvert sur la table.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w1_40",
+    "word": "usine",
+    "definition": "Lieu où l'on fabrique des objets.",
+    "sentence_context": "Mon oncle travaille à l'usine.",
+    "difficulty": 2
+  }
+]

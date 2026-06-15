@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w1_1",
+    "word": "sol",
+    "definition": "La estrella que nos da luz y calor.",
+    "sentence_context": "El sol sale por la mañana.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_2",
+    "word": "pan",
+    "definition": "Alimento hecho con harina.",
+    "sentence_context": "Comí un trozo de pan.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_3",
+    "word": "mesa",
+    "definition": "Mueble con cuatro patas.",
+    "sentence_context": "Puse el plato en la mesa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_4",
+    "word": "pato",
+    "definition": "Ave que nada en el agua.",
+    "sentence_context": "El pato hace cua-cua.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_5",
+    "word": "luna",
+    "definition": "Satélite natural de la Tierra.",
+    "sentence_context": "La luna brilla de noche.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_6",
+    "word": "dedo",
+    "definition": "Parte de la mano.",
+    "sentence_context": "Tengo cinco dedos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_7",
+    "word": "casa",
+    "definition": "Lugar donde vivimos.",
+    "sentence_context": "Mi casa es de color blanco.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_8",
+    "word": "gato",
+    "definition": "Animal pequeño que maúlla.",
+    "sentence_context": "El gato duerme en el sofá.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_9",
+    "word": "mano",
+    "definition": "Parte del cuerpo al final del brazo.",
+    "sentence_context": "Lávate la mano antes de comer.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_10",
+    "word": "pelo",
+    "definition": "Lo que crece en la cabeza.",
+    "sentence_context": "Ella tiene el pelo largo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_11",
+    "word": "cama",
+    "definition": "Mueble para dormir.",
+    "sentence_context": "Me voy a la cama.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_12",
+    "word": "bota",
+    "definition": "Calzado que cubre el pie.",
+    "sentence_context": "Me puse la bota derecha.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_13",
+    "word": "nena",
+    "definition": "Una niña pequeña.",
+    "sentence_context": "La nena juega con su muñeca.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_14",
+    "word": "lobo",
+    "definition": "Animal salvaje parecido al perro.",
+    "sentence_context": "El lobo aúlla a la luna.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_15",
+    "word": "dado",
+    "definition": "Cubo con puntos para jugar.",
+    "sentence_context": "Tira el dado para empezar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_16",
+    "word": "masa",
+    "definition": "Mezcla para hacer pan.",
+    "sentence_context": "Mamá amasa la masa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_17",
+    "word": "nido",
+    "definition": "Casa de los pájaros.",
+    "sentence_context": "Hay un huevo en el nido.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_18",
+    "word": "sopa",
+    "definition": "Comida líquida y caliente.",
+    "sentence_context": "Me gusta la sopa de verduras.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_19",
+    "word": "tela",
+    "definition": "Material para hacer ropa.",
+    "sentence_context": "La tela es de algodón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_20",
+    "word": "bola",
+    "definition": "Objeto redondo.",
+    "sentence_context": "La bola rueda por el suelo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_21",
+    "word": "palo",
+    "definition": "Trozo de madera largo.",
+    "sentence_context": "El perro trae el palo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_22",
+    "word": "lupa",
+    "definition": "Lente para ver cosas pequeñas.",
+    "sentence_context": "Uso la lupa para ver la hormiga.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_23",
+    "word": "mapa",
+    "definition": "Dibujo de un lugar.",
+    "sentence_context": "Miramos el mapa del tesoro.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_24",
+    "word": "moto",
+    "definition": "Vehículo de dos ruedas.",
+    "sentence_context": "Papá viaja en moto.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_25",
+    "word": "ruta",
+    "definition": "Camino para llegar a un sitio.",
+    "sentence_context": "Seguimos la ruta indicada.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_26",
+    "word": "nota",
+    "definition": "Escrito corto.",
+    "sentence_context": "Escribí una nota para mamá.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_27",
+    "word": "nudo",
+    "definition": "Lazo que se aprieta.",
+    "sentence_context": "Haz un nudo en la cuerda.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_28",
+    "word": "lodo",
+    "definition": "Tierra mojada.",
+    "sentence_context": "Me manché con el lodo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_29",
+    "word": "lila",
+    "definition": "Color morado claro.",
+    "sentence_context": "Mi flor favorita es la lila.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_30",
+    "word": "dama",
+    "definition": "Señora elegante.",
+    "sentence_context": "La dama camina por el parque.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w1_31",
+    "word": "nene",
+    "definition": "Un niño pequeño.",
+    "sentence_context": "El nene tiene sueño.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_32",
+    "word": "suma",
+    "definition": "Operación de añadir.",
+    "sentence_context": "Dos más dos es una suma.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_33",
+    "word": "mulo",
+    "definition": "Animal de carga.",
+    "sentence_context": "El mulo lleva las cajas.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_34",
+    "word": "liso",
+    "definition": "Que no tiene arrugas.",
+    "sentence_context": "El papel está liso.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_35",
+    "word": "tiza",
+    "definition": "Barrita blanca para escribir.",
+    "sentence_context": "Escribo en la pizarra con tiza.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_36",
+    "word": "pito",
+    "definition": "Silbato pequeño.",
+    "sentence_context": "El árbitro toca el pito.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_37",
+    "word": "lata",
+    "definition": "Recipiente de metal.",
+    "sentence_context": "La lata de refresco está fría.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_38",
+    "word": "pisa",
+    "definition": "Poner el pie sobre algo.",
+    "sentence_context": "No pisa el césped.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_39",
+    "word": "pasa",
+    "definition": "Uva seca.",
+    "sentence_context": "Me gusta el helado de pasa.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w1_40",
+    "word": "peso",
+    "definition": "Lo que pesa algo.",
+    "sentence_context": "La pesa tiene mucho peso.",
+    "difficulty": 2
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w2_1",
+    "word": "bái",
+    "spoken_version": "白",
+    "definition": "雪的颜色。",
+    "sentence_context": "云朵是白色的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_2",
+    "word": "mǎo",
+    "spoken_version": "卯",
+    "definition": "地支之一。",
+    "sentence_context": "现在是卯时。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_3",
+    "word": "lèi",
+    "spoken_version": "累",
+    "definition": "身体疲倦。",
+    "sentence_context": "跑完步我觉得很累。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_4",
+    "word": "pào",
+    "spoken_version": "泡",
+    "definition": "水里的气泡。",
+    "sentence_context": "鱼儿在吐泡泡。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_5",
+    "word": "hǎi",
+    "spoken_version": "海",
+    "definition": "广阔的水域。",
+    "sentence_context": "大海是蓝色的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_6",
+    "word": "tái",
+    "spoken_version": "台",
+    "definition": "高出的平台。",
+    "sentence_context": "他在台上表演。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_7",
+    "word": "mài",
+    "spoken_version": "卖",
+    "definition": "交换金钱。",
+    "sentence_context": "超市在卖水果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_8",
+    "word": "kài",
+    "spoken_version": "慨",
+    "definition": "情绪激动。",
+    "sentence_context": "他慷慨激昂地演讲。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_9",
+    "word": "nǎi",
+    "spoken_version": "奶",
+    "definition": "奶奶的简称。",
+    "sentence_context": "奶奶给我讲故事。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_10",
+    "word": "pái",
+    "spoken_version": "排",
+    "definition": "队伍或量词。",
+    "sentence_context": "请排队上车。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_11",
+    "word": "lái",
+    "spoken_version": "来",
+    "definition": "从别处移动到此。",
+    "sentence_context": "欢迎来到我家。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_12",
+    "word": "mǎi",
+    "spoken_version": "买",
+    "definition": "付钱得到。",
+    "sentence_context": "我想买一本书。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_13",
+    "word": "dào",
+    "spoken_version": "到",
+    "definition": "到达目的地。",
+    "sentence_context": "我们到学校了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_14",
+    "word": "hào",
+    "spoken_version": "号",
+    "definition": "数字或名称。",
+    "sentence_context": "你是几号运动员？",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_15",
+    "word": "pǎo",
+    "spoken_version": "跑",
+    "definition": "快速移动。",
+    "sentence_context": "我们在操场上跑。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_16",
+    "word": "mào",
+    "spoken_version": "帽",
+    "definition": "戴在头上的。",
+    "sentence_context": "这是一顶红帽子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_17",
+    "word": "lǎo",
+    "spoken_version": "老",
+    "definition": "年纪大。",
+    "sentence_context": "我们要尊敬老人。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_18",
+    "word": "kǎo",
+    "spoken_version": "考",
+    "definition": "测验知识。",
+    "sentence_context": "明天要考试了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_19",
+    "word": "hòu",
+    "spoken_version": "后",
+    "definition": "方位词，反义词前。",
+    "sentence_context": "他在我的后面。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_20",
+    "word": "dòu",
+    "spoken_version": "豆",
+    "definition": "一种植物种子。",
+    "sentence_context": "我喜欢喝豆浆。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_21",
+    "word": "lóu",
+    "spoken_version": "楼",
+    "definition": "多层的房屋。",
+    "sentence_context": "我家住在这栋楼。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_22",
+    "word": "móu",
+    "spoken_version": "谋",
+    "definition": "策划计谋。",
+    "sentence_context": "他在出谋划策。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_23",
+    "word": "tóu",
+    "spoken_version": "头",
+    "definition": "身体的最上部。",
+    "sentence_context": "他低着头看路。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_24",
+    "word": "fǒu",
+    "spoken_version": "否",
+    "definition": "表示否定。",
+    "sentence_context": "是否可以去公园？",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_25",
+    "word": "nèi",
+    "spoken_version": "内",
+    "definition": "里面。",
+    "sentence_context": "房子内很安静。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_26",
+    "word": "bèi",
+    "spoken_version": "背",
+    "definition": "身体后部或朗读。",
+    "sentence_context": "我会背这首诗。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_27",
+    "word": "fèi",
+    "spoken_version": "费",
+    "definition": "花费的钱。",
+    "sentence_context": "这是我的学费。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_28",
+    "word": "měi",
+    "spoken_version": "美",
+    "definition": "漂亮好望。",
+    "sentence_context": "花儿开得很美。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_29",
+    "word": "gěi",
+    "spoken_version": "给",
+    "definition": "递交动作。",
+    "sentence_context": "请给我一张纸。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_30",
+    "word": "hēi",
+    "spoken_version": "黑",
+    "definition": "煤的颜色。",
+    "sentence_context": "黑夜里看不清路。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w2_31",
+    "word": "ruì",
+    "spoken_version": "瑞",
+    "definition": "吉祥的意思。",
+    "sentence_context": "瑞雪兆丰年。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_32",
+    "word": "cuì",
+    "spoken_version": "翠",
+    "definition": "绿颜色。",
+    "sentence_context": "竹子是翠绿的。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_33",
+    "word": "tuì",
+    "spoken_version": "退",
+    "definition": "向后移动。",
+    "sentence_context": "请向后退一步。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_34",
+    "word": "kuài",
+    "spoken_version": "快",
+    "definition": "速度高。",
+    "sentence_context": "汽车开得真快。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_35",
+    "word": "zhuài",
+    "spoken_version": "拽",
+    "definition": "拉扯动作。",
+    "sentence_context": "别拽我的衣服。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_36",
+    "word": "shuài",
+    "spoken_version": "帅",
+    "definition": "英俊好看。",
+    "sentence_context": "他长得很帅。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_37",
+    "word": "nǎo",
+    "spoken_version": "脑",
+    "definition": "思考的器官。",
+    "sentence_context": "动脑筋想办法。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_38",
+    "word": "qiǎo",
+    "spoken_version": "巧",
+    "definition": "灵巧或凑巧。",
+    "sentence_context": "这事儿真凑巧。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_39",
+    "word": "shǎo",
+    "spoken_version": "少",
+    "definition": "数量不多。",
+    "sentence_context": "杯里的水很少。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w2_40",
+    "word": "zhào",
+    "spoken_version": "照",
+    "definition": "光线照射。",
+    "sentence_context": "阳光照在大地上。",
+    "difficulty": 2
+  }
+]

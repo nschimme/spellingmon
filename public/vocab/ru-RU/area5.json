@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w5_1",
+    "word": "посмотреть",
+    "definition": "Направить взгляд.",
+    "sentence_context": "Я хочу посмотреть этот мультфильм.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_2",
+    "word": "подписать",
+    "definition": "Поставить подпись.",
+    "sentence_context": "Учитель должен подписать дневник.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_3",
+    "word": "приехать",
+    "definition": "Прибыть куда-то.",
+    "sentence_context": "Завтра к нам должен приехать дедушка.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_4",
+    "word": "отдать",
+    "definition": "Вернуть или передать.",
+    "sentence_context": "Не забудь отдать книгу другу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_5",
+    "word": "рассказать",
+    "definition": "Сообщить что-то устно.",
+    "sentence_context": "Мама может рассказать сказку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_6",
+    "word": "бесполезный",
+    "definition": "Не приносящий пользы.",
+    "sentence_context": "Это был бесполезный совет.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_7",
+    "word": "побежать",
+    "definition": "Начать бег.",
+    "sentence_context": "Собака увидела кошку и решила побежать.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_8",
+    "word": "зайти",
+    "definition": "Войти ненадолго.",
+    "sentence_context": "Зайди к нам в гости после школы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_9",
+    "word": "выход",
+    "definition": "Место, где выходят.",
+    "sentence_context": "Где находится запасный выход?",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_10",
+    "word": "вход",
+    "definition": "Место, где входят.",
+    "sentence_context": "У входа стоял охранник.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_11",
+    "word": "уйти",
+    "definition": "Покинуть место.",
+    "sentence_context": "Нам пора уйти домой.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_12",
+    "word": "принести",
+    "definition": "Доставить предмет.",
+    "sentence_context": "Пожалуйста, принести мне стакан воды.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_13",
+    "word": "отойти",
+    "definition": "Переместиться в сторону.",
+    "sentence_context": "Отойди подальше от дороги.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_14",
+    "word": "перейти",
+    "definition": "Пересечь что-то.",
+    "sentence_context": "Нужно осторожно перейти улицу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_15",
+    "word": "прочитать",
+    "definition": "Закончить чтение.",
+    "sentence_context": "Я успел прочитать всю главу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_16",
+    "word": "сделать",
+    "definition": "Выполнить действие.",
+    "sentence_context": "Я хочу сделать подарок маме.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_17",
+    "word": "написать",
+    "definition": "Изобразить на бумаге.",
+    "sentence_context": "Мне нужно написать письмо.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_18",
+    "word": "бескрайний",
+    "definition": "Не имеющий границ.",
+    "sentence_context": "Перед нами лежал бескрайний океан.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_19",
+    "word": "разрезать",
+    "definition": "Разделить на части.",
+    "sentence_context": "Нам нужно разрезать торт.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_20",
+    "word": "извлечь",
+    "definition": "Вынуть откуда-то.",
+    "sentence_context": "Врач сумел извлечь занозу.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_21",
+    "word": "прекрасный",
+    "definition": "Очень красивый.",
+    "sentence_context": "Это был прекрасный солнечный день.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_22",
+    "word": "привет",
+    "definition": "Слово для приветствия.",
+    "sentence_context": "Скажи привет своим друзьям.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_23",
+    "word": "открыть",
+    "definition": "Убрать преграду.",
+    "sentence_context": "Помоги мне открыть эту банку.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_24",
+    "word": "закрыть",
+    "definition": "Поставить преграду.",
+    "sentence_context": "Не забудь закрыть окно.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_25",
+    "word": "подняться",
+    "definition": "Переместиться вверх.",
+    "sentence_context": "Мы решили подняться на гору.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_26",
+    "word": "спуститься",
+    "definition": "Переместиться вниз.",
+    "sentence_context": "С горы было легче спуститься.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_27",
+    "word": "безопасный",
+    "definition": "Не представляющий опасности.",
+    "sentence_context": "Этот путь самый безопасный.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_28",
+    "word": "разрушить",
+    "definition": "Сломать до конца.",
+    "sentence_context": "Ветер мог разрушить наш домик.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_29",
+    "word": "вспомнить",
+    "definition": "Восстановить в памяти.",
+    "sentence_context": "Я никак не могу вспомнить имя.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_30",
+    "word": "отправить",
+    "definition": "Отослать куда-то.",
+    "sentence_context": "Завтра я должен отправить письмо.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w5_31",
+    "word": "подпрыгнуть",
+    "definition": "Сделать прыжок вверх.",
+    "sentence_context": "Он смог подпрыгнуть очень высоко.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_32",
+    "word": "раскрасить",
+    "definition": "Сделать цветным.",
+    "sentence_context": "Я хочу раскрасить эту картинку.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_33",
+    "word": "превратить",
+    "definition": "Изменить вид чего-то.",
+    "sentence_context": "Фея может превратить тыкву в карету.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_34",
+    "word": "приклеить",
+    "definition": "Соединить клеем.",
+    "sentence_context": "Нужно приклеить марку к конверту.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_35",
+    "word": "бесплатный",
+    "definition": "Не требующий оплаты.",
+    "sentence_context": "В парке есть бесплатный интернет.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_36",
+    "word": "бессмертный",
+    "definition": "Тот, кто живет вечно.",
+    "sentence_context": "Кощей Бессмертный — герой сказок.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_37",
+    "word": "оттолкнуть",
+    "definition": "Удалить от себя силой.",
+    "sentence_context": "Нельзя оттолкнуть слабого человека.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_38",
+    "word": "поддержать",
+    "definition": "Оказать помощь или опору.",
+    "sentence_context": "Друзья должны поддержать друг друга.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_39",
+    "word": "избежать",
+    "definition": "Не допустить чего-то.",
+    "sentence_context": "Нам удалось избежать ошибки.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w5_40",
+    "word": "переделать",
+    "definition": "Сделать заново.",
+    "sentence_context": "Тебе придется переделать всю работу.",
+    "difficulty": 2
+  }
+]

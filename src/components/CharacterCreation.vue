@@ -2,12 +2,12 @@
   <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-8 text-white font-['Press_Start_2P']">
     <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] shadow-2xl max-w-lg w-full text-gray-800">
       <h2 class="text-xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
-        New Trainer
+        {{ $t('character.title') }}
       </h2>
 
       <div class="space-y-6">
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">What's your name?</label>
+          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.whatsYourName') }}</label>
           <input
             ref="nameInputRef"
             v-model="name"
@@ -15,12 +15,12 @@
             maxlength="12"
             :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
             class="w-full border-4 border-gray-800 p-3 rounded-xl bg-gray-50 font-bold outline-none focus:ring-8 focus:ring-blue-300"
-            placeholder="NAME"
+            :placeholder="$t('character.enterName')"
           >
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">Are you a boy or a girl?</label>
+          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.boyGirl') }}</label>
           <div class="flex gap-4">
             <button
               :class="[
@@ -30,7 +30,7 @@
               class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
               @click="gender = GENDERS.BOY"
             >
-              Boy
+              {{ $t('character.boy') }}
             </button>
             <button
               :class="[
@@ -40,13 +40,13 @@
               class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
               @click="gender = GENDERS.GIRL"
             >
-              Girl
+              {{ $t('character.girl') }}
             </button>
           </div>
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">Skin Tone</label>
+          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.skinToneLabel') }}</label>
           <div class="flex justify-between gap-2">
             <button
               v-for="(tone, i) in skinTones"
@@ -71,7 +71,7 @@
           class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1"
           @click="handleConfirm"
         >
-          Confirm
+          {{ $t('common.confirm') }}
         </button>
       </div>
     </div>

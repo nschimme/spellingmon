@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w6_1",
+    "word": "vert",
+    "definition": "La couleur de l'herbe.",
+    "sentence_context": "Le feu est passé au vert.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_2",
+    "word": "verre",
+    "definition": "Matière transparente pour boire.",
+    "sentence_context": "Fais attention à ne pas casser ton verre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_3",
+    "word": "vers",
+    "definition": "En direction de.",
+    "sentence_context": "Le chat marche vers la souris.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_4",
+    "word": "ver",
+    "definition": "Petit animal qui vit dans la terre.",
+    "sentence_context": "Il y a un ver de terre dans le jardin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_5",
+    "word": "compte",
+    "definition": "Action de compter.",
+    "sentence_context": "Fais le compte de tes billes.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_6",
+    "word": "conte",
+    "definition": "Histoire imaginaire.",
+    "sentence_context": "Ma maman me lit un conte.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_7",
+    "word": "comte",
+    "definition": "Titre de noblesse.",
+    "sentence_context": "Le comte habite dans un grand château.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_8",
+    "word": "sain",
+    "definition": "Qui est en bonne santé.",
+    "sentence_context": "Il est important de manger sain.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_9",
+    "word": "sein",
+    "definition": "Poitrine de la femme.",
+    "sentence_context": "Le bébé tète au sein de sa maman.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_10",
+    "word": "saint",
+    "definition": "Personne très religieuse.",
+    "sentence_context": "C'est la fête du saint patron.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_11",
+    "word": "seing",
+    "definition": "Signature ancienne.",
+    "sentence_context": "L'acte portait le seing du notaire.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_12",
+    "word": "mer",
+    "definition": "Grosse étendue d'eau salée.",
+    "sentence_context": "Je vais nager dans la mer.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_13",
+    "word": "mère",
+    "definition": "La maman.",
+    "sentence_context": "Ma mère est la meilleure.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_14",
+    "word": "maire",
+    "definition": "Chef de la ville.",
+    "sentence_context": "Le maire de la ville a fait un discours.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_15",
+    "word": "sol",
+    "definition": "Le par terre.",
+    "sentence_context": "Je suis assis par sol.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_16",
+    "word": "sole",
+    "definition": "Type de poisson plat.",
+    "sentence_context": "On a mangé de la sole grillée.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_17",
+    "word": "sel",
+    "definition": "Condiment blanc.",
+    "sentence_context": "Passe-moi le sel, s'il te plaît.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_18",
+    "word": "sell",
+    "definition": "Vendre en anglais.",
+    "sentence_context": "C'est un mot que l'on voit souvent.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_19",
+    "word": "balle",
+    "definition": "Petit objet rond pour jouer.",
+    "sentence_context": "Le chien court après la balle.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_20",
+    "word": "bal",
+    "definition": "Fête de danse.",
+    "sentence_context": "Nous sommes allés au bal du village.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_21",
+    "word": "peau",
+    "definition": "Ce qui recouvre le corps.",
+    "sentence_context": "J'ai la peau toute douce.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_22",
+    "word": "pot",
+    "definition": "Récipient.",
+    "sentence_context": "Le pot de fleurs est tombé.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_23",
+    "word": "eau",
+    "definition": "Liquide que l'on boit.",
+    "sentence_context": "Je bois un grand verre d'eau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_24",
+    "word": "haut",
+    "definition": "Le contraire de bas.",
+    "sentence_context": "Le nid est tout en haut de l'arbre.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_25",
+    "word": "choix",
+    "definition": "Action de choisir.",
+    "sentence_context": "Tu as fait le bon choix.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_26",
+    "word": "soi",
+    "definition": "Sa propre personne.",
+    "sentence_context": "Il faut avoir confiance en soi.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_27",
+    "word": "foi",
+    "definition": "Croyance.",
+    "sentence_context": "Il a gardé la foi en l'avenir.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_28",
+    "word": "fois",
+    "definition": "Nombre de répétitions.",
+    "sentence_context": "C'est la première fois que je vois ça.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_29",
+    "word": "foie",
+    "definition": "Organe du corps.",
+    "sentence_context": "On mange du foie de veau.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_30",
+    "word": "sans",
+    "definition": "Le contraire de avec.",
+    "sentence_context": "Je mange mes frites sans sel.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w6_31",
+    "word": "sang",
+    "definition": "Liquide rouge dans le corps.",
+    "sentence_context": "Je me suis coupé, j'ai du sang.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_32",
+    "word": "sent",
+    "definition": "Sentir au présent.",
+    "sentence_context": "Ça sent très bon dans la cuisine.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_33",
+    "word": "cent",
+    "definition": "Le nombre après quatre-vingt-dix-neuf.",
+    "sentence_context": "J'ai cent billes dans mon sac.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_34",
+    "word": "air",
+    "definition": "Ce que l'on respire.",
+    "sentence_context": "L'air est frais ce matin.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_35",
+    "word": "ère",
+    "definition": "Période de temps.",
+    "sentence_context": "C'est une nouvelle ère qui commence.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_36",
+    "word": "aire",
+    "definition": "Surface plate.",
+    "sentence_context": "On joue sur l'aire de jeux.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_37",
+    "word": "cours",
+    "definition": "Leçon à l'école.",
+    "sentence_context": "Le cours de musique est fini.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_38",
+    "word": "court",
+    "definition": "Le contraire de long.",
+    "sentence_context": "Mon pantalon est trop court.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_39",
+    "word": "cour",
+    "definition": "Espace extérieur de l'école.",
+    "sentence_context": "On joue dans la cour de récré.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w6_40",
+    "word": "cou",
+    "definition": "Partie entre la tête et les épaules.",
+    "sentence_context": "La girafe a un très long cou.",
+    "difficulty": 2
+  }
+]

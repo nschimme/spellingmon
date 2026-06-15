@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w8_1",
+    "word": "exame",
+    "definition": "Teste ou prova de conhecimento.",
+    "sentence_context": "Tive um exame de matemática.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_2",
+    "word": "táxi",
+    "definition": "Veículo de transporte com condutor.",
+    "sentence_context": "Chamei um táxi para ir para casa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_3",
+    "word": "próximo",
+    "definition": "Que está perto ou vem a seguir.",
+    "sentence_context": "O próximo comboio chega às dez.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_4",
+    "word": "xale",
+    "definition": "Peça de roupa para os ombros.",
+    "sentence_context": "Ela usa um xale de lã.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_5",
+    "word": "exceção",
+    "definition": "Algo que não segue a regra.",
+    "sentence_context": "A regra tem uma exceção.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_6",
+    "word": "órgão",
+    "definition": "Parte do corpo ou instrumento musical.",
+    "sentence_context": "O coração é um órgão vital.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_7",
+    "word": "coração",
+    "definition": "Órgão central do sistema circulatório.",
+    "sentence_context": "O meu coração bate depressa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_8",
+    "word": "maçã",
+    "definition": "Fruta redonda e doce.",
+    "sentence_context": "Comi uma maçã vermelha.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_9",
+    "word": "açúcar",
+    "definition": "Substância doce para adoçar.",
+    "sentence_context": "Não ponhas muito açúcar no chá.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_10",
+    "word": "herói",
+    "definition": "Pessoa com grande coragem.",
+    "sentence_context": "O bombeiro foi um verdadeiro herói.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_11",
+    "word": "paciência",
+    "definition": "Capacidade de esperar com calma.",
+    "sentence_context": "É preciso ter paciência com crianças.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_12",
+    "word": "excluir",
+    "definition": "Deixar de fora ou eliminar.",
+    "sentence_context": "Decidimos excluir o nome da lista.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_13",
+    "word": "tóxico",
+    "definition": "Que pode causar doenças ou morte.",
+    "sentence_context": "Este produto é muito tóxico.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_14",
+    "word": "texto",
+    "definition": "Conjunto de palavras escritas.",
+    "sentence_context": "Li um texto muito interessante.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_15",
+    "word": "xadrez",
+    "definition": "Jogo de tabuleiro ou padrão de tecido.",
+    "sentence_context": "Adoro jogar xadrez de tarde.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_16",
+    "word": "auxílio",
+    "definition": "Ajuda ou socorro dado a alguém.",
+    "sentence_context": "Pedi auxílio para carregar a caixa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_17",
+    "word": "órfão",
+    "definition": "Criança sem pai nem mãe.",
+    "sentence_context": "A personagem principal era órfã.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_18",
+    "word": "benção",
+    "definition": "Ação de benzer ou desejar bem.",
+    "sentence_context": "O avô deu a sua benção.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_19",
+    "word": "através",
+    "definition": "Por meio de algo.",
+    "sentence_context": "Olhei através da janela.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_20",
+    "word": "café",
+    "definition": "Semente ou bebida preta.",
+    "sentence_context": "Tomei um café bem quente.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_21",
+    "word": "chaminé",
+    "definition": "Tubo para sair o fumo.",
+    "sentence_context": "O fumo sai pela chaminé.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_22",
+    "word": "exército",
+    "definition": "Grupo organizado de soldados.",
+    "sentence_context": "O exército defende o país.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_23",
+    "word": "reflexo",
+    "definition": "Imagem que se vê no espelho.",
+    "sentence_context": "Vi o meu reflexo na água.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_24",
+    "word": "máximo",
+    "definition": "O maior valor ou limite.",
+    "sentence_context": "Cheguei ao meu ponto máximo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_25",
+    "word": "xampu",
+    "definition": "Líquido para lavar os cabelos.",
+    "sentence_context": "O meu xampu acabou ontem.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_26",
+    "word": "ascensão",
+    "definition": "Ato de subir ou elevar-se.",
+    "sentence_context": "A ascensão do balão foi lenta.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_27",
+    "word": "ímã",
+    "definition": "Objeto que atrai metais.",
+    "sentence_context": "O ímã colou na porta da geladeira.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_28",
+    "word": "pão",
+    "definition": "Massa de farinha assada.",
+    "sentence_context": "Quero um pão com manteiga.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_29",
+    "word": "vovô",
+    "definition": "Pai do pai ou da mãe.",
+    "sentence_context": "O meu vovô é muito simpático.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_30",
+    "word": "vovó",
+    "definition": "Mãe do pai ou da mãe.",
+    "sentence_context": "A vovó faz bolos deliciosos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w8_31",
+    "word": "exigir",
+    "definition": "Reclamar com autoridade.",
+    "sentence_context": "Vou exigir os meus direitos.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_32",
+    "word": "anexar",
+    "definition": "Juntar ou prender uma coisa a outra.",
+    "sentence_context": "Não te esqueças de anexar o ficheiro.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_33",
+    "word": "lixo",
+    "definition": "Coisas que se deitam fora.",
+    "sentence_context": "Leva o lixo para o contentor.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_34",
+    "word": "fixar",
+    "definition": "Prender ou tornar firme.",
+    "sentence_context": "Vou fixar o quadro na parede.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_35",
+    "word": "consciência",
+    "definition": "Perceção do que é certo ou errado.",
+    "sentence_context": "A minha consciência está tranquila.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_36",
+    "word": "órfã",
+    "definition": "Menina sem pais.",
+    "sentence_context": "A órfã foi adotada pela tia.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_37",
+    "word": "frequência",
+    "definition": "Número de vezes que algo acontece.",
+    "sentence_context": "Vou ao ginásio com frequência.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_38",
+    "word": "três",
+    "definition": "Número a seguir ao dois.",
+    "sentence_context": "Tenho três irmãos mais velhos.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_39",
+    "word": "árvore",
+    "definition": "Planta grande com tronco.",
+    "sentence_context": "A árvore dá muita sombra.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w8_40",
+    "word": "pássaro",
+    "definition": "Animal com penas que voa.",
+    "sentence_context": "O pássaro fez um ninho.",
+    "difficulty": 2
+  }
+]

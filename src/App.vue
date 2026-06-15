@@ -42,6 +42,16 @@ onMounted(async () => {
   await settingsStore.init();
   inputStore.init();
   inputStore.addListener('global', handleGlobalInput, 10);
+
+  // Debug/E2E Test Mode initialization
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('debug') === 'true') {
+    playerStore.debugInit({
+      name: urlParams.get('name'),
+      starter: urlParams.get('starter'),
+      locale: urlParams.get('locale')
+    });
+  }
 });
 
 onUnmounted(() => {
@@ -60,11 +70,11 @@ onUnmounted(() => {
         @continue="playerStore.startGame"
         @new-game="playerStore.startGame"
       />
-      <template v-else-if="!playerStore.characterCreationComplete">
-        <CharacterCreation />
-      </template>
       <template v-else-if="!playerStore.ttsVerified">
         <TTSWelcomeScreen @verified="playerStore.confirmTtsVerified" />
+      </template>
+      <template v-else-if="!playerStore.characterCreationComplete">
+        <CharacterCreation />
       </template>
       <template v-else>
         <StarterSelection v-if="!playerStore.isStarterSelected" />

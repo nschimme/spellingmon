@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w9_1",
+    "word": "Geschwindigkeitsbegrenzung",
+    "definition": "Wie schnell man fahren darf.",
+    "sentence_context": "Hier gilt eine Geschwindigkeitsbegrenzung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_2",
+    "word": "Sehenswürdigkeit",
+    "definition": "Etwas Tolles in der Stadt.",
+    "sentence_context": "Das Schloss ist eine Sehenswürdigkeit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_3",
+    "word": "Naturwissenschaften",
+    "definition": "Biologie, Chemie und Physik.",
+    "sentence_context": "In der Schule lernen wir Naturwissenschaften.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_4",
+    "word": "Bundesrepublik",
+    "definition": "Unser Land Deutschland.",
+    "sentence_context": "Wir wohnen in der Bundesrepublik.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_5",
+    "word": "Eichhörnchen",
+    "definition": "Ein kleines Tier mit Schwanz.",
+    "sentence_context": "Das Eichhörnchen sucht Nüsse.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_6",
+    "word": "Fahrradweg",
+    "definition": "Ein Weg nur für Räder.",
+    "sentence_context": "Fahr bitte auf dem Fahrradweg.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_7",
+    "word": "Frühstück",
+    "definition": "Essen am Morgen.",
+    "sentence_context": "Ich esse Müsli zum Frühstück.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_8",
+    "word": "Gartenzwerg",
+    "definition": "Eine Figur für draußen.",
+    "sentence_context": "Im Garten steht ein Gartenzwerg.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_9",
+    "word": "Hausaufgabe",
+    "definition": "Lernen für zu Hause.",
+    "sentence_context": "Ich mache meine Hausaufgabe.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_10",
+    "word": "Hubschrauber",
+    "definition": "Ein Flugzeug mit Propeller.",
+    "sentence_context": "Der Hubschrauber landet im Park.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_11",
+    "word": "Kühlschrank",
+    "definition": "Hier bleibt das Essen kalt.",
+    "sentence_context": "Die Milch steht im Kühlschrank.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_12",
+    "word": "Mannschaft",
+    "definition": "Viele Spieler zusammen.",
+    "sentence_context": "Unsere Mannschaft hat gewonnen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_13",
+    "word": "Nachbarschaft",
+    "definition": "Die Leute, die nebenan wohnen.",
+    "sentence_context": "Wir haben eine nette Nachbarschaft.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_14",
+    "word": "Regenschirm",
+    "definition": "Er schützt vor Nässe.",
+    "sentence_context": "Nimm deinen Regenschirm mit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_15",
+    "word": "Spielplatz",
+    "definition": "Da kann man rutschen.",
+    "sentence_context": "Wir gehen heute auf den Spielplatz.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_16",
+    "word": "Taschenlampe",
+    "definition": "Licht für die Hand.",
+    "sentence_context": "In der Nacht hilft die Taschenlampe.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_17",
+    "word": "Überraschung",
+    "definition": "Etwas, das man nicht weiß.",
+    "sentence_context": "Ich habe eine Überraschung für dich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_18",
+    "word": "Vorschule",
+    "definition": "Zeit vor der Schule.",
+    "sentence_context": "Mein Bruder geht in die Vorschule.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_19",
+    "word": "Wörterbuch",
+    "definition": "Ein Buch für Wörter.",
+    "sentence_context": "Ich suche das Wort im Wörterbuch.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_20",
+    "word": "Zahnputzbecher",
+    "definition": "Becher für die Bürste.",
+    "sentence_context": "Stell die Bürste in den Zahnputzbecher.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_21",
+    "word": "Abenteuer",
+    "definition": "Ein spannendes Erlebnis.",
+    "sentence_context": "Das war ein großes Abenteuer.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_22",
+    "word": "Bibliothek",
+    "definition": "Da gibt es viele Bücher.",
+    "sentence_context": "Wir leihen Bücher in der Bibliothek.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_23",
+    "word": "Computer",
+    "definition": "Ein elektronisches Gerät.",
+    "sentence_context": "Ich spiele am Computer.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_24",
+    "word": "Dinosaurier",
+    "definition": "Ein Urzeittier.",
+    "sentence_context": "Der Dinosaurier war sehr groß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_25",
+    "word": "Entdeckung",
+    "definition": "Etwas Neues finden.",
+    "sentence_context": "Das war eine tolle Entdeckung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_26",
+    "word": "Flugzeug",
+    "definition": "Es fliegt hoch am Himmel.",
+    "sentence_context": "Das Flugzeug startet vom Boden.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_27",
+    "word": "Geburtstag",
+    "definition": "Ein Fest für den Tag der Geburt.",
+    "sentence_context": "Ich feiere morgen meinen Geburtstag.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_28",
+    "word": "Handschuh",
+    "definition": "Kleidung für die Hände.",
+    "sentence_context": "Im Winter brauche ich Handschuhe.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_29",
+    "word": "Instrument",
+    "definition": "Geige oder Flöte.",
+    "sentence_context": "Ich lerne ein Musikinstrument.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_30",
+    "word": "Journalist",
+    "definition": "Er schreibt für die Zeitung.",
+    "sentence_context": "Der Journalist stellt viele Fragen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w9_31",
+    "word": "Kinderspiel",
+    "definition": "Etwas, das ganz leicht ist.",
+    "sentence_context": "Das Rätsel ist ein Kinderspiel.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_32",
+    "word": "Luftballon",
+    "definition": "Er ist bunt und rund.",
+    "sentence_context": "Der Luftballon fliegt in die Luft.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_33",
+    "word": "Marmelade",
+    "definition": "Süßer Aufstrich für das Brot.",
+    "sentence_context": "Ich mag gerne Erdbeermarmelade.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_34",
+    "word": "Notizbuch",
+    "definition": "Da schreibt man Sachen rein.",
+    "sentence_context": "Ich habe ein kleines Notizbuch.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_35",
+    "word": "Osterhase",
+    "definition": "Er bringt die Eier.",
+    "sentence_context": "Der Osterhase war heute da.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_36",
+    "word": "Papierschiff",
+    "definition": "Ein Boot aus Papier.",
+    "sentence_context": "Das Papierschiff schwimmt im Bach.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_37",
+    "word": "Quatschkopf",
+    "definition": "Jemand, der Witze macht.",
+    "sentence_context": "Du bist ein kleiner Quatschkopf.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_38",
+    "word": "Regenbogen",
+    "definition": "Bunt am Himmel nach Regen.",
+    "sentence_context": "Siehst du den Regenbogen dort?",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_39",
+    "word": "Sonnenschein",
+    "definition": "Licht von der Sonne.",
+    "sentence_context": "Genieße den warmen Sonnenschein.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w9_40",
+    "word": "Turnschuh",
+    "definition": "Schuh für den Sport.",
+    "sentence_context": "Zieh deine Turnschuhe an.",
+    "difficulty": 2
+  }
+]

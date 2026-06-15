@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w9_1",
+    "word": "psicología",
+    "definition": "Ciencia que estudia la mente.",
+    "sentence_context": "Ella estudia psicología en la universidad.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_2",
+    "word": "otorrinolaringólogo",
+    "definition": "Médico de oído, nariz y garganta.",
+    "sentence_context": "Fui al otorrinolaringólogo por mi dolor de oído.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_3",
+    "word": "características",
+    "definition": "Cualidades de algo.",
+    "sentence_context": "Dime las características de este animal.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_4",
+    "word": "electroencefalograma",
+    "definition": "Prueba médica del cerebro.",
+    "sentence_context": "Le hicieron un electroencefalograma en el hospital.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_5",
+    "word": "matemáticas",
+    "definition": "Ciencia de los números.",
+    "sentence_context": "Las matemáticas son muy divertidas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_6",
+    "word": "biblioteca",
+    "definition": "Lugar con muchos libros.",
+    "sentence_context": "Fui a la biblioteca a estudiar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_7",
+    "word": "astronomía",
+    "definition": "Ciencia de los astros.",
+    "sentence_context": "Me gusta mirar las estrellas y la astronomía.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_8",
+    "word": "biología",
+    "definition": "Ciencia de los seres vivos.",
+    "sentence_context": "Estudiamos las células en biología.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_9",
+    "word": "ortografía",
+    "definition": "Reglas para escribir bien.",
+    "sentence_context": "Tengo que mejorar mi ortografía.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_10",
+    "word": "computadora",
+    "definition": "Ordenador personal.",
+    "sentence_context": "Uso la computadora para hacer trabajos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_11",
+    "word": "electricidad",
+    "definition": "Forma de energía.",
+    "sentence_context": "La luz funciona con electricidad.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_12",
+    "word": "vocabulario",
+    "definition": "Conjunto de palabras.",
+    "sentence_context": "Aprendí mucho vocabulario nuevo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_13",
+    "word": "democracia",
+    "definition": "Forma de gobierno.",
+    "sentence_context": "Vivimos en una democracia libre.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_14",
+    "word": "filosofía",
+    "definition": "Estudio de la sabiduría.",
+    "sentence_context": "A Sócrates le gustaba la filosofía.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_15",
+    "word": "literatura",
+    "definition": "Arte de escribir libros.",
+    "sentence_context": "Leemos literatura clásica en clase.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_16",
+    "word": "responsabilidad",
+    "definition": "Cumplimiento de obligaciones.",
+    "sentence_context": "Tengo la responsabilidad de cuidar a mi perro.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_17",
+    "word": "generosidad",
+    "definition": "Cualidad de ser generoso.",
+    "sentence_context": "La generosidad es una gran virtud.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_18",
+    "word": "imaginación",
+    "definition": "Capacidad de crear ideas.",
+    "sentence_context": "Tienes una imaginación muy grande.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_19",
+    "word": "comunicación",
+    "definition": "Acción de comunicarse.",
+    "sentence_context": "La comunicación es muy importante.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_20",
+    "word": "entretenimiento",
+    "definition": "Acción de entretener.",
+    "sentence_context": "Vimos una película de entretenimiento.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_21",
+    "word": "descubrimiento",
+    "definition": "Hallazgo de algo nuevo.",
+    "sentence_context": "El descubrimiento de América fue en 1492.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_22",
+    "word": "arquitectura",
+    "definition": "Arte de construir edificios.",
+    "sentence_context": "La arquitectura de esta ciudad es bonita.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_23",
+    "word": "arqueología",
+    "definition": "Estudio de monumentos antiguos.",
+    "sentence_context": "El arqueólogo encontró una tumba.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_24",
+    "word": "ecología",
+    "definition": "Defensa del medio ambiente.",
+    "sentence_context": "Debemos cuidar la ecología del planeta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_25",
+    "word": "tecnología",
+    "definition": "Conjunto de conocimientos técnicos.",
+    "sentence_context": "La tecnología avanza muy rápido.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_26",
+    "word": "paleontología",
+    "definition": "Estudio de los fósiles.",
+    "sentence_context": "Vimos dinosaurios en el museo de paleontología.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_27",
+    "word": "meteorología",
+    "definition": "Ciencia del tiempo atmosférico.",
+    "sentence_context": "El hombre del tiempo estudia meteorología.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_28",
+    "word": "antropología",
+    "definition": "Estudio del ser humano.",
+    "sentence_context": "La antropología estudia las culturas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_29",
+    "word": "sociología",
+    "definition": "Estudio de las sociedades.",
+    "sentence_context": "Estudiamos el comportamiento humano en sociología.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_30",
+    "word": "economía",
+    "definition": "Administración de recursos.",
+    "sentence_context": "La economía del país está mejorando.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w9_31",
+    "word": "dinosaurio",
+    "definition": "Animal prehistórico gigante.",
+    "sentence_context": "Mi dinosaurio favorito es el T-Rex.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_32",
+    "word": "espectáculo",
+    "definition": "Función pública que divierte.",
+    "sentence_context": "Fuimos a ver un espectáculo de circo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_33",
+    "word": "herramienta",
+    "definition": "Objeto para trabajar.",
+    "sentence_context": "El martillo es una herramienta útil.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_34",
+    "word": "ingrediente",
+    "definition": "Elemento de una comida.",
+    "sentence_context": "La harina es un ingrediente básico.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_35",
+    "word": "kilómetro",
+    "definition": "Medida de distancia.",
+    "sentence_context": "Corrimos un kilómetro en el parque.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_36",
+    "word": "murciélago",
+    "definition": "Mamífero que vuela.",
+    "sentence_context": "El murciélago sale por la noche.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_37",
+    "word": "relámpago",
+    "definition": "Resplandor en una tormenta.",
+    "sentence_context": "Vi un relámpago en el cielo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_38",
+    "word": "teléfono",
+    "definition": "Aparato para hablar lejos.",
+    "sentence_context": "Hablé por teléfono con mi tía.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_39",
+    "word": "universo",
+    "definition": "Todo lo que existe.",
+    "sentence_context": "El universo es infinito y hermoso.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w9_40",
+    "word": "zanahoria",
+    "definition": "Hortaliza de color naranja.",
+    "sentence_context": "Comí una zanahoria muy rica.",
+    "difficulty": 2
+  }
+]

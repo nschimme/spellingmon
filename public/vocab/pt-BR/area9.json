@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w9_1",
+    "word": "paralegal",
+    "definition": "Profissional que ajuda advogados.",
+    "sentence_context": "O paralegal organizou os documentos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_2",
+    "word": "constitucionalidade",
+    "definition": "Qualidade do que segue a constituição.",
+    "sentence_context": "A lei está em dúvida quanto à constitucionalidade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_3",
+    "word": "inconstitucionalissimamente",
+    "definition": "De modo muito inconstitucional.",
+    "sentence_context": "Aquela decisão foi tomada inconstitucionalissimamente.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_4",
+    "word": "arquipélago",
+    "definition": "Conjunto de várias ilhas.",
+    "sentence_context": "Os Açores são um arquipélago lindo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_5",
+    "word": "antropologia",
+    "definition": "Ciência que estuda o homem.",
+    "sentence_context": "O meu curso de eleição é antropologia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_6",
+    "word": "arqueologia",
+    "definition": "Ciência que estuda civilizações antigas.",
+    "sentence_context": "O arqueólogo encontrou vasos romanos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_7",
+    "word": "biotecnologia",
+    "definition": "Aplicação da biologia na tecnologia.",
+    "sentence_context": "A biotecnologia ajuda na criação de vacinas.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_8",
+    "word": "paralelepípedo",
+    "definition": "Objeto sólido de seis faces.",
+    "sentence_context": "A rua é feita de paralelepípedos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_9",
+    "word": "eletrocardiograma",
+    "definition": "Exame que mede os batimentos do coração.",
+    "sentence_context": "Fiz um eletrocardiograma no hospital.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_10",
+    "word": "interdisciplinaridade",
+    "definition": "Relação entre várias disciplinas.",
+    "sentence_context": "O projeto exige muita interdisciplinaridade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_11",
+    "word": "hipopótamo",
+    "definition": "Grande animal africano.",
+    "sentence_context": "O hipopótamo vive perto dos rios.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_12",
+    "word": "paralisia",
+    "definition": "Falta de movimento no corpo.",
+    "sentence_context": "O acidente causou-lhe uma paralisia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_13",
+    "word": "espectroscopia",
+    "definition": "Estudo da luz e da matéria.",
+    "sentence_context": "Usamos a espectroscopia no laboratório.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_14",
+    "word": "psicopatologia",
+    "definition": "Estudo das doenças mentais.",
+    "sentence_context": "Ele especializou-se em psicopatologia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_15",
+    "word": "telecomunicações",
+    "definition": "Transmissão de sinais à distância.",
+    "sentence_context": "A empresa trabalha com telecomunicações.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_16",
+    "word": "desenvolvimento",
+    "definition": "Ato de crescer ou progredir.",
+    "sentence_context": "O desenvolvimento do país é visível.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_17",
+    "word": "infraestrutura",
+    "definition": "Base necessária para um serviço.",
+    "sentence_context": "A cidade precisa de melhor infraestrutura.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_18",
+    "word": "biblioteconomia",
+    "definition": "Gestão de bibliotecas.",
+    "sentence_context": "Ela estudou biblioteconomia na faculdade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_19",
+    "word": "revolucionário",
+    "definition": "Que causa uma grande mudança.",
+    "sentence_context": "O novo invento foi revolucionário.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_20",
+    "word": "extraordinário",
+    "definition": "Que foge ao que é comum.",
+    "sentence_context": "Tive um dia extraordinário hoje.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_21",
+    "word": "parlamentarismo",
+    "definition": "Sistema de governo pelo parlamento.",
+    "sentence_context": "O país adotou o parlamentarismo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_22",
+    "word": "biodiversidade",
+    "definition": "Variedade de seres vivos.",
+    "sentence_context": "Temos de proteger a biodiversidade.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_23",
+    "word": "característica",
+    "definition": "Qualidade distintiva de algo.",
+    "sentence_context": "Diz-me uma característica tua.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_24",
+    "word": "demonstração",
+    "definition": "Ato de mostrar ou provar algo.",
+    "sentence_context": "Assisti a uma demonstração de voo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_25",
+    "word": "estatística",
+    "definition": "Ciência que analisa dados.",
+    "sentence_context": "A estatística mostra que as vendas subiram.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_26",
+    "word": "filosofia",
+    "definition": "Estudo sobre a sabedoria e a vida.",
+    "sentence_context": "Gosto de ler livros de filosofia.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_27",
+    "word": "globalização",
+    "definition": "Integração mundial econômica.",
+    "sentence_context": "A globalização mudou o comércio.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_28",
+    "word": "hierarquia",
+    "definition": "Ordem de importância ou comando.",
+    "sentence_context": "Respeita a hierarquia na empresa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_29",
+    "word": "independência",
+    "definition": "Estado de quem é livre e autónomo.",
+    "sentence_context": "Comemoramos o dia da independência.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_30",
+    "word": "justificativa",
+    "definition": "Razão ou motivo para algo.",
+    "sentence_context": "Apresentei a minha justificativa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w9_31",
+    "word": "literatura",
+    "definition": "Arte de escrever livros e textos.",
+    "sentence_context": "A literatura portuguesa é muito rica.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_32",
+    "word": "metodologia",
+    "definition": "Estudo dos métodos de trabalho.",
+    "sentence_context": "A nossa metodologia foi eficaz.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_33",
+    "word": "nacionalidade",
+    "definition": "Pertencimento a uma nação.",
+    "sentence_context": "A minha nacionalidade é portuguesa.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_34",
+    "word": "oportunidade",
+    "definition": "Momento favorável para algo.",
+    "sentence_context": "Aproveita esta oportunidade de emprego.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_35",
+    "word": "procedimento",
+    "definition": "Modo de agir ou realizar algo.",
+    "sentence_context": "Siga o procedimento padrão.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_36",
+    "word": "qualificação",
+    "definition": "Capacidade ou preparo para algo.",
+    "sentence_context": "Ele tem a qualificação necessária.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_37",
+    "word": "responsabilidade",
+    "definition": "Obrigação de responder pelos atos.",
+    "sentence_context": "A responsabilidade é toda minha.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_38",
+    "word": "sustentabilidade",
+    "definition": "Capacidade de se manter preservando.",
+    "sentence_context": "O foco da empresa é a sustentabilidade.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_39",
+    "word": "tecnologia",
+    "definition": "Conjunto de conhecimentos técnicos.",
+    "sentence_context": "A tecnologia evolui muito rápido.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w9_40",
+    "word": "unanimidade",
+    "definition": "Acordo de todas as pessoas.",
+    "sentence_context": "A decisão foi tomada por unanimidade.",
+    "difficulty": 2
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ru_w6_1",
+    "word": "луг",
+    "definition": "Место, где растет трава.",
+    "sentence_context": "На лугу пасутся коровы.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_2",
+    "word": "лук",
+    "definition": "Овощ, который заставляет плакать.",
+    "sentence_context": "Мама режет лук для салата.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_3",
+    "word": "плод",
+    "definition": "Часть растения с семенами.",
+    "sentence_context": "Яблоко — это сладкий плод.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_4",
+    "word": "плот",
+    "definition": "Средство для плавания из бревен.",
+    "sentence_context": "Мы построили плот и поплыли.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_5",
+    "word": "код",
+    "definition": "Секретное число или знак.",
+    "sentence_context": "Я забыл код от своего телефона.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_6",
+    "word": "кот",
+    "definition": "Домашний питомец.",
+    "sentence_context": "Рыжий кот спит на заборе.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_7",
+    "word": "гриб",
+    "definition": "Лесной дар.",
+    "sentence_context": "В корзинке лежал большой гриб.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_8",
+    "word": "грипп",
+    "definition": "Вирусная болезнь.",
+    "sentence_context": "Зимой многие болеют гриппом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_9",
+    "word": "глаз",
+    "definition": "Орган зрения.",
+    "sentence_context": "У куклы голубой глаз.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_10",
+    "word": "голос",
+    "definition": "Звук, который мы издаем.",
+    "sentence_context": "У певицы очень красивый голос.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_11",
+    "word": "мороз",
+    "definition": "Очень сильный холод.",
+    "sentence_context": "На улице стоит сильный мороз.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_12",
+    "word": "сад",
+    "definition": "Место с фруктовыми деревьями.",
+    "sentence_context": "В саду растут вкусные груши.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_13",
+    "word": "суд",
+    "definition": "Место, где решают споры.",
+    "sentence_context": "Суд вынес справедливое решение.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_14",
+    "word": "дуб",
+    "definition": "Крепкое дерево.",
+    "sentence_context": "Старый дуб растет у дороги.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_15",
+    "word": "зуб",
+    "definition": "Часть нашего тела во рту.",
+    "sentence_context": "Надо чистить каждый зуб.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_16",
+    "word": "суп",
+    "definition": "Горячее первое блюдо.",
+    "sentence_context": "Я съел весь овощной суп.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_17",
+    "word": "столб",
+    "definition": "Высокий шест.",
+    "sentence_context": "У дороги стоял фонарный столб.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_18",
+    "word": "хлеб",
+    "definition": "Самая важная еда.",
+    "sentence_context": "Хлеб — всему голова.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_19",
+    "word": "снег",
+    "definition": "Белые хлопья зимой.",
+    "sentence_context": "На землю падает первый снег.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_20",
+    "word": "роза",
+    "definition": "Красивый цветок.",
+    "sentence_context": "В вазе стоит красная роза.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_21",
+    "word": "роса",
+    "definition": "Капли воды на траве утром.",
+    "sentence_context": "На траве блестела утренняя роса.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_22",
+    "word": "круг",
+    "definition": "Геометрическая фигура.",
+    "sentence_context": "Дети встали в ровный круг.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_23",
+    "word": "крюк",
+    "definition": "Металлический зацеп.",
+    "sentence_context": "Повесь куртку на этот крюк.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_24",
+    "word": "друг",
+    "definition": "Близкий человек.",
+    "sentence_context": "Мой лучший друг живет рядом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_25",
+    "word": "враг",
+    "definition": "Противник.",
+    "sentence_context": "Герой сразился с опасным врагом.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_26",
+    "word": "нож",
+    "definition": "Инструмент для резки.",
+    "sentence_context": "Нож очень острый, будь осторожен.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_27",
+    "word": "рожь",
+    "definition": "Зерновое растение.",
+    "sentence_context": "В поле колосится густая рожь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_28",
+    "word": "мышь",
+    "definition": "Маленький зверек.",
+    "sentence_context": "Серая мышь спряталась в нору.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_29",
+    "word": "тушь",
+    "definition": "Краска для ресниц или рисования.",
+    "sentence_context": "Мне нужна черная тушь.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_30",
+    "word": "марш",
+    "definition": "Вид музыки или ходьбы.",
+    "sentence_context": "Оркестр заиграл бодрый марш.",
+    "difficulty": 1
+  },
+  {
+    "id": "ru_w6_31",
+    "word": "грязь",
+    "definition": "Мокрая земля.",
+    "sentence_context": "После дождя на улице грязь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_32",
+    "word": "связь",
+    "definition": "Соединение или телефон.",
+    "sentence_context": "В лесу плохая мобильная связь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_33",
+    "word": "мазь",
+    "definition": "Лекарство для кожи.",
+    "sentence_context": "Врач велел мазать рану мазью.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_34",
+    "word": "грудь",
+    "definition": "Часть тела человека.",
+    "sentence_context": "Он глубоко вдохнул полной грудью.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_35",
+    "word": "тетрадь",
+    "definition": "Место для письма.",
+    "sentence_context": "Я открыл чистую тетрадь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_36",
+    "word": "кровать",
+    "definition": "Место для сна.",
+    "sentence_context": "Пора ложиться в теплую кровать.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_37",
+    "word": "морковь",
+    "definition": "Оранжевый овощ.",
+    "sentence_context": "Заяц грызет хрустящую морковь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_38",
+    "word": "кровь",
+    "definition": "Красная жидкость в теле.",
+    "sentence_context": "У меня пошла кровь из носа.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_39",
+    "word": "бровь",
+    "definition": "Полоска волос над глазом.",
+    "sentence_context": "Он удивленно поднял бровь.",
+    "difficulty": 2
+  },
+  {
+    "id": "ru_w6_40",
+    "word": "любовь",
+    "definition": "Сильное чувство.",
+    "sentence_context": "Любовь спасет мир.",
+    "difficulty": 2
+  }
+]

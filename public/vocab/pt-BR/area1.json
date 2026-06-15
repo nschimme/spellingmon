@@ -1,0 +1,282 @@
+[
+  {
+    "id": "pt_w1_1",
+    "word": "pai",
+    "definition": "O homem que é o progenitor.",
+    "sentence_context": "O meu pai gosta de ler.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_2",
+    "word": "bola",
+    "definition": "Objeto redondo usado para jogar.",
+    "sentence_context": "A bola rolou pelo chão.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_3",
+    "word": "pato",
+    "definition": "Ave aquática que faz quá-quá.",
+    "sentence_context": "O pato nada no lago.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_4",
+    "word": "mesa",
+    "definition": "Móvel com tampo e pernas.",
+    "sentence_context": "O prato está na mesa.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_5",
+    "word": "bota",
+    "definition": "Calçado que cobre o pé e o tornozelo.",
+    "sentence_context": "Calcei a minha bota nova.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_6",
+    "word": "cama",
+    "definition": "Móvel usado para dormir.",
+    "sentence_context": "Vou para a cama cedo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_7",
+    "word": "casa",
+    "definition": "Lugar onde as pessoas vivem.",
+    "sentence_context": "A minha casa é azul.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_8",
+    "word": "gato",
+    "definition": "Pequeno animal doméstico que mia.",
+    "sentence_context": "O gato dorme no sofá.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_9",
+    "word": "mão",
+    "definition": "Parte do corpo no fim do braço.",
+    "sentence_context": "Lava a mão antes de comer.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_10",
+    "word": "pé",
+    "definition": "Parte do corpo usada para andar.",
+    "sentence_context": "O meu pé está cansado.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_11",
+    "word": "bolo",
+    "definition": "Alimento doce cozido no forno.",
+    "sentence_context": "Fizemos um bolo de laranja.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_12",
+    "word": "dado",
+    "definition": "Objeto em forma de cubo para jogos.",
+    "sentence_context": "Lança o dado para jogar.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_13",
+    "word": "fada",
+    "definition": "Personagem mágica dos contos.",
+    "sentence_context": "A fada madrinha apareceu.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_14",
+    "word": "gelo",
+    "definition": "Água em estado sólido.",
+    "sentence_context": "Coloquei gelo no sumo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_15",
+    "word": "leão",
+    "definition": "Animal selvagem conhecido como rei da selva.",
+    "sentence_context": "O leão rugiu alto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_16",
+    "word": "mala",
+    "definition": "Objeto usado para levar roupas.",
+    "sentence_context": "Arrumei a minha mala.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_17",
+    "word": "navio",
+    "definition": "Grande embarcação que anda no mar.",
+    "sentence_context": "O navio partiu do porto.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_18",
+    "word": "ovo",
+    "definition": "Célula produzida pelas aves.",
+    "sentence_context": "Comi um ovo cozido.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_19",
+    "word": "pão",
+    "definition": "Alimento feito de farinha.",
+    "sentence_context": "Comprei pão fresco.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_20",
+    "word": "rato",
+    "definition": "Pequeno animal roedor.",
+    "sentence_context": "O rato fugiu do gato.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_21",
+    "word": "sapo",
+    "definition": "Animal anfíbio que pula.",
+    "sentence_context": "O sapo vive no brejo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_22",
+    "word": "tatu",
+    "definition": "Animal com uma carapaça dura.",
+    "sentence_context": "O tatu cava buracos.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_23",
+    "word": "uva",
+    "definition": "Pequena fruta que cresce em cachos.",
+    "sentence_context": "A uva é muito doce.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_24",
+    "word": "vaca",
+    "definition": "Animal que produz leite.",
+    "sentence_context": "A vaca pasta no campo.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_25",
+    "word": "zero",
+    "definition": "Número que representa o nada.",
+    "sentence_context": "Tirei zero dúvidas hoje.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_26",
+    "word": "boca",
+    "definition": "Parte do rosto usada para falar.",
+    "sentence_context": "Abra a boca para o médico.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_27",
+    "word": "café",
+    "definition": "Bebida feita de grãos torrados.",
+    "sentence_context": "O café está muito quente.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_28",
+    "word": "doce",
+    "definition": "Alimento com muito açúcar.",
+    "sentence_context": "Comi um doce de leite.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_29",
+    "word": "fogo",
+    "definition": "Calor e luz produzidos pela queima.",
+    "sentence_context": "O fogo aquece a sala.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_30",
+    "word": "galo",
+    "definition": "Macho da galinha.",
+    "sentence_context": "O galo canta de manhã.",
+    "difficulty": 1
+  },
+  {
+    "id": "pt_w1_31",
+    "word": "jaca",
+    "definition": "Fruta grande e tropical.",
+    "sentence_context": "A jaca é uma fruta pesada.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_32",
+    "word": "lama",
+    "definition": "Terra misturada com água.",
+    "sentence_context": "O carro ficou na lama.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_33",
+    "word": "mota",
+    "definition": "Veículo de duas rodas.",
+    "sentence_context": "Ele viaja de mota.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_34",
+    "word": "neve",
+    "definition": "Água congelada que cai das nuvens.",
+    "sentence_context": "A neve é branca e fria.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_35",
+    "word": "pipa",
+    "definition": "Brinquedo que voa com o vento.",
+    "sentence_context": "Soltei pipa no parque.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_36",
+    "word": "roda",
+    "definition": "Objeto circular que gira.",
+    "sentence_context": "A roda do carro furou.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_37",
+    "word": "selo",
+    "definition": "Pequeno papel colado em cartas.",
+    "sentence_context": "Colei o selo no envelope.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_38",
+    "word": "toca",
+    "definition": "Buraco onde vivem animais.",
+    "sentence_context": "O coelho entrou na toca.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_39",
+    "word": "vela",
+    "definition": "Objeto de cera que dá luz.",
+    "sentence_context": "Acendi uma vela na mesa.",
+    "difficulty": 2
+  },
+  {
+    "id": "pt_w1_40",
+    "word": "mico",
+    "definition": "Pequeno macaco.",
+    "sentence_context": "O mico saltou no galho.",
+    "difficulty": 2
+  }
+]

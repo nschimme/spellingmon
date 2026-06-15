@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w3_1",
+    "word": "perro",
+    "definition": "Animal doméstico que ladra.",
+    "sentence_context": "Mi perro corre muy rápido.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_2",
+    "word": "llave",
+    "definition": "Objeto para abrir puertas.",
+    "sentence_context": "Perdí la llave de casa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_3",
+    "word": "chico",
+    "definition": "Un niño o joven.",
+    "sentence_context": "El chico juega al fútbol.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_4",
+    "word": "coche",
+    "definition": "Vehículo con cuatro ruedas.",
+    "sentence_context": "Mi coche es de color azul.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_5",
+    "word": "carta",
+    "definition": "Mensaje escrito en papel.",
+    "sentence_context": "Escribí una carta a mi abuela.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_6",
+    "word": "pasto",
+    "definition": "Hierba que comen los animales.",
+    "sentence_context": "Las vacas comen pasto.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_7",
+    "word": "queso",
+    "definition": "Alimento hecho con leche.",
+    "sentence_context": "Me gusta el queso curado.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_8",
+    "word": "llama",
+    "definition": "Fuego o animal de los Andes.",
+    "sentence_context": "La llama quema mucho.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_9",
+    "word": "noche",
+    "definition": "Tiempo en que no hay sol.",
+    "sentence_context": "Dormimos durante la noche.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_10",
+    "word": "calle",
+    "definition": "Camino entre edificios.",
+    "sentence_context": "Cruza la calle con cuidado.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_11",
+    "word": "gorra",
+    "definition": "Sombrero con visera.",
+    "sentence_context": "Llevo una gorra para el sol.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_12",
+    "word": "pollo",
+    "definition": "Hijo de la gallina.",
+    "sentence_context": "El pollo pía sin parar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_13",
+    "word": "lluvia",
+    "definition": "Agua que cae del cielo.",
+    "sentence_context": "Necesito un paraguas para la lluvia.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_14",
+    "word": "choza",
+    "definition": "Casa pequeña y rústica.",
+    "sentence_context": "Vivían en una choza de paja.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_15",
+    "word": "torre",
+    "definition": "Edificio muy alto.",
+    "sentence_context": "Subimos a la torre del castillo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_16",
+    "word": "barco",
+    "definition": "Vehículo que flota en el mar.",
+    "sentence_context": "El barco navega por el océano.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_17",
+    "word": "falda",
+    "definition": "Prenda de vestir femenina.",
+    "sentence_context": "Mi falda es de cuadros.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_18",
+    "word": "selva",
+    "definition": "Lugar con muchos árboles y animales.",
+    "sentence_context": "El tigre vive en la selva.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_19",
+    "word": "bulto",
+    "definition": "Cuerpo que se ve poco claro.",
+    "sentence_context": "Hay un bulto bajo la manta.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_20",
+    "word": "tarta",
+    "definition": "Postre dulce grande.",
+    "sentence_context": "Comimos tarta de chocolate.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_21",
+    "word": "cerdo",
+    "definition": "Animal de granja rosado.",
+    "sentence_context": "El cerdo vive en la pocilga.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_22",
+    "word": "leche",
+    "definition": "Bebida blanca de la vaca.",
+    "sentence_context": "Bebo leche por la mañana.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_23",
+    "word": "parque",
+    "definition": "Lugar con árboles para jugar.",
+    "sentence_context": "Vamos al parque a jugar.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_24",
+    "word": "pulga",
+    "definition": "Insecto muy pequeño que salta.",
+    "sentence_context": "El perro tiene una pulga.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_25",
+    "word": "torta",
+    "definition": "Pan plano o pastel.",
+    "sentence_context": "Hice una torta de naranja.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_26",
+    "word": "viento",
+    "definition": "Aire en movimiento.",
+    "sentence_context": "El viento mueve las hojas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_27",
+    "word": "dentro",
+    "definition": "En la parte interior.",
+    "sentence_context": "El gato está dentro de la caja.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_28",
+    "word": "fuente",
+    "definition": "Donde sale el agua.",
+    "sentence_context": "Bebí agua de la fuente.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_29",
+    "word": "puente",
+    "definition": "Construcción para cruzar un río.",
+    "sentence_context": "Cruzamos el puente de piedra.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_30",
+    "word": "fiesta",
+    "definition": "Reunión para divertirse.",
+    "sentence_context": "Hoy es mi fiesta de cumple.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w3_31",
+    "word": "lleno",
+    "definition": "Que no cabe nada más.",
+    "sentence_context": "El vaso está lleno de agua.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_32",
+    "word": "silla",
+    "definition": "Mueble para sentarse.",
+    "sentence_context": "Siéntate en la silla roja.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_33",
+    "word": "caldo",
+    "definition": "Líquido de cocinar carne o verdura.",
+    "sentence_context": "El caldo está muy caliente.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_34",
+    "word": "pueblo",
+    "definition": "Lugar donde vive gente.",
+    "sentence_context": "Mi abuelo vive en un pueblo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_35",
+    "word": "huerto",
+    "definition": "Lugar donde se plantan verduras.",
+    "sentence_context": "Cogí tomates del huerto.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_36",
+    "word": "hierba",
+    "definition": "Planta verde y corta.",
+    "sentence_context": "Me senté en la hierba suave.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_37",
+    "word": "tierra",
+    "definition": "Suelo donde crecen plantas.",
+    "sentence_context": "Planté una flor en la tierra.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_38",
+    "word": "muerte",
+    "definition": "Final de la vida.",
+    "sentence_context": "La muerte es parte de la vida.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_39",
+    "word": "fuerte",
+    "definition": "Persona con mucha fuerza.",
+    "sentence_context": "Soy muy fuerte y valiente.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w3_40",
+    "word": "muelle",
+    "definition": "Lugar donde atracan barcos.",
+    "sentence_context": "El barco llegó al muelle.",
+    "difficulty": 2
+  }
+]

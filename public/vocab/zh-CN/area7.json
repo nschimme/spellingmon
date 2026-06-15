@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w7_1",
+    "word": "shāfā",
+    "spoken_version": "沙发",
+    "definition": "软椅子。",
+    "sentence_context": "我坐在沙发上看书。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_2",
+    "word": "qiǎokèlì",
+    "spoken_version": "巧克力",
+    "definition": "一种甜食。",
+    "sentence_context": "我喜欢吃黑巧克力。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_3",
+    "word": "kělè",
+    "spoken_version": "可乐",
+    "definition": "一种碳酸饮料。",
+    "sentence_context": "我不常喝可乐。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_4",
+    "word": "bǐsà",
+    "spoken_version": "比萨",
+    "definition": "意式薄饼。",
+    "sentence_context": "比萨上面有很多芝士。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_5",
+    "word": "hànbǎo",
+    "spoken_version": "汉堡",
+    "definition": "面包夹肉饼。",
+    "sentence_context": "汉堡是快餐的一种。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_6",
+    "word": "mòxītuō",
+    "spoken_version": "莫希托",
+    "definition": "一种鸡尾酒。",
+    "sentence_context": "这杯莫希托很清爽。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_7",
+    "word": "kǎfēi",
+    "spoken_version": "咖啡",
+    "definition": "一种提神饮料。",
+    "sentence_context": "妈妈每天喝咖啡。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_8",
+    "word": "nílóng",
+    "spoken_version": "尼龙",
+    "definition": "一种人造纤维。",
+    "sentence_context": "这种绳子是尼龙做的。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_9",
+    "word": "mǎtǎ",
+    "spoken_version": "马达",
+    "definition": "电动机。",
+    "sentence_context": "小船的马达响了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_10",
+    "word": "jítā",
+    "spoken_version": "吉他",
+    "definition": "一种弦乐器。",
+    "sentence_context": "哥哥会弹吉他。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_11",
+    "word": "bālěi",
+    "spoken_version": "芭蕾",
+    "definition": "一种舞蹈。",
+    "sentence_context": "她正在练芭蕾舞。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_12",
+    "word": "pūkè",
+    "spoken_version": "扑克",
+    "definition": "一种纸牌游戏。",
+    "sentence_context": "爷爷教我玩扑克。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_13",
+    "word": "níjiā",
+    "spoken_version": "尼加",
+    "definition": "地名相关的音译。",
+    "sentence_context": "这个品牌源自海外。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_14",
+    "word": "qiǎokèlì",
+    "spoken_version": "巧克力",
+    "definition": "可可做的零食。",
+    "sentence_context": "巧克力味很浓郁。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_15",
+    "word": "yōumò",
+    "spoken_version": "幽默",
+    "definition": "风趣可笑。",
+    "sentence_context": "这位老师说话很幽默。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_16",
+    "word": "shālā",
+    "spoken_version": "沙拉",
+    "definition": "凉拌菜。",
+    "sentence_context": "蔬菜沙拉很好吃。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_17",
+    "word": "níchōng",
+    "spoken_version": "霓虹",
+    "definition": "彩灯。",
+    "sentence_context": "城市里的霓虹灯亮了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_18",
+    "word": "shèngdàn",
+    "spoken_version": "圣诞",
+    "definition": "节日名。",
+    "sentence_context": "圣诞节到了，真快乐。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_19",
+    "word": "móshù",
+    "spoken_version": "魔术",
+    "definition": "奇幻的表演。",
+    "sentence_context": "魔术师变出了一只鸽子。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_20",
+    "word": "shìpín",
+    "spoken_version": "视频",
+    "definition": "动态图像。",
+    "sentence_context": "我喜欢看有趣的视频。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_21",
+    "word": "yīshān",
+    "spoken_version": "衣衫",
+    "definition": "衣服。",
+    "sentence_context": "他的衣衫很整洁。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_22",
+    "word": "miànbāo",
+    "spoken_version": "面包",
+    "definition": "面粉烤制的食品。",
+    "sentence_context": "面包真香。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_23",
+    "word": "yìngbi",
+    "spoken_version": "硬币",
+    "definition": "金属钱币。",
+    "sentence_context": "我存了好多硬币。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_24",
+    "word": "tiānshǐ",
+    "spoken_version": "天使",
+    "definition": "美丽的神灵。",
+    "sentence_context": "妹妹像个小天使。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_25",
+    "word": "xiāngshuǐ",
+    "spoken_version": "香水",
+    "definition": "香香的水。",
+    "sentence_context": "妈妈喷了香水。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_26",
+    "word": "tángguǒ",
+    "spoken_version": "糖果",
+    "definition": "甜甜的糖。",
+    "sentence_context": "小孩都爱吃糖果。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_27",
+    "word": "xīlà",
+    "spoken_version": "西腊",
+    "definition": "地名相关的音译。",
+    "sentence_context": "古希腊文明很灿烂。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_28",
+    "word": "sūdǎ",
+    "spoken_version": "苏打",
+    "definition": "一种化学物质音译。",
+    "sentence_context": "苏打水可以助消化。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_29",
+    "word": "yújiā",
+    "spoken_version": "瑜伽",
+    "definition": "一种健身运动。",
+    "sentence_context": "妈妈在练习瑜伽。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_30",
+    "word": "tàntè",
+    "spoken_version": "忐忑",
+    "definition": "心神不定。",
+    "sentence_context": "我心里感到忐忑不安。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w7_31",
+    "word": "diǎnxīn",
+    "spoken_version": "点心",
+    "definition": "糕点小吃。",
+    "sentence_context": "下午茶有点心吃。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_32",
+    "word": "pútáo",
+    "spoken_version": "葡萄",
+    "definition": "紫紫的水果。",
+    "sentence_context": "葡萄酸酸甜甜的。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_33",
+    "word": "mòlì",
+    "spoken_version": "茉莉",
+    "definition": "一种白花。",
+    "sentence_context": "茉莉花开真芬芳。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_34",
+    "word": "bīngqílín",
+    "spoken_version": "冰淇淋",
+    "definition": "凉凉的甜点。",
+    "sentence_context": "草莓冰淇淋我的最爱。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_35",
+    "word": "mótí",
+    "spoken_version": "摩托",
+    "definition": "二轮机动车音译。",
+    "sentence_context": "爸爸骑着摩托车。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_36",
+    "word": "kùbiān",
+    "spoken_version": "裤边",
+    "definition": "衣服边缘。",
+    "sentence_context": "裤边磨坏了。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_37",
+    "word": "yīngwǔ",
+    "spoken_version": "鹦鹉",
+    "definition": "会说话的鸟。",
+    "sentence_context": "鹦鹉学人说话。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_38",
+    "word": "fěndǐ",
+    "spoken_version": "粉底",
+    "definition": "化妆品。",
+    "sentence_context": "妈妈涂了粉底。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_39",
+    "word": "bōli",
+    "spoken_version": "玻璃",
+    "definition": "透明物质。",
+    "sentence_context": "窗户上的玻璃很干净。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w7_40",
+    "word": "kǒuqíng",
+    "spoken_version": "口琴",
+    "definition": "吹奏乐器。",
+    "sentence_context": "他吹口琴真动听。",
+    "difficulty": 2
+  }
+]

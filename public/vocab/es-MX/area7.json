@@ -1,0 +1,282 @@
+[
+  {
+    "id": "es_w7_1",
+    "word": "sándwich",
+    "definition": "Emparedado de pan de molde.",
+    "sentence_context": "Me comí un sándwich de jamón.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_2",
+    "word": "chef",
+    "definition": "Cocinero profesional.",
+    "sentence_context": "El chef preparó una cena rica.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_3",
+    "word": "kiwi",
+    "definition": "Fruta verde por dentro.",
+    "sentence_context": "El kiwi tiene mucha vitamina C.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_4",
+    "word": "xilófono",
+    "definition": "Instrumento musical de láminas.",
+    "sentence_context": "Toco el xilófono en clase de música.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_5",
+    "word": "chocolate",
+    "definition": "Dulce hecho de cacao.",
+    "sentence_context": "Me encanta el chocolate con leche.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_6",
+    "word": "jaguar",
+    "definition": "Felino grande de América.",
+    "sentence_context": "El jaguar corre por la selva.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_7",
+    "word": "fútbol",
+    "definition": "Deporte con un balón y dos porterías.",
+    "sentence_context": "Jugamos al fútbol en el recreo.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_8",
+    "word": "básquet",
+    "definition": "Deporte de encestar un balón.",
+    "sentence_context": "Mi primo juega al básquet.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_9",
+    "word": "cómic",
+    "definition": "Libro de historietas con dibujos.",
+    "sentence_context": "Leí un cómic de superhéroes.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_10",
+    "word": "pijama",
+    "definition": "Ropa para dormir.",
+    "sentence_context": "Me puse el pijama limpio.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_11",
+    "word": "champú",
+    "definition": "Jabón para el pelo.",
+    "sentence_context": "Lávate la cabeza con champú.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_12",
+    "word": "cruasán",
+    "definition": "Bollo de masa de hojaldre.",
+    "sentence_context": "Desayuné un cruasán con leche.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_13",
+    "word": "yogur",
+    "definition": "Alimento derivado de la leche.",
+    "sentence_context": "Me gusta el yogur de fresa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_14",
+    "word": "carné",
+    "definition": "Tarjeta de identidad.",
+    "sentence_context": "Tengo el carné de la biblioteca.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_15",
+    "word": "chalet",
+    "definition": "Casa unifamiliar con jardín.",
+    "sentence_context": "Mis tíos viven en un chalet.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_16",
+    "word": "kayak",
+    "definition": "Canoa pequeña para una persona.",
+    "sentence_context": "Remamos en el kayak por el río.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_17",
+    "word": "karaoke",
+    "definition": "Cantar con música grabada.",
+    "sentence_context": "Fuimos al karaoke por su cumple.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_18",
+    "word": "ketchup",
+    "definition": "Salsa de tomate dulce.",
+    "sentence_context": "Le puse ketchup a las patatas.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_19",
+    "word": "claxon",
+    "definition": "Bocina de un coche.",
+    "sentence_context": "El coche tocó el claxon.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_20",
+    "word": "taxi",
+    "definition": "Vehículo de transporte público.",
+    "sentence_context": "Cogimos un taxi para ir al aeropuerto.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_21",
+    "word": "surf",
+    "definition": "Deporte de deslizarse por las olas.",
+    "sentence_context": "Él hace surf en la playa.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_22",
+    "word": "hobby",
+    "definition": "Actividad que se hace por placer.",
+    "sentence_context": "Mi hobby es leer libros.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_23",
+    "word": "jeans",
+    "definition": "Pantalones de tela vaquera.",
+    "sentence_context": "Me compré unos jeans nuevos.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_24",
+    "word": "ticket",
+    "definition": "Resguardo de una compra.",
+    "sentence_context": "Guarda el ticket por si acaso.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_25",
+    "word": "software",
+    "definition": "Programas de un ordenador.",
+    "sentence_context": "Instalé un nuevo software.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_26",
+    "word": "web",
+    "definition": "Sitio en internet.",
+    "sentence_context": "Busqué información en la web.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_27",
+    "word": "wifi",
+    "definition": "Conexión inalámbrica a internet.",
+    "sentence_context": "Pídeles la clave del wifi.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_28",
+    "word": "flash",
+    "definition": "Luz rápida de una cámara.",
+    "sentence_context": "La cámara hizo un flash brillante.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_29",
+    "word": "pizza",
+    "definition": "Comida italiana redonda.",
+    "sentence_context": "Cenamos pizza de queso.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_30",
+    "word": "póster",
+    "definition": "Cartel grande de papel.",
+    "sentence_context": "Colgué un póster en mi pared.",
+    "difficulty": 1
+  },
+  {
+    "id": "es_w7_31",
+    "word": "béisbol",
+    "definition": "Deporte con bate y pelota.",
+    "sentence_context": "El béisbol es popular en Cuba.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_32",
+    "word": "esmoquin",
+    "definition": "Traje de fiesta masculino.",
+    "sentence_context": "Se puso un esmoquin para la boda.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_33",
+    "word": "golf",
+    "definition": "Deporte de golpear una bola pequeña.",
+    "sentence_context": "Mi abuelo juega al golf.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_34",
+    "word": "tenis",
+    "definition": "Deporte de raqueta.",
+    "sentence_context": "Jugamos al tenis el sábado.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_35",
+    "word": "camping",
+    "definition": "Lugar para acampar.",
+    "sentence_context": "Fuimos de camping a la montaña.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_36",
+    "word": "parking",
+    "definition": "Lugar para aparcar coches.",
+    "sentence_context": "Dejamos el coche en el parking.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_37",
+    "word": "clic",
+    "definition": "Acción de pulsar el ratón.",
+    "sentence_context": "Haz clic en el enlace.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_38",
+    "word": "chalé",
+    "definition": "Casa con jardín.",
+    "sentence_context": "Se mudaron a un chalé nuevo.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_39",
+    "word": "pudin",
+    "definition": "Postre dulce y blando.",
+    "sentence_context": "Comimos pudin de postre.",
+    "difficulty": 2
+  },
+  {
+    "id": "es_w7_40",
+    "word": "set",
+    "definition": "Conjunto de cosas.",
+    "sentence_context": "Tengo un set de pinturas nuevo.",
+    "difficulty": 2
+  }
+]

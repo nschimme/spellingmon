@@ -1,0 +1,322 @@
+[
+  {
+    "id": "zh_w6_1",
+    "word": "mā",
+    "spoken_version": "妈",
+    "definition": "母亲。",
+    "sentence_context": "我的妈妈最美。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_2",
+    "word": "má",
+    "spoken_version": "麻",
+    "definition": "一种植物纤维或感觉。",
+    "sentence_context": "我的手有点麻。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_3",
+    "word": "mǎ",
+    "spoken_version": "马",
+    "definition": "一种四足动物。",
+    "sentence_context": "马上草原奔跑。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_4",
+    "word": "mà",
+    "spoken_version": "骂",
+    "definition": "用言语侮辱。",
+    "sentence_context": "不要随便骂人。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_5",
+    "word": "yī",
+    "spoken_version": "一",
+    "definition": "数字一。",
+    "sentence_context": "数一数有多少个。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_6",
+    "word": "yí",
+    "spoken_version": "姨",
+    "definition": "母亲的姐妹。",
+    "sentence_context": "姨妈来看我了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_7",
+    "word": "yǐ",
+    "spoken_version": "椅",
+    "definition": "椅子。",
+    "sentence_context": "坐椅子要端正。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_8",
+    "word": "yì",
+    "spoken_version": "意",
+    "definition": "意思或意义。",
+    "sentence_context": "这非常有意义。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_9",
+    "word": "bā",
+    "spoken_version": "八",
+    "definition": "数字八。",
+    "sentence_context": "这有八本书。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_10",
+    "word": "bá",
+    "spoken_version": "拔",
+    "definition": "拉出动作。",
+    "sentence_context": "小朋友在拔萝卜。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_11",
+    "word": "bǎ",
+    "spoken_version": "把",
+    "definition": "量词或握住。",
+    "sentence_context": "一把雨伞挡风雨。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_12",
+    "word": "bà",
+    "spoken_version": "爸",
+    "definition": "父亲。",
+    "sentence_context": "爸爸带我去游玩。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_13",
+    "word": "shī",
+    "spoken_version": "师",
+    "definition": "老师。",
+    "sentence_context": "师生情谊深。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_14",
+    "word": "shí",
+    "spoken_version": "十",
+    "definition": "数字十。",
+    "sentence_context": "十个手指头。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_15",
+    "word": "shǐ",
+    "spoken_version": "史",
+    "definition": "历史。",
+    "sentence_context": "中国历史很悠久。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_16",
+    "word": "shì",
+    "spoken_version": "是",
+    "definition": "判断词。",
+    "sentence_context": "我是小学生。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_17",
+    "word": "gōngjī",
+    "spoken_version": "公鸡",
+    "definition": "雄性的鸡。",
+    "sentence_context": "公鸡喔喔叫。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_18",
+    "word": "gōngjì",
+    "spoken_version": "合计",
+    "definition": "合在一起计算。",
+    "sentence_context": "这些书合计多少钱？",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_19",
+    "word": "lǎoshī",
+    "spoken_version": "老师",
+    "definition": "教书的人。",
+    "sentence_context": "老师辛苦了。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_20",
+    "word": "lǎoshí",
+    "spoken_version": "老实",
+    "definition": "诚实。",
+    "sentence_context": "诚实是个好品质。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_21",
+    "word": "xī",
+    "spoken_version": "西",
+    "definition": "方位西。",
+    "sentence_context": "太阳西下。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_22",
+    "word": "xí",
+    "spoken_version": "习",
+    "definition": "学习或习气。",
+    "sentence_context": "好好学习，天天向上。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_23",
+    "word": "xǐ",
+    "spoken_version": "喜",
+    "definition": "高兴的事。",
+    "sentence_context": "家里有喜事。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_24",
+    "word": "xì",
+    "spoken_version": "戏",
+    "definition": "游戏或戏剧。",
+    "sentence_context": "大家在一起做游戏。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_25",
+    "word": "huā",
+    "spoken_version": "花",
+    "definition": "植物的花。",
+    "sentence_context": "花儿真好看。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_26",
+    "word": "huá",
+    "spoken_version": "华",
+    "definition": "中华或美丽。",
+    "sentence_context": "中华民族真伟大。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_27",
+    "word": "huà",
+    "spoken_version": "画",
+    "definition": "绘画。",
+    "sentence_context": "我喜欢画画。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_28",
+    "word": "shū",
+    "spoken_version": "书",
+    "definition": "书籍。",
+    "sentence_context": "多读书有好处。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_29",
+    "word": "shǔ",
+    "spoken_version": "数",
+    "definition": "计算数字。",
+    "sentence_context": "数数天上的星星。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_30",
+    "word": "shù",
+    "spoken_version": "树",
+    "definition": "树木。",
+    "sentence_context": "大树下好乘凉。",
+    "difficulty": 1
+  },
+  {
+    "id": "zh_w6_31",
+    "word": "fā",
+    "spoken_version": "发",
+    "definition": "头发。",
+    "sentence_context": "黑黑的头发。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_32",
+    "word": "fá",
+    "spoken_version": "罚",
+    "definition": "惩罚。",
+    "sentence_context": "做错事要受罚。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_33",
+    "word": "fǎ",
+    "spoken_version": "法",
+    "definition": "方法或法律。",
+    "sentence_context": "学习要有方法。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_34",
+    "word": "tī",
+    "spoken_version": "踢",
+    "definition": "踢腿。",
+    "sentence_context": "别乱踢球。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_35",
+    "word": "tí",
+    "spoken_version": "提",
+    "definition": "提起。",
+    "sentence_context": "提着篮子去采摘。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_36",
+    "word": "tǐ",
+    "spoken_version": "体",
+    "definition": "身体。",
+    "sentence_context": "身体健康很重要。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_37",
+    "word": "tì",
+    "spoken_version": "替",
+    "definition": "代替。",
+    "sentence_context": "我替你去拿书。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_38",
+    "word": "dū",
+    "spoken_version": "都",
+    "definition": "首都或全部。",
+    "sentence_context": "我们都喜欢这里。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_39",
+    "word": "dú",
+    "spoken_version": "读",
+    "definition": "阅读。",
+    "sentence_context": "大声读出课文来。",
+    "difficulty": 2
+  },
+  {
+    "id": "zh_w6_40",
+    "word": "dù",
+    "spoken_version": "度",
+    "definition": "温度或长度。",
+    "sentence_context": "今天的温度很高。",
+    "difficulty": 2
+  }
+]

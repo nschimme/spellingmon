@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w6_1",
+    "word": "Fuß",
+    "definition": "Der Teil am Ende vom Bein.",
+    "sentence_context": "Mein Fuß ist heute sehr müde.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_2",
+    "word": "Fluss",
+    "definition": "Viel Wasser, das zum Meer fließt.",
+    "sentence_context": "Der Fluss ist sehr breit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_3",
+    "word": "wieder",
+    "definition": "Noch einmal.",
+    "sentence_context": "Komm bitte bald wieder vorbei.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_4",
+    "word": "wider",
+    "definition": "Gegen etwas sein.",
+    "sentence_context": "Das ist wider den guten Geschmack.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_5",
+    "word": "Seite",
+    "definition": "Ein Teil von einem Buch.",
+    "sentence_context": "Blätter bitte die nächste Seite um.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_6",
+    "word": "Saite",
+    "definition": "Ein Draht an der Geige.",
+    "sentence_context": "Die Gitarre hat sechs Saiten.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_7",
+    "word": "weiß",
+    "definition": "Die Farbe von Milch.",
+    "sentence_context": "Ich habe ein weißes T-Shirt.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_8",
+    "word": "weis",
+    "definition": "Jemandem etwas zeigen.",
+    "sentence_context": "Ich mache dich auf den Fehler aufmerksam.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_9",
+    "word": "Straße",
+    "definition": "Darauf fahren Autos.",
+    "sentence_context": "Fahr vorsichtig auf der Straße.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_10",
+    "word": "Grüße",
+    "definition": "Was man in einen Brief schreibt.",
+    "sentence_context": "Viele Grüße an deine Familie.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_11",
+    "word": "süß",
+    "definition": "Wenn Zucker drin ist.",
+    "sentence_context": "Der Honig schmeckt sehr süß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_12",
+    "word": "groß",
+    "definition": "Nicht klein.",
+    "sentence_context": "Der Elefant ist sehr groß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_13",
+    "word": "heiß",
+    "definition": "Sehr warm.",
+    "sentence_context": "Pass auf, der Tee ist heiß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_14",
+    "word": "Wasser",
+    "definition": "Was wir zum Trinken brauchen.",
+    "sentence_context": "Ich trinke ein Glas Wasser.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_15",
+    "word": "lassen",
+    "definition": "Etwas so bleiben wie es ist.",
+    "sentence_context": "Lass das Spielzeug auf dem Boden.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_16",
+    "word": "essen",
+    "definition": "Nahrung zu sich nehmen.",
+    "sentence_context": "Ich möchte jetzt etwas essen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_17",
+    "word": "messen",
+    "definition": "Sehen, wie groß etwas ist.",
+    "sentence_context": "Ich muss meine Größe messen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_18",
+    "word": "Klasse",
+    "definition": "Kinder in einer Schule.",
+    "sentence_context": "Meine Klasse ist sehr toll.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_19",
+    "word": "Pass",
+    "definition": "Ein Dokument für die Reise.",
+    "sentence_context": "Nimm deinen Pass mit zum Flughafen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_20",
+    "word": "Tasse",
+    "definition": "Daraus trinkt man Tee.",
+    "sentence_context": "Stell die Tasse auf den Tisch.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_21",
+    "word": "bis",
+    "definition": "Bis zu einem Zeitpunkt.",
+    "sentence_context": "Ich bleibe bis morgen hier.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_22",
+    "word": "Biss",
+    "definition": "Wenn man mit Zähnen zubeißt.",
+    "sentence_context": "Der Apfel hat einen Biss.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_23",
+    "word": "Süße",
+    "definition": "Die Qualität von Zucker.",
+    "sentence_context": "Ich mag die Süße der Frucht.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_24",
+    "word": "Blöße",
+    "definition": "Wenn man eine Schwäche zeigt.",
+    "sentence_context": "Gib dir keine Blöße beim Spiel.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_25",
+    "word": "Floß",
+    "definition": "Ein einfaches Boot aus Holz.",
+    "sentence_context": "Wir bauen ein Floß für den See.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_26",
+    "word": "Ross",
+    "definition": "Ein anderes Wort für Pferd.",
+    "sentence_context": "Das weiße Ross galoppiert schnell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_27",
+    "word": "Schoß",
+    "definition": "Auf den Beinen sitzen.",
+    "sentence_context": "Komm auf meinen Schoß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_28",
+    "word": "Schloss",
+    "definition": "Ein großes Haus für Könige.",
+    "sentence_context": "Das Schloss hat viele Türme.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_29",
+    "word": "Ruß",
+    "definition": "Schwarzer Staub im Kamin.",
+    "sentence_context": "Der Schornstein ist voller Ruß.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_30",
+    "word": "Nuss",
+    "definition": "Eine Frucht mit harter Schale.",
+    "sentence_context": "Das Eichhörnchen isst eine Nuss.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w6_31",
+    "word": "Gruß",
+    "definition": "Hallo oder Auf Wiedersehen.",
+    "sentence_context": "Schick einen lieben Gruß nach Hause.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_32",
+    "word": "Stoß",
+    "definition": "Wenn man jemanden schubst.",
+    "sentence_context": "Das war ein fester Stoß.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_33",
+    "word": "Kuss",
+    "definition": "Ein Zeichen von Liebe.",
+    "sentence_context": "Mama gibt mir einen Kuss.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_34",
+    "word": "Schluss",
+    "definition": "Das Ende von einer Sache.",
+    "sentence_context": "Jetzt ist Schluss mit dem Spiel.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_35",
+    "word": "Stress",
+    "definition": "Wenn man viel zu tun hat.",
+    "sentence_context": "Hab keinen Stress bei der Arbeit.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_36",
+    "word": "Spaß",
+    "definition": "Wenn man lachen muss.",
+    "sentence_context": "Das Spiel macht viel Spaß.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_37",
+    "word": "Guss",
+    "definition": "Wenn man Wasser ausgießt.",
+    "sentence_context": "Der Regen war ein starker Guss.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_38",
+    "word": "Riss",
+    "definition": "Wenn Papier kaputt geht.",
+    "sentence_context": "Das Blatt hat einen kleinen Riss.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_39",
+    "word": "Miss",
+    "definition": "Ein Titel für eine junge Frau.",
+    "sentence_context": "Die Miss kommt zur Feier.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w6_40",
+    "word": "Fass",
+    "definition": "Ein großer Behälter aus Holz.",
+    "sentence_context": "Im Keller steht ein Fass Saft.",
+    "difficulty": 2
+  }
+]

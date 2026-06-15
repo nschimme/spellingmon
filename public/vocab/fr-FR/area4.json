@@ -1,0 +1,282 @@
+[
+  {
+    "id": "fr_w4_1",
+    "word": "chatte",
+    "definition": "Une femelle chat.",
+    "sentence_context": "La chatte allaite ses chatons.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_2",
+    "word": "chienne",
+    "definition": "Une femelle chien.",
+    "sentence_context": "La chienne surveille la maison.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_3",
+    "word": "fillette",
+    "definition": "Une petite fille.",
+    "sentence_context": "La fillette court dans le jardin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_4",
+    "word": "journaux",
+    "definition": "Plusieurs journaux.",
+    "sentence_context": "Papa lit les journaux le matin.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_5",
+    "word": "chevaux",
+    "definition": "Plusieurs chevaux.",
+    "sentence_context": "Les chevaux courent dans la prairie.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_6",
+    "word": "poulette",
+    "definition": "Une petite poule.",
+    "sentence_context": "La poulette picore du grain.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_7",
+    "word": "lionne",
+    "definition": "La femelle du lion.",
+    "sentence_context": "La lionne chasse pour ses petits.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_8",
+    "word": "maitresse",
+    "definition": "Femme qui enseigne à l'école.",
+    "sentence_context": "La maitresse explique la leçon.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_9",
+    "word": "cadeaux",
+    "definition": "Plusieurs cadeaux.",
+    "sentence_context": "J'ai reçu beaucoup de cadeaux pour ma fête.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_10",
+    "word": "oiseaux",
+    "definition": "Plusieurs oiseaux.",
+    "sentence_context": "Les oiseaux volent vers le sud.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_11",
+    "word": "vachette",
+    "definition": "Une petite vache.",
+    "sentence_context": "La vachette suit sa maman.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_12",
+    "word": "tigresse",
+    "definition": "La femelle du tigre.",
+    "sentence_context": "La tigresse est très impressionnante.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_13",
+    "word": "directrice",
+    "definition": "Femme qui dirige l'école.",
+    "sentence_context": "La directrice nous a dit bonjour.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_14",
+    "word": "bateaux",
+    "definition": "Plusieurs bateaux.",
+    "sentence_context": "Les bateaux sont amarrés au port.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_15",
+    "word": "châteaux",
+    "definition": "Plusieurs châteaux.",
+    "sentence_context": "Nous avons visité des châteaux forts.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_16",
+    "word": "lapine",
+    "definition": "La femelle du lapin.",
+    "sentence_context": "La lapine mange une carotte.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_17",
+    "word": "ourse",
+    "definition": "La femelle de l'ours.",
+    "sentence_context": "L'ourse protège ses oursons.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_18",
+    "word": "chanteuse",
+    "definition": "Femme qui chante.",
+    "sentence_context": "Elle veut devenir une grande chanteuse.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_19",
+    "word": "gâteaux",
+    "definition": "Plusieurs gâteaux.",
+    "sentence_context": "Il y a des gâteaux sur le buffet.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_20",
+    "word": "manteaux",
+    "definition": "Plusieurs manteaux.",
+    "sentence_context": "Mettez vos manteaux, il fait froid.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_21",
+    "word": "brebis",
+    "definition": "La femelle du mouton.",
+    "sentence_context": "La brebis a de la laine blanche.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_22",
+    "word": "anesse",
+    "definition": "La femelle de l'âne.",
+    "sentence_context": "L'anesse a un petit ânon.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_23",
+    "word": "danseuse",
+    "definition": "Femme qui danse.",
+    "sentence_context": "La danseuse porte un tutu.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_24",
+    "word": "marteaux",
+    "definition": "Plusieurs marteaux.",
+    "sentence_context": "Les marteaux servent à enfoncer des clous.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_25",
+    "word": "rideaux",
+    "definition": "Plusieurs rideaux.",
+    "sentence_context": "On ferme les rideaux quand il fait nuit.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_26",
+    "word": "canne",
+    "definition": "La femelle du canard.",
+    "sentence_context": "La canne nage sur l'étang.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_27",
+    "word": "louve",
+    "definition": "La femelle du loup.",
+    "sentence_context": "La louve est dans sa tanière.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_28",
+    "word": "vendeuse",
+    "definition": "Femme qui vend dans un magasin.",
+    "sentence_context": "La vendeuse m'a donné mon sac.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_29",
+    "word": "cerveaux",
+    "definition": "Plusieurs cerveaux.",
+    "sentence_context": "Les cerveaux sont très complexes.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_30",
+    "word": "tonneaux",
+    "definition": "Plusieurs tonneaux.",
+    "sentence_context": "On garde le vin dans des tonneaux.",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_w4_31",
+    "word": "clochettes",
+    "definition": "Petites cloches.",
+    "sentence_context": "Le muguet a des petites clochettes.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_32",
+    "word": "indienne",
+    "definition": "Femme qui appartient au peuple indien.",
+    "sentence_context": "Elle porte une belle tenue indienne.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_33",
+    "word": "boulangère",
+    "definition": "Femme qui fait du pain.",
+    "sentence_context": "La boulangère vend des croissants.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_34",
+    "word": "clous",
+    "definition": "Plusieurs clous.",
+    "sentence_context": "Il a fallu beaucoup de clous pour la cabane.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_35",
+    "word": "trous",
+    "definition": "Plusieurs trous.",
+    "sentence_context": "Il y a des trous dans la passoire.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_36",
+    "word": "coiffure",
+    "definition": "Façon de se coiffer.",
+    "sentence_context": "J'aime beaucoup ta nouvelle coiffure.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_37",
+    "word": "couture",
+    "definition": "Action de coudre.",
+    "sentence_context": "Elle aime faire de la couture.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_38",
+    "word": "peinture",
+    "definition": "Action de peindre ou tableau.",
+    "sentence_context": "La peinture est encore fraîche.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_39",
+    "word": "yeux",
+    "definition": "Plusieurs yeux.",
+    "sentence_context": "Il a les yeux bleus.",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_w4_40",
+    "word": "poux",
+    "definition": "Plusieurs poux.",
+    "sentence_context": "Il faut traiter les poux à l'école.",
+    "difficulty": 2
+  }
+]

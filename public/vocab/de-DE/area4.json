@@ -1,0 +1,282 @@
+[
+  {
+    "id": "de_w4_1",
+    "word": "Heizung",
+    "definition": "Sie macht das Zimmer warm.",
+    "sentence_context": "Im Winter machen wir die Heizung an.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_2",
+    "word": "Freiheit",
+    "definition": "Wenn man tun kann, was man will.",
+    "sentence_context": "Vögel lieben die Freiheit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_3",
+    "word": "Einsamkeit",
+    "definition": "Wenn man ganz alleine ist.",
+    "sentence_context": "Einsamkeit macht manchmal traurig.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_4",
+    "word": "Mädchen",
+    "definition": "Ein weibliches Kind.",
+    "sentence_context": "Das Mädchen trägt einen Zopf.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_5",
+    "word": "Häuschen",
+    "definition": "Ein ganz kleines Haus.",
+    "sentence_context": "Wir bauen ein Häuschen aus Keksen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_6",
+    "word": "Zeitung",
+    "definition": "Darin stehen Nachrichten.",
+    "sentence_context": "Opa liest jeden Morgen die Zeitung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_7",
+    "word": "Wohnung",
+    "definition": "Ein Ort zum Leben.",
+    "sentence_context": "Wir haben eine schöne Wohnung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_8",
+    "word": "Übung",
+    "definition": "Etwas, das man lernt.",
+    "sentence_context": "Diese Übung ist ganz einfach.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_9",
+    "word": "Siedlung",
+    "definition": "Viele Häuser an einem Ort.",
+    "sentence_context": "Wir wohnen in einer kleinen Siedlung.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_10",
+    "word": "Ordnung",
+    "definition": "Wenn alles an seinem Platz ist.",
+    "sentence_context": "Halte Ordnung in deinem Zimmer.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_11",
+    "word": "Klugheit",
+    "definition": "Wenn man viel weiß.",
+    "sentence_context": "Deine Klugheit hilft uns weiter.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_12",
+    "word": "Krankheit",
+    "definition": "Wenn man sich nicht gut fühlt.",
+    "sentence_context": "Gute Besserung nach der Krankheit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_13",
+    "word": "Kindheit",
+    "definition": "Die Zeit, wenn man jung ist.",
+    "sentence_context": "Ich habe eine schöne Kindheit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_14",
+    "word": "Heiterkeit",
+    "definition": "Wenn man gut gelaunt ist.",
+    "sentence_context": "In der Gruppe herrscht Heiterkeit.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_15",
+    "word": "Neuigkeit",
+    "definition": "Etwas, das man noch nicht weiß.",
+    "sentence_context": "Ich habe eine gute Neuigkeit für dich.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_16",
+    "word": "Süßigkeit",
+    "definition": "Schokolade oder Gummibärchen.",
+    "sentence_context": "Iss nicht so viele Süßigkeiten.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_17",
+    "word": "Kätzchen",
+    "definition": "Eine kleine Katze.",
+    "sentence_context": "Das Kätzchen trinkt Milch.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_18",
+    "word": "Hündchen",
+    "definition": "Ein kleiner Hund.",
+    "sentence_context": "Das Hündchen spielt mit dem Ball.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_19",
+    "word": "Brötchen",
+    "definition": "Ein kleines Brot.",
+    "sentence_context": "Ich möchte ein Brötchen mit Käse.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_20",
+    "word": "Glöckchen",
+    "definition": "Eine kleine Glocke.",
+    "sentence_context": "Das Glöckchen klingelt hell.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_21",
+    "word": "Kleidchen",
+    "definition": "Ein kleines Kleid.",
+    "sentence_context": "Das Kind trägt ein weißes Kleidchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_22",
+    "word": "Gärtchen",
+    "definition": "Ein kleiner Garten.",
+    "sentence_context": "Wir haben ein kleines Gärtchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_23",
+    "word": "Sonnenschein",
+    "definition": "Wenn die Sonne hell strahlt.",
+    "sentence_context": "Genieße den Sonnenschein.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_24",
+    "word": "Blümchen",
+    "definition": "Eine kleine Blume.",
+    "sentence_context": "Pflück mir bitte ein Blümchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_25",
+    "word": "Stühlchen",
+    "definition": "Ein kleiner Stuhl.",
+    "sentence_context": "Setz die Puppe auf das Stühlchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_26",
+    "word": "Tischchen",
+    "definition": "Ein kleiner Tisch.",
+    "sentence_context": "Auf dem Tischchen steht eine Vase.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_27",
+    "word": "Bettchen",
+    "definition": "Ein kleines Bett.",
+    "sentence_context": "Leg das Baby in sein Bettchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_28",
+    "word": "Säckchen",
+    "definition": "Ein kleiner Sack.",
+    "sentence_context": "In dem Säckchen sind Murmeln.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_29",
+    "word": "Töpfchen",
+    "definition": "Ein kleiner Topf.",
+    "sentence_context": "Das Essen kocht im Töpfchen.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_30",
+    "word": "Vögelchen",
+    "definition": "Ein kleiner Vogel.",
+    "sentence_context": "Das Vögelchen zwitschert im Nest.",
+    "difficulty": 1
+  },
+  {
+    "id": "de_w4_31",
+    "word": "Dunkelheit",
+    "definition": "Wenn kein Licht da ist.",
+    "sentence_context": "In der Dunkelheit sieht man Sterne.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_32",
+    "word": "Einigkeit",
+    "definition": "Wenn alle das Gleiche wollen.",
+    "sentence_context": "Einigkeit macht uns stark.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_33",
+    "word": "Wahrheit",
+    "definition": "Wenn man nicht lügt.",
+    "sentence_context": "Sag mir bitte die Wahrheit.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_34",
+    "word": "Sicherheit",
+    "definition": "Wenn man keine Angst hat.",
+    "sentence_context": "Im Gurt hast du Sicherheit.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_35",
+    "word": "Besuch",
+    "definition": "Wenn jemand vorbei kommt.",
+    "sentence_context": "Wir bekommen heute Besuch.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_36",
+    "word": "Geduld",
+    "definition": "Wenn man warten kann.",
+    "sentence_context": "Hab bitte ein wenig Geduld.",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_37",
+    "word": "Glückwunsch",
+    "definition": "Was man zum Geburtstag sagt.",
+    "sentence_context": "Herzlichen Glückwunsch zum Fest!",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_38",
+    "word": "Geschenk",
+    "definition": "Etwas, das man bekommt.",
+    "sentence_context": "Was ist in dem Geschenk drin?",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_39",
+    "word": "Gefahr",
+    "definition": "Wenn etwas schlimm sein kann.",
+    "sentence_context": "Vorsicht, hier herrscht Gefahr!",
+    "difficulty": 2
+  },
+  {
+    "id": "de_w4_40",
+    "word": "Gesicht",
+    "definition": "Dazu gehören Augen und Mund.",
+    "sentence_context": "Du hast Schokolade im Gesicht.",
+    "difficulty": 2
+  }
+]

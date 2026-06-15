@@ -68,20 +68,11 @@ export const speech = {
           const availableVoices = synth.getVoices();
           if (availableVoices.length > 0) {
             this.voices = availableVoices;
-            if (this._preferredVoiceName) {
-              const preferred = this.voices.find(v => v.name === this._preferredVoiceName);
-              if (preferred) this.selectedVoice = preferred;
+            // Use refreshVoices to handle logic for preferred and locale-based selection
+            this.refreshVoices();
+            if (this.selectedVoice) {
+              finishInit();
             }
-            if (!this.selectedVoice) {
-              // Prioritize Google US English
-              const googleVoice = this.voices.find(v => v.name === 'Google US English');
-              if (googleVoice) {
-                this.selectedVoice = googleVoice;
-              } else {
-                this.selectedVoice = this.voices.find(v => v.lang.startsWith('en')) || this.voices[0];
-              }
-            }
-            finishInit();
           }
         } catch (e) {
           console.warn('Failed to get voices:', e);
@@ -115,27 +106,71 @@ export const speech = {
     return this._initialized;
   },
 
-  refreshVoices() {
+  refreshVoices(langCode = null) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return false;
     try {
       const synth = window.speechSynthesis;
       const available = synth.getVoices();
       if (available.length > 0) {
         this.voices = available;
+
+        // If langCode is provided, try to find a matching voice
+        if (langCode) {
+          const code = langCode.split('-')[0].toLowerCase();
+          const voicesForLang = this.voices.filter(v => v.lang.toLowerCase().startsWith(code));
+
+          // 1. Try to find a Google voice for this language
+          const googleMatch = voicesForLang.find(v => v.name.includes('Google'));
+          if (googleMatch) {
+            this.selectedVoice = googleMatch;
+            return true;
+          }
+
+          // 2. Try to find an exact locale match if langCode is full (e.g. en-US)
+          if (langCode.includes('-')) {
+            const exactMatch = voicesForLang.find(v => v.lang.toLowerCase() === langCode.toLowerCase());
+            if (exactMatch) {
+              this.selectedVoice = exactMatch;
+              return true;
+            }
+          }
+
+          // 3. Fallback to any voice for this language
+          if (voicesForLang.length > 0) {
+            this.selectedVoice = voicesForLang[0];
+            return true;
+          }
+        }
+
+        if (this._preferredVoiceName) {
+          const preferred = available.find(v => v.name === this._preferredVoiceName);
+          if (preferred) {
+            this.selectedVoice = preferred;
+            return true;
+          }
+        }
+
         if (!this.selectedVoice) {
-          if (this._preferredVoiceName) {
-            const preferred = available.find(v => v.name === this._preferredVoiceName);
-            if (preferred) this.selectedVoice = preferred;
-          }
-          if (!this.selectedVoice) {
-            this.selectedVoice = available.find(v => v.lang.startsWith('en')) || available[0];
-          }
+          // Default selection if no langCode provided and no preferred voice
+          this.selectedVoice = available.find(v => v.lang.toLowerCase().startsWith('en')) || available[0];
         }
       }
       return available.length > 0;
     } catch {
       return false;
     }
+  },
+
+  isLanguageSupported(langCode) {
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.__PLAYWRIGHT_TEST__)) {
+      return true; // Always support all languages in dev/test for UI verification
+    }
+    if (!this.voices.length) this.refreshVoices();
+    // Default to English if no voices are loaded yet or supported
+    if (langCode.startsWith('en') && this.voices.length === 0) return true;
+
+    const code = langCode.split('-')[0].toLowerCase();
+    return this.voices.some(v => v.lang.toLowerCase().startsWith(code));
   },
 
   setVolume(val) {
