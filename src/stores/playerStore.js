@@ -323,19 +323,14 @@ export const usePlayerStore = defineStore('player', {
     },
     completeEvolution() {
       if (!this.evolutionPending) return;
-      const mon = this.party.find(m => m.id === this.evolutionPending.monId);
-      if (mon) {
+      const index = this.party.findIndex(m => m.id === this.evolutionPending.monId);
+      if (index !== -1) {
+        const oldMon = this.party[index];
         const newSpecies = this.evolutionPending.newSpecies;
-        const base = MONS[newSpecies];
-        mon.species = newSpecies;
-        mon.name = base.name;
-        mon.type = base.type;
-        // Recalculate stats for new species
-        mon.maxHp = calculateStat(base.baseHp, mon.level, true);
-        mon.hp = mon.maxHp;
-        mon.atk = calculateStat(base.baseAtk, mon.level);
-        mon.def = calculateStat(base.baseDef, mon.level);
-        mon.spd = calculateStat(base.baseSpd, mon.level);
+        const newMon = createMon(newSpecies, oldMon.level);
+        newMon.id = oldMon.id; // Preserve ID
+        newMon.exp = oldMon.exp; // Preserve EXP
+        this.party[index] = newMon;
       }
       this.evolutionPending = null;
       this.saveState();

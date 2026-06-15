@@ -68,20 +68,11 @@ export const speech = {
           const availableVoices = synth.getVoices();
           if (availableVoices.length > 0) {
             this.voices = availableVoices;
-            if (this._preferredVoiceName) {
-              const preferred = this.voices.find(v => v.name === this._preferredVoiceName);
-              if (preferred) this.selectedVoice = preferred;
+            // Use refreshVoices to handle logic for preferred and locale-based selection
+            this.refreshVoices();
+            if (this.selectedVoice) {
+              finishInit();
             }
-            if (!this.selectedVoice) {
-              // Default to Google US English if available, or any English voice
-              const googleVoice = this.voices.find(v => v.name === 'Google US English');
-              if (googleVoice) {
-                this.selectedVoice = googleVoice;
-              } else {
-                this.selectedVoice = this.voices.find(v => v.lang.toLowerCase().startsWith('en')) || this.voices[0];
-              }
-            }
-            finishInit();
           }
         } catch (e) {
           console.warn('Failed to get voices:', e);
@@ -151,14 +142,17 @@ export const speech = {
           }
         }
 
+        if (this._preferredVoiceName) {
+          const preferred = available.find(v => v.name === this._preferredVoiceName);
+          if (preferred) {
+            this.selectedVoice = preferred;
+            return true;
+          }
+        }
+
         if (!this.selectedVoice) {
-          if (this._preferredVoiceName) {
-            const preferred = available.find(v => v.name === this._preferredVoiceName);
-            if (preferred) this.selectedVoice = preferred;
-          }
-          if (!this.selectedVoice) {
-            this.selectedVoice = available.find(v => v.lang.toLowerCase().startsWith('en')) || available[0];
-          }
+          // Default selection if no langCode provided and no preferred voice
+          this.selectedVoice = available.find(v => v.lang.toLowerCase().startsWith('en')) || available[0];
         }
       }
       return available.length > 0;

@@ -28,7 +28,7 @@
               {{ mon.emoji }}
             </div>
             <div class="absolute -top-2 -right-2 bg-white border-2 border-gray-800 rounded-lg p-1 text-sm shadow-sm">
-              {{ TYPE_EMOJIS[mon.type] }}
+              {{ TYPE_EMOJIS[MONS[mon.species]?.type] }}
             </div>
           </div>
 

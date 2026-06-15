@@ -28,7 +28,7 @@
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.enemyMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
-                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[battleStore.enemyMon.type] }}</span>
+                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.enemyMon.species]?.type] }}</span>
                   <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.enemyMon.type }}</span>
                 </div>
               </div>
@@ -84,7 +84,7 @@
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.playerMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
-                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[battleStore.playerMon.type] }}</span>
+                  <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.playerMon.species]?.type] }}</span>
                   <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.playerMon.type }}</span>
                 </div>
               </div>
@@ -577,7 +577,13 @@ const submitSpelling = () => {
 
   const isPower = timeLeft.value > (totalTime.value / 2);
 
-  const isCorrect = userInput.value.toLowerCase().trim() === word.toLowerCase().trim();
+  const normalize = (str) => {
+    return str.toLowerCase().trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
+  };
+
+  const isCorrect = normalize(userInput.value) === normalize(word);
 
   // Disable turn immediately to prevent double-actions during animations
   battleStore.setTurn(false);

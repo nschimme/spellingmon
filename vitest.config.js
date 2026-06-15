@@ -5,5 +5,6 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     include: ['tests/unit/**/*.{test,spec}.js'],
+    setupFiles: ['tests/unit/setup.js'],
   },
 });

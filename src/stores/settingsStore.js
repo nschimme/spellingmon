@@ -3,7 +3,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS } from '../utils/constants';
-import i18n from '../i18n';
+import i18n, { loadLocaleMessages } from '../i18n';
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
@@ -64,6 +64,7 @@ export const useSettingsStore = defineStore('settings', {
       }
     },
     async setLocale(locale) {
+      await loadLocaleMessages(locale);
       this.locale = locale;
       i18n.global.locale.value = locale;
       storage.save(STORAGE_KEYS.LOCALE, locale);
