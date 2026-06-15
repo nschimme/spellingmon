@@ -1,9 +1,10 @@
-const CACHE_NAME = 'spellingmon-v2';
+const CACHE_NAME = 'spellingmon-v3';
 const ASSETS = [
   './',
   './index.html',
   './favicon.svg',
-  './manifest.json'
+  './manifest.json',
+  './vocab/en-US/area1.json'
 ];
 
 // Install Event: Cache core assets
