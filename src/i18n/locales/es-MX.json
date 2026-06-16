@@ -111,7 +111,14 @@
     "releaseNew": "Soltar",
     "whitedOutTitle": "¡Derrotado!",
     "whitedOutDesc": "¡No te quedan Spellingmon! Corriste al Centro de Hechizos.",
-    "timeBonus": "¡Bonificación de tiempo!"
+    "timeBonus": "¡Bonificación de tiempo!",
+    "faster": "¡{name} es más rápido!",
+    "go": "¡Adelante, {name}!",
+    "dealtDamage": "Infligió {amount} de daño.",
+    "superEffective": "¡Es súper efectivo!",
+    "notEffective": "No es muy efectivo...",
+    "noEffect": "¡No tuvo ningún efecto!",
+    "enemyAttacked": "¡{name} atacó e infligió {amount} de daño!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

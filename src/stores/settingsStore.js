@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore('settings', {
     volume: 1.0,
     isMuted: false,
     locale: 'en-US',
+    ttsVerified: false,
   }),
   actions: {
     async init() {
@@ -22,9 +23,11 @@ export const useSettingsStore = defineStore('settings', {
       const savedVolume = storage.load(STORAGE_KEYS.VOLUME);
       const savedMuted = storage.load(STORAGE_KEYS.IS_MUTED);
       const savedLocale = storage.load(STORAGE_KEYS.LOCALE);
+      const savedTtsVerified = storage.load('tts_verified_global');
 
       if (savedVolume !== null) this.volume = parseFloat(savedVolume);
       if (savedMuted !== null) this.isMuted = savedMuted === 'true';
+      if (savedTtsVerified !== null) this.ttsVerified = savedTtsVerified === true;
 
       if (savedLocale !== null) {
         await this.setLocale(savedLocale);
@@ -109,6 +112,10 @@ export const useSettingsStore = defineStore('settings', {
     },
     toggleMute() {
       this.setMuted(!this.isMuted);
+    },
+    confirmTtsVerified() {
+      this.ttsVerified = true;
+      storage.save('tts_verified_global', true);
     }
   }
 });

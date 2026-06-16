@@ -41,14 +41,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Delete existing beta tag and release if they exist
-          gh release delete beta --yes || true
-          git push --delete origin beta || true || echo "Tag not found on remote"
+          # Delete existing beta release and tag using GitHub CLI
+          gh release delete beta --yes --cleanup-tag || true
 
-          # Create new beta tag and release
-          git tag -f beta
-          git push origin beta
-          gh release create beta spellingmon-chrome-extension.zip --title "Latest Beta" --notes "Latest automated beta build from main branch." --prerelease
+          # Create new beta release (this also creates the tag)
+          gh release create beta spellingmon-chrome-extension.zip \
+            --title "Latest Beta" \
+            --notes "Latest automated beta build from main branch." \
+            --prerelease \
+            --target main
 
       - name: Handle Tag Release
         if: startsWith(github.ref, 'refs/tags/v')

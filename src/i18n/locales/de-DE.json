@@ -111,7 +111,14 @@
     "releaseNew": "Freilassen",
     "whitedOutTitle": "Besiegt!",
     "whitedOutDesc": "Du hast keine kampffähigen Spellingmon mehr! Du eilst zum nächsten Heilzentrum.",
-    "timeBonus": "Zeitbonus!"
+    "timeBonus": "Zeitbonus!",
+    "faster": "{name} ist schneller!",
+    "go": "Los, {name}!",
+    "dealtDamage": "{amount} Schaden zugefügt.",
+    "superEffective": "Das ist sehr effektiv!",
+    "notEffective": "Das ist nicht sehr effektiv...",
+    "noEffect": "Es hat keine Wirkung!",
+    "enemyAttacked": "{name} hat angegriffen und {amount} Schaden zugefügt!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

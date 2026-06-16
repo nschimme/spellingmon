@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "playwright test",
     "test:unit": "vitest run",
-    "lint": "eslint src"
+    "lint": "eslint src && node scripts/check-i18n.cjs"
   },
   "dependencies": {
     "pinia": "^2.3.1",
