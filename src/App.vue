@@ -74,7 +74,7 @@ onUnmounted(() => {
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
       <LandingScreen
-        v-if="!playerStore.gameStarted && !showSaveSelection && !settingsStore.ttsVerified"
+        v-if="!playerStore.gameStarted && !showSaveSelection"
         @continue="showSaveSelection = true"
         @new-game="showSaveSelection = true"
       />

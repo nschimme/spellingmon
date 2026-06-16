@@ -23,6 +23,7 @@ export const useBattleStore = defineStore('battle', {
       isSwitching: false,
       isCapturing: false,
       pendingCapture: null,
+      participatingMons: [],
     };
 
     const rawSaved = typeof window !== 'undefined' ? storage.load(STORAGE_KEYS.BATTLE_STATE) : null;
@@ -109,14 +110,18 @@ export const useBattleStore = defineStore('battle', {
       validated.pendingCapture = saved.pendingCapture;
     }
 
+    if (Array.isArray(saved.participatingMons)) {
+      validated.participatingMons = saved.participatingMons;
+    }
+
     return validated;
   },
   actions: {
     saveState() {
       if (this._saveTimeout) clearTimeout(this._saveTimeout);
       this._saveTimeout = setTimeout(() => {
-        const { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture } = this.$state;
-        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture });
+        const { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture, participatingMons } = this.$state;
+        storage.save(STORAGE_KEYS.BATTLE_STATE, { inBattle, phase, playerMon, enemyMon, battleLog, isPlayerTurn, currentWord, battleType, trainerId, trainerParty, isSwitching, isCapturing, pendingCapture, participatingMons });
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
     },
     startBattle(playerMon, enemyMon, type = BATTLE_TYPES.WILD, trainer = null, trainerId = null, trainerParty = []) {
@@ -201,6 +206,7 @@ export const useBattleStore = defineStore('battle', {
       this.isSwitching = false;
       this.isCapturing = false;
       this.pendingCapture = null;
+      this.participatingMons = [];
       this.saveState();
     },
     setPhase(phase) {
