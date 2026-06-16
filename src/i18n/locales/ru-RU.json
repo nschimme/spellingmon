@@ -13,12 +13,15 @@
     "title": "СПЕЛЛИНГМОН",
     "subtitle": "Собери их всех!",
     "startGame": "Начать игру",
-    "continue": "Продолжить ({name})",
-    "newGame": "Новая игра",
-    "deleteSave": "Удалить",
-    "deleteConfirm": "Удалить весь прогресс? Это навсегда!",
-    "yesDelete": "Да, удалить",
-    "pressAnyKey": "Нажми любую клавишу"
+    "pressAnyKey": "Нажми любую клавишу",
+    "selectAdventure": "Выберите приключение",
+    "continueSlot": "Продолжить",
+    "deleteSlot": "Удалить",
+    "newGameSlot": "Новая игра",
+    "startSlot": "Начать",
+    "backToTitle": "Назад в меню",
+    "deleteSaveConfirm": "Удалить сохранение?",
+    "deleteSaveWarning": "Это навсегда удалит ваш прогресс в слоте {n}."
   },
   "tts": {
     "title": "Проверка звука",

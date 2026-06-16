@@ -13,12 +13,15 @@
     "title": "SPELLINGMON",
     "subtitle": "Temos que pegar!",
     "startGame": "Iniciar Jogo",
-    "continue": "Continuar ({name})",
-    "newGame": "Novo Jogo",
-    "deleteSave": "Apagar Jogo",
-    "deleteConfirm": "Apagar progresso? Não pode ser desfeito!",
-    "yesDelete": "Sim, apagar",
-    "pressAnyKey": "Pressione qualquer tecla para começar"
+    "pressAnyKey": "Pressione qualquer tecla para começar",
+    "selectAdventure": "Selecionar Aventura",
+    "continueSlot": "Continuar",
+    "deleteSlot": "Apagar",
+    "newGameSlot": "Novo Jogo",
+    "startSlot": "Iniciar",
+    "backToTitle": "Voltar ao Título",
+    "deleteSaveConfirm": "Apagar Save?",
+    "deleteSaveWarning": "Isso apagará permanentemente todo o seu progresso no Slot {n}."
   },
   "tts": {
     "title": "Verificação de Áudio",

@@ -13,12 +13,15 @@
     "title": "SPELLINGMON",
     "subtitle": "¡Atrápalos a todos!",
     "startGame": "Empezar juego",
-    "continue": "Continuar ({name})",
-    "newGame": "Nuevo juego",
-    "deleteSave": "Borrar partida",
-    "deleteConfirm": "¿Borrar todo el progreso? ¡No se puede deshacer!",
-    "yesDelete": "Sí, borrar",
-    "pressAnyKey": "Pulsa cualquier tecla para empezar"
+    "pressAnyKey": "Pulsa cualquier tecla para empezar",
+    "selectAdventure": "Seleccionar Aventura",
+    "continueSlot": "Continuar",
+    "deleteSlot": "Borrar",
+    "newGameSlot": "Nuevo Juego",
+    "startSlot": "Empezar",
+    "backToTitle": "Volver al Título",
+    "deleteSaveConfirm": "¿Borrar Partida?",
+    "deleteSaveWarning": "Esto borrará permanentemente todo tu progreso en la Ranura {n}."
   },
   "tts": {
     "title": "Verificación de audio",

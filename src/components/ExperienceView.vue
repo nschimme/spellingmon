@@ -20,7 +20,7 @@
             <div class="flex-1">
               <div class="flex justify-between items-end">
                 <h3 class="font-black text-xl text-gray-800 uppercase">
-                  {{ mon.name }}
+                  {{ $t('monsters.' + mon.species) }}
                 </h3>
                 <span class="font-bold text-blue-600">Lv {{ mon.displayLevel }}</span>
               </div>

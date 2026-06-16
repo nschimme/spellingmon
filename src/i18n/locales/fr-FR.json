@@ -13,12 +13,15 @@
     "title": "SPELLINGMON",
     "subtitle": "Attrapez-les tous !",
     "startGame": "Démarrer le jeu",
-    "continue": "Continuer ({name})",
-    "newGame": "Nouveau jeu",
-    "deleteSave": "Effacer sauvegarde",
-    "deleteConfirm": "Tout effacer ? C'est irréversible !",
-    "yesDelete": "Oui, effacer",
-    "pressAnyKey": "Appuyez sur une touche pour commencer"
+    "pressAnyKey": "Appuyez sur une touche pour commencer",
+    "selectAdventure": "Choisir l'Aventure",
+    "continueSlot": "Continuer",
+    "deleteSlot": "Supprimer",
+    "newGameSlot": "Nouveau Jeu",
+    "startSlot": "Démarrer",
+    "backToTitle": "Retour au Titre",
+    "deleteSaveConfirm": "Supprimer la sauvegarde ?",
+    "deleteSaveWarning": "Cela effacera définitivement toute votre progression dans l'Emplacement {n}."
   },
   "tts": {
     "title": "Vérification audio",

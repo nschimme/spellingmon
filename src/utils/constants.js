@@ -125,6 +125,7 @@ export const STORAGE_KEYS = {
   VOLUME: 'volume',
   IS_MUTED: 'is_muted',
   LOCALE: 'locale',
+  ACTIVE_SLOT: 'active_slot',
 };
 
 export const SUPPORTED_LANGUAGES = [

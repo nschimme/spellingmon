@@ -6,6 +6,7 @@ import { useSettingsStore } from './stores/settingsStore';
 import { useInputStore } from './stores/inputStore';
 import { speech } from './utils/speech';
 import LandingScreen from './components/LandingScreen.vue';
+import SaveSelection from './components/SaveSelection.vue';
 import TTSWelcomeScreen from './components/TTSWelcomeScreen.vue';
 import CharacterCreation from './components/CharacterCreation.vue';
 import StarterSelection from './components/StarterSelection.vue';
@@ -20,6 +21,7 @@ const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 
 const showMenu = ref(false);
+const showSaveSelection = ref(false);
 
 const handleGlobalInput = (e) => {
   if (e.key === 'Escape') {
@@ -46,10 +48,16 @@ onMounted(async () => {
   // Debug/E2E Test Mode initialization
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('debug') === 'true') {
+    // If we're debugging, we auto-assign slot 0 if none is active
+    if (playerStore.activeSlot === null) {
+      playerStore.loadSlot(0);
+    }
     playerStore.debugInit({
       name: urlParams.get('name'),
       starter: urlParams.get('starter'),
-      locale: urlParams.get('locale')
+      locale: urlParams.get('locale'),
+      battle: urlParams.get('battle'),
+      word: urlParams.get('word')
     });
   }
 });
@@ -66,9 +74,14 @@ onUnmounted(() => {
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
       <LandingScreen
-        v-if="!playerStore.gameStarted"
-        @continue="playerStore.startGame"
-        @new-game="playerStore.startGame"
+        v-if="!playerStore.gameStarted && !showSaveSelection"
+        @continue="showSaveSelection = true"
+        @new-game="showSaveSelection = true"
+      />
+      <SaveSelection
+        v-else-if="showSaveSelection && !playerStore.gameStarted"
+        @back="showSaveSelection = false"
+        @selected="playerStore.startGame(); showSaveSelection = false"
       />
       <template v-else-if="!playerStore.ttsVerified">
         <TTSWelcomeScreen @verified="playerStore.confirmTtsVerified" />

@@ -13,12 +13,15 @@
     "title": "拼写萌宠",
     "subtitle": "全都要拼写！",
     "startGame": "开始游戏",
-    "continue": "继续 ({name})",
-    "newGame": "新游戏",
-    "deleteSave": "删除存档",
-    "deleteConfirm": "删除所有进度？不可恢复！",
-    "yesDelete": "确定删除",
-    "pressAnyKey": "按任意键开始"
+    "pressAnyKey": "按任意键开始",
+    "selectAdventure": "选择冒险",
+    "continueSlot": "继续",
+    "deleteSlot": "删除",
+    "newGameSlot": "新游戏",
+    "startSlot": "开始",
+    "backToTitle": "返回标题",
+    "deleteSaveConfirm": "删除存档？",
+    "deleteSaveWarning": "这将永久删除存档 {n} 中的所有进度。"
   },
   "tts": {
     "title": "音频检查",

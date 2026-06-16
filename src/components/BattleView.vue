@@ -24,12 +24,12 @@
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
                 <div class="flex flex-col">
-                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ battleStore.enemyMon.name }}</span>
+                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ $t('monsters.' + battleStore.enemyMon.species) }}</span>
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.enemyMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
                   <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.enemyMon.species]?.type] }}</span>
-                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.enemyMon.type }}</span>
+                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ $t('types.' + battleStore.enemyMon.type) }}</span>
                 </div>
               </div>
             </div>
@@ -80,12 +80,12 @@
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
                 <div class="flex flex-col">
-                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ battleStore.playerMon.name }}</span>
+                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ $t('monsters.' + battleStore.playerMon.species) }}</span>
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.playerMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
                   <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.playerMon.species]?.type] }}</span>
-                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ battleStore.playerMon.type }}</span>
+                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ $t('types.' + battleStore.playerMon.type) }}</span>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
               ]"
               @click="handleSwitch(mon)"
             >
-              {{ mon.name }} (HP: {{ mon.hp }})
+              {{ $t('monsters.' + mon.species) }} (HP: {{ mon.hp }})
             </button>
             <button
               v-show="battleStore.playerMon.hp > 0"
@@ -316,10 +316,10 @@
                 {{ $t('battle.newCapture') }}
               </p>
               <h3 class="text-2xl font-black text-gray-800 uppercase">
-                {{ battleStore.pendingCapture.name }}
+                {{ $t('monsters.' + battleStore.pendingCapture.species) }}
               </h3>
               <p class="text-sm font-bold text-gray-500 uppercase">
-                Level {{ battleStore.pendingCapture.level }} • {{ battleStore.pendingCapture.type }}
+                Level {{ battleStore.pendingCapture.level }} • {{ $t('types.' + battleStore.pendingCapture.type) }}
               </p>
             </div>
           </div>
@@ -341,7 +341,7 @@
               </div>
               <div class="flex-1">
                 <div class="flex justify-between items-center">
-                  <span class="font-black text-sm uppercase truncate">{{ mon.name }}</span>
+                  <span class="font-black text-sm uppercase truncate">{{ $t('monsters.' + mon.species) }}</span>
                   <span class="text-[10px] font-bold text-blue-600">Lv {{ mon.level }}</span>
                 </div>
                 <div class="w-full bg-gray-200 h-1 rounded-full mt-1">
@@ -404,7 +404,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { getHPColorClass } from '../utils/visuals';
 import { SOUND_EFFECTS, ANIMATION_DURATIONS, BATTLE_TYPES, INPUT_PRIORITIES, BATTLE_PHASES } from '../utils/constants';
-import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, calculateTimerDuration } from '../utils/gameData';
+import { calculateExpGain, calculateDamage, createMon, TYPE_EMOJIS, calculateTimerDuration, MONS } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
@@ -661,7 +661,7 @@ const handleAttackSuccess = (isPower, isPerfect = false) => {
     battleStore.setPhase(BATTLE_PHASES.END);
     enemyFainted.value = true;
     audio.playSound(SOUND_EFFECTS.FAINT);
-    battleStore.log(t('battle.win', { name: battleStore.enemyMon.name }));
+    battleStore.log(t('battle.win', { name: t('monsters.' + battleStore.enemyMon.species) }));
 
     const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === BATTLE_TYPES.TRAINER);
     const results = playerStore.awardExp(exp);
@@ -677,7 +677,7 @@ const handleAttackSuccess = (isPower, isPerfect = false) => {
           const nextMon = createMon(nextMonCfg.species, nextMonCfg.level);
           battleStore.enemyMon = nextMon;
           enemyFainted.value = false;
-          battleStore.log(t('battle.trainerSentOut', { name: nextMon.name }));
+          battleStore.log(t('battle.trainerSentOut', { name: t('monsters.' + nextMon.species) }));
           battleStore.saveState();
           battleStore.setTurn(true);
           battleStore.setPhase(BATTLE_PHASES.SELECT_ACTION);
@@ -722,7 +722,7 @@ const handleCaptureSuccess = (isPower) => {
 
     if (Math.random() < successChance) {
       audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
-      battleStore.log(t('battle.catchSuccess', { name: battleStore.enemyMon.name }));
+      battleStore.log(t('battle.catchSuccess', { name: t('monsters.' + battleStore.enemyMon.species) }));
 
       const newMon = { ...battleStore.enemyMon, hp: battleStore.enemyMon.maxHp };
 
@@ -743,7 +743,7 @@ const handleCaptureSuccess = (isPower) => {
     } else {
       audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
       battleStore.isCapturing = false;
-      battleStore.log(t('battle.catchFail', { name: battleStore.enemyMon.name }));
+      battleStore.log(t('battle.catchFail', { name: t('monsters.' + battleStore.enemyMon.species) }));
       enemyTurn();
     }
   }, ANIMATION_DURATIONS.CAPTURE_PROCESS_MS);
@@ -829,9 +829,9 @@ const enemyTurn = () => {
 
     const { damage, typeMod } = calculateDamage(battleStore.enemyMon, battleStore.playerMon, 30);
     battleStore.damagePlayer(damage);
-    battleStore.log(`${battleStore.enemyMon.name} attacked and dealt ${damage} damage!`);
-    if (typeMod > 1) battleStore.log("It's super effective!");
-    if (typeMod < 1 && typeMod > 0) battleStore.log("It's not very effective...");
+    battleStore.log(t('battle.enemyAttacked', { name: t('monsters.' + battleStore.enemyMon.species), amount: damage }));
+    if (typeMod > 1) battleStore.log(t('battle.superEffective'));
+    if (typeMod < 1 && typeMod > 0) battleStore.log(t('battle.notEffective'));
 
     audio.playSound(SOUND_EFFECTS.HIT);
     triggerShake(false);
@@ -839,7 +839,7 @@ const enemyTurn = () => {
     if (battleStore.playerMon.hp <= 0) {
       playerFainted.value = true;
       audio.playSound(SOUND_EFFECTS.FAINT);
-      battleStore.log(t('battle.lose', { name: battleStore.playerMon.name }));
+      battleStore.log(t('battle.lose', { name: t('monsters.' + battleStore.playerMon.species) }));
 
       const hasHealthyMon = playerStore.party.some(m => m.hp > 0);
       if (hasHealthyMon) {
@@ -891,10 +891,10 @@ const { selectedIndex: partyReplaceSelectedIndex } = useKeyboardNavigation({
 
 const handleReplaceMon = (index) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  const replacedMonName = playerStore.party[index].name;
+  const replacedMonName = t('monsters.' + playerStore.party[index].species);
   playerStore.replaceSpellingmon(index, battleStore.pendingCapture);
   battleStore.log(t('battle.released', { name: replacedMonName }));
-  battleStore.log(t('battle.joinedParty', { name: battleStore.pendingCapture.name }));
+  battleStore.log(t('battle.joinedParty', { name: t('monsters.' + battleStore.pendingCapture.species) }));
 
   // Finish battle
   battleStore.endBattle();
@@ -902,7 +902,7 @@ const handleReplaceMon = (index) => {
 
 const handleReleaseNewMon = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  battleStore.log(t('battle.releasedWild', { name: battleStore.pendingCapture.name }));
+  battleStore.log(t('battle.releasedWild', { name: t('monsters.' + battleStore.pendingCapture.species) }));
   battleStore.endBattle();
 };
 

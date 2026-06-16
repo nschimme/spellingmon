@@ -13,12 +13,15 @@
     "title": "SPELLINGMON",
     "subtitle": "Gotta Spell 'Em All!",
     "startGame": "Start Game",
-    "continue": "Continue ({name})",
-    "newGame": "New Game",
-    "deleteSave": "Delete Save",
-    "deleteConfirm": "Delete all progress? This cannot be undone!",
-    "yesDelete": "Yes, Delete",
-    "pressAnyKey": "Press any key or click to begin"
+    "pressAnyKey": "Press any key or click to begin",
+    "selectAdventure": "Select Adventure",
+    "continueSlot": "Continue",
+    "deleteSlot": "Delete",
+    "newGameSlot": "New Game",
+    "startSlot": "Start",
+    "backToTitle": "Back to Title",
+    "deleteSaveConfirm": "Delete Save?",
+    "deleteSaveWarning": "This will permanently erase all your progress in Slot {n}."
   },
   "tts": {
     "title": "Audio Check",
@@ -108,7 +111,14 @@
     "asIn": "As in...",
     "timesUp": "Time's up! Type fast next time!",
     "items": "Items",
-    "timeBonus": "Time Bonus!"
+    "timeBonus": "Time Bonus!",
+    "faster": "{name} is faster!",
+    "go": "Go, {name}!",
+    "dealtDamage": "Dealt {amount} damage.",
+    "superEffective": "It's super effective!",
+    "notEffective": "It's not very effective...",
+    "noEffect": "It had no effect!",
+    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
   },
   "menu": {
     "items": "Items",

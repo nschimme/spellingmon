@@ -4,14 +4,17 @@ import { GAME_CONSTANTS, GENDERS, SKIN_TONES, STORAGE_KEYS } from '../utils/cons
 import { calculateExpToNext, calculateStat, MONS, createMon, SPECIES } from '../utils/gameData';
 import { useBattleStore } from './battleStore';
 import { useSettingsStore } from './settingsStore';
+import i18n from '../i18n';
 
 let saveTimeout = null;
 let notificationCounter = 0;
 
 export const usePlayerStore = defineStore('player', {
   state: () => {
-    const saved = storage.load(STORAGE_KEYS.PLAYER_STATE);
+    const activeSlot = storage.load(STORAGE_KEYS.ACTIVE_SLOT);
+    const saved = activeSlot !== null ? storage.load(STORAGE_KEYS.PLAYER_STATE, activeSlot) : null;
     const defaultState = {
+      activeSlot,
       party: [],
       position: null,
       unlockedAreas: [1],
@@ -93,14 +96,57 @@ export const usePlayerStore = defineStore('player', {
       this.saveState();
     },
     saveState() {
+      if (this.activeSlot === null) return;
       if (saveTimeout) clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         // Create a clean state object for persistence
         const cleanState = { ...this.$state };
         delete cleanState.notification;
         delete cleanState.notificationId;
-        storage.save(STORAGE_KEYS.PLAYER_STATE, cleanState);
+        storage.save(STORAGE_KEYS.PLAYER_STATE, cleanState, this.activeSlot);
+        storage.save(STORAGE_KEYS.ACTIVE_SLOT, this.activeSlot);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
+    },
+    loadSlot(slotIndex) {
+      this.activeSlot = slotIndex;
+      const saved = storage.load(STORAGE_KEYS.PLAYER_STATE, slotIndex);
+      if (saved) {
+        Object.assign(this.$state, saved);
+        this.activeSlot = slotIndex; // Ensure it stays
+      } else {
+        this.resetToDefaults();
+        this.activeSlot = slotIndex;
+      }
+      this.saveState();
+    },
+    deleteSlot(slotIndex) {
+      storage.remove(`${STORAGE_KEYS.PLAYER_STATE}_slot_${slotIndex}`);
+      if (this.activeSlot === slotIndex) {
+        this.activeSlot = null;
+        storage.remove(STORAGE_KEYS.ACTIVE_SLOT);
+      }
+    },
+    resetToDefaults() {
+      const defaults = {
+        party: [],
+        position: null,
+        unlockedAreas: [1],
+        currentArea: 1,
+        lastSpellCenter: null,
+        isStarterSelected: false,
+        gameStarted: false,
+        defeatedTrainers: [],
+        evolutionPending: null,
+        playerName: 'Player',
+        gender: GENDERS.BOY,
+        skinTone: SKIN_TONES.NEUTRAL,
+        mapSeed: Math.random().toString(36).slice(2, 11),
+        characterCreationComplete: false,
+        discoveredTiles: {},
+        discoveredWords: {},
+        masteredWords: {},
+      };
+      Object.assign(this.$state, defaults);
     },
     discoverTile(area, x, y) {
       if (!this.discoveredTiles[area]) {
@@ -180,28 +226,10 @@ export const usePlayerStore = defineStore('player', {
       const battleStore = useBattleStore();
       battleStore.resetStore();
 
-      storage.remove(STORAGE_KEYS.PLAYER_STATE);
-      // Reset state to defaults (excluding ttsVerified which is transient anyway)
-      const defaults = {
-        party: [],
-        position: null,
-        unlockedAreas: [1],
-        currentArea: 1,
-        lastSpellCenter: null,
-        isStarterSelected: false,
-        gameStarted: false,
-        defeatedTrainers: [],
-        evolutionPending: null,
-        playerName: 'Player',
-        gender: GENDERS.BOY,
-        skinTone: SKIN_TONES.NEUTRAL,
-        mapSeed: Math.random().toString(36).slice(2, 11),
-        characterCreationComplete: false,
-        discoveredTiles: {},
-        discoveredWords: {},
-        masteredWords: {},
-      };
-      Object.assign(this.$state, defaults);
+      if (this.activeSlot !== null) {
+        storage.remove(`${STORAGE_KEYS.PLAYER_STATE}_slot_${this.activeSlot}`);
+      }
+      this.resetToDefaults();
     },
     startGame() {
       this.gameStarted = true;
@@ -253,6 +281,27 @@ export const usePlayerStore = defineStore('player', {
         this.party = [mon];
         this.isStarterSelected = true;
       }
+
+      if (params.battle === 'true') {
+        if (this.party.length === 0) {
+          this.party = [createMon(SPECIES.Grammander, 5)];
+          this.isStarterSelected = true;
+        }
+        const battleStore = useBattleStore();
+        const enemy = createMon(SPECIES.Verminverb, 5);
+        battleStore.startBattle(this.party[0], enemy);
+
+        if (params.word) {
+          battleStore.setCurrentWord({
+            word: params.word,
+            definition: 'Debug word',
+            sentence_context: `This is a ${params.word}.`,
+            difficulty: 1
+          });
+          battleStore.setPhase('spelling');
+        }
+      }
+
       this.saveState();
     },
     moveMonToFront(index) {
@@ -283,7 +332,7 @@ export const usePlayerStore = defineStore('player', {
         }
         return {
           id: mon.id,
-          name: mon.name,
+          name: mon.species, // Corrected from mon.name
           emoji: mon.emoji,
           oldLevel,
           oldExp,
@@ -311,7 +360,8 @@ export const usePlayerStore = defineStore('player', {
         mon.spd = calculateStat(base.baseSpd, mon.level);
       }
 
-      this.notify(`${mon.name} grew to Level ${mon.level}!`);
+      const { t } = i18n.global;
+      this.notify(t('battle.levelUp', { name: t('monsters.' + mon.species), level: mon.level }));
 
       if (base && base.evolvesAt && mon.level >= base.evolvesAt) {
         this.evolutionPending = {
