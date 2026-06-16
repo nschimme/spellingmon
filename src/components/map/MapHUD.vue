@@ -8,11 +8,11 @@
         v-if="biome"
         class="text-[10px] font-bold text-blue-600 uppercase italic opacity-75"
       >
-        {{ biome }}
+        {{ $t('menu.biomes.' + biome) }}
       </div>
     </div>
     <div class="text-[8px] font-bold text-gray-500 uppercase">
-      Party: {{ leaderName }} (Lv{{ leaderLevel }})
+      {{ $t('menu.party') }}: {{ leaderName }} (Lv{{ leaderLevel }})
     </div>
   </div>
 </template>

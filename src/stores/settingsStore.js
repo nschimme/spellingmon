@@ -113,6 +113,9 @@ export const useSettingsStore = defineStore('settings', {
     toggleMute() {
       this.setMuted(!this.isMuted);
     },
+    t(key, params) {
+      return i18n.global.t(key, params);
+    },
     confirmTtsVerified() {
       this.ttsVerified = true;
       storage.save('tts_verified_global', true);

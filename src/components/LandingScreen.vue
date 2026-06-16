@@ -1,5 +1,8 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center bg-gray-900 p-8 relative overflow-hidden">
+  <div
+    class="w-full h-full flex flex-col items-center justify-center bg-gray-900 p-8 relative overflow-hidden cursor-pointer"
+    @click="handleContinue"
+  >
     <!-- Animated Background Elements -->
     <div class="absolute top-10 left-10 text-6xl opacity-20 animate-bounce">
       🔥
@@ -24,7 +27,7 @@
           <button
             :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 md:py-6 px-6 md:px-12 rounded-2xl border-b-8 border-blue-800 text-xl md:text-2xl uppercase tracking-widest transition-all active:border-b-0 active:translate-y-2 group"
-            @click="handleContinue"
+            @click.stop="handleContinue"
           >
             <span class="group-hover:scale-110 inline-block transition-transform">{{ $t('landing.startGame') }}</span>
           </button>
@@ -39,24 +42,30 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
 import { audio } from '../utils/audio';
-import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
-import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
+import { SOUND_EFFECTS } from '../utils/constants';
 
 const emit = defineEmits(['continue']);
+const selectedIndex = ref(0);
 
 const handleContinue = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   emit('continue');
 };
 
-const { selectedIndex } = useKeyboardNavigation({
-  id: 'landing-screen',
-  priority: INPUT_PRIORITIES.GLOBAL,
-  isActive: true,
-  maxIndex: 1,
-  onConfirm: () => {
+const handleGlobalKeyDown = (e) => {
+  if (e.key === ' ' || e.key === 'Enter') {
+    e.preventDefault();
     handleContinue();
   }
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', handleGlobalKeyDown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleGlobalKeyDown);
 });
 </script>

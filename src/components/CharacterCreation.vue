@@ -65,7 +65,7 @@
         <button
           :disabled="!name"
           :class="[
-            selectedIndex === 8 ? 'ring-8 ring-yellow-400' : '',
+            selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400' : '',
             !name ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600'
           ]"
           class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1"

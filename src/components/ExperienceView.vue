@@ -52,7 +52,7 @@
 
       <div class="p-6 bg-gray-100 border-t-8 border-gray-800 flex justify-center">
         <button
-          :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+          :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 0 }"
           class="bg-green-500 text-white px-12 py-4 rounded-2xl border-b-8 border-green-700 font-black uppercase text-xl tracking-widest hover:bg-green-600 active:translate-y-2 transition-all shadow-xl"
           @click="$emit('continue')"
         >

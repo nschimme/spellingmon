@@ -13,7 +13,7 @@
     "title": "SPELLINGMON",
     "subtitle": "Attrapez-les tous !",
     "startGame": "Démarrer le jeu",
-    "pressAnyKey": "Appuyez sur une touche pour commencer",
+    "pressAnyKey": "Appuyez sur Espace/Entrée ou touchez l'écran pour commencer",
     "selectAdventure": "Choisir l'Aventure",
     "continueSlot": "Continuer",
     "deleteSlot": "Supprimer",
@@ -101,7 +101,7 @@
     "miss": "Raté !",
     "incorrect": "Incorrect !",
     "shouldHaveBeen": "C'était :",
-    "typeHere": "ÉCRIRE ICI",
+    "typeHere": "Écrire ici",
     "listenAgain": "Réécouter",
     "switchWho": "Qui envoyer ?",
     "partyFull": "Équipe complète !",
@@ -161,7 +161,17 @@
     "spd": "Vitesse",
     "pressEnterToSwap": "ENTER pour échanger",
     "activeLeader": "Leader Actif",
-    "setLeader": "Changer Leader"
+    "setLeader": "Changer Leader",
+    "wasdToMove": "WASD pour bouger | ESC pour Menu",
+    "healed": "Vos Spellingmon ont été entièrement soignés !",
+    "defeatTrainerFirst": "Vous devez vaincre le dresseur de la zone avant de continuer !",
+    "biomes": {
+      "wilderness": "Étendues sauvages",
+      "cave": "Grotte",
+      "town": "Ville",
+      "route": "Route",
+      "forest": "Forêt"
+    }
   },
   "settings": {
     "testSFX": "Tester SFX",

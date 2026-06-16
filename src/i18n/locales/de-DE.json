@@ -13,7 +13,7 @@
     "title": "SPELLINGMON",
     "subtitle": "Schnapp sie dir alle!",
     "startGame": "Spiel starten",
-    "pressAnyKey": "Drücke eine Taste zum Starten",
+    "pressAnyKey": "Tippe oder drücke Leertaste/Enter zum Starten",
     "selectAdventure": "Abenteuer wählen",
     "continueSlot": "Weiter",
     "deleteSlot": "Löschen",
@@ -101,7 +101,7 @@
     "miss": "Verfehlt!",
     "incorrect": "Falsch!",
     "shouldHaveBeen": "Richtig wäre:",
-    "typeHere": "HIER TIPPEN",
+    "typeHere": "Hier tippen",
     "listenAgain": "Noch einmal hören",
     "switchWho": "Wen einwechseln?",
     "partyFull": "Team voll!",
@@ -161,7 +161,17 @@
     "spd": "Init.",
     "pressEnterToSwap": "ENTER zum Tauschen",
     "activeLeader": "Aktueller Anführer",
-    "setLeader": "Als Anführer setzen"
+    "setLeader": "Als Anführer setzen",
+    "wasdToMove": "WASD zum Bewegen | ESC für Menü",
+    "healed": "Deine Spellingmon wurden vollständig geheilt!",
+    "defeatTrainerFirst": "Du musst den Trainer dieses Gebiets besiegen, bevor du weitergehen kannst!",
+    "biomes": {
+      "wilderness": "Wildnis",
+      "cave": "Höhle",
+      "town": "Stadt",
+      "route": "Route",
+      "forest": "Wald"
+    }
   },
   "settings": {
     "testSFX": "SFX testen",

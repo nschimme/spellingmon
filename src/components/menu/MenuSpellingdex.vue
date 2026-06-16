@@ -23,7 +23,7 @@
       v-for="(area, areaIdx) in GAME_CONSTANTS.MAX_AREAS"
       :key="area"
       :ref="el => { if (el) areaRefs[areaIdx] = el }"
-      :class="{ 'ring-8 ring-yellow-400': selectedIndex === areaIdx }"
+      :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === areaIdx }"
       class="bg-white border-4 border-gray-800 rounded-3xl overflow-hidden shadow-sm transition-all"
     >
       <div class="bg-gray-800 p-3 flex justify-between items-center">
@@ -48,7 +48,7 @@
           <div
             v-for="(word, idx) in vocabStore.vocabData[`${settingsStore.locale}_${area}`] || []"
             :key="idx"
-            class="group relative p-3 border-2 rounded-xl text-xs font-black uppercase text-center transition-all duration-200"
+            class="group relative p-3 border-2 rounded-xl text-xs font-black text-center transition-all duration-200"
             :class="getWordDexClass(area, word.word)"
           >
             {{ getWordDexDisplay(area, word.word) }}
