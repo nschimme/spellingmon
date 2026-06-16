@@ -221,8 +221,8 @@ watch(selectedIndex, (newIdx) => {
   if (phase.value === 'language') {
     const lang = SUPPORTED_LANGUAGES[newIdx];
     if (lang && isLangSupported(lang.code)) {
-       // We don't want to spam if they move too fast, but the requirement is to speak on navigation
-       speech.speak(lang.native);
+      // We don't want to spam if they move too fast, but the requirement is to speak on navigation
+      speech.speak(lang.native, lang.code);
     }
   }
 });
@@ -257,7 +257,7 @@ onMounted(async () => {
     // Briefly wait to ensure voices are ready before announcing the default
     setTimeout(() => {
       if (phase.value === 'language') {
-        speech.speak(SUPPORTED_LANGUAGES[initialIndex].native);
+        speech.speak(SUPPORTED_LANGUAGES[initialIndex].native, SUPPORTED_LANGUAGES[initialIndex].code);
       }
     }, 500);
   }

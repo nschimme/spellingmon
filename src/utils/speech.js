@@ -181,10 +181,14 @@ export const speech = {
     this._onError = callback;
   },
 
-  speak(text) {
+  speak(text, langCode = null) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
     try {
-      this.refreshVoices();
+      if (langCode) {
+        this.refreshVoices(langCode);
+      } else if (!this.selectedVoice) {
+        this.refreshVoices();
+      }
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       if (this.selectedVoice) {
@@ -195,7 +199,8 @@ export const speech = {
         const error = e.error || 'unknown';
         console.warn('TTS utterance error:', error);
         this.lastError = error;
-        if (this._onError) {
+        // Don't trigger global error for interrupted or canceled speech
+        if (this._onError && !['interrupted', 'canceled'].includes(error)) {
           this._onError(error);
         }
       };

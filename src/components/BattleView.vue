@@ -286,8 +286,8 @@
       </div>
     </div>
     <ExperienceView
-      v-if="showResults"
-      :participating-mons="participatingMons"
+      v-if="battleStore.phase === BATTLE_PHASES.RESULTS"
+      :participating-mons="battleStore.participatingMons"
       @continue="battleStore.endBattle()"
     />
 
@@ -425,11 +425,9 @@ let timerInterval = null;
 
 const enemyShake = ref(false);
 const playerShake = ref(false);
-const enemyFainted = ref(false);
-const playerFainted = ref(false);
+const enemyFainted = computed(() => battleStore.enemyMon?.hp <= 0);
+const playerFainted = computed(() => battleStore.playerMon?.hp <= 0);
 const isFlashing = ref(false);
-const showResults = ref(false);
-const participatingMons = ref([]);
 const thrownWord = ref('');
 const mistakeWord = ref('');
 const isPerfectFeedback = ref(false);
@@ -504,7 +502,6 @@ const tryRun = () => {
 const handleSwitch = (mon) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   battleStore.switchPlayerMon(mon);
-  playerFainted.value = false; // Reset fainted view if switching after faint
 
   if (isForcedSwitch.value) {
     isForcedSwitch.value = false;
@@ -665,10 +662,10 @@ const handleAttackSuccess = (isPower, isPerfect = false) => {
 
     const exp = calculateExpGain(battleStore.enemyMon, battleStore.battleType === BATTLE_TYPES.TRAINER);
     const results = playerStore.awardExp(exp);
-    participatingMons.value = results;
+    battleStore.participatingMons = results;
     battleStore.log(t('battle.gainedExp', { exp }));
 
-      const hasExp = results.some(r => r.expGained > 0);
+    const hasExp = results.some(r => r.expGained > 0);
 
     if (battleStore.battleType === BATTLE_TYPES.TRAINER) {
       const nextMonCfg = battleStore.getNextTrainerMon();
@@ -694,7 +691,6 @@ const handleAttackSuccess = (isPower, isPerfect = false) => {
       setTimeout(() => {
         if (hasExp) {
           battleStore.setPhase(BATTLE_PHASES.RESULTS);
-          showResults.value = true;
         } else {
           battleStore.endBattle();
         }
@@ -930,6 +926,17 @@ onMounted(async () => {
       if (freshMon) {
         battleStore.playerMon = freshMon;
       }
+    }
+
+    // Check if enemy is already defeated (state hardening for reloads)
+    if (battleStore.enemyMon && battleStore.enemyMon.hp <= 0 && battleStore.phase !== BATTLE_PHASES.RESULTS) {
+      // If results are available, show them, otherwise end battle
+      if (battleStore.participatingMons.length > 0) {
+        battleStore.setPhase(BATTLE_PHASES.RESULTS);
+      } else {
+        battleStore.endBattle();
+      }
+      return;
     }
 
     // Ensure phase is consistent with store state on mount
