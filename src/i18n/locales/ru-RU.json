@@ -112,13 +112,13 @@
     "whitedOutTitle": "Проигрыш!",
     "whitedOutDesc": "Нет готовых к бою! Бегом в Спелл-Центр.",
     "timeBonus": "Временной бонус!",
-    "faster": "{name} is faster!",
-    "go": "Go, {name}!",
-    "dealtDamage": "Dealt {amount} damage.",
-    "superEffective": "It's super effective!",
-    "notEffective": "It's not very effective...",
-    "noEffect": "It had no effect!",
-    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
+    "faster": "{name} быстрее!",
+    "go": "Вперёд, {name}!",
+    "dealtDamage": "Нанесено {amount} урона.",
+    "superEffective": "Это суперэффективно!",
+    "notEffective": "Это не очень эффективно...",
+    "noEffect": "Это не подействовало!",
+    "enemyAttacked": "{name} атакует и наносит {amount} урона!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

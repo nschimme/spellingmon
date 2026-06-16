@@ -112,13 +112,13 @@
     "whitedOutTitle": "战败！",
     "whitedOutDesc": "你没有可以战斗的萌宠了！赶快去医疗中心。",
     "timeBonus": "时间奖励！",
-    "faster": "{name} is faster!",
-    "go": "Go, {name}!",
-    "dealtDamage": "Dealt {amount} damage.",
-    "superEffective": "It's super effective!",
-    "notEffective": "It's not very effective...",
-    "noEffect": "It had no effect!",
-    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
+    "faster": "{name} 的速度更快！",
+    "go": "去吧，{name}！",
+    "dealtDamage": "造成了 {amount} 点伤害。",
+    "superEffective": "效果拔群！",
+    "notEffective": "收效甚微...",
+    "noEffect": "毫无效果！",
+    "enemyAttacked": "{name} 发起进攻，造成了 {amount} 点伤害！"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

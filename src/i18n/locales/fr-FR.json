@@ -112,13 +112,13 @@
     "whitedOutTitle": "Équipe KO !",
     "whitedOutDesc": "Plus aucun Spellingmon n'est apte au combat ! Retour au centre de soin.",
     "timeBonus": "Bonus de temps !",
-    "faster": "{name} is faster!",
-    "go": "Go, {name}!",
-    "dealtDamage": "Dealt {amount} damage.",
-    "superEffective": "It's super effective!",
-    "notEffective": "It's not very effective...",
-    "noEffect": "It had no effect!",
-    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
+    "faster": "{name} est plus rapide !",
+    "go": "En avant, {name} !",
+    "dealtDamage": "{amount} dégâts infligés.",
+    "superEffective": "C'est super efficace !",
+    "notEffective": "Ce n'est pas très efficace...",
+    "noEffect": "Ça n'a aucun effet !",
+    "enemyAttacked": "{name} a attaqué et a infligé {amount} dégâts !"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

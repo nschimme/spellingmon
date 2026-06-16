@@ -112,13 +112,13 @@
     "whitedOutTitle": "Besiegt!",
     "whitedOutDesc": "Du hast keine kampffähigen Spellingmon mehr! Du eilst zum nächsten Heilzentrum.",
     "timeBonus": "Zeitbonus!",
-    "faster": "{name} is faster!",
-    "go": "Go, {name}!",
-    "dealtDamage": "Dealt {amount} damage.",
-    "superEffective": "It's super effective!",
-    "notEffective": "It's not very effective...",
-    "noEffect": "It had no effect!",
-    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
+    "faster": "{name} ist schneller!",
+    "go": "Los, {name}!",
+    "dealtDamage": "{amount} Schaden zugefügt.",
+    "superEffective": "Das ist sehr effektiv!",
+    "notEffective": "Das ist nicht sehr effektiv...",
+    "noEffect": "Es hat keine Wirkung!",
+    "enemyAttacked": "{name} hat angegriffen und {amount} Schaden zugefügt!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

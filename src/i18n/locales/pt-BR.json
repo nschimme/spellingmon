@@ -112,13 +112,13 @@
     "whitedOutTitle": "Derrotado!",
     "whitedOutDesc": "Sem Spellingmon para lutar! Você correu para o Centro de Magia.",
     "timeBonus": "Bônus de tempo!",
-    "faster": "{name} is faster!",
-    "go": "Go, {name}!",
-    "dealtDamage": "Dealt {amount} damage.",
-    "superEffective": "It's super effective!",
-    "notEffective": "It's not very effective...",
-    "noEffect": "It had no effect!",
-    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
+    "faster": "{name} é mais rápido!",
+    "go": "Vai, {name}!",
+    "dealtDamage": "{amount} de dano causado.",
+    "superEffective": "É super efetivo!",
+    "notEffective": "Não é muito efetivo...",
+    "noEffect": "Não teve efeito!",
+    "enemyAttacked": "{name} atacou e causou {amount} de dano!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",
