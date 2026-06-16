@@ -13,7 +13,7 @@
     "title": "SPELLINGMON",
     "subtitle": "Gotta Spell 'Em All!",
     "startGame": "Start Game",
-    "pressAnyKey": "Press any key or click to begin",
+    "pressAnyKey": "Tap or press Space/Enter to begin",
     "selectAdventure": "Select Adventure",
     "continueSlot": "Continue",
     "deleteSlot": "Delete",
@@ -87,7 +87,7 @@
     "miss": "Miss!",
     "incorrect": "Incorrect!",
     "shouldHaveBeen": "Should have been:",
-    "typeHere": "TYPE HERE",
+    "typeHere": "Type here",
     "listenAgain": "Listen Again",
     "switchWho": "Switch to who?",
     "partyFull": "Party Full!",
@@ -161,6 +161,16 @@
     "activeLeader": "Active Leader",
     "setLeader": "Set Leader",
     "unlockedAreas": "Unlocked Areas",
+    "wasdToMove": "WASD to Move | ESC for Menu",
+    "healed": "Your Spellingmon have been fully healed!",
+    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "biomes": {
+      "wilderness": "Wilderness",
+      "cave": "Cave",
+      "town": "Town",
+      "route": "Route",
+      "forest": "Forest"
+    },
     "badgesEarned": "Total Badges Earned: {n}"
   },
   "settings": {

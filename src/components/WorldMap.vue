@@ -34,14 +34,14 @@
     </div>
 
     <MapHUD
-      :area-name="areaConfig.name"
+      :area-name="$t('menu.areaNames.' + playerStore.currentArea)"
       :biome="currentMapData?.biome"
       :leader-name="playerStore.party[0]?.name"
       :leader-level="playerStore.party[0]?.level"
     />
 
     <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest hidden lg:block">
-      WASD to Move | ESC for Menu
+      {{ $t('menu.wasdToMove') }}
     </div>
 
     <MobileControls
@@ -218,7 +218,7 @@ const checkTriggers = (x, y) => {
   if (type === TILE_TYPES.SPELL_CENTER) {
     playerStore.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
-    playerStore.notify('Your Spellingmon have been fully healed!');
+    playerStore.notify(settingsStore.t('menu.healed'));
     playerStore.lastSpellCenter = { x, y, area: playerStore.currentArea };
     playerStore.saveState();
     return;
@@ -246,7 +246,7 @@ const checkTriggers = (x, y) => {
         playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
       );
       if (!allDefeated) {
-        playerStore.notify("You must defeat the area's trainer before moving on!");
+        playerStore.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
       }
       playerStore.unlockArea(playerStore.currentArea + 1);

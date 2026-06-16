@@ -45,7 +45,7 @@
         <!-- Detail Header -->
         <div class="bg-gray-800 text-white p-4 flex items-center gap-4 shadow-lg shrink-0">
           <button
-            class="bg-gray-700 hover:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center font-bold border-2 border-gray-600 ring-yellow-400 focus:ring-8"
+            class="bg-gray-700 hover:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center font-bold border-2 border-gray-600 focus:ring-8 focus:ring-yellow-400"
             @click="activeDetailTab = null"
           >
             ◀

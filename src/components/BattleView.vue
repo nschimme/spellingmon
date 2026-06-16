@@ -24,12 +24,12 @@
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
                 <div class="flex flex-col">
-                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ $t('monsters.' + battleStore.enemyMon.species) }}</span>
+                  <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + battleStore.enemyMon.species) }}</span>
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.enemyMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
                   <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.enemyMon.species]?.type] }}</span>
-                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ $t('types.' + battleStore.enemyMon.type) }}</span>
+                  <span class="text-[6px] sm:text-[8px] tracking-widest text-gray-400">{{ $t('types.' + battleStore.enemyMon.type) }}</span>
                 </div>
               </div>
             </div>
@@ -80,12 +80,12 @@
             <div class="flex flex-col font-bold leading-tight">
               <div class="flex justify-between items-start">
                 <div class="flex flex-col">
-                  <span class="text-[10px] sm:text-sm uppercase tracking-tighter">{{ $t('monsters.' + battleStore.playerMon.species) }}</span>
+                  <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + battleStore.playerMon.species) }}</span>
                   <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase -mt-0.5">Lv {{ battleStore.playerMon.level }}</span>
                 </div>
                 <div class="flex flex-col items-end opacity-80">
                   <span class="text-[10px] sm:text-xs">{{ TYPE_EMOJIS[MONS[battleStore.playerMon.species]?.type] }}</span>
-                  <span class="text-[6px] sm:text-[8px] uppercase tracking-widest text-gray-400">{{ $t('types.' + battleStore.playerMon.type) }}</span>
+                  <span class="text-[6px] sm:text-[8px] tracking-widest text-gray-400">{{ $t('types.' + battleStore.playerMon.type) }}</span>
                 </div>
               </div>
             </div>
@@ -122,13 +122,13 @@
         class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm webkit-backdrop-blur-sm"
       >
         <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2 animate-bounce">
-          <p class="text-red-600 font-black uppercase text-xl mb-2">
+          <p class="text-red-600 font-black text-xl mb-2">
             {{ $t('battle.incorrect') }}
           </p>
-          <p class="text-gray-500 font-bold uppercase text-[10px] mb-1">
+          <p class="text-gray-500 font-bold text-[10px] mb-1">
             {{ $t('battle.shouldHaveBeen') }}
           </p>
-          <p class="text-4xl font-black uppercase tracking-widest text-gray-800">
+          <p class="text-4xl font-black tracking-widest text-gray-800">
             {{ mistakeWord }}
           </p>
         </div>
@@ -167,7 +167,7 @@
           <div class="grid grid-cols-2 gap-2">
             <button
               :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
-              class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black uppercase border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg"
+              class="col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-black border-b-4 border-blue-800 active:translate-y-1 text-sm tracking-widest shadow-lg"
               @click="prepareAttack"
             >
               {{ $t('battle.attack') }}
@@ -175,14 +175,14 @@
             <button
               :disabled="battleStore.isCapturing"
               :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
-              class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold uppercase border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs"
+              class="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-bold border-b-4 border-red-700 active:translate-y-1 disabled:opacity-50 text-xs"
               @click="tryCapture"
             >
               {{ $t('battle.capture') }}
             </button>
             <button
               :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
-              class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold uppercase border-b-4 border-green-700 active:translate-y-1 text-xs"
+              class="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 font-bold border-b-4 border-green-700 active:translate-y-1 text-xs"
               @click="battleStore.isSwitching = true; battleStore.setPhase(BATTLE_PHASES.SWITCHING);"
             >
               {{ $t('battle.switch') }}
@@ -190,7 +190,7 @@
           </div>
           <button
             :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
-            class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold uppercase border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs"
+            class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 font-bold border-b-4 border-gray-700 active:translate-y-1 mt-2 text-xs"
             @click="tryRun"
           >
             {{ $t('battle.run') }}
@@ -265,7 +265,7 @@
               <input
                 ref="spellingInput"
                 v-model="userInput"
-                class="w-full border-2 border-gray-800 p-1 text-center text-lg uppercase rounded-lg"
+                class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg"
                 :placeholder="$t('battle.typeHere')"
                 autocomplete="off"
                 autocorrect="off"
@@ -277,7 +277,7 @@
                 @keydown.enter="submitSpelling"
                 @paste.prevent
               >
-              <p class="text-[8px] text-red-500 font-bold mt-1 uppercase">
+              <p class="text-[8px] text-red-500 font-bold mt-1">
                 {{ $t('battle.spellForPower') }}
               </p>
             </div>
@@ -298,10 +298,10 @@
     >
       <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
         <div class="bg-yellow-500 p-6 text-center border-b-8 border-gray-800">
-          <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">
+          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tighter">
             {{ $t('battle.partyFull') }}
           </h2>
-          <p class="text-white font-bold text-xs uppercase opacity-90">
+          <p class="text-white font-bold text-xs opacity-90">
             {{ $t('battle.partyFullDesc') }}
           </p>
         </div>
@@ -312,13 +312,13 @@
               {{ battleStore.pendingCapture.emoji }}
             </div>
             <div class="flex-1">
-              <p class="text-[10px] font-black text-yellow-700 uppercase">
+              <p class="text-[10px] font-black text-yellow-700">
                 {{ $t('battle.newCapture') }}
               </p>
-              <h3 class="text-2xl font-black text-gray-800 uppercase">
+              <h3 class="text-2xl font-black text-gray-800">
                 {{ $t('monsters.' + battleStore.pendingCapture.species) }}
               </h3>
-              <p class="text-sm font-bold text-gray-500 uppercase">
+              <p class="text-sm font-bold text-gray-500">
                 Level {{ battleStore.pendingCapture.level }} • {{ $t('types.' + battleStore.pendingCapture.type) }}
               </p>
             </div>
@@ -341,7 +341,7 @@
               </div>
               <div class="flex-1">
                 <div class="flex justify-between items-center">
-                  <span class="font-black text-sm uppercase truncate">{{ $t('monsters.' + mon.species) }}</span>
+                  <span class="font-black text-sm truncate">{{ $t('monsters.' + mon.species) }}</span>
                   <span class="text-[10px] font-bold text-blue-600">Lv {{ mon.level }}</span>
                 </div>
                 <div class="w-full bg-gray-200 h-1 rounded-full mt-1">
@@ -375,7 +375,7 @@
       <div class="mb-8 text-8xl">
         🏥
       </div>
-      <h2 class="text-6xl font-black text-gray-800 mb-4 uppercase tracking-tighter italic">
+      <h2 class="text-6xl font-black text-gray-800 mb-4 tracking-tighter italic">
         {{ $t('battle.whitedOutTitle') }}
       </h2>
       <p class="text-xl font-bold text-gray-600 mb-12 max-w-md">
@@ -601,9 +601,16 @@ const submitSpelling = () => {
   const isCorrect = normalizedInput === normalizedWord;
 
   // Perfect check: Exact match (capitalization and diacritics)
-  const isPerfect = isCorrect && (userInput.value.trim() === word.trim());
+  // ONLY if the original word actually had capitalization or diacritics
+  const hasChallenge = (word) => {
+    const hasUpper = /[A-Z]/.test(word);
+    const hasDiacritics = word.normalize('NFD') !== word.normalize('NFC') || /[ß]/.test(word);
+    return hasUpper || hasDiacritics;
+  };
 
-  if (isPerfect && isCorrect) {
+  const isPerfect = isCorrect && (userInput.value.trim() === word.trim()) && hasChallenge(word);
+
+  if (isPerfect) {
     // Reward perfection: add 20% of total time back to timeLeft
     // This can push a slow-but-perfect entry into the "Power" bracket!
     timeLeft.value = Math.min(totalTime.value, timeLeft.value + (totalTime.value * 0.2));
@@ -624,7 +631,7 @@ const submitSpelling = () => {
     const isNewMastery = playerStore.recordMasteredWord(playerStore.currentArea, word);
     if (isNewMastery) {
       audio.playSound(SOUND_EFFECTS.DISCOVERY);
-      playerStore.notify(`${t('menu.mastered')}: ${word.toUpperCase()}!`);
+      playerStore.notify(`${t('menu.mastered')}: ${word}!`);
     }
 
     if (battleStore.isCapturing) {
@@ -633,11 +640,11 @@ const submitSpelling = () => {
       handleAttackSuccess(isPower, isPerfect);
     }
   } else {
-    mistakeWord.value = word.toUpperCase();
+    mistakeWord.value = word;
     setTimeout(() => mistakeWord.value = '', 2000);
 
     battleStore.log(t('battle.incorrect'));
-    battleStore.log(t('battle.correctSpelling', { word: word.toUpperCase() }));
+    battleStore.log(t('battle.correctSpelling', { word: word }));
     battleStore.isCapturing = false;
     enemyTurn();
   }

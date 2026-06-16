@@ -31,11 +31,11 @@
 
       <button
         v-if="isComplete"
-        :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+        :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 0 }"
         class="mt-4 bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1"
         @click="finish"
       >
-        Awesome!
+        {{ $t('common.continue') }}
       </button>
     </div>
   </div>

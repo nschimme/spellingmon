@@ -13,7 +13,7 @@
     "title": "СПЕЛЛИНГМОН",
     "subtitle": "Собери их всех!",
     "startGame": "Начать игру",
-    "pressAnyKey": "Нажми любую клавишу",
+    "pressAnyKey": "Нажми Пробел/Enter или коснись экрана",
     "selectAdventure": "Выберите приключение",
     "continueSlot": "Продолжить",
     "deleteSlot": "Удалить",
@@ -101,7 +101,7 @@
     "miss": "Мимо!",
     "incorrect": "Неверно!",
     "shouldHaveBeen": "Должно быть:",
-    "typeHere": "ПИШИ ТУТ",
+    "typeHere": "Пиши тут",
     "listenAgain": "Повторить",
     "switchWho": "Кого выпустить?",
     "partyFull": "Команда полна!",
@@ -161,7 +161,17 @@
     "spd": "Скор.",
     "pressEnterToSwap": "ENTER для смены",
     "activeLeader": "Лидер",
-    "setLeader": "Выбрать лидера"
+    "setLeader": "Выбрать лидера",
+    "wasdToMove": "WASD to Move | ESC for Menu",
+    "healed": "Your Spellingmon have been fully healed!",
+    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "biomes": {
+      "wilderness": "Wilderness",
+      "cave": "Cave",
+      "town": "Town",
+      "route": "Route",
+      "forest": "Forest"
+    }
   },
   "settings": {
     "testSFX": "Тест звука",

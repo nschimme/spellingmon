@@ -13,7 +13,7 @@
     "title": "SPELLINGMON",
     "subtitle": "¡Atrápalos a todos!",
     "startGame": "Empezar juego",
-    "pressAnyKey": "Pulsa cualquier tecla para empezar",
+    "pressAnyKey": "Toca o pulsa Espacio/Enter para empezar",
     "selectAdventure": "Seleccionar Aventura",
     "continueSlot": "Continuar",
     "deleteSlot": "Borrar",
@@ -101,7 +101,7 @@
     "miss": "¡Fallo!",
     "incorrect": "¡Incorrecto!",
     "shouldHaveBeen": "Debió ser:",
-    "typeHere": "ESCRIBE AQUÍ",
+    "typeHere": "Escribe aquí",
     "listenAgain": "Escuchar otra vez",
     "switchWho": "¿A quién cambiar?",
     "partyFull": "Equipo lleno!",
@@ -161,7 +161,17 @@
     "spd": "Veloc.",
     "pressEnterToSwap": "ENTER para cambiar",
     "activeLeader": "Líder Activo",
-    "setLeader": "Cambiar Líder"
+    "setLeader": "Cambiar Líder",
+    "wasdToMove": "WASD to Move | ESC for Menu",
+    "healed": "Your Spellingmon have been fully healed!",
+    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "biomes": {
+      "wilderness": "Wilderness",
+      "cave": "Cave",
+      "town": "Town",
+      "route": "Route",
+      "forest": "Forest"
+    }
   },
   "settings": {
     "testSFX": "Probar SFX",

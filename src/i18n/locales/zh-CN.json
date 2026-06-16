@@ -13,7 +13,7 @@
     "title": "拼写萌宠",
     "subtitle": "全都要拼写！",
     "startGame": "开始游戏",
-    "pressAnyKey": "按任意键开始",
+    "pressAnyKey": "点击或按空格/回车键开始",
     "selectAdventure": "选择冒险",
     "continueSlot": "继续",
     "deleteSlot": "删除",
@@ -161,7 +161,17 @@
     "spd": "速度",
     "pressEnterToSwap": "按 ENTER 交换",
     "activeLeader": "当前队长",
-    "setLeader": "设为队长"
+    "setLeader": "设为队长",
+    "wasdToMove": "WASD to Move | ESC for Menu",
+    "healed": "Your Spellingmon have been fully healed!",
+    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "biomes": {
+      "wilderness": "Wilderness",
+      "cave": "Cave",
+      "town": "Town",
+      "route": "Route",
+      "forest": "Forest"
+    }
   },
   "settings": {
     "testSFX": "测试音效",
