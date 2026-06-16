@@ -47,7 +47,7 @@ import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
-import { TYPE_EMOJIS, MONS } from '../utils/gameData';
+import { MONS } from '../utils/gameData';
 
 const playerStore = usePlayerStore();
 const step = ref(0);

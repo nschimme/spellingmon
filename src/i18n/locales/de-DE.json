@@ -18,7 +18,16 @@
     "deleteSave": "Spielstand löschen",
     "deleteConfirm": "Alle Fortschritte löschen? Dies kann nicht rückgängig gemacht werden!",
     "yesDelete": "Ja, löschen",
-    "pressAnyKey": "Drücke eine Taste zum Starten"
+    "pressAnyKey": "Drücke eine Taste zum Starten",
+    "selectAdventure": "Abenteuer wählen",
+    "slot": "Speicherplatz {n}",
+    "continueSlot": "Weiter",
+    "deleteSlot": "Löschen",
+    "newGameSlot": "Neues Spiel",
+    "startSlot": "Start",
+    "backToTitle": "Zurück zum Titel",
+    "deleteSaveConfirm": "Spielstand löschen?",
+    "deleteSaveWarning": "Dies wird all deinen Fortschritt auf Speicherplatz {n} dauerhaft löschen."
   },
   "tts": {
     "title": "Audio-Check",

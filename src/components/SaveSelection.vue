@@ -2,7 +2,12 @@
   <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-4 md:p-8 relative overflow-hidden">
     <!-- Animated background bubbles -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div v-for="i in 10" :key="i" class="bubble" :style="bubbleStyle(i)"></div>
+      <div
+        v-for="n in 10"
+        :key="n"
+        class="bubble"
+        :style="bubbleStyle(n)"
+      />
     </div>
 
     <div class="z-10 bg-white border-8 border-gray-800 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full text-gray-800 overflow-y-auto max-h-full">
@@ -10,22 +15,25 @@
         {{ $t('landing.title') }}
       </h1>
       <h2 class="text-sm font-bold text-center mb-8 text-gray-500 uppercase tracking-widest">
-        Select Adventure
+        {{ $t('landing.selectAdventure') }}
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div
           v-for="(slot, index) in slots"
           :key="index"
+          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px]"
           :class="{
             'ring-8 ring-yellow-400 border-blue-500 -translate-y-2 shadow-2xl': selectedIndex === index,
             'bg-gray-50 border-gray-200': !slot,
             'bg-white border-gray-800': slot
           }"
-          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px]"
           @click="selectSlot(index)"
         >
-          <div v-if="slot" class="w-full flex flex-col items-center h-full">
+          <div
+            v-if="slot"
+            class="w-full flex flex-col items-center h-full"
+          >
             <div class="text-6xl mb-4 animate-bounce-slow">
               {{ slot.party[0]?.emoji || '👦' }}
             </div>
@@ -33,16 +41,22 @@
               {{ slot.playerName }}
             </h3>
             <div class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase mb-4">
-              Area {{ slot.currentArea }}
+              {{ $t('menu.area', { n: slot.currentArea }) }}
             </div>
 
             <div class="w-full space-y-2 mt-auto">
               <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
-                <span>Party</span>
+                <span>{{ $t('menu.party') }}</span>
                 <span>{{ slot.party.length }} / 6</span>
               </div>
               <div class="flex gap-1 justify-center">
-                <span v-for="mon in slot.party" :key="mon.id" class="text-lg">{{ mon.emoji }}</span>
+                <span
+                  v-for="mon in slot.party"
+                  :key="mon.id"
+                  class="text-lg"
+                >
+                  {{ mon.emoji }}
+                </span>
               </div>
             </div>
 
@@ -51,29 +65,32 @@
                 class="w-full bg-blue-500 text-white py-3 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1 text-xs"
                 @click.stop="selectSlot(index)"
               >
-                Continue
+                {{ $t('landing.continueSlot') }}
               </button>
               <button
                 class="w-full bg-red-100 text-red-500 py-2 rounded-xl font-black uppercase border-b-4 border-red-200 hover:bg-red-200 transition-colors text-[10px]"
                 @click.stop="confirmDelete(index)"
               >
-                Delete
+                {{ $t('landing.deleteSlot') }}
               </button>
             </div>
           </div>
 
-          <div v-else class="w-full h-full flex flex-col items-center justify-center">
+          <div
+            v-else
+            class="w-full h-full flex flex-col items-center justify-center"
+          >
             <div class="text-6xl mb-6 opacity-20">
               ➕
             </div>
             <h3 class="text-xl font-black uppercase text-gray-300 mb-6">
-              New Game
+              {{ $t('landing.newGameSlot') }}
             </h3>
             <button
               class="w-full bg-green-500 text-white py-3 rounded-xl font-black uppercase border-b-4 border-green-700 active:translate-y-1 text-xs"
               @click.stop="selectSlot(index)"
             >
-              Start
+              {{ $t('landing.startSlot') }}
             </button>
           </div>
 
@@ -90,29 +107,38 @@
           class="text-xs font-bold text-gray-400 uppercase hover:text-gray-600 transition-colors"
           @click="$emit('back')"
         >
-          &larr; Back to Title
+          &larr; {{ $t('landing.backToTitle') }}
         </button>
       </div>
     </div>
 
     <!-- Delete Confirmation Dialog -->
-    <div v-if="slotToDelete !== null" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+      v-if="slotToDelete !== null"
+      class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+    >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
-        <div class="text-6xl mb-4">⚠️</div>
-        <h2 class="text-2xl font-black uppercase mb-2">Delete Save?</h2>
-        <p class="text-sm font-bold text-gray-500 mb-8">This will permanently erase all your progress in Slot {{ slotToDelete + 1 }}.</p>
+        <div class="text-6xl mb-4">
+          ⚠️
+        </div>
+        <h2 class="text-2xl font-black uppercase mb-2">
+          {{ $t('landing.deleteSaveConfirm') }}
+        </h2>
+        <p class="text-sm font-bold text-gray-500 mb-8">
+          {{ $t('landing.deleteSaveWarning', { n: slotToDelete + 1 }) }}
+        </p>
         <div class="flex gap-4">
           <button
             class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1"
             @click="slotToDelete = null"
           >
-            Cancel
+            {{ $t('common.cancel') }}
           </button>
           <button
             class="flex-1 bg-red-600 text-white py-3 rounded-xl font-black uppercase border-b-4 border-red-800 active:translate-y-1"
             @click="doDelete"
           >
-            Delete
+            {{ $t('landing.deleteSlot') }}
           </button>
         </div>
       </div>
@@ -169,7 +195,7 @@ const { selectedIndex } = useKeyboardNavigation({
   onCancel: () => emit('back')
 });
 
-const bubbleStyle = (i) => {
+const bubbleStyle = () => {
   return {
     left: `${Math.random() * 100}%`,
     animationDelay: `${Math.random() * 5}s`,

@@ -9,7 +9,7 @@ test.describe('TTS Verification Flow', () => {
     await expect(startButton).toBeVisible();
     await startButton.click();
 
-    const newGameButton = page.getByRole('button', { name: 'New Game' });
+    const newGameButton = page.getByRole('button', { name: 'Start' }).first();
     await expect(newGameButton).toBeVisible();
     await newGameButton.click();
 
@@ -37,7 +37,7 @@ test.describe('TTS Verification Flow', () => {
   test('should show troubleshooting when clicking No', async ({ page }) => {
     await page.goto('/');
     await page.click('text=Start Game');
-    await page.click('text=New Game');
+    await page.getByRole('button', { name: 'Start' }).first().click();
     await page.getByRole('button').filter({ hasText: /English/i }).click();
 
     const testVoiceButton = page.getByRole('button', { name: 'Test Voice' });

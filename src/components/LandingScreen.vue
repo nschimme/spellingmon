@@ -31,34 +31,6 @@
         </div>
       </div>
 
-      <!-- Delete Confirmation Modal -->
-      <div
-        v-if="confirmDelete"
-        class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-      >
-        <div class="bg-white border-8 border-gray-800 p-8 rounded-2xl max-w-sm w-full text-center">
-          <p class="font-black uppercase text-red-600 mb-6">
-            {{ $t('landing.deleteConfirm') }}
-          </p>
-          <div class="flex gap-4">
-            <button
-              :class="{ 'ring-8 ring-yellow-400': confirmDelete && deleteSelectedIndex === 0 }"
-              class="flex-1 bg-red-500 text-white py-3 rounded-lg font-bold uppercase text-xs border-b-4 border-red-800 active:translate-y-1"
-              @click="handleDelete"
-            >
-              {{ $t('landing.yesDelete') }}
-            </button>
-            <button
-              :class="{ 'ring-8 ring-yellow-400': confirmDelete && deleteSelectedIndex === 1 }"
-              class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-bold uppercase text-xs border-b-4 border-gray-400 active:translate-y-1"
-              @click="confirmDelete = false"
-            >
-              {{ $t('common.cancel') }}
-            </button>
-          </div>
-        </div>
-      </div>
-
       <p class="mt-8 md:mt-12 text-white/50 font-bold uppercase text-[10px] tracking-widest animate-pulse">
         {{ $t('landing.pressAnyKey') }}
       </p>
@@ -67,20 +39,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
 import { audio } from '../utils/audio';
-import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
 
-const emit = defineEmits(['start', 'new-game', 'continue']);
-const playerStore = usePlayerStore();
-
-const showSaveOptions = ref(false);
-const confirmDelete = ref(false);
-
-const hasSave = computed(() => playerStore.characterCreationComplete);
-const playerName = computed(() => playerStore.playerName);
+const emit = defineEmits(['continue']);
 
 const handleContinue = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
@@ -95,18 +58,5 @@ const { selectedIndex } = useKeyboardNavigation({
   onConfirm: () => {
     handleContinue();
   }
-});
-
-const { selectedIndex: deleteSelectedIndex } = useKeyboardNavigation({
-  id: 'landing-screen-delete',
-  priority: INPUT_PRIORITIES.MODAL,
-  isActive: confirmDelete,
-  maxIndex: 2,
-  gridColumns: 2,
-  onConfirm: (idx) => {
-    if (idx === 0) handleDelete();
-    else confirmDelete.value = false;
-  },
-  onCancel: () => { confirmDelete.value = false; }
 });
 </script>

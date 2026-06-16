@@ -18,7 +18,16 @@
     "deleteSave": "Delete Save",
     "deleteConfirm": "Delete all progress? This cannot be undone!",
     "yesDelete": "Yes, Delete",
-    "pressAnyKey": "Press any key or click to begin"
+    "pressAnyKey": "Press any key or click to begin",
+    "selectAdventure": "Select Adventure",
+    "slot": "Slot {n}",
+    "continueSlot": "Continue",
+    "deleteSlot": "Delete",
+    "newGameSlot": "New Game",
+    "startSlot": "Start",
+    "backToTitle": "Back to Title",
+    "deleteSaveConfirm": "Delete Save?",
+    "deleteSaveWarning": "This will permanently erase all your progress in Slot {n}."
   },
   "tts": {
     "title": "Audio Check",
