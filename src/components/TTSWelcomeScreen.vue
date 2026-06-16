@@ -156,9 +156,14 @@ const selectLanguage = async (lang) => {
   if (!isLangSupported(lang.code)) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
   await settingsStore.setLocale(lang.code);
-  speech.speak(lang.native);
+  // speech.speak(lang.native); // Requirement: don't repeat the language name
   phase.value = 'audio-check';
   hasTested.value = true;
+
+  // Immediately trigger test voice
+  setTimeout(() => {
+    testVoice();
+  }, 300);
 };
 
 const onHoverLang = (index) => {

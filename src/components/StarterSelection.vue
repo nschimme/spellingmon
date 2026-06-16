@@ -11,7 +11,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div
           v-for="(mon, i) in starters"
-          :key="mon.name"
+          :key="mon.species"
           :class="{ 'ring-8 ring-yellow-400 border-yellow-400 -translate-y-2 shadow-xl': selectedIndex === i }"
           class="group cursor-pointer bg-white border-4 border-gray-200 hover:border-blue-500 p-4 rounded-2xl transition-all hover:-translate-y-2 hover:shadow-xl flex flex-col items-center"
           @click="selectStarter(mon)"
@@ -23,13 +23,13 @@
             {{ mon.icon }}
           </div>
           <h3 class="text-sm font-black uppercase mb-2">
-            {{ mon.name }}
+            {{ $t('monsters.' + mon.species) }}
           </h3>
           <div
             :class="typeColor(mon.type)"
             class="text-[8px] px-2 py-1 rounded-full text-white font-bold mb-2 uppercase"
           >
-            {{ mon.type }}
+            {{ $t('types.' + mon.type) }}
           </div>
           <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-auto">
             <div class="bg-green-400 h-full w-[80%]" />
@@ -56,13 +56,13 @@ import { INPUT_PRIORITIES } from '../utils/constants';
 const playerStore = usePlayerStore();
 
 const starters = [
-  { name: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
-  { name: SPECIES.Squirtspell, type: 'Water', icon: '💧', hp: 21 },
-  { name: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
+  { species: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
+  { species: SPECIES.Squirtspell, type: 'Water', icon: '💧', hp: 21 },
+  { species: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
 ];
 
 const selectStarter = (mon) => {
-  const fullMon = createMon(mon.name, 1);
+  const fullMon = createMon(mon.species, 1);
   playerStore.setStarter(fullMon);
 };
 

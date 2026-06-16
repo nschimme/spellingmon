@@ -35,7 +35,7 @@
           <div class="flex-1 min-w-0">
             <div class="flex justify-between items-end mb-1">
               <h3 class="text-xl font-black uppercase text-gray-800 truncate">
-                {{ mon.name }}
+                {{ $t('monsters.' + mon.species) }}
               </h3>
               <span class="text-sm font-black text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md border-2 border-blue-200">LV{{ mon.level }}</span>
             </div>
@@ -121,7 +121,7 @@ import { computed, ref, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { INPUT_PRIORITIES } from '../../utils/constants';
-import { TYPE_EMOJIS } from '../../utils/gameData';
+import { TYPE_EMOJIS, MONS } from '../../utils/gameData';
 import { getHPColorClass } from '../../utils/visuals';
 
 const playerStore = usePlayerStore();

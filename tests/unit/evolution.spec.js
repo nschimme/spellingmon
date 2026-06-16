@@ -51,7 +51,6 @@ describe('PlayerStore Evolution', () => {
 
     const evolvedMon = store.party[0];
     expect(evolvedMon.species).toBe('Wordmeleon');
-    expect(evolvedMon.name).toBe('Wordmeleon');
     expect(store.evolutionPending).toBeNull();
   });
 });

@@ -3,6 +3,9 @@ import { storage } from '../utils/storage';
 import { GAME_CONSTANTS, BATTLE_TYPES, STORAGE_KEYS, BATTLE_PHASES } from '../utils/constants';
 import { usePlayerStore } from './playerStore';
 import { calculateDamage } from '../utils/gameData';
+import i18n from '../i18n';
+
+const { t } = i18n.global;
 
 export const useBattleStore = defineStore('battle', {
   state: () => {
@@ -126,15 +129,18 @@ export const useBattleStore = defineStore('battle', {
       this.trainerParty = trainerParty;
 
       if (type === BATTLE_TYPES.TRAINER) {
-        this.battleLog = [`${trainer.name} wants to battle!`, `They sent out ${enemyMon.name}!`];
+        this.battleLog = [
+          t('battle.trainerWantsToBattle', { name: trainer.name }),
+          t('battle.trainerSentOut', { name: t('monsters.' + enemyMon.species) })
+        ];
       } else {
-        this.battleLog = [`A wild ${enemyMon.name} appeared!`];
+        this.battleLog = [t('battle.wildAppeared', { name: t('monsters.' + enemyMon.species) })];
       }
 
       // Determine initial turn based on Speed
       this.isPlayerTurn = (playerMon.spd >= enemyMon.spd);
       if (!this.isPlayerTurn) {
-        this.log(`${enemyMon.name} is faster!`);
+        this.log(t('battle.faster', { name: t('monsters.' + enemyMon.species) }));
       }
 
       this.saveState();
@@ -162,10 +168,10 @@ export const useBattleStore = defineStore('battle', {
       }
 
       this.damageEnemy(damage);
-      this.log(`Dealt ${damage} damage.`);
-      if (typeMod > 1) this.log("It's super effective!");
-      if (typeMod < 1 && typeMod > 0) this.log("It's not very effective...");
-      if (typeMod === 0) this.log("It had no effect!");
+      this.log(t('battle.dealtDamage', { amount: damage }));
+      if (typeMod > 1) this.log(t('battle.superEffective'));
+      if (typeMod < 1 && typeMod > 0) this.log(t('battle.notEffective'));
+      if (typeMod === 0) this.log(t('battle.noEffect'));
 
       return { damage, typeMod };
     },
@@ -214,7 +220,7 @@ export const useBattleStore = defineStore('battle', {
     switchPlayerMon(newMon) {
       this.playerMon = newMon;
       this.isSwitching = false;
-      this.log(`Go, ${newMon.name}!`);
+      this.log(t('battle.go', { name: t('monsters.' + newMon.species) }));
       this.setPhase(BATTLE_PHASES.SELECT_ACTION);
     },
     damageEnemy(amount) {

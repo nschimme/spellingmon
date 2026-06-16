@@ -20,45 +20,13 @@
           {{ $t('landing.subtitle') }}
         </p>
 
-        <div
-          v-if="!showSaveOptions"
-          class="space-y-4"
-        >
+        <div class="space-y-4">
           <button
-            :class="{ 'ring-8 ring-yellow-400': !showSaveOptions && selectedIndex === 0 }"
+            :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 md:py-6 px-6 md:px-12 rounded-2xl border-b-8 border-blue-800 text-xl md:text-2xl uppercase tracking-widest transition-all active:border-b-0 active:translate-y-2 group"
-            @click="handleInitialClick"
-          >
-            <span class="group-hover:scale-110 inline-block transition-transform">{{ $t('landing.startGame') }}</span>
-          </button>
-        </div>
-
-        <div
-          v-else
-          class="space-y-4 animate-in fade-in zoom-in duration-300"
-        >
-          <button
-            v-if="hasSave"
-            :class="{ 'ring-8 ring-yellow-400': showSaveOptions && !confirmDelete && selectedIndex === 0 }"
-            class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-4 rounded-xl border-b-4 border-green-800 uppercase text-sm active:translate-y-1"
             @click="handleContinue"
           >
-            {{ $t('landing.continue', { name: playerName }) }}
-          </button>
-          <button
-            :class="{ 'ring-8 ring-yellow-400': showSaveOptions && !confirmDelete && ((hasSave && selectedIndex === 1) || (!hasSave && selectedIndex === 0)) }"
-            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 rounded-xl border-b-4 border-blue-800 uppercase text-sm active:translate-y-1"
-            @click="handleNewGame"
-          >
-            {{ $t('landing.newGame') }}
-          </button>
-          <button
-            v-if="hasSave"
-            :class="{ 'ring-8 ring-yellow-400': showSaveOptions && !confirmDelete && selectedIndex === 2 }"
-            class="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 rounded-xl border-b-4 border-red-800 uppercase text-sm active:translate-y-1"
-            @click="confirmDelete = true"
-          >
-            {{ $t('landing.deleteSave') }}
+            <span class="group-hover:scale-110 inline-block transition-transform">{{ $t('landing.startGame') }}</span>
           </button>
         </div>
       </div>
@@ -114,49 +82,18 @@ const confirmDelete = ref(false);
 const hasSave = computed(() => playerStore.characterCreationComplete);
 const playerName = computed(() => playerStore.playerName);
 
-const handleInitialClick = () => {
-  audio.playSound(SOUND_EFFECTS.CLICK);
-  showSaveOptions.value = true;
-  reset();
-};
-
 const handleContinue = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   emit('continue');
 };
 
-const handleNewGame = () => {
-  audio.playSound(SOUND_EFFECTS.CLICK);
-  if (hasSave.value) {
-    playerStore.resetStore();
-  }
-  emit('new-game');
-};
-
-const handleDelete = () => {
-  audio.playSound(SOUND_EFFECTS.FAINT);
-  playerStore.resetStore();
-  confirmDelete.value = false;
-  reset();
-};
-
-const { selectedIndex, reset } = useKeyboardNavigation({
+const { selectedIndex } = useKeyboardNavigation({
   id: 'landing-screen',
   priority: INPUT_PRIORITIES.GLOBAL,
-  isActive: computed(() => !confirmDelete.value),
-  maxIndex: computed(() => showSaveOptions.value ? (hasSave.value ? 3 : 1) : 1),
-  onConfirm: (idx) => {
-    if (!showSaveOptions.value) {
-      handleInitialClick();
-    } else {
-      if (hasSave.value) {
-        if (idx === 0) handleContinue();
-        if (idx === 1) handleNewGame();
-        if (idx === 2) confirmDelete.value = true;
-      } else {
-        handleNewGame();
-      }
-    }
+  isActive: true,
+  maxIndex: 1,
+  onConfirm: () => {
+    handleContinue();
   }
 });
 

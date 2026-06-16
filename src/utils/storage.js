@@ -1,16 +1,18 @@
 export const storage = {
-  save(key, data) {
+  save(key, data, slot = null) {
     if (typeof window === 'undefined') return;
+    const finalKey = slot !== null ? `${key}_slot_${slot}` : key;
     try {
-      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem(finalKey, JSON.stringify(data));
     } catch (e) {
       console.warn('Storage save failed:', e);
     }
   },
-  load(key) {
+  load(key, slot = null) {
     if (typeof window === 'undefined') return null;
+    const finalKey = slot !== null ? `${key}_slot_${slot}` : key;
     try {
-      const data = localStorage.getItem(key);
+      const data = localStorage.getItem(finalKey);
       return data ? JSON.parse(data) : null;
     } catch (e) {
       console.warn('Storage load failed:', e);
