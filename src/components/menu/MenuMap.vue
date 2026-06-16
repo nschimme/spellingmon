@@ -20,7 +20,7 @@
 
     <div class="w-full mt-4">
       <h3 class="font-black uppercase text-gray-800 mb-2 text-sm">
-        World Map
+        {{ $t('menu.map') }}
       </h3>
       <div class="flex gap-2 justify-between items-center bg-gray-200 p-4 rounded-xl border-4 border-gray-800">
         <div
@@ -48,7 +48,7 @@
 import { ref, onMounted } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
-import { GAME_CONSTANTS, INPUT_PRIORITIES, TRANSITION_TYPES } from '../../utils/constants';
+import { GAME_CONSTANTS, TRANSITION_TYPES } from '../../utils/constants';
 import { TILE_TYPES, MapGenerator } from '../../utils/mapGenerator';
 
 const playerStore = usePlayerStore();
@@ -58,7 +58,6 @@ const emit = defineEmits(['back']);
 
 useKeyboardNavigation({
   id: 'menu-map',
-  priority: INPUT_PRIORITIES.MENU + 10,
   maxIndex: 0,
   onConfirm: () => {},
   onCancel: () => emit('back')

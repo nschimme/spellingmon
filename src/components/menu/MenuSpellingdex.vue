@@ -1,156 +1,187 @@
 <template>
-  <div class="flex flex-col gap-6 max-w-2xl mx-auto">
-    <div class="bg-blue-50 p-4 rounded-2xl border-4 border-blue-200">
-      <div class="flex justify-end items-center mb-4">
-        <div class="text-right">
-          <div class="text-[10px] font-bold text-blue-600 uppercase">
-            {{ $t('menu.globalProgress') }}
-          </div>
-          <div class="text-lg font-black text-blue-800">
-            {{ totalMastered }} / {{ totalWords }}
-          </div>
+  <div class="flex flex-col gap-4">
+    <!-- Area Filter Header -->
+    <div
+      class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-2xl shadow-md sticky top-0 z-10"
+    >
+      <button
+        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        @click="prevArea"
+      >
+        ⬅️
+      </button>
+      <div class="flex-1 text-center">
+        <div class="text-[10px] font-bold text-blue-600">
+          {{ $t('menu.area', { n: currentArea }) }}
+        </div>
+        <h3 class="font-black text-gray-800 text-sm tracking-widest">
+          {{ $t('menu.areaNames.' + currentArea) }}
+        </h3>
+      </div>
+      <button
+        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        @click="nextArea"
+      >
+        ➡️
+      </button>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
+        <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.seen') }}</span>
+        <div class="bg-gray-700 px-2 py-1 rounded text-[8px] font-bold text-gray-300">
+          {{ discoveredCount }} / 40
         </div>
       </div>
-      <div class="w-full bg-blue-200 h-4 rounded-full border-2 border-blue-300 overflow-hidden">
+      <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
+        <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.mastered') }}</span>
+        <div class="bg-green-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
+          {{ masteredCount }} / 40
+        </div>
+      </div>
+    </div>
+
+    <!-- Word Grid -->
+    <div
+      v-if="loading"
+      class="flex flex-col items-center justify-center p-12 text-gray-400 animate-pulse"
+    >
+      <div class="text-4xl mb-4">
+        📚
+      </div>
+      <p class="font-bold text-xs">
+        {{ $t('menu.loadingWords') }}
+      </p>
+    </div>
+
+    <div
+      v-else
+      class="grid grid-cols-1 gap-2"
+    >
+      <div
+        v-for="(word, index) in areaWords"
+        :key="word.term"
+        :ref="el => { if (el) itemRefs[index] = el }"
+        class="group relative overflow-hidden bg-white border-4 p-3 rounded-xl transition-all"
+        :class="[
+          isMastered(word.term) ? 'border-green-500 shadow-md' : (isDiscovered(word.term) ? 'border-gray-400' : 'border-gray-200 opacity-40'),
+          selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
+        ]"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="font-black text-sm tracking-tight">
+                {{ isDiscovered(word.term) ? word.term : '???' }}
+              </span>
+              <span
+                v-if="isMastered(word.term)"
+                class="text-green-500"
+              >✅</span>
+            </div>
+            <p
+              v-if="isMastered(word.term)"
+              class="text-[9px] text-gray-500 font-bold leading-tight mt-1 line-clamp-2"
+            >
+              {{ word.definition }}
+            </p>
+          </div>
+          <div class="text-xs">
+            {{ isDiscovered(word.term) ? word.emoji : '❓' }}
+          </div>
+        </div>
+
+        <!-- Progress Mini-Bar (if discovered but not mastered) -->
         <div
-          class="bg-blue-600 h-full transition-all duration-1000"
-          :style="{ width: `${(totalMastered / totalWords) * 100}%` }"
-        />
+          v-if="isDiscovered(word.term) && !isMastered(word.term)"
+          class="mt-2 w-full bg-gray-100 h-1 rounded-full overflow-hidden"
+        >
+          <div class="h-full bg-blue-400 w-1/2" />
+        </div>
       </div>
     </div>
 
     <div
-      v-for="(area, areaIdx) in GAME_CONSTANTS.MAX_AREAS"
-      :key="area"
-      :ref="el => { if (el) areaRefs[areaIdx] = el }"
-      :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === areaIdx }"
-      class="bg-white border-4 border-gray-800 rounded-3xl overflow-hidden shadow-sm transition-all"
+      v-if="areaWords.length === 0 && !loading"
+      class="text-center py-8 text-gray-400"
     >
-      <div class="bg-gray-800 p-3 flex justify-between items-center">
-        <h3 class="font-black uppercase text-white text-sm tracking-widest">
-          {{ $t(`menu.areaNames.${area}`) }}
-        </h3>
-        <div class="flex gap-3 items-center">
-          <div class="bg-gray-700 px-2 py-1 rounded text-[8px] font-bold text-gray-300 uppercase">
-            {{ $t('menu.seen') }}: {{ playerStore.discoveredWords[area]?.length || 0 }}
-          </div>
-          <div class="bg-green-600 px-2 py-1 rounded text-[8px] font-bold text-white uppercase shadow-inner">
-            {{ $t('menu.mastered') }}: {{ playerStore.masteredWords[area]?.length || 0 }}
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4">
-        <div
-          v-if="playerStore.unlockedAreas.includes(area)"
-          class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2"
-        >
-          <div
-            v-for="(word, idx) in vocabStore.vocabData[`${settingsStore.locale}_${area}`] || []"
-            :key="idx"
-            class="group relative p-3 border-2 rounded-xl text-xs font-black text-center transition-all duration-200"
-            :class="getWordDexClass(area, word.word)"
-          >
-            {{ getWordDexDisplay(area, word.word) }}
-            <div
-              v-if="isMastered(area, word.word)"
-              class="absolute -top-1 -right-1 bg-yellow-400 text-[8px] w-4 h-4 flex items-center justify-center rounded-full border border-gray-800 shadow-sm"
-            >
-              ★
-            </div>
-          </div>
-          <div
-            v-if="!vocabStore.vocabData[`${settingsStore.locale}_${area}`]"
-            class="col-span-full text-center py-6 text-gray-400 text-xs italic"
-          >
-            {{ $t('menu.loadingWords') }}
-          </div>
-        </div>
-        <div
-          v-else
-          class="py-12 flex flex-col items-center justify-center gap-3 opacity-30 grayscale"
-        >
-          <span class="text-4xl">🔒</span>
-          <span class="font-black text-xs text-gray-500 uppercase tracking-widest text-center">
-            {{ $t('menu.locked') }}<br>
-            <span class="text-[10px] font-bold">{{ $t('menu.discoverToUnlock') }}</span>
-          </span>
-        </div>
-      </div>
+      <span class="font-black text-xs tracking-widest text-center">
+        {{ $t('menu.locked') }}
+      </span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, computed, ref, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
-import { useVocabStore } from '../../stores/vocabStore';
-import { useSettingsStore } from '../../stores/settingsStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
-import { GAME_CONSTANTS, INPUT_PRIORITIES } from '../../utils/constants';
+import { audio } from '../../utils/audio';
+import { SOUND_EFFECTS } from '../../utils/constants';
 
 const playerStore = usePlayerStore();
-const vocabStore = useVocabStore();
-const settingsStore = useSettingsStore();
+const currentArea = ref(playerStore.currentArea);
+const areaWords = ref([]);
+const loading = ref(false);
+const itemRefs = ref([]);
 
 const emit = defineEmits(['back']);
-const areaRefs = ref([]);
 
-const { selectedIndex } = useKeyboardNavigation({
+const discoveredCount = computed(() => (playerStore.discoveredWords[currentArea.value] || []).length);
+const masteredCount = computed(() => (playerStore.masteredWords[currentArea.value] || []).length);
+
+const isDiscovered = (term) => (playerStore.discoveredWords[currentArea.value] || []).includes(term);
+const isMastered = (term) => (playerStore.masteredWords[currentArea.value] || []).includes(term);
+
+const fetchWords = async () => {
+  loading.value = true;
+  try {
+    const response = await fetch(`./vocab/${playerStore.locale}/area${currentArea.value}.json`);
+    areaWords.value = await response.json();
+  } catch (e) {
+    console.error('Failed to load vocab', e);
+    areaWords.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
+
+const nextArea = () => {
+  if (currentArea.value < 9) {
+    currentArea.value++;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    fetchWords();
+    reset();
+  }
+};
+
+const prevArea = () => {
+  if (currentArea.value > 1) {
+    currentArea.value--;
+    audio.playSound(SOUND_EFFECTS.CLICK);
+    fetchWords();
+    reset();
+  }
+};
+
+const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'menu-spellingdex',
-  priority: INPUT_PRIORITIES.MENU + 10,
-  maxIndex: GAME_CONSTANTS.MAX_AREAS,
+  maxIndex: () => areaWords.value.length,
   onConfirm: () => {},
-  onCancel: () => emit('back')
+  onCancel: () => emit('back'),
+  onLeft: () => prevArea(),
+  onRight: () => nextArea()
 });
 
 watch(selectedIndex, (newIdx) => {
-  if (areaRefs.value[newIdx]) {
-    areaRefs.value[newIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const el = itemRefs.value[newIdx];
+  if (el) {
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 });
-
-const totalWords = computed(() => {
-  let count = 0;
-  for (let i = 1; i <= GAME_CONSTANTS.MAX_AREAS; i++) {
-    const cacheKey = `${settingsStore.locale}_${i}`;
-    count += (vocabStore.vocabData[cacheKey] || []).length;
-  }
-  return count || 1;
-});
-
-const totalMastered = computed(() => {
-  return Object.values(playerStore.masteredWords).reduce((sum, words) => sum + words.length, 0);
-});
-
-const isMastered = (area, word) => {
-  const mastered = playerStore.masteredWords[area] || [];
-  return mastered.includes(word.toLowerCase().trim());
-};
-
-const getWordDexDisplay = (area, word) => {
-  const mastered = playerStore.masteredWords[area] || [];
-  const discovered = playerStore.discoveredWords[area] || [];
-  const normalized = word.toLowerCase().trim();
-
-  if (mastered.includes(normalized) || discovered.includes(normalized)) return word;
-  return '••••••';
-};
-
-const getWordDexClass = (area, word) => {
-  const mastered = playerStore.masteredWords[area] || [];
-  const discovered = playerStore.discoveredWords[area] || [];
-  const normalized = word.toLowerCase().trim();
-
-  if (mastered.includes(normalized)) return 'bg-green-50 border-green-400 text-green-700 shadow-sm scale-105 z-10';
-  if (discovered.includes(normalized)) return 'bg-gray-100 border-gray-300 text-gray-500';
-  return 'bg-gray-50 border-dashed border-gray-200 text-gray-300';
-};
 
 onMounted(() => {
-  // Load vocab for ALL areas in current locale to calculate total progress correctly
-  for (let i = 1; i <= GAME_CONSTANTS.MAX_AREAS; i++) {
-    vocabStore.loadVocab(i, settingsStore.locale);
-  }
+  fetchWords();
 });
 </script>

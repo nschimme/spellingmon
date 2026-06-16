@@ -16,6 +16,7 @@
             :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
             class="w-full border-4 border-gray-800 p-3 rounded-xl bg-gray-50 font-bold outline-none focus:ring-8 focus:ring-blue-300"
             :placeholder="$t('character.enterName')"
+            @focus="selectedIndex = 0"
           >
         </div>
 
@@ -23,21 +24,23 @@
           <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.boyGirl') }}</label>
           <div class="flex gap-4">
             <button
+              :ref="el => { if (el) itemRefs[1] = el }"
               :class="[
                 gender === GENDERS.BOY ? 'bg-blue-500 text-white border-blue-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 1 ? 'ring-8 ring-yellow-400' : ''
               ]"
-              class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
+              class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1 outline-none"
               @click="gender = GENDERS.BOY"
             >
               {{ $t('character.boy') }}
             </button>
             <button
+              :ref="el => { if (el) itemRefs[2] = el }"
               :class="[
                 gender === GENDERS.GIRL ? 'bg-pink-500 text-white border-pink-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 2 ? 'ring-8 ring-yellow-400' : ''
               ]"
-              class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1"
+              class="flex-1 border-b-4 py-3 rounded-xl font-black uppercase text-xs transition-all active:translate-y-1 outline-none"
               @click="gender = GENDERS.GIRL"
             >
               {{ $t('character.girl') }}
@@ -51,24 +54,26 @@
             <button
               v-for="(tone, i) in skinTones"
               :key="tone.id"
+              :ref="el => { if (el) itemRefs[3 + i] = el }"
               :style="{ backgroundColor: tone.color }"
               :class="[
                 skinTone === tone.id ? 'border-blue-500 scale-110' : 'border-gray-800',
                 selectedIndex === (3 + i) ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
               ]"
-              class="w-10 h-10 rounded-full border-4 transition-transform active:scale-95"
+              class="w-10 h-10 rounded-full border-4 transition-transform active:scale-95 outline-none"
               @click="skinTone = tone.id"
             />
           </div>
         </div>
 
         <button
+          :ref="el => { if (el) itemRefs[8] = el }"
           :disabled="!name"
           :class="[
             selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400' : '',
             !name ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600'
           ]"
-          class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1"
+          class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1 outline-none"
           @click="handleConfirm"
         >
           {{ $t('common.confirm') }}
@@ -79,11 +84,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { usePlayerStore } from '../stores/playerStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, GENDERS, SKIN_TONES, INPUT_PRIORITIES } from '../utils/constants';
+import { SOUND_EFFECTS, GENDERS, SKIN_TONES } from '../utils/constants';
 
 const playerStore = usePlayerStore();
 
@@ -91,6 +96,7 @@ const name = ref('');
 const gender = ref(GENDERS.BOY);
 const skinTone = ref(SKIN_TONES.NEUTRAL);
 const nameInputRef = ref(null);
+const itemRefs = ref([]);
 
 const skinTones = [
   { id: SKIN_TONES.PALE, color: '#f9ebde' },
@@ -110,61 +116,39 @@ const handleConfirm = () => {
   });
 };
 
-import { onMounted, onUnmounted } from 'vue';
-import { useInputStore } from '../stores/inputStore';
+// Spatial Map: 0: Name, 1: Boy, 2: Girl, 3-7: Skin Tones, 8: Confirm
+const spatialMap = [
+  { down: 1 }, // 0: Name
+  { up: 0, down: 3, right: 2 }, // 1: Boy
+  { up: 0, down: 3, left: 1 }, // 2: Girl
+  { up: 1, down: 8, right: 4 }, // 3: Skin 1
+  { up: 1, down: 8, left: 3, right: 5 }, // 4: Skin 2
+  { up: 1, down: 8, left: 4, right: 6 }, // 5: Skin 3
+  { up: 2, down: 8, left: 5, right: 7 }, // 6: Skin 4
+  { up: 2, down: 8, left: 6 }, // 7: Skin 5
+  { up: 5 } // 8: Confirm
+];
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'character-creation',
-  priority: INPUT_PRIORITIES.GLOBAL,
-  // 0: Name, 1: Boy, 2: Girl, 3-7: Skin Tones, 8: Confirm
   maxIndex: 9,
+  spatialMap,
+  itemRefs,
   onConfirm: (idx) => {
     if (idx === 0) nameInputRef.value?.focus();
-    if (idx === 1) gender.value = GENDERS.BOY;
-    if (idx === 2) gender.value = GENDERS.GIRL;
-    if (idx >= 3 && idx <= 7) skinTone.value = skinTones[idx - 3].id;
-    if (idx === 8) handleConfirm();
+    else if (idx === 1) gender.value = GENDERS.BOY;
+    else if (idx === 2) gender.value = GENDERS.GIRL;
+    else if (idx >= 3 && idx <= 7) skinTone.value = skinTones[idx - 3].id;
+    else if (idx === 8) handleConfirm();
   }
 });
 
-// Custom navigation override
-const inputStore = useInputStore();
-const handleKeyDown = (e) => {
-  let newIdx = selectedIndex.value;
-  if (e.key === 'ArrowUp') {
-    if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 0;
-    else if (selectedIndex.value >= 3 && selectedIndex.value <= 7) newIdx = 1;
-    else if (selectedIndex.value === 8) newIdx = 3;
-  } else if (e.key === 'ArrowDown') {
-    if (selectedIndex.value === 0) newIdx = 1;
-    else if (selectedIndex.value === 1 || selectedIndex.value === 2) newIdx = 3;
-    else if (selectedIndex.value >= 3 && selectedIndex.value <= 7) newIdx = 8;
-  } else if (e.key === 'ArrowLeft') {
-    if (selectedIndex.value === 2) newIdx = 1;
-    else if (selectedIndex.value > 3 && selectedIndex.value <= 7) newIdx = selectedIndex.value - 1;
-  } else if (e.key === 'ArrowRight') {
-    if (selectedIndex.value === 1) newIdx = 2;
-    else if (selectedIndex.value >= 3 && selectedIndex.value < 7) newIdx = selectedIndex.value + 1;
-  } else {
-    return false;
+// Sync selectedIndex 0 with focusing the input
+watch(selectedIndex, (newIdx, oldIdx) => {
+  if (newIdx === 0) {
+    nameInputRef.value?.focus();
+  } else if (oldIdx === 0) {
+    nameInputRef.value?.blur();
   }
-
-  if (newIdx !== selectedIndex.value) {
-    // If we are leaving the name input, blur it
-    if (selectedIndex.value === 0) {
-      nameInputRef.value?.blur();
-    }
-    selectedIndex.value = newIdx;
-    audio.playSound(SOUND_EFFECTS.CLICK);
-    return true;
-  }
-  return false;
-};
-
-onMounted(() => {
-  inputStore.addListener('character-creation-custom', handleKeyDown, INPUT_PRIORITIES.GLOBAL + 1);
-});
-onUnmounted(() => {
-  inputStore.removeListener('character-creation-custom');
 });
 </script>
