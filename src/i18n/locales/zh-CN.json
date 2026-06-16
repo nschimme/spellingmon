@@ -162,15 +162,15 @@
     "pressEnterToSwap": "按 ENTER 交换",
     "activeLeader": "当前队长",
     "setLeader": "设为队长",
-    "wasdToMove": "WASD to Move | ESC for Menu",
-    "healed": "Your Spellingmon have been fully healed!",
-    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "wasdToMove": "WASD 移动 | ESC 菜单",
+    "healed": "你的萌宠已完全康复！",
+    "defeatTrainerFirst": "你必须先击败该区域的训练家才能继续前进！",
     "biomes": {
-      "wilderness": "Wilderness",
-      "cave": "Cave",
-      "town": "Town",
-      "route": "Route",
-      "forest": "Forest"
+      "wilderness": "旷野",
+      "cave": "洞穴",
+      "town": "城镇",
+      "route": "路线",
+      "forest": "森林"
     }
   },
   "settings": {

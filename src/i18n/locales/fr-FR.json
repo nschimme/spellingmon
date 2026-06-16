@@ -162,15 +162,15 @@
     "pressEnterToSwap": "ENTER pour échanger",
     "activeLeader": "Leader Actif",
     "setLeader": "Changer Leader",
-    "wasdToMove": "WASD to Move | ESC for Menu",
-    "healed": "Your Spellingmon have been fully healed!",
-    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "wasdToMove": "WASD pour bouger | ESC pour Menu",
+    "healed": "Vos Spellingmon ont été entièrement soignés !",
+    "defeatTrainerFirst": "Vous devez vaincre le dresseur de la zone avant de continuer !",
     "biomes": {
-      "wilderness": "Wilderness",
-      "cave": "Cave",
-      "town": "Town",
+      "wilderness": "Étendues sauvages",
+      "cave": "Grotte",
+      "town": "Ville",
       "route": "Route",
-      "forest": "Forest"
+      "forest": "Forêt"
     }
   },
   "settings": {
