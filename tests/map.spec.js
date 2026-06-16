@@ -12,15 +12,16 @@ async function bypassOnboarding(page) {
   await page.getByRole('button', { name: /Yes/i }).click();
 
   // 3. Save Selection
-  await page.getByRole('button', { name: /Start/i }).first().click();
+  await page.locator('.relative.border-4.p-6').first().click();
+  await page.getByRole('button', { name: /Start/i }).click();
 
   // 4. Character Creation
   await page.getByPlaceholder(/Enter your name/i).fill('Tester');
   await page.getByRole('button', { name: /Confirm/i }).click();
 
   // 5. Starter Selection
-  await page.waitForSelector('text=GRAMMANDER');
-  await page.click('text=GRAMMANDER');
+  await page.waitForSelector('text=Grammander');
+  await page.click('text=Grammander');
 }
 
 test('map renders correctly in menu', async ({ page }) => {
@@ -31,9 +32,9 @@ test('map renders correctly in menu', async ({ page }) => {
 
   // Open menu
   await page.keyboard.press('Escape');
-  await page.waitForSelector('text=BACK TO GAME', { timeout: 10000 });
+  await page.waitForSelector('text=Back to Game', { timeout: 10000 });
 
-  await page.click('button:has-text("MAP")');
+  await page.click('button:has-text("Map")');
 
   const canvas = page.locator('[data-testid="map-canvas"]');
   await expect(canvas).toBeVisible({ timeout: 15000 });

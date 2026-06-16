@@ -5,7 +5,6 @@ test('Internationalization and TTS Flow', async ({ page }) => {
   await page.getByRole('button', { name: /Start Game/i }).click();
 
   // 1. Language Selection
-  // Verify presence of flag emojis in language selection
   await expect(page.getByText('🇺🇸')).toBeVisible();
   await expect(page.getByText('🇲🇽')).toBeVisible();
 
@@ -18,7 +17,8 @@ test('Internationalization and TTS Flow', async ({ page }) => {
   await page.getByRole('button', { name: /Sí/i }).click();
 
   // 3. Save Selection (Spanish)
-  await page.getByRole('button', { name: /Empezar/i }).first().click();
+  await page.locator('.relative.border-4.p-6').first().click();
+  await page.getByRole('button', { name: /Empezar/i }).click();
 
   // 4. Character Creation (Spanish)
   await expect(page.getByText(/Creación de personaje/i)).toBeVisible();

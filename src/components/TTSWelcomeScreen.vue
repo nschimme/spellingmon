@@ -11,12 +11,13 @@
           <button
             v-for="(lang, index) in SUPPORTED_LANGUAGES"
             :key="lang.code"
+            :ref="el => { if (el) langRefs[index] = el }"
             :class="{
               'ring-8 ring-yellow-400': selectedIndex === index,
               'opacity-50 grayscale cursor-not-allowed': !isLangSupported(lang.code),
               'bg-blue-500 hover:bg-blue-600': isLangSupported(lang.code)
             }"
-            class="flex items-center gap-4 p-4 rounded-xl border-b-4 border-blue-800 text-white transition-all"
+            class="flex items-center gap-4 p-4 rounded-xl border-b-4 border-blue-800 text-white transition-all outline-none"
             @click="selectLanguage(lang)"
             @mouseenter="onHoverLang(index)"
           >
@@ -51,9 +52,10 @@
 
         <div class="space-y-6">
           <button
+            ref="testButton"
             :disabled="isInitializing"
             :class="{ 'ring-8 ring-yellow-400': checkSelectedIndex === 0 }"
-            class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1"
+            class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black py-4 px-6 rounded-xl border-b-4 border-orange-800 disabled:border-gray-600 text-lg uppercase transition-all active:not-disabled:border-b-0 active:not-disabled:translate-y-1 outline-none"
             @click="testVoice"
           >
             {{ isInitializing ? $t('common.loading') : $t('tts.testVoice') }}
@@ -74,15 +76,17 @@
             </p>
             <div class="flex gap-4">
               <button
+                :ref="el => { if (el) checkRefs[1] = el }"
                 :class="{ 'ring-8 ring-yellow-400': checkSelectedIndex === 1 }"
-                class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1"
+                class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase text-sm active:border-b-0 active:translate-y-1 outline-none"
                 @click="confirmSuccess"
               >
                 {{ $t('common.yes') }}
               </button>
               <button
+                :ref="el => { if (el) checkRefs[2] = el }"
                 :class="{ 'ring-8 ring-yellow-400': checkSelectedIndex === 2 }"
-                class="flex-1 bg-red-500 hover:bg-red-600 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase text-sm active:border-b-0 active:translate-y-1"
+                class="flex-1 bg-red-500 hover:bg-red-600 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase text-sm active:border-b-0 active:translate-y-1 outline-none"
                 @click="handleNo"
               >
                 {{ $t('common.no') }}
@@ -134,7 +138,7 @@ import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
-import { SOUND_EFFECTS, INPUT_PRIORITIES, SUPPORTED_LANGUAGES } from '../utils/constants';
+import { SOUND_EFFECTS, SUPPORTED_LANGUAGES } from '../utils/constants';
 
 const emit = defineEmits(['verified']);
 const { t } = useI18n();
@@ -144,6 +148,10 @@ const phase = ref('language'); // 'language' or 'audio-check'
 const hasTested = ref(false);
 const showTroubleshooting = ref(false);
 const isInitializing = ref(false);
+
+const langRefs = ref([]);
+const testButton = ref(null);
+const checkRefs = ref([]);
 
 const isChrome = computed(() => {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
@@ -156,7 +164,6 @@ const selectLanguage = async (lang) => {
   if (!isLangSupported(lang.code)) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
   await settingsStore.setLocale(lang.code);
-  // speech.speak(lang.native); // Requirement: don't repeat the language name
   phase.value = 'audio-check';
   hasTested.value = true;
 
@@ -204,10 +211,10 @@ const confirmSuccess = () => {
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'language-selection',
-  priority: INPUT_PRIORITIES.GLOBAL,
   isActive: computed(() => phase.value === 'language'),
   maxIndex: SUPPORTED_LANGUAGES.length,
   gridColumns: 2,
+  itemRefs: langRefs,
   onConfirm: (idx) => {
     const lang = SUPPORTED_LANGUAGES[idx];
     if (isLangSupported(lang.code)) {
@@ -221,17 +228,25 @@ watch(selectedIndex, (newIdx) => {
   if (phase.value === 'language') {
     const lang = SUPPORTED_LANGUAGES[newIdx];
     if (lang && isLangSupported(lang.code)) {
-      // We don't want to spam if they move too fast, but the requirement is to speak on navigation
       speech.speak(lang.native, lang.code);
     }
   }
 });
 
+const checkItemRefs = computed(() => {
+  const refs = [testButton.value];
+  if (hasTested.value) {
+    refs[1] = checkRefs.value[1];
+    refs[2] = checkRefs.value[2];
+  }
+  return refs;
+});
+
 const { selectedIndex: checkSelectedIndex } = useKeyboardNavigation({
   id: 'tts-welcome',
-  priority: INPUT_PRIORITIES.GLOBAL,
   isActive: computed(() => phase.value === 'audio-check'),
   maxIndex: computed(() => hasTested.value ? 3 : 1),
+  itemRefs: checkItemRefs,
   onConfirm: (idx) => {
     if (idx === 0) testVoice();
     else if (idx === 1) confirmSuccess();
