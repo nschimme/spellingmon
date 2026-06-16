@@ -22,7 +22,6 @@ export const usePlayerStore = defineStore('player', {
       lastSpellCenter: null,
       isStarterSelected: false,
       gameStarted: false,
-      ttsVerified: false,
       defeatedTrainers: [],
       notification: null,
       notificationId: null,
@@ -103,6 +102,7 @@ export const usePlayerStore = defineStore('player', {
         const cleanState = { ...this.$state };
         delete cleanState.notification;
         delete cleanState.notificationId;
+        delete cleanState.ttsVerified; // Migration: remove from per-slot save
         storage.save(STORAGE_KEYS.PLAYER_STATE, cleanState, this.activeSlot);
         storage.save(STORAGE_KEYS.ACTIVE_SLOT, this.activeSlot);
       }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
@@ -261,18 +261,14 @@ export const usePlayerStore = defineStore('player', {
         this.saveState();
       }
     },
-    confirmTtsVerified() {
-      this.ttsVerified = true;
-      this.saveState();
-    },
     debugInit(params) {
+      const settingsStore = useSettingsStore();
       if (params.name) this.playerName = params.name;
       if (params.locale) {
-        const settingsStore = useSettingsStore();
         settingsStore.setLocale(params.locale);
       }
       this.gameStarted = true;
-      this.ttsVerified = true;
+      settingsStore.confirmTtsVerified();
       this.characterCreationComplete = true;
 
       if (params.starter) {
@@ -332,7 +328,7 @@ export const usePlayerStore = defineStore('player', {
         }
         return {
           id: mon.id,
-          name: mon.species, // Corrected from mon.name
+          species: mon.species,
           emoji: mon.emoji,
           oldLevel,
           oldExp,

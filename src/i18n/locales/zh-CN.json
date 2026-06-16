@@ -111,7 +111,14 @@
     "releaseNew": "放生",
     "whitedOutTitle": "战败！",
     "whitedOutDesc": "你没有可以战斗的萌宠了！赶快去医疗中心。",
-    "timeBonus": "时间奖励！"
+    "timeBonus": "时间奖励！",
+    "faster": "{name} is faster!",
+    "go": "Go, {name}!",
+    "dealtDamage": "Dealt {amount} damage.",
+    "superEffective": "It's super effective!",
+    "notEffective": "It's not very effective...",
+    "noEffect": "It had no effect!",
+    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

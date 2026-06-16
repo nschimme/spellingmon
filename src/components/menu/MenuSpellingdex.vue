@@ -20,9 +20,11 @@
     </div>
 
     <div
-      v-for="area in GAME_CONSTANTS.MAX_AREAS"
+      v-for="(area, areaIdx) in GAME_CONSTANTS.MAX_AREAS"
       :key="area"
-      class="bg-white border-4 border-gray-800 rounded-3xl overflow-hidden shadow-sm"
+      :ref="el => { if (el) areaRefs[areaIdx] = el }"
+      :class="{ 'ring-8 ring-yellow-400': selectedIndex === areaIdx }"
+      class="bg-white border-4 border-gray-800 rounded-3xl overflow-hidden shadow-sm transition-all"
     >
       <div class="bg-gray-800 p-3 flex justify-between items-center">
         <h3 class="font-black uppercase text-white text-sm tracking-widest">
@@ -80,7 +82,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref, watch } from 'vue';
 import { usePlayerStore } from '../../stores/playerStore';
 import { useVocabStore } from '../../stores/vocabStore';
 import { useSettingsStore } from '../../stores/settingsStore';
@@ -92,13 +94,20 @@ const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
 
 const emit = defineEmits(['back']);
+const areaRefs = ref([]);
 
-useKeyboardNavigation({
+const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-spellingdex',
   priority: INPUT_PRIORITIES.MENU + 10,
-  maxIndex: 0,
+  maxIndex: GAME_CONSTANTS.MAX_AREAS,
   onConfirm: () => {},
   onCancel: () => emit('back')
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (areaRefs.value[newIdx]) {
+    areaRefs.value[newIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 });
 
 const totalWords = computed(() => {

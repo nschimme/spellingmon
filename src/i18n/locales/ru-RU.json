@@ -111,7 +111,14 @@
     "releaseNew": "Отпустить",
     "whitedOutTitle": "Проигрыш!",
     "whitedOutDesc": "Нет готовых к бою! Бегом в Спелл-Центр.",
-    "timeBonus": "Временной бонус!"
+    "timeBonus": "Временной бонус!",
+    "faster": "{name} is faster!",
+    "go": "Go, {name}!",
+    "dealtDamage": "Dealt {amount} damage.",
+    "superEffective": "It's super effective!",
+    "notEffective": "It's not very effective...",
+    "noEffect": "It had no effect!",
+    "enemyAttacked": "{name} attacked and dealt {amount} damage!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

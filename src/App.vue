@@ -74,18 +74,18 @@ onUnmounted(() => {
     <!-- Main Console Container -->
     <div class="relative w-full h-full max-w-5xl max-h-[800px] bg-white border-[12px] border-gray-800 rounded-[40px] shadow-2xl overflow-hidden flex flex-col">
       <LandingScreen
-        v-if="!playerStore.gameStarted && !showSaveSelection"
+        v-if="!playerStore.gameStarted && !showSaveSelection && !settingsStore.ttsVerified"
         @continue="showSaveSelection = true"
         @new-game="showSaveSelection = true"
       />
+      <template v-else-if="!settingsStore.ttsVerified">
+        <TTSWelcomeScreen @verified="settingsStore.confirmTtsVerified" />
+      </template>
       <SaveSelection
         v-else-if="showSaveSelection && !playerStore.gameStarted"
         @back="showSaveSelection = false"
         @selected="playerStore.startGame(); showSaveSelection = false"
       />
-      <template v-else-if="!playerStore.ttsVerified">
-        <TTSWelcomeScreen @verified="playerStore.confirmTtsVerified" />
-      </template>
       <template v-else-if="!playerStore.characterCreationComplete">
         <CharacterCreation />
       </template>
