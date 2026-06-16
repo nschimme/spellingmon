@@ -1,8 +1,15 @@
 <template>
-  <div class="flex flex-col gap-6" role="form" :aria-label="$t('menu.settings')">
+  <div
+    class="flex flex-col gap-6"
+    role="form"
+    :aria-label="$t('menu.settings')"
+  >
     <!-- Language Selection -->
     <div :ref="el => { if (el) itemRefs[0] = el }">
-      <label id="lang-label" class="font-black text-gray-600 block mb-2 text-xs uppercase">{{ $t('settings.language') }}</label>
+      <label
+        id="lang-label"
+        class="font-black text-gray-600 block mb-2 text-xs uppercase"
+      >{{ $t('settings.language') }}</label>
       <div class="relative">
         <select
           ref="languageSelect"
@@ -26,7 +33,10 @@
 
     <!-- Audio Settings -->
     <div :ref="el => { if (el) itemRefs[1] = el }">
-      <label id="volume-label" class="font-black text-gray-600 block mb-2 text-xs uppercase">{{ $t('settings.volume') }}</label>
+      <label
+        id="volume-label"
+        class="font-black text-gray-600 block mb-2 text-xs uppercase"
+      >{{ $t('settings.volume') }}</label>
       <div
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 1 || selectedIndex === 2 }"
         class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner"
@@ -58,7 +68,10 @@
     </div>
 
     <div :ref="el => { if (el) itemRefs[3] = el }">
-      <label id="voice-label" class="font-black text-gray-600 block mb-2 text-xs uppercase">{{ $t('settings.voice') }}</label>
+      <label
+        id="voice-label"
+        class="font-black text-gray-600 block mb-2 text-xs uppercase"
+      >{{ $t('settings.voice') }}</label>
       <p
         v-if="settingsStore.voices.length === 0"
         class="text-[9px] text-amber-600 mb-1"

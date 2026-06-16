@@ -7,12 +7,18 @@
   >
     <div class="bg-white border-8 border-gray-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col">
       <div class="bg-blue-600 p-6 text-center border-b-8 border-gray-800">
-        <h2 id="exp-title" class="text-3xl font-black text-white uppercase tracking-widest">
+        <h2
+          id="exp-title"
+          class="text-3xl font-black text-white uppercase tracking-widest"
+        >
           {{ $t('battle.experience') }}
         </h2>
       </div>
 
-      <div class="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 overflow-y-auto" role="list">
+      <div
+        class="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 overflow-y-auto"
+        role="list"
+      >
         <div
           v-for="mon in results"
           :key="mon.id"
@@ -20,7 +26,10 @@
           role="listitem"
         >
           <div class="flex items-center gap-4 mb-3">
-            <div class="text-4xl" aria-hidden="true">
+            <div
+              class="text-4xl"
+              aria-hidden="true"
+            >
               {{ mon.emoji }}
             </div>
             <div class="flex-1">

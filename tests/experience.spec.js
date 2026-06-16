@@ -2,23 +2,27 @@ import { test, expect } from '@playwright/test';
 
 async function bypassOnboarding(page) {
   await page.goto('/');
+  // Landing Screen
   await page.getByRole('button', { name: /Start Game/i }).click();
 
-  // 1. Language Selection (comes first now)
+  // 1. Language Selection
   await page.getByRole('button').filter({ hasText: /English/i }).click();
 
   // 2. Audio Check
   await page.getByRole('button', { name: /Test Voice/i }).click();
   await page.getByRole('button', { name: /Yes/i }).click();
 
-  // 3. Save Selection
-  await page.getByRole('button', { name: /Start/i }).first().click();
+  // 3. Save Selection -> Open Actions
+  await page.locator('.relative.border-4.p-6').first().click();
 
-  // 4. Character Creation
+  // 4. Action Menu -> Start
+  await page.getByRole('button', { name: /Start/i }).click();
+
+  // 5. Character Creation
   await page.getByPlaceholder(/Enter your name/i).fill('Tester');
   await page.getByRole('button', { name: /Confirm/i }).click();
 
-  // 5. Starter Selection
+  // 6. Starter Selection
   await page.click('text=Grammander');
 }
 

@@ -51,9 +51,7 @@ export const useInputStore = defineStore('input', {
       this.stack = this.stack.filter(l => l.id !== id);
     },
     // Compatibility methods for old API
-    addListener(id, callback, priority = 0) {
-      // If priority is high, we probably want it at the top or treated as global.
-      // For now, let's just push it. Higher priority ones added later go to top.
+    addListener(id, callback) {
       this.pushLayer(id, callback);
     },
     removeListener(id) {

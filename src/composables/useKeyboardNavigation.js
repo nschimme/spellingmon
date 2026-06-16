@@ -1,4 +1,4 @@
-import { ref, watch, onUnmounted, nextTick } from 'vue';
+import { ref, watch, onUnmounted, nextTick, unref } from 'vue';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
@@ -35,8 +35,10 @@ export function useKeyboardNavigation({
   const inputStore = useInputStore();
 
   const syncDomFocus = () => {
-    if (itemRefs?.value && itemRefs.value[selectedIndex.value]) {
-      const el = itemRefs.value[selectedIndex.value];
+    if (!isActive.value) return;
+    if (itemRefs?.value) {
+      const refs = unref(itemRefs);
+      const el = unref(refs[selectedIndex.value]);
       if (el instanceof HTMLElement) {
         el.focus();
       }
@@ -51,9 +53,10 @@ export function useKeyboardNavigation({
 
     let newIndex = selectedIndex.value;
     const key = e.key.toLowerCase();
-    const isInput = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
-    const isRange = e.target.type === 'range';
-    const isSelect = e.target.tagName === 'SELECT';
+    const target = e.target;
+    const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+    const isRange = target.type === 'range';
+    const isSelect = target.tagName === 'SELECT';
 
     // If it's a range or select and it's NOT handled by custom callbacks, let it handle left/right naturally
     if ((isRange || isSelect) && (e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !onLeft && !onRight) {
