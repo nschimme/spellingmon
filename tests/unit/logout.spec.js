@@ -1,18 +1,21 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
-import { usePlayerStore } from '../../src/stores/playerStore';
+import { useGameFSM } from '../../src/stores/gameFSM';
+import { GAME_STATES, GAME_EVENTS } from '../../src/utils/constants';
 
-describe('PlayerStore Logout', () => {
+describe('GameFSM Navigation', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });
 
-  it('sets gameStarted to false on logout', () => {
-    const store = usePlayerStore();
-    store.gameStarted = true;
-    expect(store.gameStarted).toBe(true);
+  it('can transition through landing to save selection', () => {
+    const fsm = useGameFSM();
+    // Use transitions since we are testing machine flow
+    fsm.transition(GAME_STATES.LANDING);
+    expect(fsm.matches(GAME_STATES.LANDING)).toBe(true);
 
-    store.logout();
-    expect(store.gameStarted).toBe(false);
+    fsm.send(GAME_EVENTS.START);
+    // If ttsVerified is false (default), it goes to LANGUAGE_SELECT
+    expect(fsm.matches(GAME_STATES.LANGUAGE_SELECT)).toBe(true);
   });
 });

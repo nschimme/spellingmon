@@ -6,48 +6,53 @@ import { usePlayerMovement } from '../../src/composables/usePlayerMovement';
 import { TILE_TYPES } from '../../src/utils/mapGenerator';
 
 describe('useMapManager', () => {
-  let playerStore;
+  let session;
 
   beforeEach(() => {
-    playerStore = {
-      currentArea: 1,
-      mapSeed: 'test-seed',
-      position: { x: 5, y: 5 },
-      updatePosition: vi.fn(),
-      discoverTile: vi.fn(),
+    session = {
+      player: {
+        currentArea: 1,
+        mapSeed: 'test-seed',
+        position: { x: 5, y: 5 },
+      },
+      updatePlayerPosition: vi.fn(),
+      recordDiscovery: vi.fn(),
     };
   });
 
   it('generates map and updates position', () => {
     const playerX = ref(0);
     const playerY = ref(0);
-    const { generateMap, currentMapData } = useMapManager(playerStore);
+    const { generateMap, currentMapData } = useMapManager(session);
 
     generateMap(false, null, playerX, playerY);
 
     expect(currentMapData.value).toBeDefined();
-    expect(playerStore.updatePosition).toHaveBeenCalled();
+    expect(session.updatePlayerPosition).toHaveBeenCalled();
   });
 
   it('updates discovery radius', () => {
-    const { updateDiscovery } = useMapManager(playerStore);
+    const { updateDiscovery } = useMapManager(session);
+    session.discoverTile = vi.fn();
     updateDiscovery(10, 10);
 
     // 11x11 radius = 121 tiles
-    expect(playerStore.discoverTile).toHaveBeenCalledTimes(121);
+    expect(session.discoverTile).toHaveBeenCalledTimes(121);
   });
 });
 
 describe('useTrainerAI', () => {
-  let playerStore, battleStore, currentMapData;
+  let session, fsm, currentMapData;
 
   beforeEach(() => {
-    playerStore = {
-      currentArea: 1,
-      defeatedTrainers: [],
+    session = {
+      player: {
+        currentArea: 1,
+        defeatedTrainers: [],
+      },
       notify: vi.fn()
     };
-    battleStore = { inBattle: false };
+    fsm = { matches: vi.fn().mockImplementation((state) => state === 'PLAY.WORLD') };
     currentMapData = ref({
       trainers: [
         { x: 10, y: 10, direction: 'right', name: 'Trainer Red', dialog: 'Hello!' }
@@ -61,7 +66,7 @@ describe('useTrainerAI', () => {
     const playerY = ref(10);
     const getTileType = () => TILE_TYPES.EMPTY;
 
-    const { checkTrainerLOS } = useTrainerAI(playerStore, battleStore, currentMapData, playerX, playerY, getTileType);
+    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType);
 
     const result = checkTrainerLOS(new Set());
     expect(result).not.toBeNull();
@@ -73,7 +78,7 @@ describe('useTrainerAI', () => {
     const playerY = ref(10);
     const getTileType = (x, y) => (x === 12) ? TILE_TYPES.WALL : TILE_TYPES.EMPTY;
 
-    const { checkTrainerLOS } = useTrainerAI(playerStore, battleStore, currentMapData, playerX, playerY, getTileType);
+    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType);
 
     const result = checkTrainerLOS(new Set());
     expect(result).toBeNull();

@@ -48,6 +48,6 @@ test.describe('TTS Verification Flow', () => {
     await expect(noButton).toBeVisible();
     await noButton.click();
 
-    await expect(page.getByText(/Troubleshooting/i)).toBeVisible();
+    await expect(page.getByText(/Troubleshooting:/i)).toBeVisible();
   });
 });

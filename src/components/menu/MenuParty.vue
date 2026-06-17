@@ -2,13 +2,13 @@
   <div class="flex flex-col gap-6 max-w-xl mx-auto">
     <div class="flex justify-end items-center px-2">
       <div class="bg-gray-800 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-        {{ $t('menu.monCount', { n: playerStore.party.length }) }}
+        {{ $t('menu.monCount', { n: session.player.party.length }) }}
       </div>
     </div>
 
     <div class="flex flex-col gap-4">
       <div
-        v-for="(mon, i) in playerStore.party"
+        v-for="(mon, i) in session.player.party"
         :key="mon.id"
         :ref="el => { if (el) itemRefs[i] = el }"
         :class="[
@@ -97,7 +97,7 @@
             >{{ $t('menu.pressEnterToSwap') }}</span>
             <button
               class="bg-blue-500 hover:bg-blue-600 text-white text-[10px] px-4 py-2 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1 transition-all"
-              @click="playerStore.moveMonToFront(i)"
+              @click="session.moveMonToFront(i)"
             >
               {{ $t('menu.setLeader') }}
             </button>
@@ -118,13 +118,13 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { usePlayerStore } from '../../stores/playerStore';
+import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { INPUT_PRIORITIES } from '../../utils/constants';
 import { TYPE_EMOJIS, MONS } from '../../utils/gameData';
 import { getHPColorClass } from '../../utils/visuals';
 
-const playerStore = usePlayerStore();
+const session = useSessionStore();
 
 const emit = defineEmits(['back']);
 const itemRefs = ref([]);
@@ -132,10 +132,10 @@ const itemRefs = ref([]);
 const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-party',
   priority: INPUT_PRIORITIES.MENU + 10,
-  maxIndex: computed(() => playerStore.party.length),
+  maxIndex: computed(() => session.player.party.length),
   onConfirm: (idx) => {
     if (idx > 0) {
-      playerStore.moveMonToFront(idx);
+      session.moveMonToFront(idx);
     }
   },
   onCancel: () => emit('back')

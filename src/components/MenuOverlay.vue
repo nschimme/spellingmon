@@ -77,9 +77,10 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { usePlayerStore } from '../stores/playerStore';
+
+import { useGameFSM } from '../stores/gameFSM';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
-import { MENU_TABS, INPUT_PRIORITIES } from '../utils/constants';
+import { MENU_TABS, INPUT_PRIORITIES, GAME_EVENTS } from '../utils/constants';
 import { useI18n } from 'vue-i18n';
 
 // Sub-components
@@ -89,7 +90,7 @@ import MenuMap from './menu/MenuMap.vue';
 import MenuProgress from './menu/MenuProgress.vue';
 import MenuSettings from './menu/MenuSettings.vue';
 
-const playerStore = usePlayerStore();
+const fsm = useGameFSM();
 const emit = defineEmits(['close']);
 const { t } = useI18n();
 
@@ -116,7 +117,7 @@ const activeComponent = computed(() => {
 
 const handleMenuClick = (item) => {
   if (item.id === 'logout') {
-    playerStore.logout();
+    fsm.send(GAME_EVENTS.LOGOUT);
   } else if (item.id === 'close') {
     emit('close');
   } else {

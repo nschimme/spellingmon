@@ -48,12 +48,13 @@
 </template>
 
 <script setup>
-import { usePlayerStore } from '../stores/playerStore';
+import { useSessionStore } from '../stores/sessionStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { createMon, SPECIES } from '../utils/gameData';
 import { INPUT_PRIORITIES } from '../utils/constants';
 
-const playerStore = usePlayerStore();
+const session = useSessionStore();
+const emit = defineEmits(['complete']);
 
 const starters = [
   { species: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
@@ -63,7 +64,8 @@ const starters = [
 
 const selectStarter = (mon) => {
   const fullMon = createMon(mon.species, 1);
-  playerStore.setStarter(fullMon);
+  session.setStarter(fullMon);
+  emit('complete');
 };
 
 const { selectedIndex } = useKeyboardNavigation({

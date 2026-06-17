@@ -11,6 +11,7 @@ export const speech = {
   _onError: null,
 
   init(force = false) {
+    console.log("[SPEECH] init", { force });
     if (this._initPromise && !force) return this._initPromise;
 
     if (force && this._cleanup) {
@@ -20,6 +21,7 @@ export const speech = {
     this._initialized = false;
     this._initPromise = new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
+        console.log("[SPEECH] speechSynthesis NOT FOUND");
         this._initPromise = null;
         resolve();
         return;
@@ -96,7 +98,10 @@ export const speech = {
       interval = setInterval(loadVoices, 250);
 
       // Fallback resolve if voices take too long or never load
-      timeoutId = setTimeout(finishInit, force ? 5000 : 2000);
+      timeoutId = setTimeout(() => {
+        console.log("[SPEECH] init timeout reached");
+        finishInit();
+      }, 100);
     });
 
     return this._initPromise;
