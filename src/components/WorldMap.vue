@@ -126,7 +126,17 @@ const handleInput = (e) => {
   // 1. Check for Trainers FIRST
   const triggeredTrainer = checkTrainerLOS(engagedTrainers);
   if (triggeredTrainer) {
-    initiateTrainerApproach(triggeredTrainer.trainer, triggeredTrainer.trainerId, engagedTrainers, triggerTrainerBattle);
+    const { trainer, trainerId } = triggeredTrainer;
+    const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
+    const firstMonCfg = party[0];
+    const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
+
+    initiateTrainerApproach(trainer, trainerId, engagedTrainers, {
+      enemy: enemyMon,
+      type: BATTLE_TYPES.TRAINER,
+      trainerId,
+      trainerParty: party
+    });
   } else {
     // 2. Wild battle triggers
     checkTriggers(newX, newY);

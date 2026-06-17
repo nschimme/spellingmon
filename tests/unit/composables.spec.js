@@ -52,7 +52,7 @@ describe('useTrainerAI', () => {
       },
       notify: vi.fn()
     };
-    fsm = { matches: vi.fn().mockReturnValue(false) };
+    fsm = { matches: vi.fn().mockImplementation((state) => state === 'PLAY.WORLD') };
     currentMapData = ref({
       trainers: [
         { x: 10, y: 10, direction: 'right', name: 'Trainer Red', dialog: 'Hello!' }

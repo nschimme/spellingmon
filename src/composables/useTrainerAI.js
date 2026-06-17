@@ -1,13 +1,13 @@
 import { ref } from 'vue';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, GAME_CONSTANTS, GAME_STATES } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { TILE_TYPES } from '../utils/mapGenerator';
 
 export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType) {
   const alertingTrainer = ref(null);
 
   const checkTrainerLOS = (engagedTrainers) => {
-    if (fsm.matches(GAME_STATES.BATTLE) || alertingTrainer.value || !currentMapData.value) return;
+    if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value) return;
 
     const trainers = currentMapData.value.trainers;
     const LOS_RANGE = 5;
@@ -50,10 +50,13 @@ export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, get
     return null;
   };
 
-  const initiateTrainerApproach = (trainer, trainerId, engagedTrainers, triggerTrainerBattle) => {
+  const initiateTrainerApproach = (trainer, trainerId, engagedTrainers, triggerBattleParams) => {
     engagedTrainers.add(trainerId);
     alertingTrainer.value = trainerId;
     audio.playSound(SOUND_EFFECTS.CLICK);
+
+    // Start FSM transition to block movement/input
+    fsm.send(GAME_EVENTS.ENCOUNTER, { type: BATTLE_TYPES.TRAINER });
 
     setTimeout(async () => {
       const dx = playerX.value - trainer.x;
@@ -78,7 +81,7 @@ export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, get
       session.notify(`${trainer.name}: "${trainer.dialog}"`);
 
       setTimeout(() => {
-        triggerTrainerBattle(trainer, trainerId);
+        fsm.send(GAME_EVENTS.CONFIRM, triggerBattleParams);
         engagedTrainers.delete(trainerId);
       }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS);
     }, 600);
