@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useGameFSM } from '../../src/stores/gameFSM';
-import { GAME_STATES } from '../../src/utils/constants';
+import { GAME_STATES, GAME_EVENTS } from '../../src/utils/constants';
 
 describe('GameFSM Navigation', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('GameFSM Navigation', () => {
     fsm.transition(GAME_STATES.LANDING);
     expect(fsm.matches(GAME_STATES.LANDING)).toBe(true);
 
-    fsm.send('START');
+    fsm.send(GAME_EVENTS.START);
     // If ttsVerified is false (default), it goes to LANGUAGE_SELECT
     expect(fsm.matches(GAME_STATES.LANGUAGE_SELECT)).toBe(true);
   });

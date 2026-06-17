@@ -5,7 +5,8 @@ You are working on a game engine built with Vue 3, Pinia, and a custom HFSM. To 
 ## 1. Do Not Bypass the FSM
 - Never use local `ref` booleans for major state transitions (e.g., `isBattleOpen = true`).
 - Always define a state in `src/stores/gameFSM.js` and use `fsm.transition()` or `fsm.send()`.
-- Use `fsm.matches('PATH')` in components to determine visibility.
+- Use `fsm.matches(GAME_STATES.XYZ)` in components to determine visibility.
+- **Never use magic strings** for events or states; always use the `GAME_EVENTS` and `GAME_STATES` constants from `src/utils/constants.js`.
 
 ## 2. Keep Stores "Dumb"
 - Stores (like `sessionStore.js`) should only contain data and simple mutation functions.
@@ -19,7 +20,7 @@ You are working on a game engine built with Vue 3, Pinia, and a custom HFSM. To 
 - Leverage the hierarchy! If you are adding a sub-mode to the Battle, add it as a child state of `PLAY.BATTLE`. This ensures that parent `onExit` hooks (like cleaning up battle music) still run correctly.
 
 ## 5. Event-Driven Transitions
-- Favor `fsm.send('EVENT_NAME')` over direct `fsm.transition()`. This allows the FSM to decide how to handle the event based on the current state, preventing "impossible" transitions.
+- Favor `fsm.send(GAME_EVENTS.EVENT_NAME)` over direct `fsm.transition()`. This allows the FSM to decide how to handle the event based on the current state, preventing "impossible" transitions.
 
 ## 6. Documentation
 - If you change the state tree or the session data structure, you MUST update `docs/architecture.md`.

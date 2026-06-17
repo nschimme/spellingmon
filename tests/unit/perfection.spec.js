@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useGameFSM } from '../../src/stores/gameFSM';
 import { useSessionStore } from '../../src/stores/sessionStore';
 import { useVocabStore } from '../../src/stores/vocabStore';
-import { GAME_STATES } from '../../src/utils/constants';
+import { GAME_STATES, GAME_EVENTS } from '../../src/utils/constants';
 
 describe('Tiered Attack Quality and Damage via FSM', () => {
   beforeEach(() => {
@@ -55,7 +55,7 @@ describe('Tiered Attack Quality and Damage via FSM', () => {
     expect(session.battle.currentWord.word).toBe('APPLE');
 
     // Test Correct
-    fsm.send('SUBMIT', { input: 'APPLE' });
+    fsm.send(GAME_EVENTS.SUBMIT, { input: 'APPLE' });
 
     // In Pinia setup stores, refs are unwrapped
     expect(fsm.matches(GAME_STATES.BATTLE_PLAYER_ATTACK)).toBe(true);

@@ -9,6 +9,7 @@ This project uses a **Separation of Concerns** architecture driven by a **Hierar
 - The FSM is reactive and uses the lightweight engine in `src/utils/fsm.js`.
 - **States** define what mode the game is in (e.g., `PLAY.WORLD`, `PLAY.BATTLE.SPELLING`).
 - **Transitions** are the only way to change states, ensuring side effects are handled predictably.
+- **Events** are sent to the machine via `fsm.send(GAME_EVENTS.XYZ)`.
 
 ### 2. The Body: Session Store (`src/stores/sessionStore.js`)
 - Pure data storage for the current game session (Player stats, Party, Map discovery, Battle status).
@@ -17,8 +18,8 @@ This project uses a **Separation of Concerns** architecture driven by a **Hierar
 
 ### 3. The Face: Components (`src/components/`)
 - "Thin" UI layers that subscribe to FSM state and Session data.
-- They emit **Events** to the FSM (e.g., `fsm.send('ATTACK')`) instead of modifying state directly.
-- Use `fsm.matches('STATE_NAME')` to conditionally render UI elements.
+- They emit **Events** to the FSM (using `GAME_EVENTS` constants) instead of modifying state directly.
+- Use `fsm.matches(GAME_STATES.XYZ)` to conditionally render UI elements.
 
 ## Hierarchy Tree
 
@@ -37,18 +38,34 @@ ROOT
     ├── BATTLE
     │   ├── INTRO
     │   ├── ACTION_SELECT
+    │   ├── SWITCHING
     │   ├── SPELLING
     │   ├── PLAYER_ATTACK
     │   ├── ENEMY_TURN
     │   ├── WHITED_OUT
     │   ├── VICTORY
-    │   └── RESULTS
+    │   ├── RESULTS
+    │   └── PARTY_FULL
     ├── MENU
     └── EVOLUTION
+```
+
+## Best Practices
+
+### Use Constants
+Always use `GAME_STATES` and `GAME_EVENTS` from `src/utils/constants.js`.
+```javascript
+// Good
+fsm.send(GAME_EVENTS.ATTACK);
+if (fsm.matches(GAME_STATES.BATTLE_SPELLING)) { ... }
+
+// Bad
+fsm.send('ATTACK');
+if (fsm.state.value === 'PLAY.BATTLE.SPELLING') { ... }
 ```
 
 ## Adding a Feature
 
 1. **Data:** Add any new persistent fields to `sessionStore.js`.
 2. **Logic:** Add new states or transition handlers to `gameFSM.js`.
-3. **UI:** Create/Update components to react to the new FSM state.
+3. **UI:** Create/Update components to react to the new FSM state and send appropriate events.
