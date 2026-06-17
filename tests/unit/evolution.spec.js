@@ -1,18 +1,18 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
-import { usePlayerStore } from '../../src/stores/playerStore';
-import { MONS } from '../../src/utils/gameData';
+import { useSessionStore } from '../../src/stores/sessionStore';
+import { SPECIES } from '../../src/utils/gameData';
 
-describe('PlayerStore Evolution', () => {
+describe('SessionStore Evolution', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });
 
   it('triggers evolution pending when level threshold is met', () => {
-    const store = usePlayerStore();
+    const session = useSessionStore();
     const mon = {
       id: 'test-mon',
-      species: 'Grammander',
+      species: SPECIES.Grammander,
       level: 15,
       exp: 0,
       expToNext: 100,
@@ -20,37 +20,36 @@ describe('PlayerStore Evolution', () => {
       hp: 20,
       maxHp: 20
     };
-    store.party = [mon];
+    session.player.party = [mon];
 
-    store.levelUp(mon); // Should reach Level 16
+    session.levelUpMon(mon); // Should reach Level 16
 
     expect(mon.level).toBe(16);
-    expect(store.evolutionPending).not.toBeNull();
-    expect(store.evolutionPending.newSpecies).toBe('Wordmeleon');
+    expect(session.evolutionPending).not.toBeNull();
+    expect(session.evolutionPending.newSpecies).toBe(SPECIES.Wordmeleon);
   });
 
   it('completes evolution and transforms species', () => {
-    const store = usePlayerStore();
+    const session = useSessionStore();
     const mon = {
       id: 'test-mon',
-      species: 'Grammander',
+      species: SPECIES.Grammander,
       level: 16,
       name: 'Grammander',
       type: 'Fire',
       hp: 20,
       maxHp: 20
     };
-    store.party = [mon];
-    store.evolutionPending = {
+    session.player.party = [mon];
+    session.evolutionPending = {
       monId: 'test-mon',
-      oldSpecies: 'Grammander',
-      newSpecies: 'Wordmeleon'
+      newSpecies: SPECIES.Wordmeleon
     };
 
-    store.completeEvolution();
+    session.completeEvolution();
 
-    const evolvedMon = store.party[0];
-    expect(evolvedMon.species).toBe('Wordmeleon');
-    expect(store.evolutionPending).toBeNull();
+    const evolvedMon = session.player.party[0];
+    expect(evolvedMon.species).toBe(SPECIES.Wordmeleon);
+    expect(session.evolutionPending).toBeNull();
   });
 });

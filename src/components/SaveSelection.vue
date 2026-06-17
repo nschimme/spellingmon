@@ -178,14 +178,14 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { usePlayerStore } from '../stores/playerStore';
+import { useSessionStore } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { audio } from '../utils/audio';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const emit = defineEmits(['back', 'selected']);
-const playerStore = usePlayerStore();
+const session = useSessionStore();
 const slots = ref([null, null, null]);
 const activeSlotIndex = ref(null);
 const isDeleting = ref(false);
@@ -208,7 +208,7 @@ const openSlotActions = (index) => {
 
 const confirmAction = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  playerStore.loadSlot(activeSlotIndex.value);
+  session.loadSlot(activeSlotIndex.value);
   emit('selected');
 };
 
@@ -219,7 +219,7 @@ const confirmDelete = () => {
 
 const doDelete = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  playerStore.deleteSlot(activeSlotIndex.value);
+  session.deleteSlot(activeSlotIndex.value);
   slots.value[activeSlotIndex.value] = null;
   isDeleting.value = false;
   activeSlotIndex.value = null;

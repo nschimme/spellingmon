@@ -12,8 +12,8 @@
       <div
         class="absolute w-6 h-6 bg-red-500 rounded-full animate-ping pointer-events-none opacity-75"
         :style="{
-          left: `calc(${(playerStore.position.x / 100) * 100}% - 12px)`,
-          top: `calc(${(playerStore.position.y / 100) * 100}% - 12px)`
+          left: `calc(${(session.player.position.x / 100) * 100}% - 12px)`,
+          top: `calc(${(session.player.position.y / 100) * 100}% - 12px)`
         }"
       />
     </div>
@@ -30,7 +30,7 @@
         >
           <div
             class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold border-2 border-gray-800 shadow-sm text-xs sm:text-base"
-            :class="playerStore.currentArea === i ? 'bg-blue-500 text-white' : (playerStore.unlockedAreas.includes(i) ? 'bg-green-400' : 'bg-gray-400')"
+            :class="session.player.currentArea === i ? 'bg-blue-500 text-white' : (session.player.unlockedAreas.includes(i) ? 'bg-green-400' : 'bg-gray-400')"
           >
             {{ i }}
           </div>
@@ -46,12 +46,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { usePlayerStore } from '../../stores/playerStore';
+import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, TRANSITION_TYPES } from '../../utils/constants';
 import { TILE_TYPES, MapGenerator } from '../../utils/mapGenerator';
 
-const playerStore = usePlayerStore();
+const session = useSessionStore();
 const mapCanvas = ref(null);
 
 const emit = defineEmits(['back']);
@@ -66,14 +66,14 @@ useKeyboardNavigation({
 const drawMap = () => {
   if (!mapCanvas.value) return;
   const ctx = mapCanvas.value.getContext('2d');
-  const discovered = new Set(playerStore.discoveredTiles[playerStore.currentArea] || []);
+  const discovered = new Set(session.dex.discoveredTiles[session.player.currentArea] || []);
 
   const MAP_SIZE = 100;
   ctx.fillStyle = '#111827'; // bg-gray-900
   ctx.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
 
-  const gen = new MapGenerator(playerStore.mapSeed, MAP_SIZE, MAP_SIZE);
-  const mapData = gen.generate(playerStore.currentArea);
+  const gen = new MapGenerator(session.player.mapSeed, MAP_SIZE, MAP_SIZE);
+  const mapData = gen.generate(session.player.currentArea);
 
   ctx.font = '8px serif';
   ctx.textAlign = 'center';
@@ -108,7 +108,7 @@ const drawMap = () => {
 
   // Draw player
   ctx.fillStyle = '#ef4444';
-  ctx.fillRect(playerStore.position.x, playerStore.position.y, 1, 1);
+  ctx.fillRect(session.player.position.x, session.player.position.y, 1, 1);
 };
 
 onMounted(() => {

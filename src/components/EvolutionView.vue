@@ -43,29 +43,33 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { usePlayerStore } from '../stores/playerStore';
+import { useSessionStore } from '../stores/sessionStore';
+import { useGameFSM } from '../stores/gameFSM';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, INPUT_PRIORITIES } from '../utils/constants';
+import { SOUND_EFFECTS, INPUT_PRIORITIES, GAME_EVENTS } from '../utils/constants';
 import { MONS } from '../utils/gameData';
 
-const playerStore = usePlayerStore();
+const session = useSessionStore();
 const step = ref(0);
 const isComplete = ref(false);
 
-const pending = computed(() => playerStore.evolutionPending);
+const pending = computed(() => session.evolutionPending);
 
 const currentEmoji = computed(() => {
   if (isComplete.value || step.value >= 15) {
     const newSpecies = pending.value?.newSpecies;
     return MONS[newSpecies]?.emoji || '👾';
   }
-  const oldMon = playerStore.party.find(m => m.id === pending.value?.monId);
+  const oldMon = session.player.party.find(m => m.id === pending.value?.monId);
   return oldMon?.emoji || '👾';
 });
 
+const fsm = useGameFSM();
+
 const finish = () => {
-  playerStore.completeEvolution();
+  session.completeEvolution();
+  fsm.send(GAME_EVENTS.FINISH);
 };
 
 const { selectedIndex } = useKeyboardNavigation({

@@ -1,21 +1,21 @@
 import { ref } from 'vue';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, GAME_CONSTANTS } from '../utils/constants';
+import { SOUND_EFFECTS, GAME_CONSTANTS, GAME_STATES } from '../utils/constants';
 import { TILE_TYPES } from '../utils/mapGenerator';
 
-export function useTrainerAI(playerStore, battleStore, currentMapData, playerX, playerY, getTileType) {
+export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType) {
   const alertingTrainer = ref(null);
 
   const checkTrainerLOS = (engagedTrainers) => {
-    if (battleStore.inBattle || alertingTrainer.value || !currentMapData.value) return;
+    if (fsm.matches(GAME_STATES.BATTLE) || alertingTrainer.value || !currentMapData.value) return;
 
     const trainers = currentMapData.value.trainers;
     const LOS_RANGE = 5;
 
     for (let i = 0; i < trainers.length; i++) {
       const t = trainers[i];
-      const trainerId = `area${playerStore.currentArea}_${i}`;
-      if (playerStore.defeatedTrainers.includes(trainerId)) continue;
+      const trainerId = `area${session.player.currentArea}_${i}`;
+      if (session.player.defeatedTrainers.includes(trainerId)) continue;
       if (engagedTrainers.has(trainerId)) continue;
 
       let inLOS = false;
@@ -75,7 +75,7 @@ export function useTrainerAI(playerStore, battleStore, currentMapData, playerX, 
       }
 
       alertingTrainer.value = null;
-      playerStore.notify(`${trainer.name}: "${trainer.dialog}"`);
+      session.notify(`${trainer.name}: "${trainer.dialog}"`);
 
       setTimeout(() => {
         triggerTrainerBattle(trainer, trainerId);

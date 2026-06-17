@@ -85,12 +85,13 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { usePlayerStore } from '../stores/playerStore';
+import { useSessionStore } from '../stores/sessionStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, GENDERS, SKIN_TONES } from '../utils/constants';
 
-const playerStore = usePlayerStore();
+const session = useSessionStore();
+const emit = defineEmits(['complete']);
 
 const name = ref('');
 const gender = ref(GENDERS.BOY);
@@ -109,11 +110,12 @@ const skinTones = [
 const handleConfirm = () => {
   if (!name.value) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
-  playerStore.setPlayerData({
+  session.setPlayerData({
     name: name.value,
     gender: gender.value,
     skinTone: skinTone.value
   });
+  emit('complete');
 };
 
 // Spatial Map: 0: Name, 1: Boy, 2: Girl, 3-7: Skin Tones, 8: Confirm

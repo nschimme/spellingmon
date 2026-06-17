@@ -115,29 +115,29 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
-import { usePlayerStore } from '../../stores/playerStore';
+import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { audio } from '../../utils/audio';
 import { SOUND_EFFECTS } from '../../utils/constants';
 
-const playerStore = usePlayerStore();
-const currentArea = ref(playerStore.currentArea);
+const session = useSessionStore();
+const currentArea = ref(session.player.currentArea);
 const areaWords = ref([]);
 const loading = ref(false);
 const itemRefs = ref([]);
 
 const emit = defineEmits(['back']);
 
-const discoveredCount = computed(() => (playerStore.discoveredWords[currentArea.value] || []).length);
-const masteredCount = computed(() => (playerStore.masteredWords[currentArea.value] || []).length);
+const discoveredCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
+const masteredCount = computed(() => (session.dex.masteredWords[currentArea.value] || []).length);
 
-const isDiscovered = (term) => (playerStore.discoveredWords[currentArea.value] || []).includes(term);
-const isMastered = (term) => (playerStore.masteredWords[currentArea.value] || []).includes(term);
+const isDiscovered = (term) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
+const isMastered = (term) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
 
 const fetchWords = async () => {
   loading.value = true;
   try {
-    const response = await fetch(`./vocab/${playerStore.locale}/area${currentArea.value}.json`);
+    const response = await fetch(`./vocab/${session.locale}/area${currentArea.value}.json`);
     areaWords.value = await response.json();
   } catch (e) {
     console.error('Failed to load vocab', e);

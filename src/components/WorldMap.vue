@@ -25,19 +25,19 @@
     <!-- Player -->
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center">
       <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">
-        {{ playerStore.playerName }}
+        {{ session.player.name }}
       </div>
       <div class="relative">
         <span>{{ playerEmoji }}</span>
-        <span class="absolute -bottom-1 -right-1 text-xs">{{ playerStore.party[0]?.emoji }}</span>
+        <span class="absolute -bottom-1 -right-1 text-xs">{{ session.player.party[0]?.emoji }}</span>
       </div>
     </div>
 
     <MapHUD
-      :area-name="$t('menu.areaNames.' + playerStore.currentArea)"
+      :area-name="$t('menu.areaNames.' + session.player.currentArea)"
       :biome="currentMapData?.biome"
-      :leader-name="playerStore.party[0]?.name"
-      :leader-level="playerStore.party[0]?.level"
+      :leader-name="session.player.party[0]?.name"
+      :leader-level="session.player.party[0]?.level"
     />
 
     <div class="absolute bottom-6 left-6 bg-gray-800/80 text-white px-4 py-2 rounded-full text-[8px] font-bold uppercase tracking-widest hidden lg:block">
@@ -54,14 +54,14 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import { usePlayerStore } from '../stores/playerStore';
-import { useBattleStore } from '../stores/battleStore';
+import { useSessionStore } from '../stores/sessionStore';
+import { useGameFSM } from '../stores/gameFSM';
 import { useVocabStore } from '../stores/vocabStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
-import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
 import { TILE_TYPES } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
@@ -72,8 +72,8 @@ import MapHUD from './map/MapHUD.vue';
 import MapTile from './map/MapTile.vue';
 import MobileControls from './map/MobileControls.vue';
 
-const playerStore = usePlayerStore();
-const battleStore = useBattleStore();
+const session = useSessionStore();
+const fsm = useGameFSM();
 const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
@@ -87,20 +87,20 @@ const props = defineProps({
 
 defineEmits(['toggle-menu']);
 
-const playerX = ref(playerStore.position?.x ?? 0);
-const playerY = ref(playerStore.position?.y ?? 0);
+const playerX = ref(session.player.position?.x ?? 0);
+const playerY = ref(session.player.position?.y ?? 0);
 
 const {
   MAP_WIDTH, MAP_HEIGHT, currentMapData, areaConfig,
   generateMap, getTileType, getTrainerAt, updateDiscovery
-} = useMapManager(playerStore);
+} = useMapManager(session);
 
 const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach } = useTrainerAI(
-  playerStore, battleStore, currentMapData, playerX, playerY, getTileType
+  session, fsm, currentMapData, playerX, playerY, getTileType
 );
 
 const handleInput = (e) => {
-  if (battleStore.inBattle || props.isMenuOpen) return false;
+  if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return false;
 
   const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
   let newX = playerX.value;
@@ -121,14 +121,14 @@ const handleInput = (e) => {
 
   playerX.value = newX;
   playerY.value = newY;
-  playerStore.updatePosition({ x: newX, y: newY });
+  session.updatePlayerPosition({ x: newX, y: newY });
 
-  // 1. Check for Trainers FIRST - they have priority
+  // 1. Check for Trainers FIRST
   const triggeredTrainer = checkTrainerLOS(engagedTrainers);
   if (triggeredTrainer) {
     initiateTrainerApproach(triggeredTrainer.trainer, triggeredTrainer.trainerId, engagedTrainers, triggerTrainerBattle);
   } else {
-    // 2. Only check for wild battles if no trainer is engaging
+    // 2. Wild battle triggers
     checkTriggers(newX, newY);
   }
 
@@ -139,8 +139,8 @@ const handleInput = (e) => {
 const { startMovement, stopMovement } = usePlayerMovement(playerX, playerY, handleInput);
 
 const playerEmoji = computed(() => {
-  const gender = playerStore.gender;
-  const tone = playerStore.skinTone;
+  const gender = session.player.gender;
+  const tone = session.player.skinTone;
   const base = gender === GENDERS.BOY ? '👦' : '👧';
   const modifiers = {
     [SKIN_TONES.PALE]: '🏻',
@@ -152,37 +152,24 @@ const playerEmoji = computed(() => {
   return base + (modifiers[tone] || '');
 });
 
-watch(() => playerStore.currentArea, async (newArea, oldArea) => {
+watch(() => session.player.currentArea, async (newArea, oldArea) => {
+  if (!session.player?.mapSeed) return;
   const direction = newArea > oldArea ? 'next' : 'prev';
   generateMap(true, direction, playerX, playerY);
   await vocabStore.loadVocab(newArea, settingsStore.locale);
 
-  // Auto-set last spell center on area transition
   if (currentMapData.value?.spellCenter) {
-    playerStore.lastSpellCenter = {
+    session.player.lastSpellCenter = {
       x: currentMapData.value.spellCenter.x,
       y: currentMapData.value.spellCenter.y,
       area: newArea
     };
-    playerStore.saveState();
+    session.save();
   }
 });
 
-watch(() => playerStore.position, (newPos) => {
-  if (battleStore.inBattle || !newPos || !playerStore.lastSpellCenter) return;
-  if (newPos.x === playerStore.lastSpellCenter.x && newPos.y === playerStore.lastSpellCenter.y && playerStore.currentArea === playerStore.lastSpellCenter.area) {
-     if (playerX.value !== newPos.x || playerY.value !== newPos.y) {
-        playerX.value = newPos.x;
-        playerY.value = newPos.y;
-        generateMap(false, null, playerX, playerY);
-     }
-  }
-}, { deep: true });
-
-watch(() => playerStore.mapSeed, () => generateMap(false, null, playerX, playerY));
-
-watch(() => settingsStore.locale, async (newLocale) => {
-  await vocabStore.loadVocab(playerStore.currentArea, newLocale);
+watch(() => session.player.mapSeed, (newSeed) => {
+  if (newSeed) generateMap(false, null, playerX, playerY);
 });
 
 const viewportTiles = computed(() => {
@@ -216,11 +203,11 @@ const checkTriggers = (x, y) => {
   const type = getTileType(x, y);
 
   if (type === TILE_TYPES.SPELL_CENTER) {
-    playerStore.healParty();
+    session.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
-    playerStore.notify(settingsStore.t('menu.healed'));
-    playerStore.lastSpellCenter = { x, y, area: playerStore.currentArea };
-    playerStore.saveState();
+    session.notify(settingsStore.t('menu.healed'));
+    session.player.lastSpellCenter = { x, y, area: session.player.currentArea };
+    session.save();
     return;
   }
 
@@ -230,7 +217,7 @@ const checkTriggers = (x, y) => {
       const { trainer, trainerId } = trainerData;
       if (engagedTrainers.has(trainerId)) return;
       engagedTrainers.add(trainerId);
-      playerStore.notify(`${trainer.name}: "${trainer.dialog}"`);
+      session.notify(`${trainer.name}: "${trainer.dialog}"`);
       setTimeout(() => {
         triggerTrainerBattle(trainer, trainerId);
         engagedTrainers.delete(trainerId);
@@ -243,26 +230,26 @@ const checkTriggers = (x, y) => {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
     if (transition.type === TRANSITION_TYPES.NEXT) {
       const allDefeated = currentMapData.value.trainers.every((t, i) =>
-        playerStore.defeatedTrainers.includes(`area${playerStore.currentArea}_${i}`)
+        session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
       );
       if (!allDefeated) {
-        playerStore.notify(settingsStore.t('menu.defeatTrainerFirst'));
+        session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
       }
-      playerStore.unlockArea(playerStore.currentArea + 1);
-      playerStore.setCurrentArea(playerStore.currentArea + 1);
+      session.player.unlockedAreas.push(session.player.currentArea + 1);
+      session.player.currentArea++;
+      session.save();
     } else if (transition.type === TRANSITION_TYPES.PREV) {
-      playerStore.setCurrentArea(playerStore.currentArea - 1);
+      session.player.currentArea--;
+      session.save();
     }
     return;
   }
 
   if (type === TILE_TYPES.GRASS) {
     if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
-      // Small delay before wild battle starts after movement
       setTimeout(() => {
-        // Re-check conditions: ensure not already in battle and no trainer is approaching
-        if (!battleStore.inBattle && !alertingTrainer.value) {
+        if (fsm.matches(GAME_STATES.WORLD) && !alertingTrainer.value) {
           triggerWildBattle();
         }
       }, 300);
@@ -271,36 +258,31 @@ const checkTriggers = (x, y) => {
 };
 
 const triggerWildBattle = async () => {
-  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
+  await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
   const level = currentMapData.value.levelMap[playerY.value][playerX.value];
   const wildMon = createMon(species, level);
-  const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
-  battleStore.startBattle(firstHealthyMon, wildMon, BATTLE_TYPES.WILD);
+  fsm.send(GAME_EVENTS.ENCOUNTER, { enemy: wildMon, type: BATTLE_TYPES.WILD });
 };
 
 const triggerTrainerBattle = async (trainer, trainerId) => {
-  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
+  await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
   const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
   const firstMonCfg = party[0];
   const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
-  const firstHealthyMon = playerStore.party.find(m => m.hp > 0) || playerStore.party[0];
-  battleStore.startBattle(firstHealthyMon, enemyMon, BATTLE_TYPES.TRAINER, trainer, trainerId, party);
+  fsm.send(GAME_EVENTS.ENCOUNTER, {
+    enemy: enemyMon,
+    type: BATTLE_TYPES.TRAINER,
+    trainerId,
+    trainerParty: party
+  });
 };
 
 onMounted(async () => {
-  await vocabStore.loadVocab(playerStore.currentArea, settingsStore.locale);
-  generateMap(false, null, playerX, playerY);
-  updateDiscovery(playerX.value, playerY.value);
-
-  // Ensure initial lastSpellCenter is set if we spawn on one
-  if (!playerStore.lastSpellCenter && getTileType(playerX.value, playerY.value) === TILE_TYPES.SPELL_CENTER) {
-    playerStore.lastSpellCenter = {
-      x: playerX.value,
-      y: playerY.value,
-      area: playerStore.currentArea
-    };
-    playerStore.saveState();
+  if (session.player?.mapSeed) {
+    await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
+    generateMap(false, null, playerX, playerY);
+    updateDiscovery(playerX.value, playerY.value);
   }
 
   inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput, 5);
@@ -310,13 +292,3 @@ onUnmounted(() => {
   inputStore.removeListener(INPUT_CONTEXTS.WORLD);
 });
 </script>
-
-<style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-  transform: translate(-50%, 20px);
-}
-</style>

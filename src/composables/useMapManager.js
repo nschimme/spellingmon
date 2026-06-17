@@ -3,15 +3,16 @@ import { MapGenerator, TILE_TYPES } from '../utils/mapGenerator';
 import { AREA_CONFIGS } from '../utils/gameData';
 import { TRANSITION_TYPES } from '../utils/constants';
 
-export function useMapManager(playerStore) {
+export function useMapManager(session) {
   const MAP_WIDTH = 100;
   const MAP_HEIGHT = 100;
   const currentMapData = ref(null);
-  const areaConfig = computed(() => AREA_CONFIGS[playerStore.currentArea]);
+  const areaConfig = computed(() => AREA_CONFIGS[session.player.currentArea]);
 
   const generateMap = (isTransition = false, direction = null, playerX, playerY) => {
-    const gen = new MapGenerator(playerStore.mapSeed, MAP_WIDTH, MAP_HEIGHT);
-    currentMapData.value = gen.generate(playerStore.currentArea);
+    if (!session.player?.mapSeed) return;
+    const gen = new MapGenerator(session.player.mapSeed, MAP_WIDTH, MAP_HEIGHT);
+    currentMapData.value = gen.generate(session.player.currentArea);
 
     let newX = playerX.value;
     let newY = playerY.value;
@@ -30,9 +31,9 @@ export function useMapManager(playerStore) {
           newY = entry.y;
         }
       }
-    } else if (playerStore.position) {
-      newX = playerStore.position.x;
-      newY = playerStore.position.y;
+    } else if (session.player.position) {
+      newX = session.player.position.x;
+      newY = session.player.position.y;
     } else {
       const sc = currentMapData.value.spellCenter;
       if (sc) {
@@ -43,7 +44,7 @@ export function useMapManager(playerStore) {
 
     playerX.value = newX;
     playerY.value = newY;
-    playerStore.updatePosition({ x: newX, y: newY });
+    session.updatePlayerPosition({ x: newX, y: newY });
   };
 
   const getTileType = (x, y) => {
@@ -57,8 +58,8 @@ export function useMapManager(playerStore) {
     const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
     if (!trainer) return null;
     const index = currentMapData.value.trainers.indexOf(trainer);
-    const trainerId = `area${playerStore.currentArea}_${index}`;
-    if (playerStore.defeatedTrainers.includes(trainerId)) return null;
+    const trainerId = `area${session.player.currentArea}_${index}`;
+    if (session.player.defeatedTrainers.includes(trainerId)) return null;
     return { trainer, trainerId };
   };
 
@@ -69,7 +70,9 @@ export function useMapManager(playerStore) {
         const tx = x + dx;
         const ty = y + dy;
         if (tx >= 0 && tx < MAP_WIDTH && ty >= 0 && ty < MAP_HEIGHT) {
-          playerStore.discoverTile(playerStore.currentArea, tx, ty);
+          if (session.discoverTile) {
+            session.discoverTile(session.currentArea, tx, ty);
+          }
         }
       }
     }
