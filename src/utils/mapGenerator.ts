@@ -161,13 +161,13 @@ export class MapGenerator {
       transitions.push({ x: tx, y: ty, type: TRANSITION_TYPES.PREV } as any);
     }
 
-    let nextTransition: Transition | null = null;
+    let nextTransition: Transition | undefined = undefined;
     if (areaNum < AREA_CONFIGS_MAX) {
       const tx = exitRoom.centerX;
       const ty = exitRoom.centerY;
       map[ty][tx] = TILE_TYPES.TRANSITION;
       nextTransition = { x: tx, y: ty, type: TRANSITION_TYPES.NEXT } as any;
-      transitions.push(nextTransition as any);
+      transitions.push(nextTransition);
     }
 
     let spellCenter: Point | null = null;
@@ -225,7 +225,7 @@ export class MapGenerator {
 
     const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
 
-    const checkReachability = (from: Point, to: any) => {
+    const checkReachability = (from: Point, to: Point) => {
       const queue: [number, number][] = [[from.x, from.y]];
       const visited = new Set([`${from.x},${from.y}`]);
 

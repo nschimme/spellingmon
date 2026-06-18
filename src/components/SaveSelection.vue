@@ -36,23 +36,23 @@
             class="w-full flex flex-col items-center h-full"
           >
             <div class="text-6xl mb-4 animate-bounce-slow">
-              {{ slot.party[0]?.emoji || '👦' }}
+              {{ slot.player.party[0]?.emoji || '👦' }}
             </div>
             <h3 class="text-xl font-black uppercase text-gray-800 mb-1">
-              {{ slot.playerName }}
+              {{ slot.player.name }}
             </h3>
             <div class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase mb-4">
-              {{ $t('menu.area', { n: slot.currentArea }) }}
+              {{ $t('menu.area', { n: slot.player.currentArea }) }}
             </div>
 
             <div class="w-full space-y-2 mt-auto">
               <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
                 <span>{{ $t('menu.party') }}</span>
-                <span>{{ slot.party.length }} / 6</span>
+                <span>{{ slot.player.party.length }} / 6</span>
               </div>
               <div class="flex gap-1 justify-center">
                 <span
-                  v-for="mon in slot.party"
+                  v-for="mon in slot.player.party"
                   :key="mon.id"
                   class="text-lg"
                 >
@@ -100,10 +100,10 @@
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
         <div class="text-6xl mb-4">
-          {{ slots[activeSlotIndex] ? (slots[activeSlotIndex].party[0]?.emoji || '👦') : '✨' }}
+          {{ slots[activeSlotIndex] ? (slots[activeSlotIndex].player.party[0]?.emoji || '👦') : '✨' }}
         </div>
         <h2 class="text-2xl font-black uppercase mb-6">
-          {{ slots[activeSlotIndex] ? slots[activeSlotIndex].playerName : $t('landing.newGameSlot') }}
+          {{ slots[activeSlotIndex] ? slots[activeSlotIndex].player.name : $t('landing.newGameSlot') }}
         </h2>
 
         <div class="flex flex-col gap-4">
@@ -187,13 +187,13 @@ import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 const emit = defineEmits(['back', 'selected']);
 const session = useSessionStore();
 const slots = ref([null, null, null]);
-const activeSlotIndex = ref<any>(null);
+const activeSlotIndex = ref<number | null>(null);
 const isDeleting = ref(false);
 
-const slotRefs = ref([]);
+const slotRefs = ref<(HTMLElement | null)[]>([]);
 const backButton = ref<any>(null);
-const actionRefs = ref([]);
-const deleteRefs = ref([]);
+const actionRefs = ref<(HTMLElement | null)[]>([]);
+const deleteRefs = ref<(HTMLElement | null)[]>([]);
 
 const loadSlots = () => {
   for (let i = 0; i < 3; i++) {
@@ -201,7 +201,7 @@ const loadSlots = () => {
   }
 };
 
-const openSlotActions = (index) => {
+const openSlotActions = (index: number) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   activeSlotIndex.value = index;
 };
@@ -220,7 +220,7 @@ const confirmDelete = () => {
 const doDelete = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   session.deleteSlot(activeSlotIndex.value);
-  slots.value[activeSlotIndex.value] = null;
+  slots.value[activeSlotIndex.value!] = null;
   isDeleting.value = false;
   activeSlotIndex.value = null;
 };
@@ -241,11 +241,11 @@ const { selectedIndex } = useKeyboardNavigation({
 const { selectedIndex: actionSelectedIndex } = useKeyboardNavigation({
   id: 'save-actions',
   isActive: computed(() => activeSlotIndex.value !== null && !isDeleting.value),
-  maxIndex: computed(() => slots.value[activeSlotIndex.value] ? 3 : 2),
+  maxIndex: computed(() => slots.value[activeSlotIndex.value!] ? 3 : 2),
   itemRefs: actionRefs,
   onConfirm: (idx) => {
     if (idx === 0) confirmAction();
-    else if (idx === 1 && slots.value[activeSlotIndex.value]) confirmDelete();
+    else if (idx === 1 && slots.value[activeSlotIndex.value!]) confirmDelete();
     else activeSlotIndex.value = null;
   },
   onCancel: () => { activeSlotIndex.value = null; }

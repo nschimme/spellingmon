@@ -52,9 +52,9 @@ export const speech: SpeechInterface = {
 
       this.supported = true;
       const synth = window.speechSynthesis;
-      let interval: any = null;
+      let interval: ReturnType<typeof setInterval> | null = null;
       let isFinished = false;
-      let timeoutId: any = null;
+      let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
       const finishInit = () => {
         if (isFinished) return;

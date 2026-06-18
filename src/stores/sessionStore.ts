@@ -31,7 +31,7 @@ export interface BattleState {
   currentWord: Word | null;
   totalTime: number;
   isCapturing: boolean;
-  results?: any[];
+  results?: Monster[];
   startTime?: number;
   debugWord?: string | null;
 }
@@ -49,7 +49,7 @@ export interface SessionStoreState {
   dex: DexState;
   notification: string | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
-  _saveTimeout?: any;
+  _saveTimeout?: ReturnType<typeof setTimeout>;
 }
 
 /**

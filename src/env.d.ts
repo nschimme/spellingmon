@@ -11,5 +11,4 @@ interface Window {
   __FSM__: any;
   __FSM_STATE__: string;
   __PLAYWRIGHT_TEST__?: boolean;
-  webkitAudioContext: typeof AudioContext;
 }

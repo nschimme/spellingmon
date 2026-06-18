@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
 import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
-import { calculateExpGain, calculateDamage, calculateTimerDuration, createMon, SPECIES } from '../utils/gameData';
+import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
 
@@ -175,7 +175,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.type = params.type || BATTLE_TYPES.WILD;
                     ctx.session.battle.trainerId = params.trainerId;
                     ctx.session.battle.trainerParty = params.trainerParty || [];
-                    ctx.session.battle.playerMonId = ctx.session.player.party.find((m: any) => m.hp > 0)?.id;
+                    ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
                     ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
                     ctx.session.battle.participatingMonIds = [ctx.session.battle.playerMonId];
                   }
@@ -317,7 +317,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                    setTimeout(() => {
                      if (ctx.session.activePlayerMon.hp <= 0) {
                         ctx.session.battle.log.push(ctx.t('battle.lose', { name: ctx.t('monsters.' + ctx.session.activePlayerMon.species) }));
-                        if (ctx.session.player.party.some((m: any) => m.hp > 0)) {
+                        if (ctx.session.player.party.some((m: Monster) => m.hp > 0)) {
                           ctx.fsm.transition(GAME_STATES.BATTLE_SWITCHING);
                         } else {
                           ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
@@ -355,7 +355,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [s(GAME_STATES.BATTLE_PARTY_FULL)]: {
                 on: {
                   [GAME_EVENTS.REPLACE]: (ctx, params) => {
-                    const index = ctx.session.player.party.findIndex((m: any) => m.id === params.replaceMonId);
+                    const index = ctx.session.player.party.findIndex((m: Monster) => m.id === params.replaceMonId);
                     if (index !== -1) {
                       ctx.session.player.party[index] = {...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp};
                       ctx.session.save();
