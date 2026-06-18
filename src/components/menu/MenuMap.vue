@@ -65,8 +65,9 @@ useKeyboardNavigation({
 });
 
 const drawMap = () => {
-  if (!mapCanvas.value) return;
+  if (!mapCanvas.value || !session.player.mapSeed) return;
   const ctx = mapCanvas.value.getContext('2d');
+  if (!ctx) return;
   const discovered = new Set(session.dex.discoveredTiles[session.player.currentArea] || []);
 
   const MAP_SIZE = 100;

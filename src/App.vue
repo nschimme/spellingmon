@@ -19,7 +19,7 @@ const fsm = useGameFSM();
 const session = useSessionStore();
 const inputStore = useInputStore();
 
-const handleGlobalInput = (e) => {
+const handleGlobalInput = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
     if (fsm.matches(GAME_STATES.MENU)) {
       fsm.send(GAME_EVENTS.CLOSE);

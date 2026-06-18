@@ -22,7 +22,7 @@
         <div
           v-for="(slot, index) in slots"
           :key="index"
-          :ref="el => { if (el) slotRefs[index] = el }"
+          :ref="el => setSlotRef(el, index)"
           class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer"
           :class="{
             'ring-8 ring-yellow-400 border-blue-500 -translate-y-2 shadow-2xl': selectedIndex === index,
@@ -100,25 +100,25 @@
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
         <div class="text-6xl mb-4">
-          {{ slots[activeSlotIndex] ? (slots[activeSlotIndex].player.party[0]?.emoji || '👦') : '✨' }}
+          {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? (slots[activeSlotIndex]!.player.party[0]?.emoji || '👦') : '✨' }}
         </div>
         <h2 class="text-2xl font-black uppercase mb-6">
-          {{ slots[activeSlotIndex] ? slots[activeSlotIndex].player.name : $t('landing.newGameSlot') }}
+          {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? slots[activeSlotIndex]!.player.name : $t('landing.newGameSlot') }}
         </h2>
 
         <div class="flex flex-col gap-4">
           <button
-            :ref="el => { if (el) actionRefs[0] = el }"
+            :ref="el => setActionRef(el, 0)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === 0 }"
             class="w-full bg-blue-500 text-white py-4 rounded-xl font-black uppercase border-b-8 border-blue-800 active:translate-y-1 outline-none"
             @click="confirmAction"
           >
-            {{ slots[activeSlotIndex] ? $t('landing.continueSlot') : $t('landing.startSlot') }}
+            {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? $t('landing.continueSlot') : $t('landing.startSlot') }}
           </button>
 
           <button
-            v-if="slots[activeSlotIndex]"
-            :ref="el => { if (el) actionRefs[1] = el }"
+            v-if="activeSlotIndex !== null && slots[activeSlotIndex]"
+            :ref="el => setActionRef(el, 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === 1 }"
             class="w-full bg-red-100 text-red-500 py-3 rounded-xl font-black uppercase border-b-4 border-red-200 hover:bg-red-200 transition-colors outline-none"
             @click="confirmDelete"
@@ -127,8 +127,8 @@
           </button>
 
           <button
-            :ref="el => { if (el) actionRefs[slots[activeSlotIndex] ? 2 : 1] = el }"
-            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === (slots[activeSlotIndex] ? 2 : 1) }"
+            :ref="el => setActionRef(el, (activeSlotIndex !== null && slots[activeSlotIndex]) ? 2 : 1)"
+            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === ((activeSlotIndex !== null && slots[activeSlotIndex]) ? 2 : 1) }"
             class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none"
             @click="activeSlotIndex = null"
           >
@@ -151,11 +151,11 @@
           {{ $t('landing.deleteSaveConfirm') }}
         </h2>
         <p class="text-sm font-bold text-gray-500 mb-8">
-          {{ $t('landing.deleteSaveWarning', { n: activeSlotIndex + 1 }) }}
+          {{ $t('landing.deleteSaveWarning', { n: (activeSlotIndex !== null ? activeSlotIndex + 1 : 0) }) }}
         </p>
         <div class="flex gap-4">
           <button
-            :ref="el => { if (el) deleteRefs[0] = el }"
+            :ref="el => setDeleteRef(el, 0)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': deleteSelectedIndex === 0 }"
             class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none"
             @click="isDeleting = false"
@@ -163,7 +163,7 @@
             {{ $t('common.cancel') }}
           </button>
           <button
-            :ref="el => { if (el) deleteRefs[1] = el }"
+            :ref="el => setDeleteRef(el, 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': deleteSelectedIndex === 1 }"
             class="flex-1 bg-red-600 text-white py-3 rounded-xl font-black uppercase border-b-4 border-red-800 active:translate-y-1 outline-none"
             @click="doDelete"
@@ -177,7 +177,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, type ComponentPublicInstance } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
@@ -186,14 +186,26 @@ import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const emit = defineEmits(['back', 'selected']);
 const session = useSessionStore();
-const slots = ref([null, null, null]);
+const slots = ref<(any | null)[]>([null, null, null]);
 const activeSlotIndex = ref<number | null>(null);
 const isDeleting = ref(false);
 
 const slotRefs = ref<(HTMLElement | null)[]>([]);
-const backButton = ref<any>(null);
+const backButton = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
 const deleteRefs = ref<(HTMLElement | null)[]>([]);
+
+const setSlotRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) slotRefs.value[index] = el as HTMLElement;
+};
+
+const setActionRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) actionRefs.value[index] = el as HTMLElement;
+};
+
+const setDeleteRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) deleteRefs.value[index] = el as HTMLElement;
+};
 
 const loadSlots = () => {
   for (let i = 0; i < 3; i++) {
@@ -207,6 +219,7 @@ const openSlotActions = (index: number) => {
 };
 
 const confirmAction = () => {
+  if (activeSlotIndex.value === null) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
   session.loadSlot(activeSlotIndex.value);
   emit('selected');
@@ -218,9 +231,10 @@ const confirmDelete = () => {
 };
 
 const doDelete = () => {
+  if (activeSlotIndex.value === null) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
   session.deleteSlot(activeSlotIndex.value);
-  slots.value[activeSlotIndex.value!] = null;
+  slots.value[activeSlotIndex.value] = null;
   isDeleting.value = false;
   activeSlotIndex.value = null;
 };
@@ -241,11 +255,11 @@ const { selectedIndex } = useKeyboardNavigation({
 const { selectedIndex: actionSelectedIndex } = useKeyboardNavigation({
   id: 'save-actions',
   isActive: computed(() => activeSlotIndex.value !== null && !isDeleting.value),
-  maxIndex: computed(() => slots.value[activeSlotIndex.value!] ? 3 : 2),
+  maxIndex: computed(() => (activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]) ? 3 : 2),
   itemRefs: actionRefs,
   onConfirm: (idx) => {
     if (idx === 0) confirmAction();
-    else if (idx === 1 && slots.value[activeSlotIndex.value!]) confirmDelete();
+    else if (idx === 1 && activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]) confirmDelete();
     else activeSlotIndex.value = null;
   },
   onCancel: () => { activeSlotIndex.value = null; }

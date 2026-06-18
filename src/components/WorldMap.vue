@@ -16,7 +16,7 @@
         :x="tile.x"
         :y="tile.y"
         :type="tile.type"
-        :is-alerting="getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y).trainerId"
+        :is-alerting="!!(getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y)?.trainerId)"
         :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
         :transitions="currentMapData?.transitions"
       />
@@ -99,7 +99,7 @@ const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach } = useTrainer
   session, fsm, currentMapData, playerX, playerY, getTileType
 );
 
-const handleInput = (e) => {
+const handleInput = (e: any) => {
   if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return false;
 
   const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
@@ -152,7 +152,7 @@ const playerEmoji = computed(() => {
   const gender = session.player.gender;
   const tone = session.player.skinTone;
   const base = gender === GENDERS.BOY ? '👦' : '👧';
-  const modifiers = {
+  const modifiers: Record<string, string> = {
     [SKIN_TONES.PALE]: '🏻',
     [SKIN_TONES.FAIR]: '🏼',
     [SKIN_TONES.NEUTRAL]: '🏽',
@@ -196,7 +196,8 @@ const viewportTiles = computed(() => {
   return tiles;
 });
 
-const getTrainerEmoji = (x, y) => {
+const getTrainerEmoji = (x: number, y: number) => {
+  if (!currentMapData.value) return '👤';
   const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
   if (!trainer) return '👤';
   switch (trainer.direction) {
@@ -208,7 +209,7 @@ const getTrainerEmoji = (x, y) => {
   }
 };
 
-const checkTriggers = (x, y) => {
+const checkTriggers = (x: number, y: number) => {
   const type = getTileType(x, y);
 
   if (type === TILE_TYPES.SPELL_CENTER) {
@@ -236,9 +237,11 @@ const checkTriggers = (x, y) => {
   }
 
   if (type === TILE_TYPES.TRANSITION) {
+    if (!currentMapData.value) return;
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
-    if (transition!.type === TRANSITION_TYPES.NEXT) {
-      const allDefeated = currentMapData.value!.trainers.every((t, i) =>
+    if (!transition) return;
+    if (transition.type === TRANSITION_TYPES.NEXT) {
+      const allDefeated = currentMapData.value.trainers.every((t, i) =>
         session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
       );
       if (!allDefeated) {
@@ -248,7 +251,7 @@ const checkTriggers = (x, y) => {
       session.player.unlockedAreas.push(session.player.currentArea + 1);
       session.player.currentArea++;
       session.save();
-    } else if (transition!.type === TRANSITION_TYPES.PREV) {
+    } else if (transition.type === TRANSITION_TYPES.PREV) {
       session.player.currentArea--;
       session.save();
     }
@@ -267,6 +270,7 @@ const checkTriggers = (x, y) => {
 };
 
 const triggerWildBattle = async () => {
+  if (!currentMapData.value) return;
   await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
   const species = areaConfig.value.encounters[Math.floor(Math.random() * areaConfig.value.encounters.length)];
   const level = currentMapData.value.levelMap[playerY.value][playerX.value];
@@ -274,9 +278,9 @@ const triggerWildBattle = async () => {
   fsm.send(GAME_EVENTS.ENCOUNTER, { enemy: wildMon, type: BATTLE_TYPES.WILD });
 };
 
-const triggerTrainerBattle = async (trainer, trainerId) => {
+const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
   await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
-  const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
+  const party = trainer.party.map((p: any) => ({ ...p, isDefeated: false }));
   const firstMonCfg = party[0];
   const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
   fsm.send(GAME_EVENTS.ENCOUNTER, {

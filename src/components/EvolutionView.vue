@@ -2,7 +2,7 @@
   <div class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8">
     <div class="max-w-md w-full flex flex-col items-center">
       <h2 class="text-2xl font-black mb-12 uppercase tracking-tighter text-center animate-pulse">
-        {{ $t('battle.evolution', { name: $t(`monsters.${pending?.oldSpecies}`) }) }}
+        {{ $t('battle.evolution', { name: pending?.oldSpecies ? $t(`monsters.${pending.oldSpecies}`) : '' }) }}
       </h2>
 
       <div class="relative w-64 h-64 flex items-center justify-center bg-gray-50 rounded-full border-8 border-gray-800 shadow-inner overflow-hidden">
@@ -25,7 +25,7 @@
           v-if="isComplete"
           class="text-lg font-black uppercase text-center animate-bounce"
         >
-          {{ $t('battle.evolutionComplete', { old: $t(`monsters.${pending?.oldSpecies}`), new: $t(`monsters.${pending?.newSpecies}`) }) }}
+          {{ $t('battle.evolutionComplete', { old: pending?.oldSpecies ? $t(`monsters.${pending.oldSpecies}`) : '', new: pending?.newSpecies ? $t(`monsters.${pending.newSpecies}`) : '' }) }}
         </p>
       </div>
 
@@ -59,7 +59,7 @@ const pending = computed(() => session.evolutionPending);
 const currentEmoji = computed(() => {
   if (isComplete.value || step.value >= 15) {
     const newSpecies = pending.value?.newSpecies;
-    return MONS[newSpecies]?.emoji || '👾';
+    return (newSpecies && MONS[newSpecies]) ? MONS[newSpecies].emoji : '👾';
   }
   const oldMon = session.player.party.find(m => m.id === pending.value?.monId);
   return oldMon?.emoji || '👾';

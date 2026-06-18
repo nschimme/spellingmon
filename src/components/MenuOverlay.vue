@@ -17,11 +17,11 @@
           <button
             v-for="(item, i) in menuItems"
             :key="item.id"
-            :ref="el => { if (el) itemRefs[i] = el }"
+            :ref="el => setItemRef(el, i)"
             class="group flex items-center justify-between p-4 rounded-2xl transition-all duration-200 font-black uppercase tracking-widest text-left"
             :class="[
               selectedIndex === i ? 'bg-blue-600 text-white translate-x-2 ring-8 ring-yellow-400' : 'bg-white text-gray-700 hover:bg-gray-100 border-4 border-gray-800',
-              item.class
+              item.class || ''
             ]"
             @click="handleMenuClick(item)"
           >
@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, type ComponentPublicInstance } from 'vue';
 
 import { useGameFSM } from '../stores/gameFSM';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
@@ -94,8 +94,12 @@ const fsm = useGameFSM();
 const emit = defineEmits(['close']);
 const { t } = useI18n();
 
-const activeDetailTab = ref(null);
-const itemRefs = ref([]);
+const activeDetailTab = ref<string | null>(null);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
+
+const setItemRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) itemRefs.value[index] = el as HTMLElement;
+};
 
 const menuItems = computed(() => [
   { id: MENU_TABS.PARTY, label: t('menu.party'), icon: '🎒', component: MenuParty },
@@ -115,7 +119,7 @@ const activeComponent = computed(() => {
   return menuItems.value.find(item => item.id === activeDetailTab.value)?.component;
 });
 
-const handleMenuClick = (item) => {
+const handleMenuClick = (item: any) => {
   if (item.id === 'logout') {
     fsm.send(GAME_EVENTS.LOGOUT);
   } else if (item.id === 'close') {
@@ -146,7 +150,7 @@ const { selectedIndex } = useKeyboardNavigation({
 
 watch(selectedIndex, (newIdx) => {
   if (!activeDetailTab.value && itemRefs.value[newIdx]) {
-    itemRefs.value[newIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    itemRefs.value[newIdx]!.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 });
 </script>

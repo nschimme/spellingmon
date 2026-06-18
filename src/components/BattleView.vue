@@ -132,7 +132,7 @@
               {{ $t('monsters.' + mon.species) }} (HP: {{ mon.hp }})
             </button>
             <button
-              v-if="session.activePlayerMon.hp > 0"
+              v-if="session.activePlayerMon && session.activePlayerMon.hp > 0"
               class="w-full text-xs text-red-500 font-bold mt-1"
               @click="fsm.send(GAME_EVENTS.CANCEL)"
             >
@@ -172,7 +172,7 @@
         <!-- Results -->
         <template v-if="fsm.matches(GAME_STATES.BATTLE_RESULTS)">
           <ExperienceView
-            :participating-mons="session.battle.results"
+            :participating-mons="session.battle.results || []"
             @continue="fsm.send(GAME_EVENTS.CONTINUE)"
           />
         </template>
@@ -207,7 +207,7 @@ const isFlashing = ref(false);
 const timeLeft = ref(0);
 const showMistake = ref(false);
 const showPerfect = ref(false);
-let timerInterval = null;
+const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
 const submitSpelling = () => {
   if (!session.battle.currentWord) return;
@@ -218,15 +218,15 @@ const submitSpelling = () => {
 watch(() => fsm.state as any, (newState, oldState) => {
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     timeLeft.value = session.battle.totalTime;
-    if (timerInterval) clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
+    if (timerInterval.value) clearInterval(timerInterval.value);
+    timerInterval.value = setInterval(() => {
       const elapsed = (Date.now() - (session.battle.startTime || 0)) / 1000;
       timeLeft.value = Math.max(0, session.battle.totalTime - elapsed);
-    }, 100) as any;
+    }, 100);
   } else {
-    if (timerInterval) {
-      clearInterval(timerInterval);
-      timerInterval = null;
+    if (timerInterval.value) {
+      clearInterval(timerInterval.value);
+      timerInterval.value = null;
     }
   }
 
@@ -250,7 +250,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (timerInterval) clearInterval(timerInterval);
+  if (timerInterval.value) clearInterval(timerInterval.value);
 });
 </script>
 

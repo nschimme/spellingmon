@@ -92,7 +92,7 @@ const fsm = useGameFSM();
 const selectedIndex = ref(0);
 const showTroubleshooting = ref(false);
 
-const selectLanguage = (lang) => {
+const selectLanguage = (lang: any) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   fsm.send(GAME_EVENTS.SELECT_LANG, { locale: lang.code });
 };
