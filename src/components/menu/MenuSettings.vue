@@ -118,7 +118,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '../../stores/settingsStore';
@@ -130,7 +130,7 @@ import { SOUND_EFFECTS, SUPPORTED_LANGUAGES } from '../../utils/constants';
 const settingsStore = useSettingsStore();
 
 const emit = defineEmits(['back']);
-const itemRefs = ref([]);
+const itemRefs = ref<any[]>([]);
 const languageSelect = ref(null);
 const voiceSelect = ref(null);
 const volumeInput = ref(null);

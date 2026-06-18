@@ -67,14 +67,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS } from '../../utils/constants';
 
 const session = useSessionStore();
-const itemRefs = ref([]);
+const itemRefs = ref<any[]>([]);
 
 const emit = defineEmits(['back']);
 

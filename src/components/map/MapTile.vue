@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { TILE_TYPES } from '../../utils/mapGenerator';
 import { TRANSITION_TYPES } from '../../utils/constants';
@@ -29,7 +29,7 @@ const props = defineProps({
   }
 });
 
-const getTileClass = (type) => {
+const getTileClass = (type: any) => {
   switch (type) {
     case TILE_TYPES.SPELL_CENTER: return 'bg-red-50 border-red-300';
     case TILE_TYPES.GRASS: return 'bg-green-300';
@@ -51,7 +51,7 @@ const emoji = computed(() => {
     case TILE_TYPES.GRASS: return '🌿';
     case TILE_TYPES.SPELL_CENTER: return '🏥';
     case TILE_TYPES.TRANSITION: {
-      const transition = props.transitions.find(t => t.x === props.x && t.y === props.y);
+      const transition = (props.transitions as any[]).find(t => t.x === props.x && t.y === props.y);
       return transition?.type === TRANSITION_TYPES.NEXT ? '🔼' : '🔽';
     }
     case TILE_TYPES.WATER: return '💧';

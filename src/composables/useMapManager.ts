@@ -1,15 +1,15 @@
-import { ref, computed } from 'vue';
-import { MapGenerator, TILE_TYPES } from '../utils/mapGenerator';
+import { ref, computed, type Ref } from 'vue';
+import { MapGenerator, TILE_TYPES, type MapResult } from '../utils/mapGenerator';
 import { AREA_CONFIGS } from '../utils/gameData';
 import { TRANSITION_TYPES } from '../utils/constants';
 
-export function useMapManager(session) {
+export function useMapManager(session: any) {
   const MAP_WIDTH = 100;
   const MAP_HEIGHT = 100;
-  const currentMapData = ref(null);
+  const currentMapData = ref<MapResult | null>(null);
   const areaConfig = computed(() => AREA_CONFIGS[session.player.currentArea]);
 
-  const generateMap = (isTransition = false, direction = null, playerX, playerY) => {
+  const generateMap = (isTransition = false, direction: string | null = null, playerX: Ref<number>, playerY: Ref<number>) => {
     if (!session.player?.mapSeed) return;
     const gen = new MapGenerator(session.player.mapSeed, MAP_WIDTH, MAP_HEIGHT);
     currentMapData.value = gen.generate(session.player.currentArea);
@@ -47,13 +47,13 @@ export function useMapManager(session) {
     session.updatePlayerPosition({ x: newX, y: newY });
   };
 
-  const getTileType = (x, y) => {
+  const getTileType = (x: number, y: number) => {
     if (!currentMapData.value) return TILE_TYPES.WALL;
     if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) return TILE_TYPES.WALL;
     return currentMapData.value.map[y][x];
   };
 
-  const getTrainerAt = (x, y) => {
+  const getTrainerAt = (x: number, y: number) => {
     if (!currentMapData.value) return null;
     const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
     if (!trainer) return null;
@@ -63,7 +63,7 @@ export function useMapManager(session) {
     return { trainer, trainerId };
   };
 
-  const updateDiscovery = (x, y) => {
+  const updateDiscovery = (x: number, y: number) => {
     const RADIUS = 5;
     for (let dy = -RADIUS; dy <= RADIUS; dy++) {
       for (let dx = -RADIUS; dx <= RADIUS; dx++) {

@@ -36,7 +36,7 @@
     <MapHUD
       :area-name="$t('menu.areaNames.' + session.player.currentArea)"
       :biome="currentMapData?.biome"
-      :leader-name="session.player.party[0]?.name"
+      :leader-name="$t('monsters.' + session.player.party[0]?.species)"
       :leader-level="session.player.party[0]?.level"
     />
 
@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
@@ -77,7 +77,7 @@ const fsm = useGameFSM();
 const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
-const engagedTrainers = new Set();
+const engagedTrainers = new Set<string>();
 
 const VIEWPORT_SIZE = 15;
 
@@ -171,9 +171,8 @@ watch(() => session.player.currentArea, async (newArea, oldArea) => {
   if (currentMapData.value?.spellCenter) {
     session.player.lastSpellCenter = {
       x: currentMapData.value.spellCenter.x,
-      y: currentMapData.value.spellCenter.y,
-      area: newArea
-    };
+      y: currentMapData.value.spellCenter.y
+    } as any;
     session.save();
   }
 });
@@ -216,7 +215,7 @@ const checkTriggers = (x, y) => {
     session.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
     session.notify(settingsStore.t('menu.healed'));
-    session.player.lastSpellCenter = { x, y, area: session.player.currentArea };
+    session.player.lastSpellCenter = { x, y } as any;
     session.save();
     return;
   }
@@ -227,7 +226,7 @@ const checkTriggers = (x, y) => {
       const { trainer, trainerId } = trainerData;
       if (engagedTrainers.has(trainerId)) return;
       engagedTrainers.add(trainerId);
-      session.notify(`${trainer.name}: "${trainer.dialog}"`);
+      session.notify(`${(trainer as any).name}: "${trainer.dialog}"`);
       setTimeout(() => {
         triggerTrainerBattle(trainer, trainerId);
         engagedTrainers.delete(trainerId);
@@ -238,8 +237,8 @@ const checkTriggers = (x, y) => {
 
   if (type === TILE_TYPES.TRANSITION) {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
-    if (transition.type === TRANSITION_TYPES.NEXT) {
-      const allDefeated = currentMapData.value.trainers.every((t, i) =>
+    if (transition!.type === TRANSITION_TYPES.NEXT) {
+      const allDefeated = currentMapData.value!.trainers.every((t, i) =>
         session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
       );
       if (!allDefeated) {
@@ -249,7 +248,7 @@ const checkTriggers = (x, y) => {
       session.player.unlockedAreas.push(session.player.currentArea + 1);
       session.player.currentArea++;
       session.save();
-    } else if (transition.type === TRANSITION_TYPES.PREV) {
+    } else if (transition!.type === TRANSITION_TYPES.PREV) {
       session.player.currentArea--;
       session.save();
     }
@@ -295,7 +294,7 @@ onMounted(async () => {
     updateDiscovery(playerX.value, playerY.value);
   }
 
-  inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput, 5);
+  inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput);
 });
 
 onUnmounted(() => {

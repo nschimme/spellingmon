@@ -191,7 +191,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
@@ -215,14 +215,14 @@ const submitSpelling = () => {
   userInput.value = '';
 };
 
-watch(() => fsm.state.value, (newState, oldState) => {
+watch(() => fsm.state as any, (newState, oldState) => {
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     timeLeft.value = session.battle.totalTime;
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-      const elapsed = (Date.now() - session.battle.startTime) / 1000;
+      const elapsed = (Date.now() - (session.battle.startTime || 0)) / 1000;
       timeLeft.value = Math.max(0, session.battle.totalTime - elapsed);
-    }, 100);
+    }, 100) as any;
   } else {
     if (timerInterval) {
       clearInterval(timerInterval);

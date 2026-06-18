@@ -5,8 +5,17 @@ import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SUPPORTED_LANGUAGES } from '../utils/constants';
 import i18n, { loadLocaleMessages } from '../i18n';
 
+export interface SettingsStoreState {
+  voices: SpeechSynthesisVoice[];
+  selectedVoiceName: string;
+  volume: number;
+  isMuted: boolean;
+  locale: string;
+  ttsVerified: boolean;
+}
+
 export const useSettingsStore = defineStore('settings', {
-  state: () => ({
+  state: (): SettingsStoreState => ({
     voices: [],
     selectedVoiceName: '',
     volume: 1.0,
@@ -63,13 +72,13 @@ export const useSettingsStore = defineStore('settings', {
       this.voices = speech.voices;
       this.selectedVoiceName = speech.selectedVoice?.name || '';
     },
-    setVoice(name) {
+    setVoice(name: string) {
       if (speech.setVoice(name)) {
         this.selectedVoiceName = name;
         storage.save(STORAGE_KEYS.SELECTED_VOICE, name);
       }
     },
-    async setLocale(locale) {
+    async setLocale(locale: string) {
       await loadLocaleMessages(locale);
       this.locale = locale;
       i18n.global.locale.value = locale;
@@ -99,13 +108,13 @@ export const useSettingsStore = defineStore('settings', {
 
       await this.setLocale(bestMatch);
     },
-    setVolume(val) {
+    setVolume(val: number) {
       this.volume = val;
       audio.setVolume(val);
       speech.setVolume(val);
       storage.save(STORAGE_KEYS.VOLUME, val.toString());
     },
-    setMuted(muted) {
+    setMuted(muted: boolean) {
       this.isMuted = muted;
       audio.setMuted(muted);
       storage.save(STORAGE_KEYS.IS_MUTED, muted.toString());
@@ -113,7 +122,7 @@ export const useSettingsStore = defineStore('settings', {
     toggleMute() {
       this.setMuted(!this.isMuted);
     },
-    t(key, params) {
+    t(key: string, params?: any) {
       return i18n.global.t(key, params);
     },
     confirmTtsVerified() {

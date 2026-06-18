@@ -1,6 +1,12 @@
 import { SOUND_EFFECTS } from './constants';
 
 class AudioService {
+  private ctx: AudioContext | null = null;
+  private masterGain: GainNode | null = null;
+  private isMuted: boolean = false;
+  private volume: number = 0.5;
+  private initialized: boolean = false;
+
   constructor() {
     this.ctx = null;
     this.masterGain = null;
@@ -14,7 +20,8 @@ class AudioService {
     if (typeof window === 'undefined') return;
 
     try {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      this.ctx = new AudioContextClass();
       this.masterGain = this.ctx.createGain();
       this.masterGain.connect(this.ctx.destination);
       this.masterGain.gain.value = this.isMuted ? 0 : this.volume;
@@ -22,7 +29,7 @@ class AudioService {
 
       if (this.ctx.state === 'suspended') {
         const resume = () => {
-          if (this.ctx.state === 'suspended') this.ctx.resume();
+          if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
           window.removeEventListener('click', resume);
           window.removeEventListener('keydown', resume);
           window.removeEventListener('pointerdown', resume);
@@ -38,21 +45,21 @@ class AudioService {
     }
   }
 
-  setVolume(val) {
+  setVolume(val: number) {
     this.volume = Math.max(0, Math.min(1, val));
-    if (this.masterGain && !this.isMuted) {
+    if (this.masterGain && this.ctx && !this.isMuted) {
       this.masterGain.gain.setTargetAtTime(this.volume, this.ctx.currentTime, 0.01);
     }
   }
 
-  setMuted(muted) {
+  setMuted(muted: boolean) {
     this.isMuted = muted;
-    if (this.masterGain) {
+    if (this.masterGain && this.ctx) {
       this.masterGain.gain.setTargetAtTime(muted ? 0 : this.volume, this.ctx.currentTime, 0.01);
     }
   }
 
-  playSound(type) {
+  playSound(type: string) {
     // Attempt auto-init on first play call (usually user triggered)
     if (!this.initialized) this.init();
 
@@ -96,7 +103,8 @@ class AudioService {
     }
   }
 
-  playBlip(freq, duration) {
+  playBlip(freq: number, duration: number) {
+    if (!this.ctx || !this.masterGain) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
 
@@ -107,13 +115,14 @@ class AudioService {
     gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.masterGain!);
 
     osc.start();
     osc.stop(this.ctx.currentTime + duration);
   }
 
-  playNoise(duration, volume = 0.1) {
+  playNoise(duration: number, volume: number = 0.1) {
+    if (!this.ctx || !this.masterGain) return;
     const bufferSize = this.ctx.sampleRate * duration;
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -136,13 +145,14 @@ class AudioService {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.masterGain!);
 
     noise.start();
     noise.stop(this.ctx.currentTime + duration);
   }
 
-  playSlide(startFreq, endFreq, duration, type = 'sine') {
+  playSlide(startFreq: number, endFreq: number, duration: number, type: OscillatorType = 'sine') {
+    if (!this.ctx || !this.masterGain) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
 
@@ -154,17 +164,18 @@ class AudioService {
     gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + duration);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.masterGain!);
 
     osc.start();
     osc.stop(this.ctx.currentTime + duration);
   }
 
-  playArpeggio(notes, noteDuration) {
+  playArpeggio(notes: number[], noteDuration: number) {
+    if (!this.ctx || !this.masterGain) return;
     const now = this.ctx.currentTime;
     notes.forEach((freq, i) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      const osc = this.ctx!.createOscillator();
+      const gain = this.ctx!.createGain();
 
       osc.type = 'square';
       osc.frequency.setValueAtTime(freq, now + i * noteDuration);
@@ -174,7 +185,7 @@ class AudioService {
       gain.gain.linearRampToValueAtTime(0, now + i * noteDuration + noteDuration);
 
       osc.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.masterGain!);
 
       osc.start(now + i * noteDuration);
       osc.stop(now + i * noteDuration + noteDuration);
@@ -182,6 +193,7 @@ class AudioService {
   }
 
   playEvolution() {
+    if (!this.ctx || !this.masterGain) return;
     const now = this.ctx.currentTime;
     const duration = 4.0;
     const osc = this.ctx.createOscillator();
@@ -202,7 +214,7 @@ class AudioService {
     gain.gain.linearRampToValueAtTime(0, now + duration);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.masterGain!);
 
     osc.start(now);
     osc.stop(now + duration);

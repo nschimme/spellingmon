@@ -1,28 +1,38 @@
 import { defineStore } from 'pinia';
 
+export interface InputListener {
+  id: string;
+  callback: (e: KeyboardEvent) => boolean;
+}
+
+export interface InputStoreState {
+  stack: InputListener[];
+  _handler?: (e: KeyboardEvent) => void;
+}
+
 /**
  * useInputStore
  * Manages a stack of input listeners. Listeners are checked from top to bottom.
  * If a listener returns true, the event is considered handled and propagation stops.
  */
 export const useInputStore = defineStore('input', {
-  state: () => ({
+  state: (): InputStoreState => ({
     // Stack of { id, callback }
     stack: [],
   }),
   actions: {
     init() {
       if (this._handler) return;
-      this._handler = (e) => this.handleKeydown(e);
+      this._handler = (e: KeyboardEvent) => this.handleKeydown(e);
       window.addEventListener('keydown', this._handler);
     },
     cleanup() {
       if (this._handler) {
         window.removeEventListener('keydown', this._handler);
-        this._handler = null;
+        delete (this as any)._handler;
       }
     },
-    handleKeydown(e) {
+    handleKeydown(e: KeyboardEvent) {
       if (this.stack.length === 0) return;
 
       // Check from top to bottom
@@ -38,7 +48,7 @@ export const useInputStore = defineStore('input', {
      * pushLayer
      * Adds a new input handling layer to the top of the stack.
      */
-    pushLayer(id, callback) {
+    pushLayer(id: string, callback: (e: KeyboardEvent) => boolean) {
       // Avoid duplicates of the same ID
       this.popLayer(id);
       this.stack.push({ id, callback });
@@ -47,14 +57,14 @@ export const useInputStore = defineStore('input', {
      * popLayer
      * Removes a layer from the stack by ID.
      */
-    popLayer(id) {
+    popLayer(id: string) {
       this.stack = this.stack.filter(l => l.id !== id);
     },
     // Compatibility methods for old API
-    addListener(id, callback) {
+    addListener(id: string, callback: (e: KeyboardEvent) => boolean) {
       this.pushLayer(id, callback);
     },
-    removeListener(id) {
+    removeListener(id: string) {
       this.popLayer(id);
     }
   }

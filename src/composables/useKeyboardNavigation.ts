@@ -1,22 +1,32 @@
-import { ref, watch, onUnmounted, nextTick, unref } from 'vue';
+import { ref, watch, onUnmounted, nextTick, unref, type Ref } from 'vue';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
 
+export interface SpatialMapItem {
+  up?: number;
+  down?: number;
+  left?: number;
+  right?: number;
+}
+
+export interface KeyboardNavigationOptions {
+  id: string;
+  maxIndex: Ref<number> | (() => number) | number;
+  onConfirm: (index: number) => void;
+  onCancel?: (() => void) | null;
+  onLeft?: ((index: number) => void) | null;
+  onRight?: ((index: number) => void) | null;
+  gridColumns?: number;
+  isActive?: Ref<boolean>;
+  loop?: boolean;
+  spatialMap?: SpatialMapItem[] | null;
+  itemRefs?: Ref<(HTMLElement | null)[]> | null;
+  priority?: number;
+}
+
 /**
  * useKeyboardNavigation
- * @param {Object} options
- * @param {String} options.id - Unique ID for the input listener
- * @param {Ref<Number>|Function|Number} options.maxIndex - Maximum index (exclusive)
- * @param {Function} options.onConfirm - Callback when Enter/Space is pressed
- * @param {Function} options.onCancel - Callback when Escape/Backspace is pressed
- * @param {Function} options.onLeft - Callback when Left is pressed
- * @param {Function} options.onRight - Callback when Right is pressed
- * @param {Number} options.gridColumns - Number of columns for grid navigation
- * @param {Ref<Boolean>} options.isActive - Ref to control if listener is active
- * @param {Boolean} options.loop - Whether to loop around when reaching the end
- * @param {Array<Object>} options.spatialMap - Optional map for irregular layouts [{up, down, left, right}]
- * @param {Ref<Array<HTMLElement>>} options.itemRefs - Optional refs to DOM elements for focus management
  */
 export function useKeyboardNavigation({
   id,
@@ -30,7 +40,7 @@ export function useKeyboardNavigation({
   loop = true,
   spatialMap = null,
   itemRefs = null
-}) {
+}: KeyboardNavigationOptions) {
   const selectedIndex = ref(0);
   const inputStore = useInputStore();
 
@@ -45,18 +55,18 @@ export function useKeyboardNavigation({
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent): boolean => {
     if (!isActive.value) return false;
 
-    const max = typeof maxIndex === 'function' ? maxIndex() : (maxIndex?.value !== undefined ? maxIndex.value : maxIndex);
+    const max = typeof maxIndex === 'function' ? maxIndex() : (typeof maxIndex === 'number' ? maxIndex : maxIndex.value);
     if (max <= 0) return false;
 
     let newIndex = selectedIndex.value;
     const key = e.key.toLowerCase();
-    const target = e.target;
-    const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
-    const isRange = target.type === 'range';
-    const isSelect = target.tagName === 'SELECT';
+    const target = e.target as HTMLElement | null;
+    const isInput = target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA';
+    const isRange = (target as HTMLInputElement)?.type === 'range';
+    const isSelect = target?.tagName === 'SELECT';
 
     // If it's a range or select and it's NOT handled by custom callbacks, let it handle left/right naturally
     if ((isRange || isSelect) && (e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !onLeft && !onRight) {
@@ -65,7 +75,7 @@ export function useKeyboardNavigation({
 
     if (e.key === 'ArrowUp' || (!isInput && key === 'w')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.up !== undefined) {
-        newIndex = spatialMap[selectedIndex.value].up;
+        newIndex = spatialMap[selectedIndex.value].up!;
       } else if (selectedIndex.value - gridColumns >= 0) {
         newIndex = selectedIndex.value - gridColumns;
       } else if (loop) {
@@ -76,7 +86,7 @@ export function useKeyboardNavigation({
       }
     } else if (e.key === 'ArrowDown' || (!isInput && key === 's')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.down !== undefined) {
-        newIndex = spatialMap[selectedIndex.value].down;
+        newIndex = spatialMap[selectedIndex.value].down!;
       } else if (selectedIndex.value + gridColumns < max) {
         newIndex = selectedIndex.value + gridColumns;
       } else if (loop) {
@@ -88,7 +98,7 @@ export function useKeyboardNavigation({
         return true;
       }
       if (spatialMap && spatialMap[selectedIndex.value]?.left !== undefined) {
-        newIndex = spatialMap[selectedIndex.value].left;
+        newIndex = spatialMap[selectedIndex.value].left!;
       } else if (selectedIndex.value % gridColumns > 0) {
         newIndex = selectedIndex.value - 1;
       } else if (loop) {
@@ -101,7 +111,7 @@ export function useKeyboardNavigation({
         return true;
       }
       if (spatialMap && spatialMap[selectedIndex.value]?.right !== undefined) {
-        newIndex = spatialMap[selectedIndex.value].right;
+        newIndex = spatialMap[selectedIndex.value].right!;
       } else {
         const rowStart = Math.floor(selectedIndex.value / gridColumns) * gridColumns;
         if (selectedIndex.value < rowStart + gridColumns - 1 && selectedIndex.value + 1 < max) {

@@ -60,14 +60,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const emit = defineEmits(['continue']);
-const startButton = ref(null);
+const startButton = ref<HTMLElement | null>(null);
 
 const handleContinue = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
@@ -77,7 +77,7 @@ const handleContinue = () => {
 const { selectedIndex } = useKeyboardNavigation({
   id: 'landing-screen',
   maxIndex: 1,
-  itemRefs: ref([startButton]),
+  itemRefs: ref([startButton.value]) as any,
   onConfirm: handleContinue
 });
 </script>

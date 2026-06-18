@@ -116,7 +116,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
@@ -127,7 +127,7 @@ import { getHPColorClass } from '../../utils/visuals';
 const session = useSessionStore();
 
 const emit = defineEmits(['back']);
-const itemRefs = ref([]);
+const itemRefs = ref<any[]>([]);
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'menu-party',

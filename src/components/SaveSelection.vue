@@ -176,7 +176,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
@@ -187,11 +187,11 @@ import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 const emit = defineEmits(['back', 'selected']);
 const session = useSessionStore();
 const slots = ref([null, null, null]);
-const activeSlotIndex = ref(null);
+const activeSlotIndex = ref<any>(null);
 const isDeleting = ref(false);
 
 const slotRefs = ref([]);
-const backButton = ref(null);
+const backButton = ref<any>(null);
 const actionRefs = ref([]);
 const deleteRefs = ref([]);
 

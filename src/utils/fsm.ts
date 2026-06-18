@@ -1,30 +1,52 @@
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
+
+export interface FSMConfig {
+  initial: string;
+  debug?: boolean;
+  states: Record<string, FSMStateConfig>;
+}
+
+export interface FSMStateConfig {
+  initial?: string;
+  states?: Record<string, FSMStateConfig>;
+  onEnter?: (context: any, params: any) => void;
+  onExit?: (context: any) => void;
+  on?: Record<string, string | ((context: any, params: any) => any) | { target: string; params?: any }>;
+}
+
+export interface FSMMachine {
+  state: Ref<string>;
+  params: Ref<any>;
+  matches(statePath: string): boolean;
+  transition(target: string, params?: any): Promise<void> | void;
+  send(event: string, params?: any): void;
+  _handleEvent(event: string, params: any): void;
+  init(): Promise<void>;
+}
 
 /**
  * Lightweight Hierarchical Finite State Machine
- * @param {Object} config - State configurations
- * @param {Object} context - Shared data/services
  */
-export function createFSM(config, context) {
+export function createFSM(config: FSMConfig, context: any): FSMMachine {
   if (config.debug) console.log("[FSM] Creating machine with config:", config);
   const currentState = ref(config.initial);
-  const stateParams = ref({});
-  const eventQueue = [];
+  const stateParams = ref<any>({});
+  const eventQueue: { event: string; params: any }[] = [];
   let isProcessing = false;
 
-  const getTargetConfig = (target) => {
-    return target.split('.').reduce((obj, key) => obj?.states?.[key], config);
+  const getTargetConfig = (target: string): FSMStateConfig | undefined => {
+    return target.split('.').reduce((obj: any, key: string) => obj?.states?.[key], config) as FSMStateConfig;
   };
 
-  const machine = {
+  const machine: FSMMachine = {
     state: currentState,
     params: stateParams,
 
-    matches(statePath) {
+    matches(statePath: string) {
       return currentState.value === statePath || currentState.value.startsWith(statePath + '.');
     },
 
-    transition(target, params = {}) {
+    transition(target: string, params: any = {}) {
       const targetConfig = getTargetConfig(target);
       if (!targetConfig) {
         console.warn(`[FSM] State not found: ${target}`);
@@ -42,7 +64,7 @@ export function createFSM(config, context) {
 
       // Exit old states (bottom-up to common)
       for (let i = oldPath.length - 1; i >= commonIndex; i--) {
-        const cfg = oldPath.slice(0, i + 1).reduce((obj, key) => obj?.states?.[key], config);
+        const cfg = oldPath.slice(0, i + 1).reduce((obj: any, key) => obj?.states?.[key], config) as FSMStateConfig;
         if (cfg?.onExit) cfg.onExit(context);
       }
 
@@ -52,7 +74,7 @@ export function createFSM(config, context) {
 
       // Enter new states (common-down to target)
       for (let i = commonIndex; i < newPath.length; i++) {
-        const cfg = newPath.slice(0, i + 1).reduce((obj, key) => obj?.states?.[key], config);
+        const cfg = newPath.slice(0, i + 1).reduce((obj: any, key) => obj?.states?.[key], config) as FSMStateConfig;
         if (cfg?.onEnter) {
           // Pass params only to the leaf state's onEnter
           const isLeaf = (i === newPath.length - 1);
@@ -66,24 +88,26 @@ export function createFSM(config, context) {
       }
     },
 
-    send(event, params = {}) {
+    send(event: string, params: any = {}) {
       eventQueue.push({ event, params });
       if (isProcessing) return;
 
       isProcessing = true;
       while (eventQueue.length > 0) {
-        const { event: evt, params: p } = eventQueue.shift();
-        machine._handleEvent(evt, p);
+        const item = eventQueue.shift();
+        if (item) {
+          machine._handleEvent(item.event, item.params);
+        }
       }
       isProcessing = false;
     },
 
-    _handleEvent(event, params) {
+    _handleEvent(event: string, params: any) {
       const pathParts = currentState.value.split('.');
 
       // Bubble event up from leaf to root
       for (let i = pathParts.length; i > 0; i--) {
-        const cfg = pathParts.slice(0, i).reduce((obj, key) => obj?.states?.[key], config);
+        const cfg = pathParts.slice(0, i).reduce((obj: any, key: string) => obj?.states?.[key], config) as FSMStateConfig;
 
         if (cfg?.on?.[event]) {
           const result = cfg.on[event];

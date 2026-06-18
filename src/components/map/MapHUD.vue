@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineProps({
   areaName: { type: String, default: '' },
   biome: { type: String, default: '' },

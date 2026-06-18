@@ -3,14 +3,14 @@ import enUS from './locales/en-US.json';
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'en-US',
-  fallbackLocale: 'en-US',
+  locale: 'en-US' as any,
+  fallbackLocale: 'en-US' as any,
   messages: {
     'en-US': enUS
   }
 });
 
-export async function loadLocaleMessages(locale) {
+export async function loadLocaleMessages(locale: string) {
   if (i18n.global.availableLocales.includes(locale) || locale === 'en-US') {
     return;
   }

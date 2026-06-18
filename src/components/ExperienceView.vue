@@ -20,7 +20,7 @@
         role="list"
       >
         <div
-          v-for="mon in results"
+          v-for="mon in (results as any[])"
           :key="mon.id"
           class="bg-white border-4 border-gray-800 p-3 sm:p-4 rounded-2xl shadow-md h-fit"
           role="listitem"
@@ -86,7 +86,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
@@ -99,10 +99,10 @@ const props = defineProps({
 
 const emit = defineEmits(['continue']);
 
-const results = ref([]);
-const continueButton = ref(null);
+const results = ref<any[]>([]);
+const continueButton = ref<HTMLElement | null>(null);
 
-const animateExp = async (mon) => {
+const animateExp = async (mon: any) => {
   if (mon.level === mon.oldLevel) {
     // Normal case: same level
     setTimeout(() => {
@@ -139,14 +139,14 @@ const animateExp = async (mon) => {
 const { selectedIndex } = useKeyboardNavigation({
   id: 'experience-view',
   maxIndex: 1,
-  itemRefs: ref([continueButton]),
+  itemRefs: ref([continueButton.value]) as any,
   onConfirm: () => emit('continue')
 });
 
 onMounted(() => {
 
   // Initialize display data
-  results.value = props.participatingMons.map(mon => ({
+  results.value = (props.participatingMons as any[]).map((mon: any) => ({
     ...mon,
     displayExp: mon.oldExp,
     displayExpPercent: (mon.oldExp / (mon.oldLevelExpToNext || mon.expToNext)) * 100,

@@ -62,7 +62,7 @@
       <div
         v-for="(word, index) in areaWords"
         :key="word.term"
-        :ref="el => { if (el) itemRefs[index] = el }"
+        :ref="el => { if (el) itemRefs[index] = el as HTMLElement }"
         class="group relative overflow-hidden bg-white border-4 p-3 rounded-xl transition-all"
         :class="[
           isMastered(word.term) ? 'border-green-500 shadow-md' : (isDiscovered(word.term) ? 'border-gray-400' : 'border-gray-200 opacity-40'),
@@ -113,31 +113,34 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { audio } from '../../utils/audio';
 import { SOUND_EFFECTS } from '../../utils/constants';
 
+import { useSettingsStore } from '../../stores/settingsStore';
+
 const session = useSessionStore();
+const settings = useSettingsStore();
 const currentArea = ref(session.player.currentArea);
-const areaWords = ref([]);
+const areaWords = ref<any[]>([]);
 const loading = ref(false);
-const itemRefs = ref([]);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
 
 const emit = defineEmits(['back']);
 
 const discoveredCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
 const masteredCount = computed(() => (session.dex.masteredWords[currentArea.value] || []).length);
 
-const isDiscovered = (term) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
-const isMastered = (term) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
+const isDiscovered = (term: string) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
+const isMastered = (term: string) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
 
 const fetchWords = async () => {
   loading.value = true;
   try {
-    const response = await fetch(`./vocab/${session.locale}/area${currentArea.value}.json`);
+    const response = await fetch(`./vocab/${settings.locale}/area${currentArea.value}.json`);
     areaWords.value = await response.json();
   } catch (e) {
     console.error('Failed to load vocab', e);

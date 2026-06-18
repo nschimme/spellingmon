@@ -21,7 +21,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -66,12 +66,13 @@ jobs:
       # Only runs on official tagged releases
       - name: Upload to Chrome Web Store
         if: startsWith(github.ref, 'refs/tags/v') && env.CHROME_EXTENSION_ID != ''
-        uses: chrome-plugin-labs/chrome-extension-upload@v1
+        uses: mobilefirstllc/cws-publish@latest
         with:
-          file-path: spellingmon-chrome-extension.zip
-          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
-          client-id: ${{ secrets.CHROME_CLIENT_ID }}
-          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
-          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          action: 'upload'
+          zip_file: 'spellingmon-chrome-extension.zip'
+          extension_id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client_id: ${{ secrets.CHROME_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
         env:
           CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}

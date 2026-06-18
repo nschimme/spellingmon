@@ -21,27 +21,71 @@ export const TILE_TYPES = {
   BUILDING: 9,
 };
 
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface Room {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  centerX: number;
+  centerY: number;
+}
+
+export interface Transition extends Point {
+  type: string;
+}
+
+export interface Trainer extends Point {
+  name: string;
+  dialog: string;
+  party: Array<{ species: string; level: number }>;
+  direction: string;
+}
+
+export interface MapResult {
+  map: number[][];
+  levelMap: number[][];
+  spellCenter: Point | null;
+  trainers: Trainer[];
+  transitions: Transition[];
+  biome: string;
+}
+
 class BSPNode {
-  constructor(x, y, w, h) {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  left: BSPNode | null = null;
+  right: BSPNode | null = null;
+  room: Room | null = null;
+
+  constructor(x: number, y: number, w: number, h: number) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
-    this.left = null;
-    this.right = null;
-    this.room = null;
   }
 }
 
 export class MapGenerator {
-  constructor(seed, width = 100, height = 100) {
+  seed: string;
+  width: number;
+  height: number;
+  rng: () => number;
+
+  constructor(seed: string, width = 100, height = 100) {
     this.seed = seed;
     this.width = width;
     this.height = height;
     this.rng = this.mulberry32(this.hashString(seed));
   }
 
-  hashString(str) {
+  hashString(str: string): number {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
@@ -50,7 +94,7 @@ export class MapGenerator {
     return hash;
   }
 
-  mulberry32(a) {
+  mulberry32(a: number): () => number {
     return () => {
       let t = a += 0x6D2B79F5;
       t = Math.imul(t ^ (t >>> 15), t | 1);
@@ -59,15 +103,15 @@ export class MapGenerator {
     };
   }
 
-  random() {
+  random(): number {
     return this.rng();
   }
 
-  randomRange(min, max) {
+  randomRange(min: number, max: number): number {
     return Math.floor(this.random() * (max - min + 1)) + min;
   }
 
-  generate(areaNum, retryCount = 0) {
+  generate(areaNum: number, retryCount: number = 0): MapResult {
     const MAX_RETRIES = 10;
     const map = Array(this.height).fill(0).map(() => Array(this.width).fill(TILE_TYPES.WALL));
     const levelMap = Array(this.height).fill(0).map(() => Array(this.width).fill(0));
@@ -77,7 +121,7 @@ export class MapGenerator {
     const root = new BSPNode(2, 2, this.width - 4, this.height - 4);
     this.splitNode(root, 4); // 4 levels of splitting approx 16 rooms
     const leaves = this.getLeaves(root);
-    const rooms = [];
+    const rooms: Room[] = [];
 
     leaves.forEach(node => {
       const w = this.randomRange(6, Math.min(15, node.w - 2));
@@ -114,19 +158,19 @@ export class MapGenerator {
       const tx = entryRoom.centerX;
       const ty = entryRoom.centerY;
       map[ty][tx] = TILE_TYPES.TRANSITION;
-      transitions.push({ x: tx, y: ty, type: TRANSITION_TYPES.PREV });
+      transitions.push({ x: tx, y: ty, type: TRANSITION_TYPES.PREV } as any);
     }
 
-    let nextTransition = null;
+    let nextTransition: Transition | null = null;
     if (areaNum < AREA_CONFIGS_MAX) {
       const tx = exitRoom.centerX;
       const ty = exitRoom.centerY;
       map[ty][tx] = TILE_TYPES.TRANSITION;
-      nextTransition = { x: tx, y: ty, type: TRANSITION_TYPES.NEXT };
-      transitions.push(nextTransition);
+      nextTransition = { x: tx, y: ty, type: TRANSITION_TYPES.NEXT } as any;
+      transitions.push(nextTransition as any);
     }
 
-    let spellCenter = null;
+    let spellCenter: Point | null = null;
     // Every area now has a SpellCenter in the entry room for easy access
     const scRoom = entryRoom;
     spellCenter = { x: scRoom.centerX, y: scRoom.centerY };
@@ -170,23 +214,23 @@ export class MapGenerator {
     };
   }
 
-  isMapNavigable(map, transitions, spellCenter) {
+  isMapNavigable(map: number[][], transitions: Transition[], spellCenter: Point | null): boolean {
     if (transitions.length === 0) return true;
 
     const start = transitions[0];
     const targets = [...transitions.slice(1)];
-    if (spellCenter) targets.push(spellCenter);
+    if (spellCenter) targets.push(spellCenter as any);
 
     if (targets.length === 0) return true;
 
     const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
 
-    const checkReachability = (from, to) => {
-      const queue = [[from.x, from.y]];
+    const checkReachability = (from: Point, to: any) => {
+      const queue: [number, number][] = [[from.x, from.y]];
       const visited = new Set([`${from.x},${from.y}`]);
 
       while (queue.length > 0) {
-        const [x, y] = queue.shift();
+        const [x, y] = queue.shift()!;
         if (x === to.x && y === to.y) return true;
 
         const neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]];
@@ -206,7 +250,7 @@ export class MapGenerator {
     return targets.every(target => checkReachability(start, target));
   }
 
-  splitNode(node, depth) {
+  splitNode(node: BSPNode, depth: number): void {
     if (depth <= 0) return;
 
     let splitHorizontal = this.random() > 0.5;
@@ -230,12 +274,15 @@ export class MapGenerator {
     this.splitNode(node.right, depth - 1);
   }
 
-  getLeaves(node) {
+  getLeaves(node: BSPNode): BSPNode[] {
     if (!node.left && !node.right) return [node];
-    return [...this.getLeaves(node.left), ...this.getLeaves(node.right)];
+    const leaves: BSPNode[] = [];
+    if (node.left) leaves.push(...this.getLeaves(node.left));
+    if (node.right) leaves.push(...this.getLeaves(node.right));
+    return leaves;
   }
 
-  fillRoom(room, map, biome) {
+  fillRoom(room: Room, map: number[][], biome: string): void {
     const type = biome === BIOMES.CAVE ? TILE_TYPES.EMPTY : TILE_TYPES.PATH;
     for (let y = room.y; y < room.y + room.h; y++) {
       for (let x = room.x; x < room.x + room.w; x++) {
@@ -244,7 +291,7 @@ export class MapGenerator {
     }
   }
 
-  connectNodes(node, map) {
+  connectNodes(node: BSPNode, map: number[][]): void {
     if (node.left && node.right) {
       const r1 = this.findClosestRoom(node.left);
       const r2 = this.findClosestRoom(node.right);
@@ -254,13 +301,13 @@ export class MapGenerator {
     }
   }
 
-  findClosestRoom(node) {
+  findClosestRoom(node: BSPNode): Room {
     if (node.room) return node.room;
     // Arbitrarily pick from left or right child to find a room in sub-tree
-    return this.findClosestRoom(node.left || node.right);
+    return this.findClosestRoom(node.left || node.right!);
   }
 
-  drawCorridor(map, x1, y1, x2, y2, type) {
+  drawCorridor(map: number[][], x1: number, y1: number, x2: number, y2: number, type: number): void {
     let x = x1;
     let y = y1;
 
@@ -276,8 +323,8 @@ export class MapGenerator {
     }
   }
 
-  placeTrainers(rooms, map, areaNum, transitions, spellCenter) {
-    const trainers = [];
+  placeTrainers(rooms: Room[], map: number[][], areaNum: number, transitions: Transition[], spellCenter: Point | null): Trainer[] {
+    const trainers: Trainer[] = [];
     const count = this.randomRange(8, 12);
     const titles = ['Spelling Bee', 'Grammar Geek', 'Vocab Victor', 'Linguist', 'Prose Pro', 'Word Wizard', 'Syntax Sage', 'Lexis Legend'];
     const names = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Robin', 'Jamie', 'Morgan', 'Quinn', 'Skyler', 'Sasha'];
@@ -303,7 +350,7 @@ export class MapGenerator {
       // Boundary check
       if (x < 1 || x >= this.width - 1 || y < 1 || y >= this.height - 1) continue;
 
-      const isOccupied = occupied.some(o => Math.abs(o.x - x) < 3 && Math.abs(o.y - y) < 3) || map[y][x] !== TILE_TYPES.PATH;
+      const isOccupied = occupied.some(o => Math.abs(o!.x - x) < 3 && Math.abs(o!.y - y) < 3) || map[y][x] !== TILE_TYPES.PATH;
       if (!isOccupied) {
         map[y][x] = TILE_TYPES.TRAINER;
         occupied.push({ x, y });
@@ -340,7 +387,7 @@ export class MapGenerator {
     return trainers;
   }
 
-  addFeatures(map, biome) {
+  addFeatures(map: number[][], biome: string): void {
     const grassChance = biome === BIOMES.FOREST ? 0.2 : (biome === BIOMES.CAVE ? 0.025 : 0.07);
     const waterChance = biome === BIOMES.WILDERNESS ? 0.02 : 0.005;
 
@@ -358,7 +405,7 @@ export class MapGenerator {
     }
   }
 
-  floodFill(map, x, y, type, size, allowedOverwrites = null) {
+  floodFill(map: number[][], x: number, y: number, type: number, size: number, allowedOverwrites: number[] | null = null): void {
     if (size <= 0 || x < 0 || y < 0 || x >= this.width || y >= this.height) return;
 
     if (allowedOverwrites && !allowedOverwrites.includes(map[y][x])) return;
@@ -373,26 +420,26 @@ export class MapGenerator {
     }
   }
 
-  getBiomeForArea(area) {
+  getBiomeForArea(area: number): string {
     return AREA_CONFIGS[area]?.biome || BIOMES.ROUTE;
   }
 
-  generateLevelMap(map, levelMap, areaNum, entryRoom) {
+  generateLevelMap(map: number[][], levelMap: number[][], areaNum: number, entryRoom: Room): void {
     const config = AREA_CONFIGS[areaNum];
     const min = config.minLevel;
     const max = config.maxLevel;
 
-    const queue = [[entryRoom.centerX, entryRoom.centerY, 0]];
-    const visited = new Set();
+    const queue: [number, number, number][] = [[entryRoom.centerX, entryRoom.centerY, 0]];
+    const visited = new Set<string>();
     visited.add(`${entryRoom.centerX},${entryRoom.centerY}`);
 
     let maxDist = 0;
-    const distances = [];
+    const distances: Array<{ x: number; y: number; d: number }> = [];
 
     const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
 
     while (queue.length > 0) {
-      const [x, y, d] = queue.shift();
+      const [x, y, d] = queue.shift()!;
       distances.push({ x, y, d });
       if (d > maxDist) maxDist = d;
 

@@ -1,5 +1,5 @@
 export const storage = {
-  save(key, data, slot = null) {
+  save(key: string, data: any, slot: number | null = null) {
     if (typeof window === 'undefined') return;
     const finalKey = slot !== null ? `${key}_slot_${slot}` : key;
     try {
@@ -8,7 +8,7 @@ export const storage = {
       console.warn('Storage save failed:', e);
     }
   },
-  load(key, slot = null) {
+  load(key: string, slot: number | null = null) {
     if (typeof window === 'undefined') return null;
     const finalKey = slot !== null ? `${key}_slot_${slot}` : key;
     try {
@@ -19,7 +19,7 @@ export const storage = {
       return null;
     }
   },
-  remove(key) {
+  remove(key: string) {
     if (typeof window === 'undefined') return;
     try {
       localStorage.removeItem(key);
