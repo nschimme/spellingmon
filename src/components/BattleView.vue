@@ -230,17 +230,19 @@ const whiteoutButton = ref<HTMLElement | null>(null);
 
 const setActionRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) actionRefs.value[index] = el as HTMLElement;
+  else actionRefs.value[index] = null;
 };
 
 const setPartyRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) partyRefs.value[index] = el as HTMLElement;
+  else partyRefs.value[index] = null;
 };
 
 const { selectedIndex: actionIndex } = useKeyboardNavigation({
   id: 'battle-actions',
   isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_ACTION_SELECT)),
-  maxIndex: 4,
-  itemRefs: computed(() => actionRefs.value),
+  maxIndex: computed(() => actionRefs.value.filter(el => !!el).length),
+  itemRefs: computed(() => actionRefs.value.filter(el => !!el)),
   spatialMap: [
     { down: 1, left: 3, right: 3 }, // Attack (0)
     { up: 0, right: 2, down: 3 },  // Capture (1)
@@ -292,6 +294,10 @@ const submitSpelling = () => {
 };
 
 watch(() => fsm.state as any, (newState, oldState) => {
+  // Clear refs on state change to avoid stale elements
+  actionRefs.value = [];
+  partyRefs.value = [];
+
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);

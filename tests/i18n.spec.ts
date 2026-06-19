@@ -16,9 +16,8 @@ test('Internationalization and TTS Flow', async ({ page }) => {
   await page.getByRole('button', { name: /Probar voz/i }).click();
   await page.getByRole('button', { name: /Sí/i }).click();
 
-  // 3. Save Selection (Spanish)
+  // 3. Save Selection (Spanish) - Click empty slot starts immediately
   await page.locator('.relative.border-4.p-6').first().click();
-  await page.getByRole('button', { name: /Empezar/i }).click();
 
   // 4. Character Creation (Spanish)
   await expect(page.getByText(/Creación de personaje/i)).toBeVisible();
