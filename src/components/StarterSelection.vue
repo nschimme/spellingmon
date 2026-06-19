@@ -41,13 +41,13 @@
           </div>
 
           <div class="w-full space-y-2 mt-auto">
-             <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
-                <span>{{ $t('starter.hp') }}</span>
-                <span>{{ mon.hp }}</span>
-             </div>
-             <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden border-2 border-gray-800">
-                <div class="bg-green-500 h-full w-full" />
-             </div>
+            <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
+              <span>{{ $t('starter.hp') }}</span>
+              <span>{{ mon.hp }}</span>
+            </div>
+            <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden border-2 border-gray-800">
+              <div class="bg-green-500 h-full w-full" />
+            </div>
           </div>
         </div>
       </div>

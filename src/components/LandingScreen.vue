@@ -8,13 +8,23 @@
     <!-- Parallax Background Elements -->
     <div class="absolute inset-0 pointer-events-none">
       <!-- Clouds -->
-      <div v-for="n in 5" :key="'cloud-'+n" class="absolute text-8xl opacity-40 animate-float" :style="cloudStyle(n)">
+      <div
+        v-for="n in 5"
+        :key="'cloud-'+n"
+        class="absolute text-8xl opacity-40 animate-float"
+        :style="cloudStyle(n)"
+      >
         ☁️
       </div>
       <!-- Grass/Floor -->
       <div class="absolute bottom-0 left-0 right-0 h-32 bg-green-500 border-t-8 border-green-700">
         <div class="flex justify-around items-end h-full px-10">
-          <div v-for="n in 12" :key="'grass-'+n" class="text-4xl animate-sway" :style="{ animationDelay: (n * 0.2) + 's' }">
+          <div
+            v-for="n in 12"
+            :key="'grass-'+n"
+            class="text-4xl animate-sway"
+            :style="{ animationDelay: (n * 0.2) + 's' }"
+          >
             🌿
           </div>
         </div>

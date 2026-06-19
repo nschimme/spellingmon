@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { MapGenerator, type MapResult } from '../utils/mapGenerator';
 import { useSessionStore } from './sessionStore';
 

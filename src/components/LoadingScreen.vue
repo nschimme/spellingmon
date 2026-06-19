@@ -3,7 +3,11 @@
     <!-- Background patterns -->
     <div class="absolute inset-0 opacity-10">
       <div class="grid grid-cols-6 gap-8 p-8">
-        <div v-for="n in 24" :key="n" class="text-4xl transform rotate-12">
+        <div
+          v-for="n in 24"
+          :key="n"
+          class="text-4xl transform rotate-12"
+        >
           {{ emojis[n % emojis.length] }}
         </div>
       </div>

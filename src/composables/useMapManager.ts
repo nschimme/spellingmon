@@ -1,6 +1,5 @@
 import { computed } from 'vue';
 import { useMapStore } from '../stores/mapStore';
-import { TILE_TYPES } from '../utils/mapGenerator';
 import { AREA_CONFIGS } from '../utils/gameData';
 
 export function useMapManager(session: any) {
