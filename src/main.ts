@@ -3,9 +3,11 @@ import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import i18n from './i18n'
+import { persistencePlugin } from './utils/persistencePlugin'
 
 const app = createApp(App)
 const pinia = createPinia()
+pinia.use(persistencePlugin)
 
 app.use(pinia)
 app.use(i18n)

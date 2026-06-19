@@ -57,8 +57,14 @@ export interface SessionStoreState {
  * Handles ALL persistent game data for the current active slot.
  */
 export const useSessionStore = defineStore('session', {
+  persist: {
+    key: STORAGE_KEYS.SESSION,
+    version: '1.0.0',
+    slotDependent: true,
+    exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
+  },
   state: (): SessionStoreState => ({
-    activeSlot: null,
+    activeSlot: storage.load(STORAGE_KEYS.ACTIVE_SLOT),
 
     player: {
       name: 'Player',
@@ -108,30 +114,29 @@ export const useSessionStore = defineStore('session', {
   },
 
   actions: {
-    setSlot(slotIndex: number) {
-      this.activeSlot = slotIndex;
-      const saved = storage.load(STORAGE_KEYS.PLAYER_STATE, slotIndex);
-      if (saved) {
-        this.player = { ...this.player, ...saved.player };
-        this.battle = { ...this.battle, ...saved.battle };
-        this.dex = { ...this.dex, ...saved.dex };
+    setSlot(slotIndex: any) {
+      const idx = typeof slotIndex === 'number' ? slotIndex : parseInt(slotIndex);
+      if (isNaN(idx)) {
+        console.error('Invalid slot index:', slotIndex);
+        return;
+      }
+
+      this.activeSlot = idx;
+      storage.save(STORAGE_KEYS.ACTIVE_SLOT, idx);
+
+      const saved = storage.load(STORAGE_KEYS.SESSION, idx);
+      if (saved && saved.version === '1.0.0') {
+        this.player = { ...this.player, ...saved.data.player };
+        this.dex = { ...this.dex, ...saved.data.dex };
       } else {
         this.resetSession();
       }
-      this.save();
+      // Reset transient state
+      this.battle.active = false;
     },
 
     save() {
-      if (this.activeSlot === null) return;
-      if (this._saveTimeout) clearTimeout(this._saveTimeout);
-      this._saveTimeout = setTimeout(() => {
-        storage.save(STORAGE_KEYS.PLAYER_STATE, {
-          player: this.player,
-          battle: this.battle,
-          dex: this.dex,
-        }, this.activeSlot);
-        storage.save(STORAGE_KEYS.ACTIVE_SLOT, this.activeSlot);
-      }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
+      // Logic handled by persistence plugin, but keeping as no-op for compatibility
     },
 
     resetSession() {
@@ -172,18 +177,15 @@ export const useSessionStore = defineStore('session', {
 
     updatePlayerPosition(pos: { x: number; y: number } | null) {
       this.player.position = pos;
-      this.save();
     },
 
     healParty() {
       this.player.party.forEach(mon => { mon.hp = mon.maxHp; });
-      this.save();
     },
 
     addMonToParty(mon: Monster) {
       if (this.player.party.length < 6) {
         this.player.party.push(mon);
-        this.save();
         return true;
       }
       return false;
@@ -192,7 +194,6 @@ export const useSessionStore = defineStore('session', {
     damageEnemy(amount: number) {
       if (this.battle.enemyMon) {
         this.battle.enemyMon.hp = Math.max(0, this.battle.enemyMon.hp - amount);
-        this.save();
       }
     },
 
@@ -200,7 +201,6 @@ export const useSessionStore = defineStore('session', {
       const mon = this.activePlayerMon;
       if (mon) {
         mon.hp = Math.max(0, mon.hp - amount);
-        this.save();
       }
     },
 
@@ -226,7 +226,6 @@ export const useSessionStore = defineStore('session', {
           expGained: splitAmount
         };
       });
-      this.save();
       return results;
     },
 
@@ -259,14 +258,12 @@ export const useSessionStore = defineStore('session', {
         this.player.party[index] = newMon;
       }
       this.evolutionPending = null;
-      this.save();
     },
 
     recordDiscovery(type: keyof DexState, area: number, value: string) {
       if (!this.dex[type][area]) this.dex[type][area] = [];
       if (!this.dex[type][area].includes(value)) {
         this.dex[type][area].push(value);
-        this.save();
       }
     },
 
@@ -279,20 +276,17 @@ export const useSessionStore = defineStore('session', {
       setTimeout(() => { if (this.notification === message) this.notification = null; }, 3000);
     },
 
-    // --- Legacy / Compatibility actions ---
     setPlayerData(data: { name?: string; gender?: string; skinTone?: string }) {
       this.player.name = data.name || this.player.name;
       this.player.gender = data.gender || this.player.gender;
       this.player.skinTone = data.skinTone || this.player.skinTone;
       this.player.mapSeed = Math.random().toString(36).slice(2, 11);
       this.player.characterCreationComplete = true;
-      this.save();
     },
 
     setStarter(mon: Monster) {
       this.player.party = [mon];
       this.player.isStarterSelected = true;
-      this.save();
     },
 
     loadSlot(index: number) {
@@ -300,7 +294,7 @@ export const useSessionStore = defineStore('session', {
     },
 
     deleteSlot(index: number) {
-      storage.remove(`${STORAGE_KEYS.PLAYER_STATE}_slot_${index}`);
+      storage.remove(STORAGE_KEYS.SESSION, index);
       if (this.activeSlot === index) {
         this.activeSlot = null;
         storage.remove(STORAGE_KEYS.ACTIVE_SLOT);
@@ -308,14 +302,13 @@ export const useSessionStore = defineStore('session', {
     },
 
     logout() {
-      // Handled by FSM transition now, but keeping for compatibility
+      // Handled by FSM transition now
     },
 
     moveMonToFront(index: number) {
       if (index > 0 && index < this.player.party.length) {
         const mon = this.player.party.splice(index, 1)[0];
         this.player.party.unshift(mon);
-        this.save();
       }
     }
   }

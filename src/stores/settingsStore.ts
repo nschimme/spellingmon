@@ -15,6 +15,11 @@ export interface SettingsStoreState {
 }
 
 export const useSettingsStore = defineStore('settings', {
+  persist: {
+    key: STORAGE_KEYS.SETTINGS,
+    version: '1.0.0',
+    exclude: ['voices']
+  },
   state: (): SettingsStoreState => ({
     voices: [],
     selectedVoiceName: '',
@@ -27,22 +32,7 @@ export const useSettingsStore = defineStore('settings', {
     async init() {
       if (typeof window === 'undefined') return;
 
-      // Load saved preferences
-      const savedVoice = storage.load(STORAGE_KEYS.SELECTED_VOICE);
-      const savedVolume = storage.load(STORAGE_KEYS.VOLUME);
-      const savedMuted = storage.load(STORAGE_KEYS.IS_MUTED);
-      const savedLocale = storage.load(STORAGE_KEYS.LOCALE);
-      const savedTtsVerified = storage.load('tts_verified_global');
-
-      if (savedVolume !== null) this.volume = parseFloat(savedVolume);
-      if (savedMuted !== null) this.isMuted = savedMuted === 'true';
-      if (savedTtsVerified !== null) this.ttsVerified = savedTtsVerified === true;
-
-      if (savedLocale !== null) {
-        await this.setLocale(savedLocale);
-      } else {
-        await this.detectAndSetLocale();
-      }
+      await this.setLocale(this.locale);
 
       audio.setVolume(this.volume);
       audio.setMuted(this.isMuted);
@@ -50,17 +40,15 @@ export const useSettingsStore = defineStore('settings', {
 
       await speech.init();
 
-      if (savedVoice && speech.setVoice(savedVoice)) {
-        this.selectedVoiceName = savedVoice;
+      if (this.selectedVoiceName && speech.setVoice(this.selectedVoiceName)) {
+        // Voice set successfully
       } else if (this.locale) {
-        // Try to pick a sensible voice for the current locale
         speech.refreshVoices(this.locale);
         this.selectedVoiceName = speech.selectedVoice?.name || '';
       }
 
       this.updateVoices();
 
-      // Use addEventListener to avoid overriding speech.js handler
       if (window.speechSynthesis && window.speechSynthesis.addEventListener) {
         window.speechSynthesis.addEventListener('voiceschanged', () => {
           speech.refreshVoices();
@@ -75,14 +63,12 @@ export const useSettingsStore = defineStore('settings', {
     setVoice(name: string) {
       if (speech.setVoice(name)) {
         this.selectedVoiceName = name;
-        storage.save(STORAGE_KEYS.SELECTED_VOICE, name);
       }
     },
     async setLocale(locale: string) {
       await loadLocaleMessages(locale);
       this.locale = locale;
       i18n.global.locale.value = locale;
-      storage.save(STORAGE_KEYS.LOCALE, locale);
 
       // Update TTS voice for new locale
       speech.refreshVoices(locale);
@@ -112,12 +98,10 @@ export const useSettingsStore = defineStore('settings', {
       this.volume = val;
       audio.setVolume(val);
       speech.setVolume(val);
-      storage.save(STORAGE_KEYS.VOLUME, val.toString());
     },
     setMuted(muted: boolean) {
       this.isMuted = muted;
       audio.setMuted(muted);
-      storage.save(STORAGE_KEYS.IS_MUTED, muted.toString());
     },
     toggleMute() {
       this.setMuted(!this.isMuted);
@@ -127,7 +111,6 @@ export const useSettingsStore = defineStore('settings', {
     },
     confirmTtsVerified() {
       this.ttsVerified = true;
-      storage.save('tts_verified_global', true);
     }
   }
 });

@@ -209,7 +209,8 @@ const setDeleteRef = (el: Element | ComponentPublicInstance | null, index: numbe
 
 const loadSlots = () => {
   for (let i = 0; i < 3; i++) {
-    slots.value[i] = storage.load(STORAGE_KEYS.PLAYER_STATE, i);
+    const saved = storage.load(STORAGE_KEYS.SESSION, i);
+    slots.value[i] = (saved && saved.data) ? saved.data : null;
   }
 };
 
