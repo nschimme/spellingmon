@@ -178,7 +178,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, type ComponentPublicInstance } from 'vue';
-import { useSessionStore } from '../stores/sessionStore';
+import { useSessionStore, getSessionSnapshot } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { audio } from '../utils/audio';
@@ -210,7 +210,7 @@ const setDeleteRef = (el: Element | ComponentPublicInstance | null, index: numbe
 const loadSlots = () => {
   for (let i = 0; i < 3; i++) {
     const saved = storage.load(STORAGE_KEYS.SESSION, i);
-    slots.value[i] = (saved && saved.data) ? saved.data : null;
+    slots.value[i] = getSessionSnapshot(saved);
   }
 };
 

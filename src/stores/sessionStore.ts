@@ -52,6 +52,28 @@ export interface SessionStoreState {
   _saveTimeout?: ReturnType<typeof setTimeout>;
 }
 
+export const SESSION_PERSIST_VERSION = '1.0.0';
+
+/**
+ * Migration helper for session data.
+ * Used by persistence plugin and UI for slot previews.
+ */
+export function migrateSessionData(data: any, version: string) {
+  // Add migration logic here when version increases
+  return data;
+}
+
+/**
+ * Normalizes a session snapshot for UI preview or initial load.
+ */
+export function getSessionSnapshot(saved: any) {
+  if (!saved || typeof saved !== 'object') return null;
+  const { version, data } = saved;
+  if (version === undefined || data === undefined) return null;
+  if (version === SESSION_PERSIST_VERSION) return data;
+  return migrateSessionData(data, version);
+}
+
 /**
  * Unified Session Store
  * Handles ALL persistent game data for the current active slot.
@@ -59,8 +81,9 @@ export interface SessionStoreState {
 export const useSessionStore = defineStore('session', {
   persist: {
     key: STORAGE_KEYS.SESSION,
-    version: '1.0.0',
+    version: SESSION_PERSIST_VERSION,
     slotDependent: true,
+    migrate: migrateSessionData,
     exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
@@ -121,22 +144,38 @@ export const useSessionStore = defineStore('session', {
         return;
       }
 
+      // 1. Reset transient state first to avoid it being saved into the NEW slot key
+      // if the debounce timer triggers immediately after activeSlot change.
+      this.resetBattle();
+
+      // 2. Setting activeSlot will trigger the persistencePlugin to update its cache
+      // and trigger an automatic loadAndPatch for this store.
       this.activeSlot = idx;
       storage.save(STORAGE_KEYS.ACTIVE_SLOT, idx);
 
-      const saved = storage.load(STORAGE_KEYS.SESSION, idx);
-      if (saved && saved.version === '1.0.0') {
-        this.player = { ...this.player, ...saved.data.player };
-        this.dex = { ...this.dex, ...saved.data.dex };
-      } else {
-        this.resetSession();
-      }
-      // Reset transient state
-      this.battle.active = false;
+      // Note: persistencePlugin handles loading the data from the new slot via loadAndPatch()
+      // when it detects the activeSlot change in its $subscribe handler.
     },
 
     save() {
       // Logic handled by persistence plugin, but keeping as no-op for compatibility
+    },
+
+    resetBattle() {
+      this.battle = {
+        active: false,
+        type: 'wild',
+        enemyMon: null,
+        playerMonId: null,
+        log: [],
+        isPlayerTurn: true,
+        trainerId: null,
+        trainerParty: [],
+        participatingMonIds: [],
+        currentWord: null,
+        totalTime: 0,
+        isCapturing: false,
+      };
     },
 
     resetSession() {
@@ -154,20 +193,7 @@ export const useSessionStore = defineStore('session', {
         characterCreationComplete: false,
         isStarterSelected: false,
       };
-      this.battle = {
-        active: false,
-        type: 'wild',
-        enemyMon: null,
-        playerMonId: null,
-        log: [],
-        isPlayerTurn: true,
-        trainerId: null,
-        trainerParty: [],
-        participatingMonIds: [],
-        currentWord: null,
-        totalTime: 0,
-        isCapturing: false,
-      };
+      this.resetBattle();
       this.dex = {
         discoveredTiles: {},
         discoveredWords: {},
