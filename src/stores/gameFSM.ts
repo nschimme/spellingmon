@@ -4,6 +4,7 @@ import { createFSM, type FSMConfig } from '../utils/fsm';
 import { useSessionStore } from './sessionStore';
 import { useSettingsStore } from './settingsStore';
 import { useVocabStore } from './vocabStore';
+import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
 import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
@@ -15,12 +16,14 @@ export const useGameFSM = defineStore('gameFSM', () => {
   const session = useSessionStore();
   const settings = useSettingsStore();
   const vocab = useVocabStore();
+  const mapStore = useMapStore();
   const { t } = i18n.global;
 
   const context = {
     get session() { return session; },
     get settings() { return settings; },
     get vocab() { return vocab; },
+    get map() { return mapStore; },
     get fsm() { return fsm; },
     get t() { return t; }
   };
@@ -121,11 +124,36 @@ export const useGameFSM = defineStore('gameFSM', () => {
         on: {
           [GAME_EVENTS.SELECT_SLOT]: (ctx, params) => {
             ctx.session.setSlot(params.slot);
-            if (!ctx.session.player.characterCreationComplete) return GAME_STATES.CHARACTER_CREATION;
-            if (!ctx.session.player.isStarterSelected) return GAME_STATES.STARTER_SELECTION;
-            return GAME_STATES.WORLD;
+            return GAME_STATES.LOADING;
           },
           [GAME_EVENTS.BACK]: GAME_STATES.LANDING
+        }
+      },
+      [GAME_STATES.LOADING]: {
+        onEnter: async (ctx, params) => {
+          const startTime = Date.now();
+
+          if (ctx.session.player.characterCreationComplete) {
+             await Promise.all([
+                ctx.vocab.loadVocab(ctx.session.player.currentArea, ctx.settings.locale),
+                ctx.map.generateMap(params?.isTransition, params?.direction)
+             ]);
+          }
+
+          // Ensure a minimum "nice" delay, but wait longer if map generation is slow
+          const minDelay = 1500;
+          const elapsed = Date.now() - startTime;
+          if (elapsed < minDelay) {
+            await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
+          }
+
+          if (!ctx.session.player.characterCreationComplete) {
+            ctx.fsm.transition(GAME_STATES.CHARACTER_CREATION);
+          } else if (!ctx.session.player.isStarterSelected) {
+            ctx.fsm.transition(GAME_STATES.STARTER_SELECTION);
+          } else {
+            ctx.fsm.transition(GAME_STATES.WORLD);
+          }
         }
       },
       [s(GAME_STATES.ONBOARDING)]: {
@@ -134,7 +162,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
             on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.STARTER_SELECTION }
           },
           [s(GAME_STATES.STARTER_SELECTION)]: {
-            on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.WORLD }
+            on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.LOADING }
           }
         }
       },

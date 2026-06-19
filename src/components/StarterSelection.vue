@@ -1,41 +1,53 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center bg-blue-500 p-4 md:p-8">
-    <div class="bg-white border-8 border-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full">
-      <h1 class="text-2xl md:text-3xl font-black text-center mb-2 uppercase tracking-tighter text-orange-500 drop-shadow-sm">
-        {{ $t('landing.title') }}
-      </h1>
-      <h2 class="text-xs md:text-sm font-bold text-center mb-6 md:mb-10 text-gray-600 uppercase">
+  <div class="w-full h-full flex flex-col items-center justify-center bg-sky-600 p-4 md:p-8">
+    <div class="bg-white border-8 border-gray-800 p-6 md:p-12 rounded-[3rem] shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full transform rotate-1">
+      <h1 class="text-3xl md:text-5xl font-black text-center mb-4 uppercase tracking-tighter text-blue-600 drop-shadow-sm">
         {{ $t('starter.title') }}
-      </h2>
+      </h1>
+      <p class="text-xs md:text-sm font-bold text-center mb-8 md:mb-12 text-gray-500 uppercase tracking-[0.2em]">
+        {{ $t('starter.description') }}
+      </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         <div
           v-for="(mon, i) in starters"
           :key="mon.species"
-          :class="{ 'ring-8 ring-yellow-400 border-yellow-400 -translate-y-2 shadow-xl': selectedIndex === i }"
-          class="group cursor-pointer bg-white border-4 border-gray-200 hover:border-blue-500 p-4 rounded-2xl transition-all hover:-translate-y-2 hover:shadow-xl flex flex-col items-center"
+          :class="{ 'ring-8 ring-yellow-400 border-blue-500 -translate-y-4 shadow-2xl bg-blue-50': selectedIndex === i }"
+          class="group cursor-pointer bg-gray-50 border-8 border-gray-800 p-8 rounded-[2rem] transition-all duration-300 flex flex-col items-center relative overflow-hidden"
           @click="selectStarter(mon)"
         >
+          <!-- Background Glow -->
           <div
-            class="text-6xl mb-4 group-hover:scale-110 transition-transform"
-            :class="{ 'scale-110': selectedIndex === i }"
+            class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+            :class="typeBgColor(mon.type)"
+          />
+
+          <div
+            class="text-8xl mb-6 group-hover:scale-125 transition-transform duration-500 drop-shadow-xl"
+            :class="{ 'scale-125': selectedIndex === i }"
           >
             {{ mon.icon }}
           </div>
-          <h3 class="text-sm font-black uppercase mb-2">
+
+          <h3 class="text-xl font-black uppercase mb-3 text-gray-800">
             {{ $t('monsters.' + mon.species) }}
           </h3>
+
           <div
             :class="typeColor(mon.type)"
-            class="text-[8px] px-2 py-1 rounded-full text-white font-bold mb-2 uppercase"
+            class="text-[10px] px-4 py-1.5 rounded-full text-white font-black mb-6 uppercase tracking-widest border-b-4 border-black/20"
           >
             {{ $t('types.' + mon.type) }}
           </div>
-          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-auto">
-            <div class="bg-green-400 h-full w-[80%]" />
-          </div>
-          <div class="text-[8px] font-bold mt-1 text-gray-400 uppercase">
-            {{ $t('starter.hp') }}: {{ mon.hp }}
+
+          <div class="w-full space-y-2 mt-auto">
+            <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
+              <span>{{ $t('starter.hp') }}</span>
+              <span>{{ mon.hp }}</span>
+            </div>
+            <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden border-2 border-gray-800">
+              <div class="bg-green-500 h-full w-full" />
+            </div>
           </div>
         </div>
       </div>
@@ -78,7 +90,16 @@ const { selectedIndex } = useKeyboardNavigation({
 
 const typeColor = (type: string) => {
   switch (type) {
-    case 'Fire': return 'bg-orange-500';
+    case 'Fire': return 'bg-red-500';
+    case 'Water': return 'bg-blue-500';
+    case 'Grass': return 'bg-green-500';
+    default: return 'bg-gray-500';
+  }
+};
+
+const typeBgColor = (type: string) => {
+  switch (type) {
+    case 'Fire': return 'bg-red-500';
     case 'Water': return 'bg-blue-500';
     case 'Grass': return 'bg-green-500';
     default: return 'bg-gray-500';

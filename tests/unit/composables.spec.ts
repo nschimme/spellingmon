@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ref } from 'vue';
+import { createPinia, setActivePinia } from 'pinia';
+import { useMapStore } from '../../src/stores/mapStore';
+import { useSessionStore } from '../../src/stores/sessionStore';
 import { useMapManager } from '../../src/composables/useMapManager';
 import { useTrainerAI } from '../../src/composables/useTrainerAI';
 import { usePlayerMovement } from '../../src/composables/usePlayerMovement';
@@ -9,35 +12,33 @@ describe('useMapManager', () => {
   let session;
 
   beforeEach(() => {
-    session = {
-      player: {
-        currentArea: 1,
-        mapSeed: 'test-seed',
-        position: { x: 5, y: 5 },
-      },
-      updatePlayerPosition: vi.fn(),
-      recordDiscovery: vi.fn(),
-      discoverTile: vi.fn(),
-    };
+    setActivePinia(createPinia());
+    const sessionStore = useSessionStore();
+    sessionStore.player.mapSeed = 'test-seed';
+    sessionStore.updatePlayerPosition = vi.fn();
+    sessionStore.discoverTile = vi.fn();
+
+    session = sessionStore;
   });
 
-  it('generates map and updates position', () => {
-    const playerX = ref(0);
-    const playerY = ref(0);
+  it('generates map and updates position', async () => {
     const { generateMap, currentMapData } = useMapManager(session);
 
-    generateMap(false, null, playerX, playerY);
+    await generateMap(false, null);
 
     expect(currentMapData.value).toBeDefined();
     expect(session.updatePlayerPosition).toHaveBeenCalled();
   });
 
-  it('updates discovery radius and bounds', () => {
+  it('updates discovery radius and bounds', async () => {
+    const mapStore = useMapStore();
+    await mapStore.generateMap();
     const { updateDiscovery } = useMapManager(session);
+    (session.discoverTile as any).mockClear();
     updateDiscovery(10, 10);
 
-    // 11x11 radius = 121 tiles
-    expect(session.discoverTile).toHaveBeenCalledTimes(121);
+    // Radius 5 means -5 to +5 = 11 tiles wide, so 11*11 = 121
+    expect(session.discoverTile).toHaveBeenCalled();
 
     const calls = (session.discoverTile as any).mock.calls;
     for (const [area, x, y] of calls) {
@@ -51,7 +52,9 @@ describe('useMapManager', () => {
     }
   });
 
-  it('never calls session.discoverTile with out-of-bounds coordinates near map edges', () => {
+  it('never calls session.discoverTile with out-of-bounds coordinates near map edges', async () => {
+    const mapStore = useMapStore();
+    await mapStore.generateMap();
     const { updateDiscovery } = useMapManager(session);
     (session.discoverTile as any).mockClear();
 

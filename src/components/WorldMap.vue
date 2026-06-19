@@ -162,24 +162,22 @@ const playerEmoji = computed(() => {
   return base + (modifiers[tone] || '');
 });
 
-watch(() => session.player.currentArea, async (newArea, oldArea) => {
+watch(() => session.player.currentArea, (newArea, oldArea) => {
   if (!session.player?.mapSeed) return;
   const direction = newArea > oldArea ? 'next' : 'prev';
-  generateMap(true, direction, playerX, playerY);
-  await vocabStore.loadVocab(newArea, settingsStore.locale);
-
-  if (currentMapData.value?.spellCenter) {
-    session.player.lastSpellCenter = {
-      x: currentMapData.value.spellCenter.x,
-      y: currentMapData.value.spellCenter.y
-    } as any;
-    session.save();
-  }
+  fsm.transition(GAME_STATES.LOADING, { isTransition: true, direction });
 });
 
 watch(() => session.player.mapSeed, (newSeed) => {
-  if (newSeed) generateMap(false, null, playerX, playerY);
+  if (newSeed) fsm.transition(GAME_STATES.LOADING);
 });
+
+watch(() => session.player.position, (newPos) => {
+  if (newPos) {
+    playerX.value = newPos.x;
+    playerY.value = newPos.y;
+  }
+}, { deep: true });
 
 const viewportTiles = computed(() => {
   if (!currentMapData.value) return [];
@@ -293,8 +291,10 @@ const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
 
 onMounted(async () => {
   if (session.player?.mapSeed) {
-    await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
-    generateMap(false, null, playerX, playerY);
+    if (!currentMapData.value) {
+       await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
+       await generateMap(false, null);
+    }
     updateDiscovery(playerX.value, playerY.value);
   }
 

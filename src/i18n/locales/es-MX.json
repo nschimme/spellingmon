@@ -296,5 +296,13 @@
     "Rock": "Roca",
     "Ghost": "Fantasma",
     "Dragon": "Dragón"
+  },
+  "loading": {
+    "didYouKnow": "¿Sabías que?",
+    "tip1": "¡Debes deletrear la palabra correctamente para infligir daño!",
+    "tip2": "¡La ortografía perfecta (coincidencia de mayúsculas y símbolos) inflige aún más daño!",
+    "tip3": "Atrapar nuevos Spellingmon te ayuda a construir un equipo más fuerte.",
+    "tip4": "Tus Spellingmon se curarán automáticamente en los Centros de Hechizos.",
+    "tip5": "¡Explora cada rincón del mapa para encontrar entrenadores ocultos!"
   }
 }

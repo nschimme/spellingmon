@@ -3,11 +3,19 @@
     "yes": "Yes",
     "no": "No",
     "cancel": "Cancel",
-    "loading": "Loading...",
+    "loading": "Loading",
     "error": "Error",
     "confirm": "Confirm",
     "back": "Back",
     "continue": "Continue"
+  },
+  "loading": {
+    "didYouKnow": "Did you know?",
+    "tip1": "You must spell the word correctly to deal damage!",
+    "tip2": "Perfect spelling (matching case and symbols) deals even more damage!",
+    "tip3": "Catching new Spellingmon helps you build a stronger team.",
+    "tip4": "Your Spellingmon will heal automatically at SpellCenters.",
+    "tip5": "Explore every corner of the map to find hidden trainers!"
   },
   "landing": {
     "title": "SPELLINGMON",

@@ -296,5 +296,13 @@
     "Rock": "Rocha",
     "Ghost": "Fantasma",
     "Dragon": "Dragão"
+  },
+  "loading": {
+    "didYouKnow": "Você sabia?",
+    "tip1": "Você deve soletrar a palavra corretamente para causar dano!",
+    "tip2": "A ortografia perfeita (letras maiúsculas e símbolos correspondentes) causa ainda mais dano!",
+    "tip3": "Capturar novos Spellingmon ajuda você a construir uma equipe mais forte.",
+    "tip4": "Seus Spellingmon serão curados automaticamente nos Centros de Magia.",
+    "tip5": "Explore cada canto do mapa para encontrar treinadores escondidos!"
   }
 }

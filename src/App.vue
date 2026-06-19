@@ -10,6 +10,7 @@ import SaveSelection from './components/SaveSelection.vue';
 import TTSWelcomeScreen from './components/TTSWelcomeScreen.vue';
 import CharacterCreation from './components/CharacterCreation.vue';
 import StarterSelection from './components/StarterSelection.vue';
+import LoadingScreen from './components/LoadingScreen.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
@@ -67,6 +68,10 @@ onUnmounted(() => {
         v-else-if="fsm.matches(GAME_STATES.SAVE_SELECTION)"
         @back="fsm.send(GAME_EVENTS.BACK)"
         @selected="(slot) => fsm.send(GAME_EVENTS.SELECT_SLOT, { slot })"
+      />
+
+      <LoadingScreen
+        v-else-if="fsm.matches(GAME_STATES.LOADING)"
       />
 
       <CharacterCreation

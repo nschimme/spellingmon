@@ -296,5 +296,13 @@
     "Rock": "Gestein",
     "Ghost": "Geist",
     "Dragon": "Drache"
+  },
+  "loading": {
+    "didYouKnow": "Wusstest du schon?",
+    "tip1": "Du musst das Wort richtig buchstabieren, um Schaden anzurichten!",
+    "tip2": "Perfekte Rechtschreibung (einschließlich Groß-/Kleinschreibung und Symbolen) verursacht noch mehr Schaden!",
+    "tip3": "Das Fangen neuer Spellingmon hilft dir, ein stärkeres Team aufzubauen.",
+    "tip4": "Deine Spellingmon werden in Zauberzentren automatisch geheilt.",
+    "tip5": "Erkunde jeden Winkel der Karte, um versteckte Trainer zu finden!"
   }
 }
