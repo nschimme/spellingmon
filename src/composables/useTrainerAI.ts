@@ -1,12 +1,19 @@
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
-import { TILE_TYPES } from '../utils/mapGenerator';
+import { TILE_TYPES, type MapResult, type Trainer } from '../utils/mapGenerator';
 
-export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType) {
-  const alertingTrainer = ref(null);
+export function useTrainerAI(
+  session: any,
+  fsm: any,
+  currentMapData: Ref<MapResult | null>,
+  playerX: Ref<number>,
+  playerY: Ref<number>,
+  getTileType: (x: number, y: number) => number
+) {
+  const alertingTrainer = ref<string | null>(null);
 
-  const checkTrainerLOS = (engagedTrainers) => {
+  const checkTrainerLOS = (engagedTrainers: Set<string>) => {
     if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value) return;
 
     const trainers = currentMapData.value.trainers;
@@ -50,7 +57,7 @@ export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, get
     return null;
   };
 
-  const initiateTrainerApproach = (trainer, trainerId, engagedTrainers, triggerBattleParams) => {
+  const initiateTrainerApproach = (trainer: Trainer, trainerId: string, engagedTrainers: Set<string>, triggerBattleParams: any) => {
     engagedTrainers.add(trainerId);
     alertingTrainer.value = trainerId;
     audio.playSound(SOUND_EFFECTS.CLICK);
@@ -71,8 +78,10 @@ export function useTrainerAI(session, fsm, currentMapData, playerX, playerY, get
         trainer.x += stepX;
         trainer.y += stepY;
 
-        currentMapData.value.map[oldY][oldX] = TILE_TYPES.PATH;
-        currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
+        if (currentMapData.value) {
+          currentMapData.value.map[oldY][oldX] = TILE_TYPES.PATH;
+          currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
+        }
 
         await new Promise(r => setTimeout(r, 150));
       }

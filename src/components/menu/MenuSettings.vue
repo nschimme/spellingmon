@@ -5,7 +5,7 @@
     :aria-label="$t('menu.settings')"
   >
     <!-- Language Selection -->
-    <div :ref="el => { if (el) itemRefs[0] = el }">
+    <div :ref="el => setItemRef(el, 0)">
       <label
         id="lang-label"
         class="font-black text-gray-600 block mb-2 text-xs uppercase"
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Audio Settings -->
-    <div :ref="el => { if (el) itemRefs[1] = el }">
+    <div :ref="el => setItemRef(el, 1)">
       <label
         id="volume-label"
         class="font-black text-gray-600 block mb-2 text-xs uppercase"
@@ -42,7 +42,7 @@
         class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-inner"
       >
         <button
-          :ref="el => { if (el) itemRefs[2] = el }"
+          :ref="el => setItemRef(el, 2)"
           :class="{ 'ring-8 ring-yellow-400 rounded-full': selectedIndex === 2 }"
           class="text-3xl hover:scale-110 transition-transform outline-none"
           :aria-label="settingsStore.isMuted ? $t('settings.unmuted') : $t('settings.muted')"
@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div :ref="el => { if (el) itemRefs[3] = el }">
+    <div :ref="el => setItemRef(el, 3)">
       <label
         id="voice-label"
         class="font-black text-gray-600 block mb-2 text-xs uppercase"
@@ -99,7 +99,7 @@
 
     <div class="grid grid-cols-2 gap-4">
       <button
-        :ref="el => { if (el) itemRefs[4] = el }"
+        :ref="el => setItemRef(el, 4)"
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 4 }"
         class="bg-blue-500 text-white p-3 rounded-xl border-b-4 border-blue-700 font-black tracking-wider active:translate-y-1 text-xs uppercase outline-none"
         @click="testVoice"
@@ -107,7 +107,7 @@
         {{ $t('tts.testVoice') }}
       </button>
       <button
-        :ref="el => { if (el) itemRefs[5] = el }"
+        :ref="el => setItemRef(el, 5)"
         :class="{ 'ring-8 ring-yellow-400 border-yellow-400': selectedIndex === 5 }"
         class="bg-purple-500 text-white p-3 rounded-xl border-b-4 border-purple-700 font-black tracking-wider active:translate-y-1 text-xs uppercase outline-none"
         @click="testSFX"
@@ -118,8 +118,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { ref, watch, type ComponentPublicInstance } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
@@ -130,14 +130,19 @@ import { SOUND_EFFECTS, SUPPORTED_LANGUAGES } from '../../utils/constants';
 const settingsStore = useSettingsStore();
 
 const emit = defineEmits(['back']);
-const itemRefs = ref([]);
-const languageSelect = ref(null);
-const voiceSelect = ref(null);
-const volumeInput = ref(null);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
 
-const isLangSupported = (langCode) => speech.isLanguageSupported(langCode);
+const setItemRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) itemRefs.value[index] = el as HTMLElement;
+};
 
-const cycleLocale = (direction) => {
+const languageSelect = ref<HTMLSelectElement | null>(null);
+const voiceSelect = ref<HTMLSelectElement | null>(null);
+const volumeInput = ref<HTMLInputElement | null>(null);
+
+const isLangSupported = (langCode: string) => speech.isLanguageSupported(langCode);
+
+const cycleLocale = (direction: number) => {
   const currentIdx = SUPPORTED_LANGUAGES.findIndex(l => l.code === settingsStore.locale);
   let nextIdx = (currentIdx + direction + SUPPORTED_LANGUAGES.length) % SUPPORTED_LANGUAGES.length;
 
@@ -150,7 +155,7 @@ const cycleLocale = (direction) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
 };
 
-const cycleVoice = (direction) => {
+const cycleVoice = (direction: number) => {
   if (settingsStore.voices.length === 0) return;
   const currentIdx = settingsStore.voices.findIndex(v => v.name === settingsStore.selectedVoiceName);
   const nextIdx = (currentIdx + direction + settingsStore.voices.length) % settingsStore.voices.length;
@@ -158,7 +163,7 @@ const cycleVoice = (direction) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
 };
 
-const adjustVolume = (direction) => {
+const adjustVolume = (direction: number) => {
   const newVol = Math.max(0, Math.min(1, settingsStore.volume + (direction * 0.05)));
   settingsStore.setVolume(newVol);
   // Volume slider feedback
@@ -194,15 +199,15 @@ watch(selectedIndex, (newIdx) => {
   }
 });
 
-const updateVoice = (e) => {
+const updateVoice = (e: any) => {
   settingsStore.setVoice(e.target.value);
 };
 
-const updateVolume = (e) => {
+const updateVolume = (e: any) => {
   settingsStore.setVolume(parseFloat(e.target.value));
 };
 
-const updateLocale = (e) => {
+const updateLocale = (e: any) => {
   settingsStore.setLocale(e.target.value);
   audio.playSound(SOUND_EFFECTS.CLICK);
 };

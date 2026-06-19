@@ -1,5 +1,46 @@
 import { MONSTER_TYPES, BIOMES } from './constants';
 
+export interface Monster {
+  id: string;
+  species: string;
+  emoji: string;
+  type: string;
+  level: number;
+  hp: number;
+  maxHp: number;
+  atk: number;
+  def: number;
+  spd: number;
+  exp: number;
+  expToNext: number;
+}
+
+export interface SpeciesBase {
+  type: string;
+  emoji: string;
+  baseHp: number;
+  baseAtk: number;
+  baseDef: number;
+  baseSpd: number;
+  evolvesAt?: number;
+  evolvesInto?: string;
+}
+
+export interface AreaConfig {
+  name: string;
+  minLevel: number;
+  maxLevel: number;
+  biome: string;
+  encounters: string[];
+}
+
+export interface Word {
+  word: string;
+  definition: string;
+  sentence: string;
+  difficulty?: number;
+}
+
 export const SPECIES = {
   Grammander: 'Grammander',
   Wordmeleon: 'Wordmeleon',
@@ -99,7 +140,7 @@ export const SPECIES = {
   Muse: 'Muse',
 };
 
-export const MONS = {
+export const MONS: Record<string, SpeciesBase> = {
   // Starters
   [SPECIES.Grammander]: { type: MONSTER_TYPES.FIRE, emoji: '🦎', baseHp: 39, baseAtk: 52, baseDef: 43, baseSpd: 65, evolvesAt: 16, evolvesInto: SPECIES.Wordmeleon },
   [SPECIES.Wordmeleon]: { type: MONSTER_TYPES.FIRE, emoji: '🦖', baseHp: 58, baseAtk: 64, baseDef: 58, baseSpd: 80, evolvesAt: 36, evolvesInto: SPECIES.Spelchar },
@@ -278,7 +319,7 @@ export const TYPE_CHART = {
   [MONSTER_TYPES.ICE]: { [MONSTER_TYPES.GRASS]: 2, [MONSTER_TYPES.GROUND]: 2, [MONSTER_TYPES.FLYING]: 2, [MONSTER_TYPES.DRAGON]: 2, [MONSTER_TYPES.FIRE]: 0.5, [MONSTER_TYPES.WATER]: 0.5, [MONSTER_TYPES.ICE]: 0.5 },
 };
 
-export function calculateStat(base, level, isHp = false) {
+export function calculateStat(base: number, level: number, isHp: boolean = false): number {
   // Simplified Pokemon stat formula
   // IV is assumed 31, EV is 0
   const iv = 31;
@@ -288,7 +329,12 @@ export function calculateStat(base, level, isHp = false) {
   return Math.floor(((2 * base + iv) * level) / 100) + 5;
 }
 
-export function calculateDamage(attacker, defender, basePower, difficulty = 1) {
+export function calculateDamage(
+  attacker: { species: string; level: number; atk?: number },
+  defender: { species: string; level: number; def?: number },
+  basePower: number,
+  difficulty: number = 1
+) {
   const atk = attacker.atk || calculateStat(MONS[attacker.species]?.baseAtk || 50, attacker.level);
   const def = defender.def || calculateStat(MONS[defender.species]?.baseDef || 50, defender.level);
 
@@ -312,12 +358,12 @@ export function calculateDamage(attacker, defender, basePower, difficulty = 1) {
   };
 }
 
-export function calculateExpToNext(level) {
+export function calculateExpToNext(level: number): number {
   // Use a quadratic formula for smoother "per-level" progression
   return Math.floor(5 * Math.pow(level, 2)) + 10;
 }
 
-export function createMon(species, level = 5) {
+export function createMon(species: string, level: number = 5): Monster {
   const base = MONS[species] || MONS[SPECIES.Verminverb];
   const hp = calculateStat(base.baseHp, level, true);
   const atk = calculateStat(base.baseAtk, level);
@@ -340,7 +386,7 @@ export function createMon(species, level = 5) {
   };
 }
 
-export function calculateExpGain(enemyMon, isTrainer) {
+export function calculateExpGain(enemyMon: { level: number }, isTrainer: boolean): number {
   // Pokemon-inspired formula: (Base * Level) / 7
   const baseExp = 60;
   const trainerBonus = isTrainer ? 1.5 : 1.0;
@@ -350,11 +396,11 @@ export function calculateExpGain(enemyMon, isTrainer) {
 /**
  * Linear algorithm for battle timer duration.
  * Harder and longer words receive more time.
- * @param {Object} wordObj - The word object
+ * @param {Word} wordObj - The word object
  * @param {boolean} isCapture - Whether this is a capture attempt
  * @returns {number} Duration in seconds
  */
-export function calculateTimerDuration(wordObj, isCapture = false) {
+export function calculateTimerDuration(wordObj: Word, isCapture: boolean = false): number {
   const base = isCapture ? 6 : 8;
   const diffMultiplier = isCapture ? 1.5 : 2;
   const lengthMultiplier = isCapture ? 0.4 : 0.6;
@@ -366,7 +412,7 @@ export function calculateTimerDuration(wordObj, isCapture = false) {
   return Math.round(time);
 }
 
-export const AREA_CONFIGS = {
+export const AREA_CONFIGS: Record<number, AreaConfig> = {
   1: {
     name: 'Alphabet Avenue',
     minLevel: 1,

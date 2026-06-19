@@ -10,6 +10,7 @@
       />
       <!-- Player pulse indicator -->
       <div
+        v-if="session.player.position"
         class="absolute w-6 h-6 bg-red-500 rounded-full animate-ping pointer-events-none opacity-75"
         :style="{
           left: `calc(${(session.player.position.x / 100) * 100}% - 12px)`,
@@ -44,7 +45,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
@@ -52,7 +53,7 @@ import { GAME_CONSTANTS, TRANSITION_TYPES } from '../../utils/constants';
 import { TILE_TYPES, MapGenerator } from '../../utils/mapGenerator';
 
 const session = useSessionStore();
-const mapCanvas = ref(null);
+const mapCanvas = ref<HTMLCanvasElement | null>(null);
 
 const emit = defineEmits(['back']);
 
@@ -64,8 +65,9 @@ useKeyboardNavigation({
 });
 
 const drawMap = () => {
-  if (!mapCanvas.value) return;
+  if (!mapCanvas.value || !session.player.mapSeed) return;
   const ctx = mapCanvas.value.getContext('2d');
+  if (!ctx) return;
   const discovered = new Set(session.dex.discoveredTiles[session.player.currentArea] || []);
 
   const MAP_SIZE = 100;
@@ -107,8 +109,10 @@ const drawMap = () => {
   }
 
   // Draw player
-  ctx.fillStyle = '#ef4444';
-  ctx.fillRect(session.player.position.x, session.player.position.y, 1, 1);
+  if (session.player.position) {
+    ctx.fillStyle = '#ef4444';
+    ctx.fillRect(session.player.position.x, session.player.position.y, 1, 1);
+  }
 };
 
 onMounted(() => {

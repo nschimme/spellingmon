@@ -2,7 +2,7 @@
  * Normalizes a string for spelling comparison.
  * Strips diacritics, hyphens, spaces and converts to lowercase.
  */
-export const normalizeWord = (str) => {
+export const normalizeWord = (str: string | null | undefined) => {
   return (str || '').toLowerCase().trim()
     .normalize('NFD')
     .replace(/ß/g, 'ss')
@@ -13,7 +13,7 @@ export const normalizeWord = (str) => {
 /**
  * Checks if a word has capitalization or diacritics (a "challenge").
  */
-export const hasSpellingChallenge = (word) => {
+export const hasSpellingChallenge = (word: string) => {
   const hasUpper = /[A-Z]/.test(word);
   const hasDiacritics = word.normalize('NFD') !== word.normalize('NFC') || /[ß]/.test(word);
   return hasUpper || hasDiacritics;
@@ -23,7 +23,7 @@ export const hasSpellingChallenge = (word) => {
  * Validates a spelling attempt.
  * Returns { isCorrect, isPerfect }.
  */
-export const validateSpelling = (input, target) => {
+export const validateSpelling = (input: string, target: string) => {
   const normalizedInput = normalizeWord(input);
   const normalizedTarget = normalizeWord(target);
   const isCorrect = normalizedInput === normalizedTarget;

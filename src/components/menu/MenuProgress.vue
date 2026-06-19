@@ -3,7 +3,7 @@
     <div
       v-for="i in GAME_CONSTANTS.MAX_AREAS"
       :key="i"
-      :ref="el => { if (el) itemRefs[i-1] = el }"
+      :ref="el => setItemRef(el, i-1)"
       class="bg-white border-4 p-4 rounded-2xl shadow-md transition-all"
       :class="[
         session.player.unlockedAreas.includes(i) ? 'border-gray-800' : 'border-gray-300 opacity-60 grayscale',
@@ -67,14 +67,18 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, watch } from 'vue';
+<script setup lang="ts">
+import { ref, computed, watch, type ComponentPublicInstance } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS } from '../../utils/constants';
 
 const session = useSessionStore();
-const itemRefs = ref([]);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
+
+const setItemRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) itemRefs.value[index] = el as HTMLElement;
+};
 
 const emit = defineEmits(['back']);
 
@@ -87,10 +91,10 @@ const globalProgress = computed(() => {
 });
 
 const totalBadges = computed(() => {
-  return Object.keys(session.dex.masteredWords).filter(area => (session.dex.masteredWords[area] || []).length >= 40).length;
+  return Object.keys(session.dex.masteredWords).filter(area => (session.dex.masteredWords[Number(area)] || []).length >= 40).length;
 });
 
-const getAreaBadge = (area) => {
+const getAreaBadge = (area: number) => {
   const masteredCount = (session.dex.masteredWords[area] || []).length;
   if (masteredCount >= 40) return '🏆';
   if (masteredCount >= 20) return '🥈';

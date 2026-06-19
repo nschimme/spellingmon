@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
 import { useGameFSM } from './stores/gameFSM';
 import { useSessionStore } from './stores/sessionStore';
@@ -19,7 +19,7 @@ const fsm = useGameFSM();
 const session = useSessionStore();
 const inputStore = useInputStore();
 
-const handleGlobalInput = (e) => {
+const handleGlobalInput = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
     if (fsm.matches(GAME_STATES.MENU)) {
       fsm.send(GAME_EVENTS.CLOSE);
@@ -38,11 +38,11 @@ onMounted(async () => {
     session.notify('Speech failed. Your browser may not support TTS.');
   });
   inputStore.init();
-  inputStore.addListener('global', handleGlobalInput, 10);
+  inputStore.addListener('global', handleGlobalInput);
 });
 
 onUnmounted(() => {
-  speech.onError(null);
+  speech.onError(() => {});
   inputStore.removeListener('global');
   inputStore.cleanup();
 });

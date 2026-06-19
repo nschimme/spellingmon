@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSessionStore } from '../stores/sessionStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { createMon, SPECIES } from '../utils/gameData';
@@ -62,7 +62,7 @@ const starters = [
   { species: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
 ];
 
-const selectStarter = (mon) => {
+const selectStarter = (mon: any) => {
   const fullMon = createMon(mon.species, 1);
   session.setStarter(fullMon);
   emit('complete');
@@ -76,7 +76,7 @@ const { selectedIndex } = useKeyboardNavigation({
   onConfirm: (idx) => selectStarter(starters[idx])
 });
 
-const typeColor = (type) => {
+const typeColor = (type: string) => {
   switch (type) {
     case 'Fire': return 'bg-orange-500';
     case 'Water': return 'bg-blue-500';

@@ -24,7 +24,7 @@
           <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.boyGirl') }}</label>
           <div class="flex gap-4">
             <button
-              :ref="el => { if (el) itemRefs[1] = el }"
+              :ref="el => setItemRef(el, 1)"
               :class="[
                 gender === GENDERS.BOY ? 'bg-blue-500 text-white border-blue-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 1 ? 'ring-8 ring-yellow-400' : ''
@@ -35,7 +35,7 @@
               {{ $t('character.boy') }}
             </button>
             <button
-              :ref="el => { if (el) itemRefs[2] = el }"
+              :ref="el => setItemRef(el, 2)"
               :class="[
                 gender === GENDERS.GIRL ? 'bg-pink-500 text-white border-pink-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 2 ? 'ring-8 ring-yellow-400' : ''
@@ -54,7 +54,7 @@
             <button
               v-for="(tone, i) in skinTones"
               :key="tone.id"
-              :ref="el => { if (el) itemRefs[3 + i] = el }"
+              :ref="el => setItemRef(el, 3 + i)"
               :style="{ backgroundColor: tone.color }"
               :class="[
                 skinTone === tone.id ? 'border-blue-500 scale-110' : 'border-gray-800',
@@ -67,7 +67,7 @@
         </div>
 
         <button
-          :ref="el => { if (el) itemRefs[8] = el }"
+          :ref="el => setItemRef(el, 8)"
           :disabled="!name"
           :class="[
             selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400' : '',
@@ -83,8 +83,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { ref, watch, type ComponentPublicInstance } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { audio } from '../utils/audio';
@@ -96,8 +96,12 @@ const emit = defineEmits(['complete']);
 const name = ref('');
 const gender = ref(GENDERS.BOY);
 const skinTone = ref(SKIN_TONES.NEUTRAL);
-const nameInputRef = ref(null);
-const itemRefs = ref([]);
+const nameInputRef = ref<HTMLInputElement | null>(null);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
+
+const setItemRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) itemRefs.value[index] = el as HTMLElement;
+};
 
 const skinTones = [
   { id: SKIN_TONES.PALE, color: '#f9ebde' },

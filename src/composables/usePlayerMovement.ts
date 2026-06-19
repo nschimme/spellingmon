@@ -1,10 +1,10 @@
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, type Ref } from 'vue';
 import { GAME_CONSTANTS } from '../utils/constants';
 
-export function usePlayerMovement(playerX, playerY, handleInput) {
-  const movementInterval = ref(null);
+export function usePlayerMovement(playerX: Ref<number>, playerY: Ref<number>, handleInput: (e: { key: string }) => void) {
+  const movementInterval = ref<any>(null);
 
-  const startMovement = (key) => {
+  const startMovement = (key: string) => {
     stopMovement();
     handleInput({ key });
     movementInterval.value = setInterval(() => {

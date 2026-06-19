@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia';
+import { type Word } from '../utils/gameData';
+
+export interface VocabStoreState {
+  vocabData: Record<string, Word[]>;
+}
 
 export const useVocabStore = defineStore('vocab', {
-  state: () => ({
+  state: (): VocabStoreState => ({
     vocabData: {}, // area -> words
   }),
   actions: {
-    async loadVocab(area, lang = 'en-US') {
+    async loadVocab(area: number, lang = 'en-US') {
       const cacheKey = `${lang}_${area}`;
       if (this.vocabData[cacheKey]) return;
       try {
@@ -18,7 +23,7 @@ export const useVocabStore = defineStore('vocab', {
         console.error(`Failed to load vocab for area ${area} in ${lang}:`, error);
       }
     },
-    getRandomWord(area, lang = 'en-US') {
+    getRandomWord(area: number, lang = 'en-US'): Word | null {
       const cacheKey = `${lang}_${area}`;
       const words = this.vocabData[cacheKey] || [];
       if (words.length === 0) {

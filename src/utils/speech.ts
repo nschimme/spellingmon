@@ -1,4 +1,27 @@
-export const speech = {
+export interface SpeechInterface {
+  voices: SpeechSynthesisVoice[];
+  selectedVoice: SpeechSynthesisVoice | null;
+  _preferredVoiceName: string | null;
+  _initialized: boolean;
+  _initPromise: Promise<void> | null;
+  _cleanup: (() => void) | null;
+  supported: boolean;
+  ttsVolume: number;
+  lastError: string | null;
+  _onError: ((error: string) => void) | null;
+  init(force?: boolean): Promise<void>;
+  isInitialized(): boolean;
+  refreshVoices(langCode?: string | null): boolean;
+  isLanguageSupported(langCode: string): boolean;
+  setVolume(val: number): void;
+  onError(callback: (error: string) => void): void;
+  speak(text: string, langCode?: string | null): void;
+  isSupported(): boolean;
+  hasVoices(): boolean;
+  setVoice(name: string): boolean;
+}
+
+export const speech: SpeechInterface = {
   voices: [],
   selectedVoice: null,
   _preferredVoiceName: null,
@@ -19,7 +42,7 @@ export const speech = {
     }
 
     this._initialized = false;
-    this._initPromise = new Promise((resolve) => {
+    this._initPromise = new Promise<void>((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
         console.log("[SPEECH] speechSynthesis NOT FOUND");
         this._initPromise = null;
@@ -29,9 +52,9 @@ export const speech = {
 
       this.supported = true;
       const synth = window.speechSynthesis;
-      let interval = null;
+      let interval: ReturnType<typeof setInterval> | null = null;
       let isFinished = false;
-      let timeoutId = null;
+      let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
       const finishInit = () => {
         if (isFinished) return;
@@ -111,7 +134,7 @@ export const speech = {
     return this._initialized;
   },
 
-  refreshVoices(langCode = null) {
+  refreshVoices(langCode: string | null = null) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return false;
     try {
       const synth = window.speechSynthesis;
@@ -166,7 +189,7 @@ export const speech = {
     }
   },
 
-  isLanguageSupported(langCode) {
+  isLanguageSupported(langCode: string) {
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.__PLAYWRIGHT_TEST__)) {
       return true; // Always support all languages in dev/test for UI verification
     }
@@ -178,15 +201,15 @@ export const speech = {
     return this.voices.some(v => v.lang.toLowerCase().startsWith(code));
   },
 
-  setVolume(val) {
+  setVolume(val: number) {
     this.ttsVolume = Math.max(0, Math.min(1, val));
   },
 
-  onError(callback) {
+  onError(callback: (error: string) => void) {
     this._onError = callback;
   },
 
-  speak(text, langCode = null) {
+  speak(text: string, langCode: string | null = null) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
     try {
       if (langCode) {
@@ -228,7 +251,7 @@ export const speech = {
     return this.voices.length > 0;
   },
 
-  setVoice(name) {
+  setVoice(name: string) {
     this._preferredVoiceName = name;
     const voice = this.voices.find(v => v.name === name);
     if (voice) {
