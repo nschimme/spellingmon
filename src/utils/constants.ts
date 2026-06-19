@@ -119,7 +119,7 @@ export const MONSTER_TYPES = {
 };
 
 export const STORAGE_KEYS = {
-  ACTIVE_SLOT: 'active_slot',
+  ACTIVE_SLOT: 'spellingmon_active_slot',
   SETTINGS: 'spellingmon_settings',
   SESSION: 'spellingmon_session', // Slot-dependent
 };

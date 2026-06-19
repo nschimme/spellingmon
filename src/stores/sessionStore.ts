@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS } from '../utils/constants';
+import { STORAGE_KEYS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 
 export interface PlayerState {
@@ -60,6 +60,7 @@ export const SESSION_PERSIST_VERSION = '1.0.0';
  */
 export function migrateSessionData(data: any, version: string) {
   // Add migration logic here when version increases
+  if (version) { /* no-op */ }
   return data;
 }
 
@@ -70,8 +71,17 @@ export function getSessionSnapshot(saved: any) {
   if (!saved || typeof saved !== 'object') return null;
   const { version, data } = saved;
   if (version === undefined || data === undefined) return null;
-  if (version === SESSION_PERSIST_VERSION) return data;
-  return migrateSessionData(data, version);
+
+  const processedData = version === SESSION_PERSIST_VERSION
+    ? data
+    : migrateSessionData(data, version);
+
+  // Validate that the snapshot contains minimal required player state
+  if (!processedData || !processedData.player) {
+    return null;
+  }
+
+  return processedData;
 }
 
 /**
@@ -87,7 +97,7 @@ export const useSessionStore = defineStore('session', {
     exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
-    activeSlot: storage.load(STORAGE_KEYS.ACTIVE_SLOT),
+    activeSlot: null,
 
     player: {
       name: 'Player',
@@ -151,7 +161,6 @@ export const useSessionStore = defineStore('session', {
       // 2. Setting activeSlot will trigger the persistencePlugin to update its cache
       // and trigger an automatic loadAndPatch for this store.
       this.activeSlot = idx;
-      storage.save(STORAGE_KEYS.ACTIVE_SLOT, idx);
 
       // Note: persistencePlugin handles loading the data from the new slot via loadAndPatch()
       // when it detects the activeSlot change in its $subscribe handler.
@@ -323,7 +332,6 @@ export const useSessionStore = defineStore('session', {
       storage.remove(STORAGE_KEYS.SESSION, index);
       if (this.activeSlot === index) {
         this.activeSlot = null;
-        storage.remove(STORAGE_KEYS.ACTIVE_SLOT);
       }
     },
 

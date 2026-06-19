@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
-import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SUPPORTED_LANGUAGES } from '../utils/constants';
 import i18n, { loadLocaleMessages } from '../i18n';
 

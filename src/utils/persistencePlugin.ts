@@ -1,17 +1,18 @@
 import type { PiniaPluginContext } from 'pinia';
 import { storage } from './storage';
-import { STORAGE_KEYS, GAME_CONSTANTS } from './constants';
+import { GAME_CONSTANTS } from './constants';
 
 export interface PersistOptions {
   key: string;
   version: string;
   slotDependent?: boolean;
   migrate?: (data: any, version: string) => any;
+  sanitize?: (data: any) => any;
   exclude?: string[];
 }
 
 declare module 'pinia' {
-  export interface DefineStoreOptionsBase<S, Store> {
+  export interface DefineStoreOptionsBase {
     persist?: PersistOptions;
   }
 }
@@ -21,11 +22,20 @@ const debounceMap = new Map<string, ReturnType<typeof setTimeout>>();
 // Module-level cache for the active slot to avoid repeated storage access across all stores
 let cachedActiveSlot: number | null | undefined = undefined;
 
+/**
+ * Reset module-level cache for testing purposes.
+ */
+export function _resetPersistenceCache() {
+  cachedActiveSlot = undefined;
+  debounceMap.forEach(t => clearTimeout(t));
+  debounceMap.clear();
+}
+
 export function persistencePlugin({ store, options }: PiniaPluginContext) {
   const persist = options.persist;
   if (!persist) return;
 
-  const { key, version, slotDependent, migrate, exclude = [] } = persist;
+  const { key, version, slotDependent, migrate, sanitize, exclude = [] } = persist;
 
   // Helper to resolve the storage key (matches storage.ts logic)
   const resolvePersistenceKey = (baseKey: string, slot: number | null | undefined) => {
@@ -36,7 +46,8 @@ export function persistencePlugin({ store, options }: PiniaPluginContext) {
   const getSlot = () => {
     if (!slotDependent) return null;
     if (cachedActiveSlot === undefined) {
-      cachedActiveSlot = storage.load(STORAGE_KEYS.ACTIVE_SLOT);
+      // In-memory only. We no longer load from storage to support "back to landing on refresh"
+      cachedActiveSlot = null;
     }
     return cachedActiveSlot;
   };
@@ -57,6 +68,19 @@ export function persistencePlugin({ store, options }: PiniaPluginContext) {
         }
       }
 
+      if (sanitize) {
+        try {
+          data = sanitize(data);
+          if (!data) {
+            console.warn(`Sanitizer rejected loaded data for ${key}.`);
+            return;
+          }
+        } catch (err) {
+          console.error(`Sanitization failed for ${key} during load:`, err);
+          return;
+        }
+      }
+
       // Patch the store with loaded data, excluding keys if needed
       const patchedData = { ...data };
       exclude.forEach(k => delete patchedData[k]);
@@ -69,7 +93,7 @@ export function persistencePlugin({ store, options }: PiniaPluginContext) {
       } else {
         try {
           store.$reset();
-        } catch (e) {
+        } catch {
           console.warn(`Could not reset store ${store.$id} after slot change.`);
         }
       }
@@ -80,10 +104,12 @@ export function persistencePlugin({ store, options }: PiniaPluginContext) {
   loadAndPatch();
 
   // 2. Subscribe to changes
-  store.$subscribe((mutation, state) => {
+  store.$subscribe((_mutation, state) => {
     // Sync cached slot and handle slot switching
     if (store.$id === 'session' && 'activeSlot' in state) {
-      const newSlot = (state as any).activeSlot ?? null;
+      const rawSlot = (state as any).activeSlot;
+      const newSlot = (rawSlot != null && !isNaN(parseInt(rawSlot))) ? parseInt(rawSlot) : null;
+
       if (newSlot !== cachedActiveSlot) {
         cachedActiveSlot = newSlot;
         // If this store is slot-dependent, we reload it immediately
@@ -105,8 +131,16 @@ export function persistencePlugin({ store, options }: PiniaPluginContext) {
     }
 
     const timeout = setTimeout(() => {
-      const dataToSave = { ...state };
+      let dataToSave = { ...state };
       exclude.forEach(k => delete dataToSave[k]);
+
+      if (sanitize) {
+        try {
+          dataToSave = sanitize(dataToSave);
+        } catch (err) {
+          console.error(`Sanitization failed for ${key} during save:`, err);
+        }
+      }
 
       storage.save(key, {
         version,
