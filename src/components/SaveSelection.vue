@@ -229,8 +229,7 @@ const openSlotActions = (index: number) => {
 const confirmAction = () => {
   if (activeSlotIndex.value === null) return;
   audio.playSound(SOUND_EFFECTS.CLICK);
-  session.loadSlot(activeSlotIndex.value);
-  emit('selected');
+  emit('selected', activeSlotIndex.value);
 };
 
 const confirmDelete = () => {

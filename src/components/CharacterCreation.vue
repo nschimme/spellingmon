@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-8 text-white font-['Press_Start_2P']">
-    <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] shadow-2xl max-w-lg w-full text-gray-800">
+  <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-8 text-white">
+    <div class="bg-white border-8 border-gray-800 p-8 rounded-[3rem] shadow-2xl max-w-lg w-full text-gray-800 transform -rotate-1">
       <h2 class="text-xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
         {{ $t('character.title') }}
       </h2>
@@ -70,10 +70,10 @@
           :ref="el => setItemRef(el, 8)"
           :disabled="!name"
           :class="[
-            selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400' : '',
+            selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105' : '',
             !name ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600'
           ]"
-          class="w-full text-white font-black py-4 rounded-xl border-b-4 border-green-800 disabled:border-gray-500 uppercase text-sm transition-all active:not-disabled:translate-y-1 outline-none"
+          class="w-full text-white font-black py-6 rounded-2xl border-b-8 border-green-800 disabled:border-gray-500 uppercase text-lg tracking-widest transition-all active:not-disabled:translate-y-1 outline-none"
           @click="handleConfirm"
         >
           {{ $t('common.confirm') }}
