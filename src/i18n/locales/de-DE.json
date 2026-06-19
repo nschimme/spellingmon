@@ -298,11 +298,11 @@
     "Dragon": "Drache"
   },
   "loading": {
-    "didYouKnow": "Did you know?",
-    "tip1": "You must spell the word correctly to deal damage!",
-    "tip2": "Perfect spelling (matching case and symbols) deals even more damage!",
-    "tip3": "Catching new Spellingmon helps you build a stronger team.",
-    "tip4": "Your Spellingmon will heal automatically at SpellCenters.",
-    "tip5": "Explore every corner of the map to find hidden trainers!"
+    "didYouKnow": "Wusstest du schon?",
+    "tip1": "Du musst das Wort richtig buchstabieren, um Schaden anzurichten!",
+    "tip2": "Perfekte Rechtschreibung (einschließlich Groß-/Kleinschreibung und Symbolen) verursacht noch mehr Schaden!",
+    "tip3": "Das Fangen neuer Spellingmon hilft dir, ein stärkeres Team aufzubauen.",
+    "tip4": "Deine Spellingmon werden in Zauberzentren automatisch geheilt.",
+    "tip5": "Erkunde jeden Winkel der Karte, um versteckte Trainer zu finden!"
   }
 }

@@ -298,11 +298,11 @@
     "Dragon": "Драконий"
   },
   "loading": {
-    "didYouKnow": "Did you know?",
-    "tip1": "You must spell the word correctly to deal damage!",
-    "tip2": "Perfect spelling (matching case and symbols) deals even more damage!",
-    "tip3": "Catching new Spellingmon helps you build a stronger team.",
-    "tip4": "Your Spellingmon will heal automatically at SpellCenters.",
-    "tip5": "Explore every corner of the map to find hidden trainers!"
+    "didYouKnow": "Знаете ли вы?",
+    "tip1": "Вы должны правильно написать слово, чтобы нанести урон!",
+    "tip2": "Идеальное написание (с учетом регистра и символов) наносит еще больше урона!",
+    "tip3": "Поимка новых Спеллингмонов поможет вам создать более сильную команду.",
+    "tip4": "Ваши Спеллингмоны будут автоматически исцелены в Центрах Заклинаний.",
+    "tip5": "Исследуйте каждый уголок карты, чтобы найти скрытых тренеров!"
   }
 }

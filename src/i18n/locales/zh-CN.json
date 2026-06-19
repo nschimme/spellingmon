@@ -298,11 +298,11 @@
     "Dragon": "龙"
   },
   "loading": {
-    "didYouKnow": "Did you know?",
-    "tip1": "You must spell the word correctly to deal damage!",
-    "tip2": "Perfect spelling (matching case and symbols) deals even more damage!",
-    "tip3": "Catching new Spellingmon helps you build a stronger team.",
-    "tip4": "Your Spellingmon will heal automatically at SpellCenters.",
-    "tip5": "Explore every corner of the map to find hidden trainers!"
+    "didYouKnow": "你知道吗？",
+    "tip1": "你必须拼对单词才能造成伤害！",
+    "tip2": "完美拼写（匹配大小写和符号）会造成更高伤害！",
+    "tip3": "捕捉新的拼写萌宠可以帮你建立更强大的队伍。",
+    "tip4": "你的拼写萌宠会在拼写中心自动恢复体力。",
+    "tip5": "探索地图的每个角落来寻找隐藏的训练师！"
   }
 }
