@@ -121,7 +121,7 @@ export function useKeyboardNavigation({
         }
       }
     } else if (e.key === 'Enter' || e.key === ' ') {
-      if (e.key === ' ' && isInput) return false;
+      if (isInput) return false;
       onConfirm(selectedIndex.value);
       return true;
     } else if ((e.key === 'Escape' || e.key === 'Backspace') && onCancel) {

@@ -23,9 +23,6 @@ test.describe('TTS Verification Flow', () => {
 
     // 4. Save Selection
     await page.locator('.relative.border-4.p-6').first().click();
-    const newGameButton = page.getByRole('button', { name: /Start/i });
-    await expect(newGameButton).toBeVisible();
-    await newGameButton.click();
 
     // 5. Character Creation
     await expect(page.getByText(/Character Creation/i)).toBeVisible();

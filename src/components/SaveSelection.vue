@@ -215,7 +215,14 @@ const loadSlots = () => {
 
 const openSlotActions = (index: number) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  activeSlotIndex.value = index;
+  if (!slots.value[index]) {
+    // If slot is empty, start immediately
+    activeSlotIndex.value = index;
+    confirmAction();
+  } else {
+    // If slot has data, show actions menu
+    activeSlotIndex.value = index;
+  }
 };
 
 const confirmAction = () => {

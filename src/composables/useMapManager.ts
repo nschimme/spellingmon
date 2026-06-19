@@ -45,6 +45,7 @@ export function useMapManager(session: any) {
     playerX.value = newX;
     playerY.value = newY;
     session.updatePlayerPosition({ x: newX, y: newY });
+    updateDiscovery(newX, newY);
   };
 
   const getTileType = (x: number, y: number) => {
@@ -70,9 +71,7 @@ export function useMapManager(session: any) {
         const tx = x + dx;
         const ty = y + dy;
         if (tx >= 0 && tx < MAP_WIDTH && ty >= 0 && ty < MAP_HEIGHT) {
-          if (session.discoverTile) {
-            session.discoverTile(session.currentArea, tx, ty);
-          }
+          session.discoverTile(session.player.currentArea, tx, ty);
         }
       }
     }

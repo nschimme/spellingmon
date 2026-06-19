@@ -17,6 +17,7 @@ describe('useMapManager', () => {
       },
       updatePlayerPosition: vi.fn(),
       recordDiscovery: vi.fn(),
+      discoverTile: vi.fn(),
     };
   });
 
@@ -31,13 +32,39 @@ describe('useMapManager', () => {
     expect(session.updatePlayerPosition).toHaveBeenCalled();
   });
 
-  it('updates discovery radius', () => {
+  it('updates discovery radius and bounds', () => {
     const { updateDiscovery } = useMapManager(session);
-    session.discoverTile = vi.fn();
     updateDiscovery(10, 10);
 
     // 11x11 radius = 121 tiles
     expect(session.discoverTile).toHaveBeenCalledTimes(121);
+
+    const calls = (session.discoverTile as any).mock.calls;
+    for (const [area, x, y] of calls) {
+      expect(area).toBe(session.player.currentArea);
+      expect(Math.abs(x - 10)).toBeLessThanOrEqual(5);
+      expect(Math.abs(y - 10)).toBeLessThanOrEqual(5);
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThan(100);
+      expect(y).toBeLessThan(100);
+    }
+  });
+
+  it('never calls session.discoverTile with out-of-bounds coordinates near map edges', () => {
+    const { updateDiscovery } = useMapManager(session);
+    (session.discoverTile as any).mockClear();
+
+    // Place player at (0,0)
+    updateDiscovery(0, 0);
+
+    const calls = (session.discoverTile as any).mock.calls;
+    for (const [, x, y] of calls) {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThan(100);
+      expect(y).toBeLessThan(100);
+    }
   });
 });
 
