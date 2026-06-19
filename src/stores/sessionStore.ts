@@ -270,6 +270,10 @@ export const useSessionStore = defineStore('session', {
       }
     },
 
+    discoverTile(area: number, x: number, y: number) {
+      this.recordDiscovery('discoveredTiles', area, `${x},${y}`);
+    },
+
     notify(message: string) {
       this.notification = message;
       setTimeout(() => { if (this.notification === message) this.notification = null; }, 3000);

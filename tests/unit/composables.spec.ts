@@ -17,6 +17,7 @@ describe('useMapManager', () => {
       },
       updatePlayerPosition: vi.fn(),
       recordDiscovery: vi.fn(),
+      discoverTile: vi.fn(),
     };
   });
 
