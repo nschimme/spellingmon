@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
@@ -77,7 +77,7 @@ const handleContinue = () => {
 const { selectedIndex } = useKeyboardNavigation({
   id: 'landing-screen',
   maxIndex: 1,
-  itemRefs: ref([startButton.value]) as any,
+  itemRefs: computed(() => [startButton.value]),
   onConfirm: handleContinue
 });
 </script>

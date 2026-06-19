@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const props = defineProps({
@@ -139,7 +139,7 @@ const animateExp = async (mon: any) => {
 const { selectedIndex } = useKeyboardNavigation({
   id: 'experience-view',
   maxIndex: 1,
-  itemRefs: ref([continueButton.value]) as any,
+  itemRefs: computed(() => [continueButton.value]),
   onConfirm: () => emit('continue')
 });
 
