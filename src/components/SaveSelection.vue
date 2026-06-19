@@ -32,11 +32,11 @@
           @click="openSlotActions(index)"
         >
           <div
-            v-if="slot"
+            v-if="slot && slot.player"
             class="w-full flex flex-col items-center h-full"
           >
             <div class="text-6xl mb-4 animate-bounce-slow">
-              {{ slot.player.party[0]?.emoji || '👦' }}
+              {{ slot.player.party?.[0]?.emoji || '👦' }}
             </div>
             <h3 class="text-xl font-black uppercase text-gray-800 mb-1">
               {{ slot.player.name }}
@@ -48,11 +48,11 @@
             <div class="w-full space-y-2 mt-auto">
               <div class="flex justify-between items-center text-[10px] font-black uppercase text-gray-400">
                 <span>{{ $t('menu.party') }}</span>
-                <span>{{ slot.player.party.length }} / 6</span>
+                <span>{{ slot.player.party?.length || 0 }} / 6</span>
               </div>
               <div class="flex gap-1 justify-center">
                 <span
-                  v-for="mon in slot.player.party"
+                  v-for="mon in slot.player.party || []"
                   :key="mon.id"
                   class="text-lg"
                 >
@@ -100,10 +100,10 @@
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
         <div class="text-6xl mb-4">
-          {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? (slots[activeSlotIndex]!.player.party[0]?.emoji || '👦') : '✨' }}
+          {{ (activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? (slots[activeSlotIndex]!.player.party?.[0]?.emoji || '👦') : '✨' }}
         </div>
         <h2 class="text-2xl font-black uppercase mb-6">
-          {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? slots[activeSlotIndex]!.player.name : $t('landing.newGameSlot') }}
+          {{ (activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? slots[activeSlotIndex]!.player.name : $t('landing.newGameSlot') }}
         </h2>
 
         <div class="flex flex-col gap-4">
@@ -117,7 +117,7 @@
           </button>
 
           <button
-            v-if="activeSlotIndex !== null && slots[activeSlotIndex]"
+            v-if="activeSlotIndex !== null && slots[activeSlotIndex]?.player"
             :ref="el => setActionRef(el, 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === 1 }"
             class="w-full bg-red-100 text-red-500 py-3 rounded-xl font-black uppercase border-b-4 border-red-200 hover:bg-red-200 transition-colors outline-none"
@@ -127,8 +127,8 @@
           </button>
 
           <button
-            :ref="el => setActionRef(el, (activeSlotIndex !== null && slots[activeSlotIndex]) ? 2 : 1)"
-            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === ((activeSlotIndex !== null && slots[activeSlotIndex]) ? 2 : 1) }"
+            :ref="el => setActionRef(el, (activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? 2 : 1)"
+            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === ((activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? 2 : 1) }"
             class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none"
             @click="activeSlotIndex = null"
           >
@@ -178,7 +178,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, type ComponentPublicInstance } from 'vue';
-import { useSessionStore } from '../stores/sessionStore';
+import { useSessionStore, getSessionSnapshot } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { audio } from '../utils/audio';
@@ -209,14 +209,15 @@ const setDeleteRef = (el: Element | ComponentPublicInstance | null, index: numbe
 
 const loadSlots = () => {
   for (let i = 0; i < 3; i++) {
-    slots.value[i] = storage.load(STORAGE_KEYS.PLAYER_STATE, i);
+    const saved = storage.load(STORAGE_KEYS.SESSION, i);
+    slots.value[i] = getSessionSnapshot(saved);
   }
 };
 
 const openSlotActions = (index: number) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  if (!slots.value[index]) {
-    // If slot is empty, start immediately
+  if (!slots.value[index] || !slots.value[index].player) {
+    // If slot is empty or malformed, start immediately
     activeSlotIndex.value = index;
     confirmAction();
   } else {
@@ -262,11 +263,11 @@ const { selectedIndex } = useKeyboardNavigation({
 const { selectedIndex: actionSelectedIndex } = useKeyboardNavigation({
   id: 'save-actions',
   isActive: computed(() => activeSlotIndex.value !== null && !isDeleting.value),
-  maxIndex: computed(() => (activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]) ? 3 : 2),
+  maxIndex: computed(() => (activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]?.player) ? 3 : 2),
   itemRefs: actionRefs,
   onConfirm: (idx) => {
     if (idx === 0) confirmAction();
-    else if (idx === 1 && activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]) confirmDelete();
+    else if (idx === 1 && activeSlotIndex.value !== null && slots.value[activeSlotIndex.value]?.player) confirmDelete();
     else activeSlotIndex.value = null;
   },
   onCancel: () => { activeSlotIndex.value = null; }

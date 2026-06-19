@@ -119,13 +119,9 @@ export const MONSTER_TYPES = {
 };
 
 export const STORAGE_KEYS = {
-  PLAYER_STATE: 'player_state',
-  BATTLE_STATE: 'battle_state',
-  SELECTED_VOICE: 'selected_voice_name',
-  VOLUME: 'volume',
-  IS_MUTED: 'is_muted',
-  LOCALE: 'locale',
-  ACTIVE_SLOT: 'active_slot',
+  ACTIVE_SLOT: 'spellingmon_active_slot',
+  SETTINGS: 'spellingmon_settings',
+  SESSION: 'spellingmon_session', // Slot-dependent
 };
 
 export const SUPPORTED_LANGUAGES = [

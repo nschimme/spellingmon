@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS } from '../utils/constants';
+import { STORAGE_KEYS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 
 export interface PlayerState {
@@ -52,11 +52,50 @@ export interface SessionStoreState {
   _saveTimeout?: ReturnType<typeof setTimeout>;
 }
 
+export const SESSION_PERSIST_VERSION = '1.0.0';
+
+/**
+ * Migration helper for session data.
+ * Used by persistence plugin and UI for slot previews.
+ */
+export function migrateSessionData(data: any, version: string) {
+  // Add migration logic here when version increases
+  if (version) { /* no-op */ }
+  return data;
+}
+
+/**
+ * Normalizes a session snapshot for UI preview or initial load.
+ */
+export function getSessionSnapshot(saved: any) {
+  if (!saved || typeof saved !== 'object') return null;
+  const { version, data } = saved;
+  if (version === undefined || data === undefined) return null;
+
+  const processedData = version === SESSION_PERSIST_VERSION
+    ? data
+    : migrateSessionData(data, version);
+
+  // Validate that the snapshot contains minimal required player state
+  if (!processedData || !processedData.player) {
+    return null;
+  }
+
+  return processedData;
+}
+
 /**
  * Unified Session Store
  * Handles ALL persistent game data for the current active slot.
  */
 export const useSessionStore = defineStore('session', {
+  persist: {
+    key: STORAGE_KEYS.SESSION,
+    version: SESSION_PERSIST_VERSION,
+    slotDependent: true,
+    migrate: migrateSessionData,
+    exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
+  },
   state: (): SessionStoreState => ({
     activeSlot: null,
 
@@ -108,30 +147,44 @@ export const useSessionStore = defineStore('session', {
   },
 
   actions: {
-    setSlot(slotIndex: number) {
-      this.activeSlot = slotIndex;
-      const saved = storage.load(STORAGE_KEYS.PLAYER_STATE, slotIndex);
-      if (saved) {
-        this.player = { ...this.player, ...saved.player };
-        this.battle = { ...this.battle, ...saved.battle };
-        this.dex = { ...this.dex, ...saved.dex };
-      } else {
-        this.resetSession();
+    setSlot(slotIndex: any) {
+      const idx = typeof slotIndex === 'number' ? slotIndex : parseInt(slotIndex);
+      if (isNaN(idx)) {
+        console.error('Invalid slot index:', slotIndex);
+        return;
       }
-      this.save();
+
+      // 1. Reset transient state first to avoid it being saved into the NEW slot key
+      // if the debounce timer triggers immediately after activeSlot change.
+      this.resetBattle();
+
+      // 2. Setting activeSlot will trigger the persistencePlugin to update its cache
+      // and trigger an automatic loadAndPatch for this store.
+      this.activeSlot = idx;
+
+      // Note: persistencePlugin handles loading the data from the new slot via loadAndPatch()
+      // when it detects the activeSlot change in its $subscribe handler.
     },
 
     save() {
-      if (this.activeSlot === null) return;
-      if (this._saveTimeout) clearTimeout(this._saveTimeout);
-      this._saveTimeout = setTimeout(() => {
-        storage.save(STORAGE_KEYS.PLAYER_STATE, {
-          player: this.player,
-          battle: this.battle,
-          dex: this.dex,
-        }, this.activeSlot);
-        storage.save(STORAGE_KEYS.ACTIVE_SLOT, this.activeSlot);
-      }, GAME_CONSTANTS.SAVE_DEBOUNCE_MS);
+      // Logic handled by persistence plugin, but keeping as no-op for compatibility
+    },
+
+    resetBattle() {
+      this.battle = {
+        active: false,
+        type: 'wild',
+        enemyMon: null,
+        playerMonId: null,
+        log: [],
+        isPlayerTurn: true,
+        trainerId: null,
+        trainerParty: [],
+        participatingMonIds: [],
+        currentWord: null,
+        totalTime: 0,
+        isCapturing: false,
+      };
     },
 
     resetSession() {
@@ -149,20 +202,7 @@ export const useSessionStore = defineStore('session', {
         characterCreationComplete: false,
         isStarterSelected: false,
       };
-      this.battle = {
-        active: false,
-        type: 'wild',
-        enemyMon: null,
-        playerMonId: null,
-        log: [],
-        isPlayerTurn: true,
-        trainerId: null,
-        trainerParty: [],
-        participatingMonIds: [],
-        currentWord: null,
-        totalTime: 0,
-        isCapturing: false,
-      };
+      this.resetBattle();
       this.dex = {
         discoveredTiles: {},
         discoveredWords: {},
@@ -172,18 +212,15 @@ export const useSessionStore = defineStore('session', {
 
     updatePlayerPosition(pos: { x: number; y: number } | null) {
       this.player.position = pos;
-      this.save();
     },
 
     healParty() {
       this.player.party.forEach(mon => { mon.hp = mon.maxHp; });
-      this.save();
     },
 
     addMonToParty(mon: Monster) {
       if (this.player.party.length < 6) {
         this.player.party.push(mon);
-        this.save();
         return true;
       }
       return false;
@@ -192,7 +229,6 @@ export const useSessionStore = defineStore('session', {
     damageEnemy(amount: number) {
       if (this.battle.enemyMon) {
         this.battle.enemyMon.hp = Math.max(0, this.battle.enemyMon.hp - amount);
-        this.save();
       }
     },
 
@@ -200,7 +236,6 @@ export const useSessionStore = defineStore('session', {
       const mon = this.activePlayerMon;
       if (mon) {
         mon.hp = Math.max(0, mon.hp - amount);
-        this.save();
       }
     },
 
@@ -226,7 +261,6 @@ export const useSessionStore = defineStore('session', {
           expGained: splitAmount
         };
       });
-      this.save();
       return results;
     },
 
@@ -259,14 +293,12 @@ export const useSessionStore = defineStore('session', {
         this.player.party[index] = newMon;
       }
       this.evolutionPending = null;
-      this.save();
     },
 
     recordDiscovery(type: keyof DexState, area: number, value: string) {
       if (!this.dex[type][area]) this.dex[type][area] = [];
       if (!this.dex[type][area].includes(value)) {
         this.dex[type][area].push(value);
-        this.save();
       }
     },
 
@@ -279,20 +311,17 @@ export const useSessionStore = defineStore('session', {
       setTimeout(() => { if (this.notification === message) this.notification = null; }, 3000);
     },
 
-    // --- Legacy / Compatibility actions ---
     setPlayerData(data: { name?: string; gender?: string; skinTone?: string }) {
       this.player.name = data.name || this.player.name;
       this.player.gender = data.gender || this.player.gender;
       this.player.skinTone = data.skinTone || this.player.skinTone;
       this.player.mapSeed = Math.random().toString(36).slice(2, 11);
       this.player.characterCreationComplete = true;
-      this.save();
     },
 
     setStarter(mon: Monster) {
       this.player.party = [mon];
       this.player.isStarterSelected = true;
-      this.save();
     },
 
     loadSlot(index: number) {
@@ -300,22 +329,20 @@ export const useSessionStore = defineStore('session', {
     },
 
     deleteSlot(index: number) {
-      storage.remove(`${STORAGE_KEYS.PLAYER_STATE}_slot_${index}`);
+      storage.remove(STORAGE_KEYS.SESSION, index);
       if (this.activeSlot === index) {
         this.activeSlot = null;
-        storage.remove(STORAGE_KEYS.ACTIVE_SLOT);
       }
     },
 
     logout() {
-      // Handled by FSM transition now, but keeping for compatibility
+      // Handled by FSM transition now
     },
 
     moveMonToFront(index: number) {
       if (index > 0 && index < this.player.party.length) {
         const mon = this.player.party.splice(index, 1)[0];
         this.player.party.unshift(mon);
-        this.save();
       }
     }
   }

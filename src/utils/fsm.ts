@@ -137,6 +137,12 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
         }
       }
 
+      if (event === 'LOGOUT') {
+        console.warn("[FSM] Global LOGOUT fallback (force transition to LANDING)");
+        this.transition('LANDING');
+        return;
+      }
+
       if (config.debug) {
         console.warn(`[FSM] Unhandled event "${event}" in state ${currentState.value}`);
       }
