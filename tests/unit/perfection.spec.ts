@@ -50,7 +50,7 @@ describe('Tiered Attack Quality and Damage via FSM', () => {
     await new Promise(r => setTimeout(r, 100));
 
     // Force transition to spelling
-    fsm.transition(GAME_STATES.BATTLE_SPELLING);
+    await fsm.transition(GAME_STATES.BATTLE_SPELLING);
 
     expect(session.battle.currentWord.word).toBe('APPLE');
 

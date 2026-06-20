@@ -11,8 +11,16 @@ export const useMapStore = defineStore('map', () => {
   const MAP_WIDTH = 100;
   const MAP_HEIGHT = 100;
 
+  let lastSeed: string | null = null;
+  let lastArea: number | null = null;
+
   const generateMap = async (isTransition = false, direction: 'next' | 'prev' | null = null) => {
     if (!session.player?.mapSeed) return;
+
+    // Idempotency check: don't regenerate if same seed and area
+    if (currentMapData.value && lastSeed === session.player.mapSeed && lastArea === session.player.currentArea) {
+      return currentMapData.value;
+    }
 
     isLoading.value = true;
 
@@ -22,6 +30,8 @@ export const useMapStore = defineStore('map', () => {
     const gen = new MapGenerator(session.player.mapSeed, MAP_WIDTH, MAP_HEIGHT);
     const result = gen.generate(session.player.currentArea);
     currentMapData.value = result;
+    lastSeed = session.player.mapSeed;
+    lastArea = session.player.currentArea;
 
     // Handle Player Positioning
     let newX = session.player.position?.x ?? 0;

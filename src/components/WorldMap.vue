@@ -11,16 +11,18 @@
         height: `${MAP_HEIGHT * 40}px`
       }"
     >
-      <MapTile
-        v-for="tile in viewportTiles"
-        :key="`${tile.x}-${tile.y}`"
-        :x="tile.x"
-        :y="tile.y"
-        :type="tile.type"
-        :is-alerting="!!(getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y)?.trainerId)"
-        :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
-        :transitions="currentMapData?.transitions"
-      />
+      <transition-group name="tile-fade">
+        <MapTile
+          v-for="tile in viewportTiles"
+          :key="`${tile.x}-${tile.y}`"
+          :x="tile.x"
+          :y="tile.y"
+          :type="tile.type"
+          :is-alerting="!!(getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y)?.trainerId)"
+          :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
+          :transitions="currentMapData?.transitions"
+        />
+      </transition-group>
     </div>
 
     <!-- Player -->
@@ -80,7 +82,7 @@ const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
 
-const VIEWPORT_SIZE = 15;
+const VIEWPORT_SIZE = 25;
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -319,3 +321,12 @@ onUnmounted(() => {
   inputStore.removeListener(INPUT_CONTEXTS.WORLD);
 });
 </script>
+
+<style scoped>
+.tile-fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.tile-fade-enter-from {
+  opacity: 0;
+}
+</style>

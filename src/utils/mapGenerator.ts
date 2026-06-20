@@ -188,6 +188,14 @@ export class MapGenerator {
     // 4. Features
     this.addFeatures(map, biome);
 
+    // 4.5 Ensure key elements are preserved and accessible
+    if (spellCenter) {
+      map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
+    }
+    transitions.forEach(t => {
+      map[t.y][t.x] = TILE_TYPES.TRANSITION;
+    });
+
     // 5. Reachability Check
     if (!this.isMapNavigable(map, transitions, spellCenter)) {
       if (retryCount < MAX_RETRIES) {
@@ -391,8 +399,12 @@ export class MapGenerator {
     const grassChance = biome === BIOMES.FOREST ? 0.2 : (biome === BIOMES.CAVE ? 0.025 : 0.07);
     const waterChance = biome === BIOMES.WILDERNESS ? 0.02 : 0.005;
 
+    const protectedTiles = [TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRANSITION, TILE_TYPES.TRAINER];
+
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
+        if (protectedTiles.includes(map[y][x])) continue;
+
         if (map[y][x] === TILE_TYPES.WALL) {
           if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3, [TILE_TYPES.WALL]);
         } else if (map[y][x] === TILE_TYPES.PATH || map[y][x] === TILE_TYPES.EMPTY) {

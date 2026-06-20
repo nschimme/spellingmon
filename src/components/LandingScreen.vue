@@ -99,20 +99,25 @@ const { selectedIndex } = useKeyboardNavigation({
 });
 
 const cloudStyle = (n: number) => {
+  const duration = 15 + (n * 5);
+  // Use negative delay to start animation at a random point immediately
+  const delay = -Math.random() * duration;
   return {
     top: `${10 + (n * 15)}%`,
-    left: `${-20 + (n * 5)}%`,
-    animationDelay: `${n * 2}s`,
-    animationDuration: `${15 + (n * 5)}s`
+    left: `-20%`,
+    animationDelay: `${delay}s`,
+    animationDuration: `${duration}s`
   };
 };
 
 const birdStyle = (n: number) => {
+  const duration = 8 + (n * 2);
+  const delay = -Math.random() * duration;
   return {
     top: `${5 + (n * 10)}%`,
-    left: `${-10}%`,
-    animationDelay: `${n * 3}s`,
-    animationDuration: `${8 + (n * 2)}s`
+    left: `-10%`,
+    animationDelay: `${delay}s`,
+    animationDuration: `${duration}s`
   };
 };
 </script>

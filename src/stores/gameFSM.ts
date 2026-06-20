@@ -42,7 +42,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
           // Handle Debug Mode
           if (typeof window === 'undefined') {
-            ctx.fsm.transition(GAME_STATES.LANDING);
+            await ctx.fsm.transition(GAME_STATES.LANDING);
             return;
           }
           const urlParams = new URLSearchParams(window.location.search);
@@ -67,7 +67,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
              const jumpState = urlParams.get('state');
              if (jumpState && Object.values(GAME_STATES).includes(jumpState)) {
-                ctx.fsm.transition(jumpState);
+                // Robust Debug Jump via Smart LOADING gateway
+                await ctx.fsm.transition(GAME_STATES.LOADING, { target: jumpState });
                 return;
              }
 
@@ -80,18 +81,18 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                 if (urlParams.get('word')) {
                    ctx.session.battle.debugWord = urlParams.get('word');
-                   ctx.fsm.transition(GAME_STATES.BATTLE_SPELLING);
+                   await ctx.fsm.transition(GAME_STATES.BATTLE_SPELLING);
                 } else {
-                   ctx.fsm.transition(GAME_STATES.BATTLE_INTRO, { enemy, type: BATTLE_TYPES.WILD });
+                   await ctx.fsm.transition(GAME_STATES.BATTLE_INTRO, { enemy, type: BATTLE_TYPES.WILD });
                 }
                 return;
              }
 
-             ctx.fsm.transition(GAME_STATES.WORLD);
+             await ctx.fsm.transition(GAME_STATES.WORLD);
              return;
           }
 
-          ctx.fsm.transition(GAME_STATES.LANDING);
+          await ctx.fsm.transition(GAME_STATES.LANDING);
         }
       },
       [GAME_STATES.LANDING]: {
@@ -135,28 +136,29 @@ export const useGameFSM = defineStore('gameFSM', () => {
       [GAME_STATES.LOADING]: {
         onEnter: async (ctx, params) => {
           const startTime = Date.now();
+          const target = params?.target || (ctx.session.player.characterCreationComplete
+            ? (ctx.session.player.isStarterSelected ? GAME_STATES.WORLD : GAME_STATES.STARTER_SELECTION)
+            : GAME_STATES.CHARACTER_CREATION);
 
-          if (ctx.session.player.characterCreationComplete) {
-             await Promise.all([
-                ctx.vocab.loadVocab(ctx.session.player.currentArea, ctx.settings.locale),
-                ctx.map.generateMap(params?.isTransition, params?.direction)
-             ]);
+          // SMART GATEWAY: Resolve requirements based on metadata
+          // Recursively check metadata for the target state and its parents
+          const requirements = getRequirements(target);
+
+          if (requirements.vocab || requirements.map) {
+             const loaders = [];
+             if (requirements.vocab) loaders.push(ctx.vocab.loadVocab(ctx.session.player.currentArea, ctx.settings.locale));
+             if (requirements.map) loaders.push(ctx.map.generateMap(params?.isTransition, params?.direction));
+             await Promise.all(loaders);
           }
 
-          // Ensure a minimum "nice" delay, but wait longer if map generation is slow
-          const minDelay = 1500;
+          // Ensure a minimum "nice" delay, but wait longer if generation is slow
+          const minDelay = params?.target ? 0 : 1500; // Skip delay for debug jumps
           const elapsed = Date.now() - startTime;
           if (elapsed < minDelay) {
             await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
           }
 
-          if (!ctx.session.player.characterCreationComplete) {
-            ctx.fsm.transition(GAME_STATES.CHARACTER_CREATION);
-          } else if (!ctx.session.player.isStarterSelected) {
-            ctx.fsm.transition(GAME_STATES.STARTER_SELECTION);
-          } else {
-            ctx.fsm.transition(GAME_STATES.WORLD);
-          }
+          await ctx.fsm.transition(target, params);
         }
       },
       [s(GAME_STATES.ONBOARDING)]: {
@@ -171,11 +173,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
       },
       [s(GAME_STATES.PLAY)]: {
         initial: s(GAME_STATES.WORLD),
+        meta: { vocab: true, map: true },
         states: {
           [s(GAME_STATES.WORLD)]: {
-            onEnter: (ctx) => {
+            onEnter: async (ctx) => {
               if (ctx.session.battle.active) {
-                 ctx.fsm.transition(GAME_STATES.BATTLE);
+                 await ctx.fsm.transition(GAME_STATES.BATTLE);
               }
             },
             on: {
@@ -204,7 +207,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
             onExit: (ctx) => { ctx.session.battle.active = false; },
             states: {
               [s(GAME_STATES.BATTLE_INTRO)]: {
-                onEnter: (ctx, params) => {
+                onEnter: async (ctx, params) => {
                   if (params.enemy) {
                     ctx.session.battle.enemyMon = params.enemy;
                     ctx.session.battle.type = params.type || BATTLE_TYPES.WILD;
@@ -308,7 +311,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_PLAYER_ATTACK)]: {
-                onEnter: (ctx, params) => {
+                onEnter: async (ctx, params) => {
                    if (ctx.session.battle.isCapturing) {
                       const hpRatio = ctx.session.battle.enemyMon.hp / ctx.session.battle.enemyMon.maxHp;
                       const speedBonus = params.isPower ? 0.2 : 0;
@@ -344,7 +347,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_ENEMY_TURN)]: {
-                onEnter: (ctx) => {
+                onEnter: async (ctx) => {
                    const { damage } = calculateDamage(ctx.session.battle.enemyMon, ctx.session.activePlayerMon, 30);
                    ctx.session.damagePlayerMon(damage);
                    ctx.session.battle.log.push(ctx.t('battle.enemyAttacked', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species), amount: damage }));
@@ -376,7 +379,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_VICTORY)]: {
-                onEnter: (ctx) => {
+                onEnter: async (ctx) => {
                   ctx.session.battle.log.push(ctx.t('battle.win', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
                   audio.playSound(SOUND_EFFECTS.VICTORY);
                   const exp = calculateExpGain(ctx.session.battle.enemyMon, ctx.session.battle.type === BATTLE_TYPES.TRAINER);
@@ -420,6 +423,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
         }
       }
     }
+  };
+
+  const getRequirements = (target: string) => {
+    const parts = target.split('.');
+    const requirements = { vocab: false, map: false };
+
+    for (let i = 1; i <= parts.length; i++) {
+      const path = parts.slice(0, i).join('.');
+      const cfg = path.split('.').reduce((obj: any, key: string) => obj?.states?.[key], config) as any;
+      if (cfg?.meta) {
+        if (cfg.meta.vocab) requirements.vocab = true;
+        if (cfg.meta.map) requirements.map = true;
+      }
+    }
+    return requirements;
   };
 
   const fsm = createFSM(config, context);
