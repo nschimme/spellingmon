@@ -270,6 +270,7 @@ const isPlayerShaking = ref(false);
 const thrownWord = ref('');
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
+const spellingFocusTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
@@ -358,6 +359,13 @@ const refocusInput = () => {
   }
 };
 
+const clearFocusTimer = () => {
+  if (spellingFocusTimeout.value) {
+    clearTimeout(spellingFocusTimeout.value);
+    spellingFocusTimeout.value = null;
+  }
+};
+
 watch(() => session.battle.log, () => {
   nextTick(() => {
     if (battleLog.value) {
@@ -372,7 +380,12 @@ watch(() => fsm.state as any, (newState, oldState) => {
   partyRefs.value = [];
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
-    setTimeout(() => spellingInput.value?.focus(), 50);
+    clearFocusTimer();
+    nextTick(() => {
+      spellingFocusTimeout.value = setTimeout(() => {
+        spellingInput.value?.focus();
+      }, 80);
+    });
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
     timerInterval.value = setInterval(() => {
@@ -384,6 +397,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
       clearInterval(timerInterval.value);
       timerInterval.value = null;
     }
+    clearFocusTimer();
   }
 
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK) {
@@ -419,6 +433,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (timerInterval.value) clearInterval(timerInterval.value);
+  clearFocusTimer();
 });
 </script>
 
@@ -442,11 +457,11 @@ onUnmounted(() => {
 
 @keyframes throw-word {
   0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.2) rotate(-5deg); }
-  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5) rotate(20deg); }
+  40% { left: 40%; bottom: 60%; opacity: 1; transform: scale(1.4) rotate(-10deg); }
+  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.5) rotate(20deg); }
 }
 .animate-throw {
-  animation: throw-word 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: throw-word 1.5s ease-in-out forwards;
 }
 
 .whiteout-fade-enter-active,

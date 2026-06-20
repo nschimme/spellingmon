@@ -1,4 +1,5 @@
 import { ref, type Ref } from 'vue';
+import i18n from '../i18n';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { TILE_TYPES, type MapResult, type Trainer } from '../utils/mapGenerator';
@@ -62,8 +63,11 @@ export function useTrainerAI(
     alertingTrainer.value = trainerId;
     audio.playSound(SOUND_EFFECTS.CLICK);
 
-    // Start FSM transition to block movement/input
+    // Block movement immediately
     fsm.send(GAME_EVENTS.ENCOUNTER, { type: BATTLE_TYPES.TRAINER });
+
+    // Initial speech notification using i18n
+    session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: trainer.name }));
 
     setTimeout(async () => {
       const dx = playerX.value - trainer.x;
@@ -83,7 +87,7 @@ export function useTrainerAI(
           currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
         }
 
-        await new Promise(r => setTimeout(r, 150));
+        await new Promise(r => setTimeout(r, 200));
       }
 
       alertingTrainer.value = null;

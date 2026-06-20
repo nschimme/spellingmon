@@ -204,7 +204,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
           [s(GAME_STATES.BATTLE)]: {
             initial: s(GAME_STATES.BATTLE_INTRO),
             onEnter: (ctx) => { ctx.session.battle.active = true; },
-            onExit: (ctx) => { ctx.session.battle.active = false; },
+            onExit: (ctx) => {
+              ctx.session.battle.active = false;
+              ctx.session.resetBattle();
+            },
             states: {
               [s(GAME_STATES.BATTLE_INTRO)]: {
                 onEnter: async (ctx, params) => {
@@ -238,7 +241,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        return null;
                     }
                     const success = Math.random() > 0.5;
-                    if (success) return GAME_STATES.WORLD;
+                    if (success) {
+                       return GAME_STATES.WORLD;
+                    }
                     ctx.session.battle.log.push(ctx.t('battle.cannotEscape'));
                     return GAME_STATES.BATTLE_ENEMY_TURN;
                   }
@@ -322,7 +327,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         ctx.session.battle.log.push(ctx.t('battle.catchSuccess', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
                         const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp});
                         if (added) {
-                          setTimeout(() => ctx.fsm.transition(GAME_STATES.WORLD), 1500);
+                          setTimeout(() => {
+                            ctx.fsm.transition(GAME_STATES.WORLD);
+                          }, 1500);
                         } else {
                           setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_PARTY_FULL), 1000);
                         }

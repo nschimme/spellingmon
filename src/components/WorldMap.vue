@@ -5,8 +5,8 @@
       class="absolute transition-all duration-200 linear"
       :class="{ 'duration-0': isJumping }"
       :style="{
-        left: `calc(50% - ${playerX * 40}px)`,
-        top: `calc(50% - ${playerY * 40}px)`,
+        left: `calc(50% - ${playerX * 40}px - 20px)`,
+        top: `calc(50% - ${playerY * 40}px - 20px)`,
         width: `${MAP_WIDTH * 40}px`,
         height: `${MAP_HEIGHT * 40}px`
       }"
@@ -18,15 +18,23 @@
           :x="tile.x"
           :y="tile.y"
           :type="tile.type"
-          :is-alerting="!!(getTrainerAt(tile.x, tile.y) && alertingTrainer === getTrainerAt(tile.x, tile.y)?.trainerId)"
-          :trainer-emoji="getTrainerEmoji(tile.x, tile.y)"
           :transitions="currentMapData?.transitions"
         />
       </transition-group>
+
+      <!-- Trainer Layer -->
+      <TrainerSprite
+        v-for="trainer in viewportTrainers"
+        :key="trainer.trainerId"
+        :x="trainer.x"
+        :y="trainer.y"
+        :direction="trainer.direction"
+        :is-alerting="alertingTrainer === trainer.trainerId"
+      />
     </div>
 
     <!-- Player -->
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center z-20">
       <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">
         {{ session.player.name }}
       </div>
@@ -73,6 +81,7 @@ import { usePlayerMovement } from '../composables/usePlayerMovement';
 
 import MapHUD from './map/MapHUD.vue';
 import MapTile from './map/MapTile.vue';
+import TrainerSprite from './map/TrainerSprite.vue';
 import MobileControls from './map/MobileControls.vue';
 
 const session = useSessionStore();
@@ -82,7 +91,7 @@ const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
 
-const VIEWPORT_SIZE = 25;
+const VIEWPORT_SIZE = 27;
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -209,18 +218,18 @@ const viewportTiles = computed(() => {
   return tiles;
 });
 
-const getTrainerEmoji = (x: number, y: number) => {
-  if (!currentMapData.value) return '👤';
-  const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
-  if (!trainer) return '👤';
-  switch (trainer.direction) {
-    case 'up': return '🧒';
-    case 'down': return '👦';
-    case 'left': return '👧';
-    case 'right': return '🧒';
-    default: return '👤';
-  }
-};
+const viewportTrainers = computed(() => {
+  if (!currentMapData.value) return [];
+  const half = Math.floor(VIEWPORT_SIZE / 2);
+  const startX = Math.max(0, Math.min(MAP_WIDTH.value - VIEWPORT_SIZE, playerX.value - half));
+  const startY = Math.max(0, Math.min(MAP_HEIGHT.value - VIEWPORT_SIZE, playerY.value - half));
+  const endX = startX + VIEWPORT_SIZE;
+  const endY = startY + VIEWPORT_SIZE;
+
+  return currentMapData.value.trainers
+    .map((t, i) => ({ ...t, trainerId: `area${session.player.currentArea}_${i}` }))
+    .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY);
+});
 
 const checkTriggers = (x: number, y: number) => {
   const type = getTileType(x, y);
@@ -275,6 +284,7 @@ const checkTriggers = (x: number, y: number) => {
   if (type === TILE_TYPES.GRASS) {
     if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
       setTimeout(() => {
+        // Double check alertingTrainer and state to prevent wild battles before trainer
         if (fsm.matches(GAME_STATES.WORLD) && !alertingTrainer.value) {
           triggerWildBattle();
         }

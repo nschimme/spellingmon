@@ -4,10 +4,6 @@
     :class="getTileClass(type)"
     :style="{ left: `${x * 40}px`, top: `${y * 40}px` }"
   >
-    <span
-      v-if="isAlerting"
-      class="absolute -top-6 text-red-600 font-bold animate-bounce text-2xl"
-    >!</span>
     {{ emoji }}
   </div>
 </template>
@@ -21,8 +17,6 @@ const props = defineProps({
   x: { type: Number, default: 0 },
   y: { type: Number, default: 0 },
   type: { type: Number, default: 0 },
-  isAlerting: { type: Boolean, default: false },
-  trainerEmoji: { type: String, default: '👤' },
   transitions: {
     type: Array,
     default: () => []
@@ -40,13 +34,12 @@ const getTileClass = (type: any) => {
     case TILE_TYPES.BUILDING: return 'bg-blue-800';
     case TILE_TYPES.PATH: return 'bg-orange-50';
     case TILE_TYPES.EMPTY: return 'bg-gray-100';
+    case TILE_TYPES.TRAINER: return 'bg-orange-50'; // Render trainers on path color
     default: return 'bg-green-100';
   }
 };
 
 const emoji = computed(() => {
-  if (props.type === TILE_TYPES.TRAINER) return props.trainerEmoji || '👤';
-
   switch (props.type) {
     case TILE_TYPES.GRASS: return '🌿';
     case TILE_TYPES.SPELL_CENTER: return '🏥';
