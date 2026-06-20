@@ -34,11 +34,11 @@
     </div>
 
     <!-- Player -->
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center z-20">
-      <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex flex-col items-center justify-center z-20">
+      <div class="absolute bottom-full mb-1 bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase whitespace-nowrap">
         {{ session.player.name }}
       </div>
-      <div class="relative">
+      <div class="relative text-2xl drop-shadow-md flex items-center justify-center">
         <span>{{ playerEmoji }}</span>
         <span class="absolute -bottom-1 -right-1 text-xs">{{ session.player.party[0]?.emoji }}</span>
       </div>
@@ -73,7 +73,7 @@ import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
-import { TILE_TYPES } from '../utils/mapGenerator';
+import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
 import { useTrainerAI } from '../composables/useTrainerAI';
@@ -148,7 +148,8 @@ const handleInput = (e: any) => {
       enemy: enemyMon,
       type: BATTLE_TYPES.TRAINER,
       trainerId,
-      trainerParty: party
+      trainerParty: party,
+      trainerName: trainer.name
     });
   } else {
     // 2. Wild battle triggers
@@ -302,16 +303,17 @@ const triggerWildBattle = async () => {
   fsm.send(GAME_EVENTS.ENCOUNTER, { enemy: wildMon, type: BATTLE_TYPES.WILD });
 };
 
-const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
+const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
   await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
-  const party = trainer.party.map((p: any) => ({ ...p, isDefeated: false }));
+  const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
   const firstMonCfg = party[0];
   const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
   fsm.send(GAME_EVENTS.ENCOUNTER, {
     enemy: enemyMon,
     type: BATTLE_TYPES.TRAINER,
     trainerId,
-    trainerParty: party
+    trainerParty: party,
+    trainerName: trainer.name
   });
 };
 
