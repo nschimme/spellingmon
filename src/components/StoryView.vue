@@ -1,8 +1,19 @@
 <template>
-  <div class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-8 text-white text-center font-bold">
-    <div v-if="type === 'intro' || type === 'ending'" class="max-w-2xl w-full">
-      <transition name="fade" mode="out-in">
-        <div :key="currentIndex" class="min-h-[200px] flex flex-col items-center justify-center">
+  <div
+    class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-8 text-white text-center font-bold"
+  >
+    <div
+      v-if="type === 'intro' || type === 'ending'"
+      class="max-w-2xl w-full"
+    >
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <div
+          :key="currentIndex"
+          class="min-h-[200px] flex flex-col items-center justify-center"
+        >
           <p class="text-xl sm:text-2xl leading-relaxed mb-8">
             {{ currentText }}
           </p>
@@ -30,7 +41,10 @@
       </div>
     </div>
 
-    <div v-else-if="type === 'areaComplete'" class="max-w-xl w-full bg-gray-900 border-4 border-yellow-400 p-8 rounded-2xl shadow-2xl">
+    <div
+      v-else-if="type === 'areaComplete'"
+      class="max-w-xl w-full bg-gray-900 border-4 border-yellow-400 p-8 rounded-2xl shadow-2xl"
+    >
       <h2 class="text-3xl text-yellow-400 mb-4 uppercase tracking-widest">
         {{ $t('story.areaComplete.title') }}
       </h2>

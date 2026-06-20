@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { useVocabStore } from '../stores/vocabStore';
@@ -182,7 +182,9 @@ watch(() => session.player.position, (newPos, oldPos) => {
       isJumping.value = true;
       playerX.value = newPos.x;
       playerY.value = newPos.y;
-      setTimeout(() => { isJumping.value = false; }, 50);
+      nextTick(() => {
+        isJumping.value = false;
+      });
     } else {
       playerX.value = newPos.x;
       playerY.value = newPos.y;
@@ -257,7 +259,7 @@ const checkTriggers = (x: number, y: number) => {
         session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
       }
-      fsm.send(GAME_EVENTS.COMPLETE, { type: 'area' });
+      fsm.send(GAME_EVENTS.COMPLETE, { type: 'area', area: session.player.currentArea });
       session.player.unlockedAreas.push(session.player.currentArea + 1);
       session.player.currentArea++;
       session.save();

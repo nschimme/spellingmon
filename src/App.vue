@@ -108,8 +108,8 @@ onUnmounted(() => {
 
         <StoryView
           v-if="fsm.matches(GAME_STATES.STORY_CUTSCENE)"
-          :type="!session.player.isStarterSelected ? 'intro' : (session.player.currentArea >= 9 ? 'ending' : 'areaComplete')"
-          :area="session.player.currentArea"
+          :type="!session.player.isStarterSelected ? 'intro' : (fsm.params.area >= 9 ? 'ending' : 'areaComplete')"
+          :area="fsm.params.area"
           @finish="fsm.send(GAME_EVENTS.FINISH)"
         />
       </template>

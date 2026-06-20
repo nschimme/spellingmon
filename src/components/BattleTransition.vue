@@ -1,6 +1,9 @@
 <template>
   <transition name="battle-transition">
-    <div v-if="active" class="fixed inset-0 z-[100] pointer-events-none overflow-hidden">
+    <div
+      v-if="active"
+      class="fixed inset-0 z-[100] pointer-events-none overflow-hidden"
+    >
       <!-- Flash -->
       <div class="absolute inset-0 bg-white animate-flash-rapid" />
 

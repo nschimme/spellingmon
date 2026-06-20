@@ -192,7 +192,8 @@
             <input
               ref="spellingInput"
               v-model="userInput"
-              class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400"
+              :disabled="isSubmitting"
+              class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
               :placeholder="$t('battle.typeHere')"
               @keydown.enter="submitSpelling"
               @blur="refocusInput"
@@ -241,6 +242,7 @@ const isFlashing = ref(false);
 const timeLeft = ref(0);
 const showMistake = ref(false);
 const showPerfect = ref(false);
+const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
 const thrownWord = ref('');
@@ -313,7 +315,8 @@ const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
 });
 
 const submitSpelling = () => {
-  if (!session.battle.currentWord) return;
+  if (!session.battle.currentWord || isSubmitting.value) return;
+  isSubmitting.value = true;
   const input = userInput.value;
   thrownWord.value = input;
   thrownWordClass.value = 'throwing';
@@ -339,6 +342,7 @@ const submitSpelling = () => {
     thrownWord.value = '';
     fsm.send(GAME_EVENTS.SUBMIT, { input });
     userInput.value = '';
+    isSubmitting.value = false;
   }, 500);
 };
 

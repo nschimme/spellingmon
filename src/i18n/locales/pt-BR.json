@@ -60,6 +60,28 @@
     "adventureAwaits": "Uma nova aventura espera...",
     "hp": "PS"
   },
+  "story": {
+    "skip": "Pular Intro",
+    "intro": [
+      "Em um mundo onde as palavras detêm o poder da criação, a vida era harmoniosa...",
+      "Mas então, a 'Tempestade Silenciosa' chegou. Um vazio misterioso que apagou as palavras da existência.",
+      "Os Spellingmon, guardiões do vocabulário, tornaram-se selvagens e confusos conforme seus nomes desapareciam.",
+      "Como um novo Escoteiro do Léxico, é seu dever usar o mágico Spellingdex para redescobrir essas palavras perdidas.",
+      "Ao soletrar seus nomes corretamente, você restaura sua essência e acalma seus espíritos.",
+      "Vá em frente, jovem Escoteiro! Salve a linguagem e salve o nosso mundo!"
+    ],
+    "areaComplete": {
+      "title": "Área Restaurada!",
+      "description": "Você mapeou com sucesso o vocabulário de {area}. A Tempestade Silenciosa recua destas terras."
+    },
+    "ending": [
+      "A Tempestade Silenciosa finalmente se dissipou. O Léxico está completo mais uma vez.",
+      "Graças aos seus esforços, os Spellingmon vivem em paz e o poder da linguagem foi restaurado.",
+      "Mas o mundo é vasto e novas palavras nascem todos os dias...",
+      "Continue explorando, continue soletrando e continue aprendendo!",
+      "Fim"
+    ]
+  },
   "battle": {
     "experience": "Experiência",
     "expGainedShort": "EXP Ganho: +{n}",

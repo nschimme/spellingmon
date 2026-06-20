@@ -60,6 +60,28 @@
     "adventureAwaits": "Una nueva aventura te espera...",
     "hp": "PS"
   },
+  "story": {
+    "skip": "Saltar Intro",
+    "intro": [
+      "En un mundo donde las palabras poseen el poder de la creación, la vida era armoniosa...",
+      "Pero entonces, llegó la 'Tormenta Silenciosa'. Un vacío misterioso que borró las palabras de la existencia.",
+      "Los Spellingmon, guardianes del vocabulario, se volvieron salvajes y confusos al desaparecer sus nombres.",
+      "Como nuevo Explorador del Léxico, es tu deber usar el mágico Spellingdex para redescubrir estas palabras perdidas.",
+      "Al deletrear sus nombres correctamente, restauras su esencia y calmas sus espíritus.",
+      "¡Adelante, joven Explorador! ¡Salva el lenguaje y salva nuestro mundo!"
+    ],
+    "areaComplete": {
+      "title": "¡Área Restaurada!",
+      "description": "Has mapeado con éxito el vocabulario de {area}. La Tormenta Silenciosa se retira de estas tierras."
+    },
+    "ending": [
+      "La Tormenta Silenciosa finalmente se ha disipado. El Léxico está completo una vez más.",
+      "Gracias a tus esfuerzos, los Spellingmon viven en paz y el poder del lenguaje ha sido restaurado.",
+      "Pero el mundo es vasto y cada día nacen nuevas palabras...",
+      "¡Sigue explorando, sigue deletreando y sigue aprendiendo!",
+      "Fin"
+    ]
+  },
   "battle": {
     "experience": "Experiencia",
     "expGainedShort": "EXP Ganada: +{n}",
