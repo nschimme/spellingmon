@@ -7,7 +7,10 @@
     <!-- Battle Field -->
     <div class="flex-1 relative border-4 border-gray-800 rounded-lg overflow-hidden bg-gradient-to-b from-blue-100 to-green-100 min-h-0">
       <!-- Enemy -->
-      <div class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300">
+      <div
+        class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
+        :class="{ 'animate-shake': isEnemyShaking }"
+      >
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
           <div class="flex flex-col font-bold leading-tight">
             <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.battle.enemyMon.species) }}</span>
@@ -27,7 +30,10 @@
       </div>
 
       <!-- Player -->
-      <div class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300">
+      <div
+        class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
+        :class="{ 'animate-shake': isPlayerShaking }"
+      >
         <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">
           {{ session.activePlayerMon.emoji }}
         </div>
@@ -59,6 +65,14 @@
             {{ session.battle.currentWord?.word }}
           </p>
         </div>
+      </div>
+
+      <!-- Thrown Word -->
+      <div
+        v-if="thrownWord"
+        class="absolute z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw"
+      >
+        {{ thrownWord }}
       </div>
 
       <div
@@ -172,11 +186,13 @@
               </p>
             </div>
             <input
+              ref="spellingInput"
               v-model="userInput"
-              class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg"
+              :disabled="isSubmitting"
+              class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
               :placeholder="$t('battle.typeHere')"
-              autofocus
               @keydown.enter="submitSpelling"
+              @blur="refocusInput"
             >
           </div>
         </template>
@@ -222,6 +238,11 @@ const isFlashing = ref(false);
 const timeLeft = ref(0);
 const showMistake = ref(false);
 const showPerfect = ref(false);
+const isSubmitting = ref(false);
+const isEnemyShaking = ref(false);
+const isPlayerShaking = ref(false);
+const thrownWord = ref('');
+const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
 const actionRefs = ref<(HTMLElement | null)[]>([]);
@@ -288,9 +309,23 @@ const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
 });
 
 const submitSpelling = () => {
-  if (!session.battle.currentWord) return;
-  fsm.send(GAME_EVENTS.SUBMIT, { input: userInput.value });
-  userInput.value = '';
+  if (!session.battle.currentWord || isSubmitting.value) return;
+  isSubmitting.value = true;
+  const input = userInput.value;
+  thrownWord.value = input;
+
+  setTimeout(() => {
+    thrownWord.value = '';
+    fsm.send(GAME_EVENTS.SUBMIT, { input });
+    userInput.value = '';
+    isSubmitting.value = false;
+  }, 600); // Slightly longer than CSS animation (500ms)
+};
+
+const refocusInput = () => {
+  if (fsm.matches(GAME_STATES.BATTLE_SPELLING)) {
+    spellingInput.value?.focus();
+  }
 };
 
 watch(() => fsm.state as any, (newState, oldState) => {
@@ -299,6 +334,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
   partyRefs.value = [];
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
+    setTimeout(() => spellingInput.value?.focus(), 50);
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
     timerInterval.value = setInterval(() => {
@@ -309,6 +345,18 @@ watch(() => fsm.state as any, (newState, oldState) => {
     if (timerInterval.value) {
       clearInterval(timerInterval.value);
       timerInterval.value = null;
+    }
+  }
+
+  if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK) {
+    isEnemyShaking.value = true;
+    setTimeout(() => isEnemyShaking.value = false, 500);
+  }
+
+  if (newState === GAME_STATES.BATTLE_ENEMY_TURN) {
+    if (oldState !== GAME_STATES.BATTLE_SPELLING) { // Don't shake if it was just a miss
+        isPlayerShaking.value = true;
+        setTimeout(() => isPlayerShaking.value = false, 500);
     }
   }
 
@@ -343,5 +391,22 @@ onUnmounted(() => {
 }
 .animate-flash {
   animation: flash 0.1s steps(2, start) 5;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
+}
+.animate-shake {
+  animation: shake 0.1s ease-in-out infinite;
+}
+
+@keyframes throw-word {
+  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1); }
+  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5); }
+}
+.animate-throw {
+  animation: throw-word 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 </style>

@@ -68,6 +68,28 @@
     "adventureAwaits": "A new adventure awaits...",
     "hp": "HP"
   },
+  "story": {
+    "skip": "Skip Intro",
+    "intro": [
+      "In a world where words hold the power of creation, life was harmonious...",
+      "But then, the 'Silent Storm' arrived. A mysterious void that erased words from existence.",
+      "Spellingmon, the guardians of vocabulary, became wild and confused as their names vanished.",
+      "As a new Lexicon Scout, it is your duty to use the magical Spellingdex to rediscover these lost words.",
+      "By spelling their names correctly, you restore their essence and calm their spirits.",
+      "Go forth, young Scout! Save the language, and save our world!"
+    ],
+    "areaComplete": {
+      "title": "Area Restored!",
+      "description": "You've successfully mapped the vocabulary of {area}. The Silent Storm retreats from these lands."
+    },
+    "ending": [
+      "The Silent Storm has finally dissipated. The Lexicon is complete once more.",
+      "Thanks to your efforts, the Spellingmon live in peace, and the power of language is restored.",
+      "But the world is vast, and new words are born every day...",
+      "Keep scouting, keep spelling, and keep learning!",
+      "The End"
+    ]
+  },
   "battle": {
     "experience": "Experience",
     "expGainedShort": "EXP Gained: +{n}",

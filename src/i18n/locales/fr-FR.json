@@ -60,6 +60,28 @@
     "adventureAwaits": "Une nouvelle aventure commence...",
     "hp": "PV"
   },
+  "story": {
+    "skip": "Passer l'Intro",
+    "intro": [
+      "Dans un monde où les mots détiennent le pouvoir de la création, la vie était harmonieuse...",
+      "Mais alors, la 'Tempête Silencieuse' arriva. Un vide mystérieux qui effaça les mots de l'existence.",
+      "Les Spellingmon, gardiens du vocabulaire, devinrent sauvages et confus à mesure que leurs noms disparaissaient.",
+      "En tant que nouvel Éclaireur du Lexique, il est de votre devoir d'utiliser le Spellingdex magique pour redécouvrir ces mots perdus.",
+      "En épelant correctement leurs noms, vous restaurez leur essence et calmez leurs esprits.",
+      "Partez, jeune Éclaireur ! Sauvez la langue, et sauvez notre monde !"
+    ],
+    "areaComplete": {
+      "title": "Zone Restaurée !",
+      "description": "Vous avez cartographié avec succès le vocabulaire de {area}. La Tempête Silencieuse se retire de ces terres."
+    },
+    "ending": [
+      "La Tempête Silencieuse s'est enfin dissipée. Le Lexique est à nouveau complet.",
+      "Grâce à vos efforts, les Spellingmon vivent en paix, et le pouvoir du langage est restauré.",
+      "Mais le monde est vaste, et de nouveaux mots naissent chaque jour...",
+      "Continuez à explorer, continuez à épeler, et continuez à apprendre !",
+      "Fin"
+    ]
+  },
   "battle": {
     "experience": "Expérience",
     "expGainedShort": "EXP Gagné : +{n}",

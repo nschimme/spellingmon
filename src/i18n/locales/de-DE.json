@@ -60,6 +60,28 @@
     "adventureAwaits": "Ein neues Abenteuer erwartet dich...",
     "hp": "KP"
   },
+  "story": {
+    "skip": "Intro überspringen",
+    "intro": [
+      "In einer Welt, in der Worte die Macht der Schöpfung besitzen, war das Leben harmonisch...",
+      "Doch dann kam der 'Stumme Sturm'. Eine mysteriöse Leere, die Worte aus der Existenz löschte.",
+      "Spellingmon, die Hüter des Vokabulars, wurden wild und verwirrt, als ihre Namen verschwanden.",
+      "Als neuer Lexicon-Scout ist es deine Pflicht, den magischen Spellingdex zu nutzen, um diese verlorenen Worte wiederzufinden.",
+      "Indem du ihre Namen korrekt buchstabierst, stellst du ihr Wesen wieder her und beruhigst ihre Geister.",
+      "Zieh aus, junger Scout! Rette die Sprache und rette unsere Welt!"
+    ],
+    "areaComplete": {
+      "title": "Gebiet wiederhergestellt!",
+      "description": "Du hast das Vokabular von {area} erfolgreich kartiert. Der Stumme Sturm zieht sich aus diesen Landen zurück."
+    },
+    "ending": [
+      "Der Stumme Sturm hat sich endlich aufgelöst. Das Lexikon ist wieder vollständig.",
+      "Dank deiner Bemühungen leben die Spellingmon in Frieden, und die Macht der Sprache ist wiederhergestellt.",
+      "Doch die Welt ist riesig, und jeden Tag werden neue Worte geboren...",
+      "Scoute weiter, buchstabier weiter und lerne weiter!",
+      "Das Ende"
+    ]
+  },
   "battle": {
     "experience": "Erfahrung",
     "expGainedShort": "EXP erhalten: +{n}",
