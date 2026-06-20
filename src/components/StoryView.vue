@@ -65,9 +65,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
+import { speech } from '../utils/speech';
 
 const props = defineProps<{
   type: 'intro' | 'areaComplete' | 'ending';
@@ -95,6 +96,7 @@ const currentText = computed(() => {
 const isLast = computed(() => currentIndex.value >= lines.value.length - 1);
 
 const next = () => {
+  speech.speak(''); // Stop current speech
   if (isLast.value) {
     emit('finish');
   } else {
@@ -103,10 +105,12 @@ const next = () => {
 };
 
 const skip = () => {
+  speech.speak(''); // Stop current speech
   emit('finish');
 };
 
 const finish = () => {
+  speech.speak(''); // Stop current speech
   emit('finish');
 };
 
@@ -137,6 +141,12 @@ const { selectedIndex } = useKeyboardNavigation({
     }
   }
 });
+
+watch(currentText, (newText) => {
+  if (newText) {
+    speech.speak(newText);
+  }
+}, { immediate: true });
 
 onMounted(() => {
   // Focus logic handled by useKeyboardNavigation selectedIndex

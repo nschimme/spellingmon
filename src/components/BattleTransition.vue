@@ -2,14 +2,14 @@
   <transition name="battle-transition">
     <div
       v-if="active"
-      class="fixed inset-0 z-[100] pointer-events-none overflow-hidden"
+      class="fixed inset-0 z-[100] pointer-events-none overflow-hidden backdrop-blur-md transition-all duration-1000"
     >
-      <!-- Flash -->
-      <div class="absolute inset-0 bg-white animate-flash-rapid" />
+      <!-- Smooth Fade Overlay -->
+      <div class="absolute inset-0 bg-white/30 animate-fade-in-out" />
 
       <!-- Swirl / SVG Overlay -->
       <div class="absolute inset-0 flex items-center justify-center">
-        <div class="w-[200vmax] h-[200vmax] bg-black rounded-full animate-swirl-zoom" />
+        <div class="w-[200vmax] h-[200vmax] bg-black/80 rounded-full animate-swirl-zoom" />
       </div>
     </div>
   </transition>
@@ -22,23 +22,24 @@ defineProps<{
 </script>
 
 <style scoped>
-@keyframes flash-rapid {
-  0%, 20%, 40%, 60%, 80%, 100% { opacity: 0; }
-  10%, 30%, 50%, 70%, 90% { opacity: 1; }
+@keyframes fade-in-out {
+  0% { opacity: 0; backdrop-filter: blur(0px); }
+  50% { opacity: 1; backdrop-filter: blur(20px); }
+  100% { opacity: 0; backdrop-filter: blur(0px); }
 }
 
 @keyframes swirl-zoom {
   0% { transform: scale(0) rotate(0deg); opacity: 0; }
-  50% { transform: scale(0.5) rotate(180deg); opacity: 1; }
+  50% { transform: scale(0.5) rotate(180deg); opacity: 0.8; }
   100% { transform: scale(1.5) rotate(720deg); opacity: 1; }
 }
 
-.animate-flash-rapid {
-  animation: flash-rapid 0.8s steps(1) forwards;
+.animate-fade-in-out {
+  animation: fade-in-out 1.2s ease-in-out forwards;
 }
 
 .animate-swirl-zoom {
-  animation: swirl-zoom 1.2s ease-in-out forwards;
+  animation: swirl-zoom 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .battle-transition-enter-active,

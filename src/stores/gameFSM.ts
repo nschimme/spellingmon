@@ -67,6 +67,11 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
              const jumpState = urlParams.get('state');
              if (jumpState && Object.values(GAME_STATES).includes(jumpState)) {
+                // Ensure map is generated if jumping to WORLD or BATTLE
+                if (jumpState.includes('WORLD') || jumpState.includes('BATTLE')) {
+                   await ctx.vocab.loadVocab(ctx.session.player.currentArea, ctx.settings.locale);
+                   await ctx.map.generateMap();
+                }
                 ctx.fsm.transition(jumpState);
                 return;
              }

@@ -89,7 +89,10 @@
 
     <!-- Battle Log & UI -->
     <div class="h-48 mt-4 border-4 border-gray-800 rounded-lg flex flex-col sm:flex-row p-4 bg-white overflow-hidden">
-      <div class="flex-1 border-b sm:border-b-0 sm:border-r border-gray-300 pr-0 sm:pr-4 overflow-y-auto min-h-0">
+      <div
+        ref="battleLog"
+        class="flex-1 border-b sm:border-b-0 sm:border-r border-gray-300 pr-0 sm:pr-4 overflow-y-auto min-h-0 scroll-smooth"
+      >
         <div
           v-for="(log, i) in session.battle.log"
           :key="i"
@@ -218,6 +221,28 @@
         </template>
       </div>
     </div>
+
+    <!-- Whiteout Full Screen Transition -->
+    <transition name="whiteout-fade">
+      <div
+        v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)"
+        class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center"
+      >
+        <div class="text-9xl mb-8 animate-pulse">🏥</div>
+        <h2 class="text-4xl font-black text-red-600 mb-4 uppercase tracking-tighter">
+          {{ $t('battle.whitedOutTitle') }}
+        </h2>
+        <p class="text-xl font-bold text-gray-700 max-w-md mb-12">
+          {{ $t('battle.whitedOutDesc') }}
+        </p>
+        <button
+          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all"
+          @click="fsm.send(GAME_EVENTS.CONFIRM)"
+        >
+          {{ $t('common.continue') }}
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -245,6 +270,7 @@ const thrownWord = ref('');
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
+const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
 const partyRefs = ref<(HTMLElement | null)[]>([]);
 const whiteoutButton = ref<HTMLElement | null>(null);
@@ -314,12 +340,17 @@ const submitSpelling = () => {
   const input = userInput.value;
   thrownWord.value = input;
 
+  // Stop narrator immediately
+  if (typeof window !== 'undefined' && window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+
   setTimeout(() => {
     thrownWord.value = '';
     fsm.send(GAME_EVENTS.SUBMIT, { input });
     userInput.value = '';
     isSubmitting.value = false;
-  }, 600); // Slightly longer than CSS animation (500ms)
+  }, 1600); // Slightly longer than CSS animation (1500ms)
 };
 
 const refocusInput = () => {
@@ -327,6 +358,14 @@ const refocusInput = () => {
     spellingInput.value?.focus();
   }
 };
+
+watch(() => session.battle.log, () => {
+  nextTick(() => {
+    if (battleLog.value) {
+      battleLog.value.scrollTop = battleLog.value.scrollHeight;
+    }
+  });
+}, { deep: true });
 
 watch(() => fsm.state as any, (newState, oldState) => {
   // Clear refs on state change to avoid stale elements
@@ -403,10 +442,20 @@ onUnmounted(() => {
 }
 
 @keyframes throw-word {
-  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1); }
-  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5); }
+  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.2) rotate(-5deg); }
+  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5) rotate(20deg); }
 }
 .animate-throw {
-  animation: throw-word 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: throw-word 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.whiteout-fade-enter-active,
+.whiteout-fade-leave-active {
+  transition: opacity 1s ease;
+}
+.whiteout-fade-enter-from,
+.whiteout-fade-leave-to {
+  opacity: 0;
 }
 </style>
