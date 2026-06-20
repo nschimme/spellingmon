@@ -90,7 +90,7 @@ onUnmounted(() => {
 
       <template v-else-if="fsm.matches(GAME_STATES.PLAY)">
         <WorldMap
-          v-if="fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MENU)"
+          v-if="fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MENU) || fsm.matches(GAME_STATES.TRAINER_APPROACH)"
           :is-menu-open="fsm.matches(GAME_STATES.MENU)"
           @toggle-menu="fsm.send(fsm.matches(GAME_STATES.MENU) ? GAME_EVENTS.CLOSE : GAME_EVENTS.OPEN_MENU)"
         />
@@ -108,7 +108,7 @@ onUnmounted(() => {
 
         <StoryView
           v-if="fsm.matches(GAME_STATES.STORY_CUTSCENE)"
-          :type="!session.player.isStarterSelected ? 'intro' : (fsm.params.area >= 9 ? 'ending' : 'areaComplete')"
+          :type="(!session.player.isStarterSelected || fsm.params.type === 'intro') ? 'intro' : (fsm.params.area >= 9 ? 'ending' : 'areaComplete')"
           :area="fsm.params.area"
           @finish="fsm.send(GAME_EVENTS.FINISH)"
         />

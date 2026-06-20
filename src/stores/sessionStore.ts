@@ -55,6 +55,47 @@ export interface SessionStoreState {
 export const SESSION_PERSIST_VERSION = '1.0.0';
 
 /**
+ * Ensures session data is consistent and valid.
+ */
+export function sanitizeSessionData(data: any) {
+  if (!data || !data.player) return data;
+
+  const MAP_WIDTH = GAME_CONSTANTS.MAP_WIDTH;
+  const MAP_HEIGHT = GAME_CONSTANTS.MAP_HEIGHT;
+  const defaultCenter = {
+    x: Math.floor(MAP_WIDTH / 2),
+    y: Math.floor(MAP_HEIGHT / 2),
+  };
+
+  const isOutOfBounds = (point?: { x: number; y: number }) =>
+    !point ||
+    point.x < 0 ||
+    point.x >= MAP_WIDTH ||
+    point.y < 0 ||
+    point.y >= MAP_HEIGHT;
+
+  // Ensure position is valid or reset to lastSpellCenter/default
+  const pos = data.player.position;
+  const lastSpellCenter = data.player.lastSpellCenter;
+
+  if (isOutOfBounds(pos)) {
+    if (lastSpellCenter && !isOutOfBounds(lastSpellCenter)) {
+      data.player.position = { ...lastSpellCenter };
+    } else {
+      data.player.position = defaultCenter;
+    }
+  }
+
+  // Ensure character creation and starter selection are consistent
+  if (data.player.party && data.player.party.length > 0) {
+    data.player.isStarterSelected = true;
+    data.player.characterCreationComplete = true;
+  }
+
+  return data;
+}
+
+/**
  * Migration helper for session data.
  * Used by persistence plugin and UI for slot previews.
  */
@@ -72,7 +113,7 @@ export function getSessionSnapshot(saved: any) {
   const { version, data } = saved;
   if (version === undefined || data === undefined) return null;
 
-  const processedData = version === SESSION_PERSIST_VERSION
+  let processedData = version === SESSION_PERSIST_VERSION
     ? data
     : migrateSessionData(data, version);
 
@@ -80,6 +121,9 @@ export function getSessionSnapshot(saved: any) {
   if (!processedData || !processedData.player) {
     return null;
   }
+
+  // Always sanitize snapshots to ensure UI previews and loaded data are consistent
+  processedData = sanitizeSessionData(processedData);
 
   return processedData;
 }
@@ -94,43 +138,7 @@ export const useSessionStore = defineStore('session', {
     version: SESSION_PERSIST_VERSION,
     slotDependent: true,
     migrate: migrateSessionData,
-    sanitize: (data: any) => {
-      if (!data || !data.player) return data;
-
-      const MAP_WIDTH = GAME_CONSTANTS.MAP_WIDTH;
-      const MAP_HEIGHT = GAME_CONSTANTS.MAP_HEIGHT;
-      const defaultCenter = {
-        x: Math.floor(MAP_WIDTH / 2),
-        y: Math.floor(MAP_HEIGHT / 2),
-      };
-
-      const isOutOfBounds = (point?: { x: number; y: number }) =>
-        !point ||
-        point.x < 0 ||
-        point.x >= MAP_WIDTH ||
-        point.y < 0 ||
-        point.y >= MAP_HEIGHT;
-
-      // Ensure position is valid or reset to lastSpellCenter/default
-      const pos = data.player.position;
-      const lastSpellCenter = data.player.lastSpellCenter;
-
-      if (isOutOfBounds(pos)) {
-        if (lastSpellCenter && !isOutOfBounds(lastSpellCenter)) {
-          data.player.position = { ...lastSpellCenter };
-        } else {
-          data.player.position = defaultCenter;
-        }
-      }
-
-      // Ensure character creation and starter selection are consistent
-      if (data.player.party && data.player.party.length > 0) {
-        data.player.isStarterSelected = true;
-        data.player.characterCreationComplete = true;
-      }
-
-      return data;
-    },
+    sanitize: sanitizeSessionData,
     exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
@@ -192,15 +200,22 @@ export const useSessionStore = defineStore('session', {
       }
 
       // 1. Reset transient state first to avoid it being saved into the NEW slot key
-      // if the debounce timer triggers immediately after activeSlot change.
       this.resetBattle();
 
-      // 2. Setting activeSlot will trigger the persistencePlugin to update its cache
-      // and trigger an automatic loadAndPatch for this store.
-      this.activeSlot = idx;
+      // 2. Sync load from storage to prevent race conditions with FSM transitions
+      const saved = storage.load(STORAGE_KEYS.SESSION, idx);
+      const snapshot = getSessionSnapshot(saved);
 
-      // Note: persistencePlugin handles loading the data from the new slot via loadAndPatch()
-      // when it detects the activeSlot change in its $subscribe handler.
+      if (snapshot) {
+        // Apply the loaded data immediately
+        this.$patch(snapshot);
+      } else {
+        // Reset to initial state for new games
+        this.resetSession();
+      }
+
+      // 3. Setting activeSlot will trigger the persistencePlugin to maintain the correct key
+      this.activeSlot = idx;
     },
 
     save() {

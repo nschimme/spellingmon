@@ -457,8 +457,8 @@ onUnmounted(() => {
 
 @keyframes throw-word {
   0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
-  40% { left: 40%; bottom: 60%; opacity: 1; transform: scale(1.4) rotate(-10deg); }
-  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.5) rotate(20deg); }
+  50% { left: 50%; bottom: 70%; opacity: 1; transform: scale(1.1) rotate(-10deg); }
+  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.6) rotate(20deg); }
 }
 .animate-throw {
   animation: throw-word 1.5s ease-in-out forwards;

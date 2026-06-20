@@ -34,11 +34,11 @@
     </div>
 
     <!-- Player -->
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl drop-shadow-md flex flex-col items-center z-20">
-      <div class="bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase mb-1">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex flex-col items-center justify-center z-20">
+      <div class="absolute bottom-full mb-1 bg-white/50 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase whitespace-nowrap">
         {{ session.player.name }}
       </div>
-      <div class="relative">
+      <div class="relative text-2xl drop-shadow-md flex items-center justify-center">
         <span>{{ playerEmoji }}</span>
         <span class="absolute -bottom-1 -right-1 text-xs">{{ session.player.party[0]?.emoji }}</span>
       </div>
@@ -148,7 +148,8 @@ const handleInput = (e: any) => {
       enemy: enemyMon,
       type: BATTLE_TYPES.TRAINER,
       trainerId,
-      trainerParty: party
+      trainerParty: party,
+      trainerName: trainer.name
     });
   } else {
     // 2. Wild battle triggers
@@ -311,7 +312,8 @@ const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
     enemy: enemyMon,
     type: BATTLE_TYPES.TRAINER,
     trainerId,
-    trainerParty: party
+    trainerParty: party,
+    trainerName: (trainer as any).name
   });
 };
 

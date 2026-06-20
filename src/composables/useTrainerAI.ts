@@ -91,12 +91,14 @@ export function useTrainerAI(
       }
 
       alertingTrainer.value = null;
+      // Show trainer dialog on the map before battle
       session.notify(`${trainer.name}: "${trainer.dialog}"`);
 
+      // Extra delay to allow reading the dialog on the map
       setTimeout(() => {
         fsm.send(GAME_EVENTS.CONFIRM, triggerBattleParams);
         engagedTrainers.delete(trainerId);
-      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS);
+      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + 500);
     }, 600);
   };
 

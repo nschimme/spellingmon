@@ -68,7 +68,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
              const jumpState = urlParams.get('state');
              if (jumpState && Object.values(GAME_STATES).includes(jumpState)) {
                 // Robust Debug Jump via Smart LOADING gateway
-                await ctx.fsm.transition(GAME_STATES.LOADING, { target: jumpState });
+                const jumpParams: any = { target: jumpState };
+                urlParams.forEach((value, key) => {
+                   if (key !== 'state' && key !== 'debug') {
+                      jumpParams[key] = isNaN(Number(value)) ? value : Number(value);
+                   }
+                });
+                await ctx.fsm.transition(GAME_STATES.LOADING, jumpParams);
                 return;
              }
 
@@ -136,6 +142,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
       [GAME_STATES.LOADING]: {
         onEnter: async (ctx, params) => {
           const startTime = Date.now();
+          // Ensure we use the latest state from the session store which was just patched in setSlot
           const target = params?.target || (ctx.session.player.characterCreationComplete
             ? (ctx.session.player.isStarterSelected ? GAME_STATES.WORLD : GAME_STATES.STARTER_SELECTION)
             : GAME_STATES.CHARACTER_CREATION);
@@ -164,7 +171,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
       [s(GAME_STATES.ONBOARDING)]: {
         states: {
           [s(GAME_STATES.CHARACTER_CREATION)]: {
-            on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.STORY_CUTSCENE }
+            on: { [GAME_EVENTS.COMPLETE]: { target: GAME_STATES.STORY_CUTSCENE, params: { type: 'intro' } } }
           },
           [s(GAME_STATES.STARTER_SELECTION)]: {
             on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.LOADING }
@@ -187,7 +194,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                  return GAME_STATES.BATTLE_INTRO;
               },
               [GAME_EVENTS.COMPLETE]: (ctx, params) => {
-                if (params?.type === 'area') return GAME_STATES.STORY_CUTSCENE;
+                if (params?.type === 'area') {
+                  return { target: GAME_STATES.STORY_CUTSCENE, params: { area: params.area } };
+                }
                 return null;
               },
               [GAME_EVENTS.OPEN_MENU]: GAME_STATES.MENU,
@@ -217,7 +226,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.trainerId = params.trainerId;
                     ctx.session.battle.trainerParty = params.trainerParty || [];
                     ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
-                    ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
+
+                    if (params.type === BATTLE_TYPES.TRAINER) {
+                      ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: params.trainerName || 'Trainer' })];
+                    } else {
+                      ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
+                    }
+
                     ctx.session.battle.participatingMonIds = [ctx.session.battle.playerMonId];
                   }
                   audio.playSound(SOUND_EFFECTS.BATTLE_START);
