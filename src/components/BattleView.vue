@@ -68,16 +68,12 @@
       </div>
 
       <!-- Thrown Word -->
-      <transition name="throw">
-        <div
-          v-if="thrownWord"
-          class="absolute z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl"
-          :class="thrownWordClass"
-          :style="thrownWordStyle"
-        >
-          {{ thrownWord }}
-        </div>
-      </transition>
+      <div
+        v-if="thrownWord"
+        class="absolute z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw"
+      >
+        {{ thrownWord }}
+      </div>
 
       <div
         v-if="showPerfect"
@@ -246,8 +242,6 @@ const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
 const thrownWord = ref('');
-const thrownWordClass = ref('');
-const thrownWordStyle = ref({});
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
@@ -319,31 +313,13 @@ const submitSpelling = () => {
   isSubmitting.value = true;
   const input = userInput.value;
   thrownWord.value = input;
-  thrownWordClass.value = 'throwing';
-
-  // Start throwing animation towards enemy
-  thrownWordStyle.value = {
-    left: '20%',
-    bottom: '20%',
-    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-  };
-
-  setTimeout(() => {
-    thrownWordStyle.value = {
-      left: '60%',
-      top: '20%',
-      opacity: 0,
-      transform: 'scale(0.5)',
-      transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-    };
-  }, 10);
 
   setTimeout(() => {
     thrownWord.value = '';
     fsm.send(GAME_EVENTS.SUBMIT, { input });
     userInput.value = '';
     isSubmitting.value = false;
-  }, 500);
+  }, 600); // Slightly longer than CSS animation (500ms)
 };
 
 const refocusInput = () => {
@@ -426,11 +402,11 @@ onUnmounted(() => {
   animation: shake 0.1s ease-in-out infinite;
 }
 
-.throw-enter-active, .throw-leave-active {
-  transition: all 0.5s;
+@keyframes throw-word {
+  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1); }
+  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5); }
 }
-.throw-enter-from {
-  opacity: 0;
-  transform: scale(0.5);
+.animate-throw {
+  animation: throw-word 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 </style>

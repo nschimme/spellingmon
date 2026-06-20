@@ -32,7 +32,8 @@
 
         <button
           v-if="type === 'intro'"
-          class="text-gray-400 hover:text-white text-sm"
+          ref="skipButton"
+          class="text-gray-400 hover:text-white text-sm outline-none"
           :class="{ 'ring-2 ring-yellow-400': selectedIndex === 1 }"
           @click="skip"
         >
@@ -110,13 +111,21 @@ const finish = () => {
 };
 
 const nextButton = ref<HTMLElement | null>(null);
+const skipButton = ref<HTMLElement | null>(null);
 const completeButton = ref<HTMLElement | null>(null);
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'story-view',
   isActive: computed(() => true),
-  maxIndex: computed(() => props.type === 'intro' ? 2 : 1),
-  itemRefs: computed(() => props.type === 'areaComplete' ? [completeButton.value] : [nextButton.value]),
+  maxIndex: computed(() => {
+    if (props.type === 'intro') return 2;
+    return 1;
+  }),
+  itemRefs: computed(() => {
+    if (props.type === 'areaComplete') return [completeButton.value];
+    if (props.type === 'intro') return [nextButton.value, skipButton.value];
+    return [nextButton.value];
+  }),
   onConfirm: (idx) => {
     if (props.type === 'intro') {
       if (idx === 0) next();
