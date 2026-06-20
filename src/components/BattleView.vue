@@ -270,6 +270,7 @@ const isPlayerShaking = ref(false);
 const thrownWord = ref('');
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
+const spellingFocusTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
@@ -358,6 +359,13 @@ const refocusInput = () => {
   }
 };
 
+const clearFocusTimer = () => {
+  if (spellingFocusTimeout.value) {
+    clearTimeout(spellingFocusTimeout.value);
+    spellingFocusTimeout.value = null;
+  }
+};
+
 watch(() => session.battle.log, () => {
   nextTick(() => {
     if (battleLog.value) {
@@ -372,11 +380,11 @@ watch(() => fsm.state as any, (newState, oldState) => {
   partyRefs.value = [];
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
+    clearFocusTimer();
     nextTick(() => {
+      spellingFocusTimeout.value = setTimeout(() => {
         spellingInput.value?.focus();
-        // Force focus again after a short delay to ensure it catches the very first keystroke
-        setTimeout(() => spellingInput.value?.focus(), 10);
-        setTimeout(() => spellingInput.value?.focus(), 50);
+      }, 80);
     });
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
@@ -389,6 +397,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
       clearInterval(timerInterval.value);
       timerInterval.value = null;
     }
+    clearFocusTimer();
   }
 
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK) {
@@ -424,6 +433,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (timerInterval.value) clearInterval(timerInterval.value);
+  clearFocusTimer();
 });
 </script>
 

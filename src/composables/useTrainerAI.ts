@@ -62,8 +62,11 @@ export function useTrainerAI(
     alertingTrainer.value = trainerId;
     audio.playSound(SOUND_EFFECTS.CLICK);
 
-    // Start FSM transition to block movement/input
+    // Block movement immediately
     fsm.send(GAME_EVENTS.ENCOUNTER, { type: BATTLE_TYPES.TRAINER });
+
+    // Initial speech notification
+    session.notify(`${trainer.name}: "Hey! You!"`);
 
     setTimeout(async () => {
       const dx = playerX.value - trainer.x;

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 
 export interface PlayerState {
@@ -97,17 +97,29 @@ export const useSessionStore = defineStore('session', {
     sanitize: (data: any) => {
       if (!data || !data.player) return data;
 
+      const MAP_WIDTH = GAME_CONSTANTS.MAP_WIDTH;
+      const MAP_HEIGHT = GAME_CONSTANTS.MAP_HEIGHT;
+      const defaultCenter = {
+        x: Math.floor(MAP_WIDTH / 2),
+        y: Math.floor(MAP_HEIGHT / 2),
+      };
+
+      const isOutOfBounds = (point?: { x: number; y: number }) =>
+        !point ||
+        point.x < 0 ||
+        point.x >= MAP_WIDTH ||
+        point.y < 0 ||
+        point.y >= MAP_HEIGHT;
+
       // Ensure position is valid or reset to lastSpellCenter/default
       const pos = data.player.position;
-      const MAP_LIMIT = 100;
-      const isOffMap = pos && (pos.x < 0 || pos.x >= MAP_LIMIT || pos.y < 0 || pos.y >= MAP_LIMIT);
+      const lastSpellCenter = data.player.lastSpellCenter;
 
-      if (!pos || isOffMap) {
-        if (data.player.lastSpellCenter) {
-          data.player.position = { ...data.player.lastSpellCenter };
+      if (isOutOfBounds(pos)) {
+        if (lastSpellCenter && !isOutOfBounds(lastSpellCenter)) {
+          data.player.position = { ...lastSpellCenter };
         } else {
-          // Default start position if no spell center is known
-          data.player.position = { x: 50, y: 50 };
+          data.player.position = defaultCenter;
         }
       }
 
