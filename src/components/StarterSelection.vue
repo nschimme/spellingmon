@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col items-center justify-center bg-sky-600 p-4 md:p-8">
-    <div class="bg-white border-8 border-gray-800 p-6 md:p-12 rounded-[3rem] shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full transform rotate-1">
+    <div class="bg-white border-8 border-gray-800 p-6 md:p-12 rounded-[3rem] shadow-2xl max-w-4xl w-full overflow-y-auto max-h-full">
       <h1 class="text-3xl md:text-5xl font-black text-center mb-4 uppercase tracking-tighter text-blue-600 drop-shadow-sm">
         {{ $t('starter.title') }}
       </h1>
@@ -12,7 +12,7 @@
         <div
           v-for="(mon, i) in starters"
           :key="mon.species"
-          :class="{ 'ring-8 ring-yellow-400 border-blue-500 -translate-y-4 shadow-2xl bg-blue-50': selectedIndex === i }"
+          :class="{ 'ring-8 ring-yellow-400 border-blue-500 shadow-2xl bg-blue-50': selectedIndex === i }"
           class="group cursor-pointer bg-gray-50 border-8 border-gray-800 p-8 rounded-[2rem] transition-all duration-300 flex flex-col items-center relative overflow-hidden"
           @click="selectStarter(mon)"
         >

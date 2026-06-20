@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col items-center justify-center bg-blue-600 p-8 text-white">
-    <div class="bg-white border-8 border-gray-800 p-8 rounded-[3rem] shadow-2xl max-w-lg w-full text-gray-800 transform -rotate-1">
+    <div class="bg-white border-8 border-gray-800 p-8 rounded-[3rem] shadow-2xl max-w-lg w-full text-gray-800">
       <h2 class="text-xl font-black text-center mb-6 uppercase tracking-tighter text-blue-600">
         {{ $t('character.title') }}
       </h2>
@@ -9,7 +9,7 @@
         <div>
           <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.whatsYourName') }}</label>
           <input
-            ref="nameInputRef"
+            :ref="el => setItemRef(el, 0)"
             v-model="name"
             type="text"
             maxlength="12"
@@ -152,9 +152,11 @@ const { selectedIndex } = useKeyboardNavigation({
 // Sync selectedIndex 0 with focusing the input
 watch(selectedIndex, (newIdx, oldIdx) => {
   if (newIdx === 0) {
-    nameInputRef.value?.focus();
+    const el = itemRefs.value[0];
+    if (el instanceof HTMLInputElement) el.focus();
   } else if (oldIdx === 0) {
-    nameInputRef.value?.blur();
+    const el = itemRefs.value[0];
+    if (el instanceof HTMLInputElement) el.blur();
   }
-});
+}, { immediate: true });
 </script>
