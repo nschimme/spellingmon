@@ -94,6 +94,31 @@ export const useSessionStore = defineStore('session', {
     version: SESSION_PERSIST_VERSION,
     slotDependent: true,
     migrate: migrateSessionData,
+    sanitize: (data: any) => {
+      if (!data || !data.player) return data;
+
+      // Ensure position is valid or reset to lastSpellCenter/default
+      const pos = data.player.position;
+      const MAP_LIMIT = 100;
+      const isOffMap = pos && (pos.x < 0 || pos.x >= MAP_LIMIT || pos.y < 0 || pos.y >= MAP_LIMIT);
+
+      if (!pos || isOffMap) {
+        if (data.player.lastSpellCenter) {
+          data.player.position = { ...data.player.lastSpellCenter };
+        } else {
+          // Default start position if no spell center is known
+          data.player.position = { x: 50, y: 50 };
+        }
+      }
+
+      // Ensure character creation and starter selection are consistent
+      if (data.player.party && data.player.party.length > 0) {
+        data.player.isStarterSelected = true;
+        data.player.characterCreationComplete = true;
+      }
+
+      return data;
+    },
     exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({

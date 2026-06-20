@@ -238,7 +238,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        return null;
                     }
                     const success = Math.random() > 0.5;
-                    if (success) return GAME_STATES.WORLD;
+                    if (success) {
+                       ctx.session.resetBattle();
+                       return GAME_STATES.WORLD;
+                    }
                     ctx.session.battle.log.push(ctx.t('battle.cannotEscape'));
                     return GAME_STATES.BATTLE_ENEMY_TURN;
                   }
@@ -322,7 +325,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         ctx.session.battle.log.push(ctx.t('battle.catchSuccess', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
                         const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp});
                         if (added) {
-                          setTimeout(() => ctx.fsm.transition(GAME_STATES.WORLD), 1500);
+                          setTimeout(() => {
+                            ctx.session.resetBattle();
+                            ctx.fsm.transition(GAME_STATES.WORLD);
+                          }, 1500);
                         } else {
                           setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_PARTY_FULL), 1000);
                         }
@@ -374,6 +380,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     if (ctx.session.player.lastSpellCenter) {
                        ctx.session.updatePlayerPosition({ x: ctx.session.player.lastSpellCenter.x, y: ctx.session.player.lastSpellCenter.y });
                     }
+                    ctx.session.resetBattle();
                     return GAME_STATES.WORLD;
                   }
                 }
@@ -388,7 +395,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_RESULTS)]: {
-                on: { [GAME_EVENTS.CONTINUE]: GAME_STATES.WORLD }
+                on: { [GAME_EVENTS.CONTINUE]: (ctx) => {
+                  ctx.session.resetBattle();
+                  return GAME_STATES.WORLD;
+                }}
               },
               [s(GAME_STATES.BATTLE_PARTY_FULL)]: {
                 on: {
@@ -398,9 +408,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       ctx.session.player.party[index] = {...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp};
                       ctx.session.save();
                     }
+                    ctx.session.resetBattle();
                     return GAME_STATES.WORLD;
                   },
-                  [GAME_EVENTS.RELEASE]: GAME_STATES.WORLD
+                  [GAME_EVENTS.RELEASE]: (ctx) => {
+                    ctx.session.resetBattle();
+                    return GAME_STATES.WORLD;
+                  }
                 }
               }
             }

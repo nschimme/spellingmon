@@ -5,8 +5,8 @@
       class="absolute transition-all duration-200 linear"
       :class="{ 'duration-0': isJumping }"
       :style="{
-        left: `calc(50% - ${playerX * 40}px)`,
-        top: `calc(50% - ${playerY * 40}px)`,
+        left: `calc(50% - ${playerX * 40}px - 20px)`,
+        top: `calc(50% - ${playerY * 40}px - 20px)`,
         width: `${MAP_WIDTH * 40}px`,
         height: `${MAP_HEIGHT * 40}px`
       }"
@@ -82,7 +82,7 @@ const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
 
-const VIEWPORT_SIZE = 25;
+const VIEWPORT_SIZE = 27;
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -275,6 +275,7 @@ const checkTriggers = (x: number, y: number) => {
   if (type === TILE_TYPES.GRASS) {
     if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
       setTimeout(() => {
+        // Double check alertingTrainer and state to prevent wild battles before trainer
         if (fsm.matches(GAME_STATES.WORLD) && !alertingTrainer.value) {
           triggerWildBattle();
         }

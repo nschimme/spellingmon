@@ -183,7 +183,10 @@ export class MapGenerator {
     }
     map[spellCenter.y][spellCenter.x] = TILE_TYPES.SPELL_CENTER;
 
-    const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter);
+    // 6. Level Map generation (moved up to inform trainer placement)
+    this.generateLevelMap(map, levelMap, areaNum, entryRoom);
+
+    const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap);
 
     // 4. Features
     this.addFeatures(map, biome);
@@ -208,9 +211,6 @@ export class MapGenerator {
         console.error(`Map generation failed after ${MAX_RETRIES} attempts for area ${areaNum}. Using potentially disconnected map.`);
       }
     }
-
-    // 6. Level Map generation
-    this.generateLevelMap(map, levelMap, areaNum, entryRoom);
 
     return {
       map,
@@ -331,7 +331,7 @@ export class MapGenerator {
     }
   }
 
-  placeTrainers(rooms: Room[], map: number[][], areaNum: number, transitions: Transition[], spellCenter: Point | null): Trainer[] {
+  placeTrainers(rooms: Room[], map: number[][], areaNum: number, transitions: Transition[], spellCenter: Point | null, levelMap: number[][]): Trainer[] {
     const trainers: Trainer[] = [];
     const count = this.randomRange(8, 12);
     const titles = ['Spelling Bee', 'Grammar Geek', 'Vocab Victor', 'Linguist', 'Prose Pro', 'Word Wizard', 'Syntax Sage', 'Lexis Legend'];
@@ -369,7 +369,7 @@ export class MapGenerator {
         const direction = directions[this.randomRange(0, directions.length - 1)];
 
         const area = AREA_CONFIGS[areaNum];
-        const level = area.maxLevel;
+        const level = levelMap[y][x] || area.maxLevel;
 
         // Scale party size based on area
         let partySize = 1;

@@ -372,7 +372,12 @@ watch(() => fsm.state as any, (newState, oldState) => {
   partyRefs.value = [];
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
-    setTimeout(() => spellingInput.value?.focus(), 50);
+    nextTick(() => {
+        spellingInput.value?.focus();
+        // Force focus again after a short delay to ensure it catches the very first keystroke
+        setTimeout(() => spellingInput.value?.focus(), 10);
+        setTimeout(() => spellingInput.value?.focus(), 50);
+    });
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
     timerInterval.value = setInterval(() => {
@@ -442,11 +447,11 @@ onUnmounted(() => {
 
 @keyframes throw-word {
   0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.2) rotate(-5deg); }
-  100% { left: 60%; top: 20%; opacity: 0; transform: scale(0.5) rotate(20deg); }
+  40% { left: 40%; bottom: 60%; opacity: 1; transform: scale(1.4) rotate(-10deg); }
+  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.5) rotate(20deg); }
 }
 .animate-throw {
-  animation: throw-word 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: throw-word 1.5s ease-in-out forwards;
 }
 
 .whiteout-fade-enter-active,

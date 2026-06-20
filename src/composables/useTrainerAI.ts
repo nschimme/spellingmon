@@ -83,7 +83,7 @@ export function useTrainerAI(
           currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
         }
 
-        await new Promise(r => setTimeout(r, 150));
+        await new Promise(r => setTimeout(r, 200));
       }
 
       alertingTrainer.value = null;
