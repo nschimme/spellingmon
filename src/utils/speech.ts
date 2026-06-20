@@ -16,6 +16,7 @@ export interface SpeechInterface {
   setVolume(val: number): void;
   onError(callback: (error: string) => void): void;
   speak(text: string, langCode?: string | null): void;
+  stop(): void;
   isSupported(): boolean;
   hasVoices(): boolean;
   setVoice(name: string): boolean;
@@ -217,7 +218,9 @@ export const speech: SpeechInterface = {
       } else if (!this.selectedVoice) {
         this.refreshVoices();
       }
-      window.speechSynthesis.cancel();
+      this.stop();
+      if (!text) return; // Allow speak('') to just stop
+
       const utterance = new SpeechSynthesisUtterance(text);
       if (this.selectedVoice) {
         utterance.voice = this.selectedVoice;
@@ -240,6 +243,12 @@ export const speech: SpeechInterface = {
       if (this._onError) {
         this._onError('exception');
       }
+    }
+  },
+
+  stop() {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
     }
   },
 

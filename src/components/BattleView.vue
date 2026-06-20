@@ -247,9 +247,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, computed, type ComponentPublicInstance } from 'vue';
+import { ref, onMounted, onUnmounted, watch, computed, type ComponentPublicInstance, nextTick } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
+import { speech } from '../utils/speech';
 import { getHPColorClass } from '../utils/visuals';
 import { GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
@@ -341,9 +342,7 @@ const submitSpelling = () => {
   thrownWord.value = input;
 
   // Stop narrator immediately
-  if (typeof window !== 'undefined' && window.speechSynthesis) {
-    window.speechSynthesis.cancel();
-  }
+  speech.stop();
 
   setTimeout(() => {
     thrownWord.value = '';

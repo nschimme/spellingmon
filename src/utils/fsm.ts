@@ -9,17 +9,19 @@ export interface FSMConfig {
 export interface FSMStateConfig {
   initial?: string;
   states?: Record<string, FSMStateConfig>;
-  onEnter?: (context: any, params: any) => void;
-  onExit?: (context: any) => void;
+  onEnter?: (context: any, params: any) => void | Promise<void>;
+  onExit?: (context: any) => void | Promise<void>;
   on?: Record<string, string | ((context: any, params: any) => any) | { target: string; params?: any }>;
+  meta?: Record<string, any>;
 }
 
 export interface FSMMachine {
   state: Ref<string>;
   params: Ref<any>;
+  meta: Ref<Record<string, any>>;
   matches(statePath: string): boolean;
-  transition(target: string, params?: any): Promise<void> | void;
-  send(event: string, params?: any): void;
+  transition(target: string, params?: any): Promise<void>;
+  send(event: string, params?: any): Promise<void>;
   _handleEvent(event: string, params: any): void;
   init(): Promise<void>;
 }
@@ -31,6 +33,7 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
   if (config.debug) console.log("[FSM] Creating machine with config:", config);
   const currentState = ref(config.initial);
   const stateParams = ref<any>({});
+  const currentMeta = ref<Record<string, any>>({});
   const eventQueue: { event: string; params: any }[] = [];
   let isProcessing = false;
 
@@ -41,12 +44,13 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
   const machine: FSMMachine = {
     state: currentState,
     params: stateParams,
+    meta: currentMeta,
 
     matches(statePath: string) {
       return currentState.value === statePath || currentState.value.startsWith(statePath + '.');
     },
 
-    transition(target: string, params: any = {}) {
+    async transition(target: string, params: any = {}) {
       const targetConfig = getTargetConfig(target);
       if (!targetConfig) {
         console.warn(`[FSM] State not found: ${target}`);
@@ -65,12 +69,13 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
       // Exit old states (bottom-up to common)
       for (let i = oldPath.length - 1; i >= commonIndex; i--) {
         const cfg = oldPath.slice(0, i + 1).reduce((obj: any, key) => obj?.states?.[key], config) as FSMStateConfig;
-        if (cfg?.onExit) cfg.onExit(context);
+        if (cfg?.onExit) await cfg.onExit(context);
       }
 
       // Update current state before entering to allow transition() calls in onEnter
       currentState.value = target;
       stateParams.value = params;
+      currentMeta.value = targetConfig.meta || {};
 
       // Enter new states (common-down to target)
       for (let i = commonIndex; i < newPath.length; i++) {
@@ -78,7 +83,7 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
         if (cfg?.onEnter) {
           // Pass params only to the leaf state's onEnter
           const isLeaf = (i === newPath.length - 1);
-          cfg.onEnter(context, isLeaf ? params : {});
+          await cfg.onEnter(context, isLeaf ? params : {});
         }
       }
 
@@ -88,7 +93,7 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
       }
     },
 
-    send(event: string, params: any = {}) {
+    async send(event: string, params: any = {}) {
       eventQueue.push({ event, params });
       if (isProcessing) return;
 
@@ -96,13 +101,13 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
       while (eventQueue.length > 0) {
         const item = eventQueue.shift();
         if (item) {
-          machine._handleEvent(item.event, item.params);
+          await machine._handleEvent(item.event, item.params);
         }
       }
       isProcessing = false;
     },
 
-    _handleEvent(event: string, params: any) {
+    async _handleEvent(event: string, params: any) {
       const pathParts = currentState.value.split('.');
 
       // Bubble event up from leaf to root
@@ -131,7 +136,7 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
           }
 
           if (nextState) {
-            this.transition(nextState, nextParams);
+            await this.transition(nextState, nextParams);
           }
           return;
         }
@@ -139,7 +144,7 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
 
       if (event === 'LOGOUT') {
         console.warn("[FSM] Global LOGOUT fallback (force transition to LANDING)");
-        this.transition('LANDING');
+        await this.transition('LANDING');
         return;
       }
 

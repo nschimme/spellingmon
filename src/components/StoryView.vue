@@ -96,7 +96,7 @@ const currentText = computed(() => {
 const isLast = computed(() => currentIndex.value >= lines.value.length - 1);
 
 const next = () => {
-  speech.speak(''); // Stop current speech
+  speech.stop();
   if (isLast.value) {
     emit('finish');
   } else {
@@ -105,12 +105,12 @@ const next = () => {
 };
 
 const skip = () => {
-  speech.speak(''); // Stop current speech
+  speech.stop();
   emit('finish');
 };
 
 const finish = () => {
-  speech.speak(''); // Stop current speech
+  speech.stop();
   emit('finish');
 };
 
