@@ -98,7 +98,7 @@ export function useTrainerAI(
       setTimeout(() => {
         fsm.send(GAME_EVENTS.CONFIRM, triggerBattleParams);
         engagedTrainers.delete(trainerId);
-      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + 500);
+      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + GAME_CONSTANTS.TRAINER_DIALOG_DELAY_MS);
     }, 600);
   };
 

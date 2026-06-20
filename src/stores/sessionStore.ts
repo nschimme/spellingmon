@@ -56,9 +56,14 @@ export const SESSION_PERSIST_VERSION = '1.0.0';
 
 /**
  * Ensures session data is consistent and valid.
+ * Returns a sanitized clone of the data.
  */
-export function sanitizeSessionData(data: any) {
+export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<SessionStoreState> {
   if (!data || !data.player) return data;
+
+  // Deep clone to avoid mutating the original object
+  const cloned = JSON.parse(JSON.stringify(data)) as SessionStoreState;
+  const player = cloned.player;
 
   const MAP_WIDTH = GAME_CONSTANTS.MAP_WIDTH;
   const MAP_HEIGHT = GAME_CONSTANTS.MAP_HEIGHT;
@@ -67,7 +72,7 @@ export function sanitizeSessionData(data: any) {
     y: Math.floor(MAP_HEIGHT / 2),
   };
 
-  const isOutOfBounds = (point?: { x: number; y: number }) =>
+  const isOutOfBounds = (point?: { x: number; y: number } | null) =>
     !point ||
     point.x < 0 ||
     point.x >= MAP_WIDTH ||
@@ -75,24 +80,21 @@ export function sanitizeSessionData(data: any) {
     point.y >= MAP_HEIGHT;
 
   // Ensure position is valid or reset to lastSpellCenter/default
-  const pos = data.player.position;
-  const lastSpellCenter = data.player.lastSpellCenter;
-
-  if (isOutOfBounds(pos)) {
-    if (lastSpellCenter && !isOutOfBounds(lastSpellCenter)) {
-      data.player.position = { ...lastSpellCenter };
+  if (isOutOfBounds(player.position)) {
+    if (player.lastSpellCenter && !isOutOfBounds(player.lastSpellCenter)) {
+      player.position = { ...player.lastSpellCenter };
     } else {
-      data.player.position = defaultCenter;
+      player.position = defaultCenter;
     }
   }
 
   // Ensure character creation and starter selection are consistent
-  if (data.player.party && data.player.party.length > 0) {
-    data.player.isStarterSelected = true;
-    data.player.characterCreationComplete = true;
+  if (player.party && player.party.length > 0) {
+    player.isStarterSelected = true;
+    player.characterCreationComplete = true;
   }
 
-  return data;
+  return cloned;
 }
 
 /**

@@ -73,7 +73,7 @@ import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
-import { TILE_TYPES } from '../utils/mapGenerator';
+import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
 import { useTrainerAI } from '../composables/useTrainerAI';
@@ -303,9 +303,9 @@ const triggerWildBattle = async () => {
   fsm.send(GAME_EVENTS.ENCOUNTER, { enemy: wildMon, type: BATTLE_TYPES.WILD });
 };
 
-const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
+const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
   await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
-  const party = trainer.party.map((p: any) => ({ ...p, isDefeated: false }));
+  const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
   const firstMonCfg = party[0];
   const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
   fsm.send(GAME_EVENTS.ENCOUNTER, {
@@ -313,7 +313,7 @@ const triggerTrainerBattle = async (trainer: any, trainerId: any) => {
     type: BATTLE_TYPES.TRAINER,
     trainerId,
     trainerParty: party,
-    trainerName: (trainer as any).name
+    trainerName: trainer.name
   });
 };
 

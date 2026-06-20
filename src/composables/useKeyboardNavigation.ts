@@ -17,10 +17,10 @@ export interface KeyboardNavigationOptions {
   onCancel?: (() => void) | null;
   onLeft?: ((index: number) => void) | null;
   onRight?: ((index: number) => void) | null;
-  gridColumns?: number;
+  gridColumns?: Ref<number> | number;
   isActive?: Ref<boolean>;
   loop?: boolean;
-  spatialMap?: SpatialMapItem[] | null;
+  spatialMap?: Ref<SpatialMapItem[] | null> | SpatialMapItem[] | null;
   itemRefs?: Ref<(HTMLElement | null)[]> | null;
   priority?: number;
 }
@@ -38,7 +38,7 @@ export function useKeyboardNavigation({
   gridColumns = 1,
   isActive = ref(true),
   loop = true,
-  spatialMap = null,
+  spatialMap: spatialMapInput = null,
   itemRefs = null
 }: KeyboardNavigationOptions) {
   const selectedIndex = ref(0);
@@ -61,6 +61,9 @@ export function useKeyboardNavigation({
     const max = typeof maxIndex === 'function' ? maxIndex() : (typeof maxIndex === 'number' ? maxIndex : maxIndex.value);
     if (max <= 0) return false;
 
+    const spatialMap = unref(spatialMapInput);
+    const cols = unref(gridColumns);
+
     let newIndex = selectedIndex.value;
     const key = e.key.toLowerCase();
     const target = e.target as HTMLElement | null;
@@ -76,21 +79,21 @@ export function useKeyboardNavigation({
     if (e.key === 'ArrowUp' || (!isInput && key === 'w')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.up !== undefined) {
         newIndex = spatialMap[selectedIndex.value].up!;
-      } else if (selectedIndex.value - gridColumns >= 0) {
-        newIndex = selectedIndex.value - gridColumns;
+    } else if (selectedIndex.value - cols >= 0) {
+      newIndex = selectedIndex.value - cols;
       } else if (loop) {
-        const col = selectedIndex.value % gridColumns;
-        const rows = Math.ceil(max / gridColumns);
-        newIndex = (rows - 1) * gridColumns + col;
-        if (newIndex >= max) newIndex -= gridColumns;
+      const col = selectedIndex.value % cols;
+      const rows = Math.ceil(max / cols);
+      newIndex = (rows - 1) * cols + col;
+      if (newIndex >= max) newIndex -= cols;
       }
     } else if (e.key === 'ArrowDown' || (!isInput && key === 's')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.down !== undefined) {
         newIndex = spatialMap[selectedIndex.value].down!;
-      } else if (selectedIndex.value + gridColumns < max) {
-        newIndex = selectedIndex.value + gridColumns;
+    } else if (selectedIndex.value + cols < max) {
+      newIndex = selectedIndex.value + cols;
       } else if (loop) {
-        newIndex = selectedIndex.value % gridColumns;
+      newIndex = selectedIndex.value % cols;
       }
     } else if (e.key === 'ArrowLeft' || (!isInput && key === 'a')) {
       if (onLeft) {
@@ -99,11 +102,11 @@ export function useKeyboardNavigation({
       }
       if (spatialMap && spatialMap[selectedIndex.value]?.left !== undefined) {
         newIndex = spatialMap[selectedIndex.value].left!;
-      } else if (selectedIndex.value % gridColumns > 0) {
+      } else if (selectedIndex.value % cols > 0) {
         newIndex = selectedIndex.value - 1;
       } else if (loop) {
-        const rowStart = Math.floor(selectedIndex.value / gridColumns) * gridColumns;
-        newIndex = Math.min(max - 1, rowStart + gridColumns - 1);
+        const rowStart = Math.floor(selectedIndex.value / cols) * cols;
+        newIndex = Math.min(max - 1, rowStart + cols - 1);
       }
     } else if (e.key === 'ArrowRight' || (!isInput && key === 'd')) {
       if (onRight) {
@@ -113,8 +116,8 @@ export function useKeyboardNavigation({
       if (spatialMap && spatialMap[selectedIndex.value]?.right !== undefined) {
         newIndex = spatialMap[selectedIndex.value].right!;
       } else {
-        const rowStart = Math.floor(selectedIndex.value / gridColumns) * gridColumns;
-        if (selectedIndex.value < rowStart + gridColumns - 1 && selectedIndex.value + 1 < max) {
+        const rowStart = Math.floor(selectedIndex.value / cols) * cols;
+        if (selectedIndex.value < rowStart + cols - 1 && selectedIndex.value + 1 < max) {
           newIndex = selectedIndex.value + 1;
         } else if (loop) {
           newIndex = rowStart;
