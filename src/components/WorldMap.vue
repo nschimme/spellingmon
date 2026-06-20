@@ -2,7 +2,8 @@
   <div class="relative w-full h-full bg-green-200 overflow-hidden select-none">
     <!-- Map Rendering -->
     <div
-      class="absolute"
+      class="absolute transition-all duration-200 linear"
+      :class="{ 'duration-0': isJumping }"
       :style="{
         left: `calc(50% - ${playerX * 40}px)`,
         top: `calc(50% - ${playerY * 40}px)`,
@@ -89,6 +90,7 @@ defineEmits(['toggle-menu']);
 
 const playerX = ref(session.player.position?.x ?? 0);
 const playerY = ref(session.player.position?.y ?? 0);
+const isJumping = ref(false);
 
 const {
   MAP_WIDTH, MAP_HEIGHT, currentMapData, areaConfig,
@@ -172,10 +174,19 @@ watch(() => session.player.mapSeed, (newSeed) => {
   if (newSeed) fsm.transition(GAME_STATES.LOADING);
 });
 
-watch(() => session.player.position, (newPos) => {
+watch(() => session.player.position, (newPos, oldPos) => {
   if (newPos) {
-    playerX.value = newPos.x;
-    playerY.value = newPos.y;
+    // If distance > 1, it's a jump (teleport/respawn)
+    const dist = oldPos ? Math.abs(newPos.x - oldPos.x) + Math.abs(newPos.y - oldPos.y) : 0;
+    if (dist > 1) {
+      isJumping.value = true;
+      playerX.value = newPos.x;
+      playerY.value = newPos.y;
+      setTimeout(() => { isJumping.value = false; }, 50);
+    } else {
+      playerX.value = newPos.x;
+      playerY.value = newPos.y;
+    }
   }
 }, { deep: true });
 
@@ -246,6 +257,7 @@ const checkTriggers = (x: number, y: number) => {
         session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
       }
+      fsm.send(GAME_EVENTS.COMPLETE, { type: 'area' });
       session.player.unlockedAreas.push(session.player.currentArea + 1);
       session.player.currentArea++;
       session.save();

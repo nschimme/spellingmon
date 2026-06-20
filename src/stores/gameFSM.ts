@@ -162,7 +162,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
       [s(GAME_STATES.ONBOARDING)]: {
         states: {
           [s(GAME_STATES.CHARACTER_CREATION)]: {
-            on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.STARTER_SELECTION }
+            on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.STORY_CUTSCENE }
           },
           [s(GAME_STATES.STARTER_SELECTION)]: {
             on: { [GAME_EVENTS.COMPLETE]: GAME_STATES.LOADING }
@@ -182,6 +182,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
                  if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
                  return GAME_STATES.BATTLE_INTRO;
+              },
+              [GAME_EVENTS.COMPLETE]: (ctx, params) => {
+                if (params?.type === 'area') return GAME_STATES.STORY_CUTSCENE;
+                return null;
               },
               [GAME_EVENTS.OPEN_MENU]: GAME_STATES.MENU,
               [GAME_EVENTS.EVOLVE]: GAME_STATES.EVOLUTION,
@@ -403,6 +407,15 @@ export const useGameFSM = defineStore('gameFSM', () => {
           },
           [s(GAME_STATES.EVOLUTION)]: {
             on: { [GAME_EVENTS.FINISH]: GAME_STATES.WORLD }
+          },
+          [s(GAME_STATES.STORY_CUTSCENE)]: {
+            on: {
+              [GAME_EVENTS.FINISH]: (ctx) => {
+                if (!ctx.session.player.isStarterSelected) return GAME_STATES.STARTER_SELECTION;
+                if (ctx.session.player.currentArea >= 9) return GAME_STATES.LANDING; // Or a credits roll state
+                return GAME_STATES.WORLD;
+              }
+            }
           }
         }
       }

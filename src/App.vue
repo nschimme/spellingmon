@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, computed } from 'vue';
 import { useGameFSM } from './stores/gameFSM';
 import { useSessionStore } from './stores/sessionStore';
 import { useInputStore } from './stores/inputStore';
@@ -15,10 +15,14 @@ import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
 import EvolutionView from './components/EvolutionView.vue';
+import StoryView from './components/StoryView.vue';
+import BattleTransition from './components/BattleTransition.vue';
 
 const fsm = useGameFSM();
 const session = useSessionStore();
 const inputStore = useInputStore();
+
+const isBattleTransitioning = computed(() => fsm.matches(GAME_STATES.BATTLE_INTRO));
 
 const handleGlobalInput = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
@@ -101,10 +105,19 @@ onUnmounted(() => {
         <EvolutionView
           v-if="fsm.matches(GAME_STATES.EVOLUTION)"
         />
+
+        <StoryView
+          v-if="fsm.matches(GAME_STATES.STORY_CUTSCENE)"
+          :type="!session.player.isStarterSelected ? 'intro' : (session.player.currentArea >= 9 ? 'ending' : 'areaComplete')"
+          :area="session.player.currentArea"
+          @finish="fsm.send(GAME_EVENTS.FINISH)"
+        />
       </template>
 
       <!-- Screen Glare Overlay -->
       <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10" />
+
+      <BattleTransition :active="isBattleTransitioning" />
 
       <!-- Global Notifications -->
       <transition name="fade">
