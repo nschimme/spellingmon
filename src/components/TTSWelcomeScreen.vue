@@ -41,27 +41,33 @@
         </p>
 
         <div class="space-y-6">
-          <button
-            class="w-full bg-orange-500 text-white font-black py-4 rounded-xl border-b-4 border-orange-800 uppercase"
-            @click="testVoice"
-          >
-            {{ $t('tts.testVoice') }}
-          </button>
-
           <div class="flex gap-4">
             <button
-              class="flex-1 bg-green-500 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase"
+              :ref="el => setItemRef(el, 0)"
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
+              class="flex-1 bg-green-500 text-white font-black py-3 rounded-xl border-b-4 border-green-800 uppercase outline-none transition-all"
               @click="fsm.send(GAME_EVENTS.CONFIRM)"
             >
               {{ $t('common.yes') }}
             </button>
             <button
-              class="flex-1 bg-red-500 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase"
+              :ref="el => setItemRef(el, 1)"
+              :class="{ 'ring-8 ring-yellow-400': selectedIndex === 1 }"
+              class="flex-1 bg-red-500 text-white font-black py-3 rounded-xl border-b-4 border-red-800 uppercase outline-none transition-all"
               @click="handleNo"
             >
               {{ $t('common.no') }}
             </button>
           </div>
+
+          <button
+            :ref="el => setItemRef(el, 2)"
+            :class="{ 'ring-8 ring-yellow-400': selectedIndex === 2 }"
+            class="w-full bg-orange-500 text-white font-black py-4 rounded-xl border-b-4 border-orange-800 uppercase outline-none transition-all"
+            @click="testVoice"
+          >
+            {{ $t('tts.testVoice') }}
+          </button>
 
           <div
             v-if="showTroubleshooting"
@@ -82,15 +88,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, SUPPORTED_LANGUAGES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
+import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const fsm = useGameFSM();
-const selectedIndex = ref(0);
 const showTroubleshooting = ref(false);
+const itemRefs = ref<(HTMLElement | null)[]>([]);
+
+const setItemRef = (el: any, index: number) => {
+  if (el) itemRefs.value[index] = el;
+};
 
 const selectLanguage = (lang: any) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
@@ -106,4 +117,45 @@ const handleNo = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
   showTroubleshooting.value = true;
 };
+
+const { selectedIndex, reset } = useKeyboardNavigation({
+  id: 'tts-welcome',
+  maxIndex: computed(() => fsm.matches(GAME_STATES.LANGUAGE_SELECT) ? SUPPORTED_LANGUAGES.length : 3),
+  gridColumns: computed(() => fsm.matches(GAME_STATES.LANGUAGE_SELECT) ? 2 : 2),
+  itemRefs,
+  onConfirm: (idx) => {
+    if (fsm.matches(GAME_STATES.LANGUAGE_SELECT)) {
+      selectLanguage(SUPPORTED_LANGUAGES[idx]);
+    } else {
+      if (idx === 0) fsm.send(GAME_EVENTS.CONFIRM);
+      else if (idx === 1) handleNo();
+      else if (idx === 2) testVoice();
+    }
+  },
+  onCancel: () => {
+    if (fsm.matches(GAME_STATES.TTS_CHECK)) {
+      fsm.send(GAME_EVENTS.BACK);
+      reset(0);
+    }
+  },
+  spatialMap: computed(() => {
+    if (fsm.matches(GAME_STATES.TTS_CHECK)) {
+      return [
+        { right: 1, down: 2 }, // Yes
+        { left: 0, down: 2 },  // No
+        { up: 0 }             // Test Voice
+      ];
+    }
+    return null;
+  })
+});
+
+// Set default focus to "No" (index 1) when entering TTS_CHECK
+watch(() => fsm.state as any, (newState, oldState) => {
+  if (newState === GAME_STATES.TTS_CHECK && oldState === GAME_STATES.LANGUAGE_SELECT) {
+    reset(1);
+  } else if (newState === GAME_STATES.LANGUAGE_SELECT) {
+    reset(0);
+  }
+});
 </script>

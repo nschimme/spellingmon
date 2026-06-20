@@ -112,6 +112,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
         }
       },
       [GAME_STATES.TTS_CHECK]: {
+        onEnter: (ctx) => {
+          speech.speak(ctx.t('tts.testPhrase'));
+        },
         on: {
           [GAME_EVENTS.CONFIRM]: (ctx) => {
             ctx.settings.confirmTtsVerified();

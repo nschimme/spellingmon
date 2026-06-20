@@ -6,7 +6,7 @@
         <div
           v-for="n in 24"
           :key="n"
-          class="text-4xl transform rotate-12"
+          class="text-4xl"
         >
           {{ emojis[n % emojis.length] }}
         </div>

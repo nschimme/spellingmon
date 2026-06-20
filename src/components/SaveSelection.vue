@@ -25,7 +25,7 @@
           :ref="el => setSlotRef(el, index)"
           class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer"
           :class="{
-            'ring-8 ring-yellow-400 border-blue-500 -translate-y-2 shadow-2xl': selectedIndex === index,
+            'ring-8 ring-yellow-400 border-blue-500 shadow-2xl': selectedIndex === index,
             'bg-gray-50 border-gray-200': !slot,
             'bg-white border-gray-800': slot
           }"

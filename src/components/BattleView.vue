@@ -51,7 +51,7 @@
         v-if="showMistake"
         class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm"
       >
-        <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center transform -rotate-2">
+        <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center">
           <p class="text-red-600 font-black text-xl mb-2">
             {{ $t('battle.incorrect') }}
           </p>

@@ -183,8 +183,8 @@ const viewportTiles = computed(() => {
   if (!currentMapData.value) return [];
   const tiles = [];
   const half = Math.floor(VIEWPORT_SIZE / 2);
-  const startX = Math.max(0, Math.min(MAP_WIDTH - VIEWPORT_SIZE, playerX.value - half));
-  const startY = Math.max(0, Math.min(MAP_HEIGHT - VIEWPORT_SIZE, playerY.value - half));
+  const startX = Math.max(0, Math.min(MAP_WIDTH.value - VIEWPORT_SIZE, playerX.value - half));
+  const startY = Math.max(0, Math.min(MAP_HEIGHT.value - VIEWPORT_SIZE, playerY.value - half));
 
   for (let y = startY; y < startY + VIEWPORT_SIZE; y++) {
     for (let x = startX; x < startX + VIEWPORT_SIZE; x++) {
