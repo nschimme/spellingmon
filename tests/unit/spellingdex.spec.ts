@@ -28,8 +28,7 @@ describe('MenuSpellingdex', () => {
 
   it('shows ??? for undiscovered words', async () => {
     const session = useSessionStore();
-    session.dex.discoveredWords = { 1: [] };
-    session.dex.masteredWords = { 1: [] };
+    session.dex.words = { 1: {} };
 
     const wrapper = mount(MenuSpellingdex);
     await new Promise(resolve => setTimeout(resolve, 50));
@@ -38,7 +37,7 @@ describe('MenuSpellingdex', () => {
 
   it('reveals words when discovered', async () => {
     const session = useSessionStore();
-    session.dex.discoveredWords = { 1: ['cat'] };
+    session.dex.words = { 1: { 'cat': 'seen' } };
 
     const wrapper = mount(MenuSpellingdex);
     await new Promise(resolve => setTimeout(resolve, 50));

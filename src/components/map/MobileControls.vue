@@ -9,7 +9,7 @@
   >
     <div class="flex flex-col items-center gap-1">
       <button
-        class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95"
+        class="w-14 h-14 bg-blue-600 border-b-4 border-blue-900 text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
         @mousedown="$emit('start', 'w')"
         @touchstart.prevent="$emit('start', 'w')"
       >
@@ -17,21 +17,21 @@
       </button>
       <div class="flex gap-1">
         <button
-          class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95"
+          class="w-14 h-14 bg-blue-600 border-b-4 border-blue-900 text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
           @mousedown="$emit('start', 'a')"
           @touchstart.prevent="$emit('start', 'a')"
         >
           ◀
         </button>
         <button
-          class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95"
+          class="w-14 h-14 bg-blue-600 border-b-4 border-blue-900 text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
           @mousedown="$emit('start', 's')"
           @touchstart.prevent="$emit('start', 's')"
         >
           ▼
         </button>
         <button
-          class="w-12 h-12 bg-gray-800/90 text-white rounded-lg flex items-center justify-center text-xl shadow-lg active:scale-95"
+          class="w-14 h-14 bg-blue-600 border-b-4 border-blue-900 text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
           @mousedown="$emit('start', 'd')"
           @touchstart.prevent="$emit('start', 'd')"
         >
@@ -43,10 +43,10 @@
 
   <button
     v-if="isTouchDevice"
-    class="absolute top-6 right-6 w-12 h-12 bg-white border-4 border-gray-800 rounded-xl flex items-center justify-center text-xl shadow-xl active:scale-95"
+    class="absolute top-6 right-6 w-14 h-14 bg-yellow-400 border-b-4 border-yellow-700 rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all z-50"
     @click="$emit('toggle-menu')"
   >
-    📋
+    🎒
   </button>
 </template>
 

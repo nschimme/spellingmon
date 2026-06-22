@@ -77,10 +77,17 @@
           v-if="showCorrect"
           class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
         >
-          <div class="bg-green-500 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce-gentle">
-            <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
-              {{ $t('battle.correct') }}
-            </p>
+          <div class="flex flex-col items-center gap-4">
+            <div class="bg-green-500 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce-gentle">
+              <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
+                {{ $t('battle.good') }}
+              </p>
+            </div>
+            <div v-if="showFast" class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse">
+              <p class="text-white font-black uppercase text-xl italic">
+                {{ $t('battle.fast') }}
+              </p>
+            </div>
           </div>
         </div>
       </transition>
@@ -90,10 +97,17 @@
           v-if="showPerfect"
           class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
         >
-          <div class="bg-yellow-400 border-8 border-white p-8 rounded-full shadow-2xl animate-bounce-gentle ring-8 ring-yellow-400/50">
-            <p class="text-white font-black uppercase text-5xl italic tracking-tighter">
-              {{ $t('battle.perfect') }}
-            </p>
+          <div class="flex flex-col items-center gap-4">
+            <div class="bg-yellow-400 border-8 border-white p-8 rounded-full shadow-2xl animate-bounce-gentle ring-8 ring-yellow-400/50">
+              <p class="text-white font-black uppercase text-5xl italic tracking-tighter">
+                {{ $t('battle.perfect') }}
+              </p>
+            </div>
+            <div v-if="showFast" class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse">
+              <p class="text-white font-black uppercase text-xl italic">
+                {{ $t('battle.fast') }}
+              </p>
+            </div>
           </div>
         </div>
       </transition>
@@ -264,6 +278,7 @@ const timeLeft = ref(0);
 const showMistake = ref(false);
 const showCorrect = ref(false);
 const showPerfect = ref(false);
+const showFast = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
@@ -432,6 +447,11 @@ watch(() => fsm.state as any, (newState, oldState) => {
   }
 
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK && fsm.params.isCorrect) {
+    if (fsm.params.isPower) {
+      showFast.value = true;
+      setTimeout(() => showFast.value = false, 1500);
+    }
+
     if (fsm.params.isPerfect) {
       showPerfect.value = true;
       setTimeout(() => showPerfect.value = false, 1500);

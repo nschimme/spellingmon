@@ -34,18 +34,6 @@
         </div>
       </div>
 
-      <!-- Moving Silhouettes of Monsters -->
-      <div class="absolute bottom-32 left-0 right-0 overflow-hidden h-24">
-        <div
-          v-for="(emoji, i) in monsterSilhouettes"
-          :key="'sil-'+i"
-          class="absolute bottom-0 text-5xl opacity-10 grayscale brightness-0 animate-walk"
-          :style="{ animationDelay: `-${i * 5}s`, animationDuration: `${15 + (i % 3) * 5}s` }"
-        >
-          {{ emoji }}
-        </div>
-      </div>
-
       <!-- Fore Trees -->
       <div class="absolute bottom-20 left-0 right-0 flex justify-between items-end opacity-90 px-4">
         <div
@@ -60,7 +48,17 @@
 
       <!-- Ground/Grass Layer -->
       <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-green-500 to-green-700 border-t-8 border-green-600 shadow-[0_-20px_50px_rgba(0,0,0,0.2)]">
-        <div class="flex justify-around items-end h-full px-4 pb-4 overflow-hidden">
+        <div class="flex justify-around items-end h-full px-4 pb-4 overflow-hidden relative">
+          <!-- Dynamic Monster Showcase -->
+          <div
+            v-if="currentMonster"
+            :key="monsterKey"
+            class="absolute bottom-12 left-1/2 -translate-x-1/2 text-8xl md:text-9xl z-10 transition-all duration-1000"
+            :class="monsterAnimClass"
+          >
+            {{ currentMonster }}
+          </div>
+
           <div
             v-for="n in 30"
             :key="'grass-'+n"
@@ -131,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
@@ -144,13 +142,41 @@ const handleContinue = () => {
   emit('continue');
 };
 
-const monsterSilhouettes = ['🦎', '🐢', '🍃', '🐭', '🐛', '🐦', '🐀', '🐍', '🦔', '🦂', '🧚', '🦊', '🎈', '🦇', '🌱', '🍄', '🕷️', '⛰️', '🐱', '🦆', '🐒', '🐕', '🌀', '🧠', '💪', '🪨', '👻', '🦴', '🦵', '🥊', '💣', '🥚', '🔪', '🐟', '⛵', '👥', '🧜', '⚡', '🔥', '😴', '🐉', '👽', '✨'];
+const monsters = ['🦎', '🐢', '🍃', '🐭', '🐛', '🐦', '🐀', '🐍', '🦔', '🦂', '🧚', '🦊', '🎈', '🦇', '🌱', '🍄', '🕷️', '🦖', '🦋', '🐝', '🦅', '🦁', '🐱', '🐶', '🐉', '👽', '✨'];
+const currentMonster = ref('');
+const monsterKey = ref(0);
+const monsterAnimClass = ref('');
+let showcaseInterval: any = null;
+
+const animVariations = ['animate-showcase-bounce', 'animate-showcase-spin', 'animate-showcase-flip'];
+
+const updateShowcase = () => {
+  const randomMon = monsters[Math.floor(Math.random() * monsters.length)];
+  const randomAnim = animVariations[Math.floor(Math.random() * animVariations.length)];
+
+  monsterAnimClass.value = 'opacity-0 scale-0';
+
+  setTimeout(() => {
+    currentMonster.value = randomMon;
+    monsterKey.value++;
+    monsterAnimClass.value = randomAnim;
+  }, 1000);
+};
 
 const { selectedIndex } = useKeyboardNavigation({
   id: 'landing-screen',
   maxIndex: 1,
   itemRefs: computed(() => [startButton.value]),
   onConfirm: handleContinue
+});
+
+onMounted(() => {
+  updateShowcase();
+  showcaseInterval = setInterval(updateShowcase, 5000);
+});
+
+onUnmounted(() => {
+  if (showcaseInterval) clearInterval(showcaseInterval);
 });
 </script>
 
@@ -173,15 +199,6 @@ const { selectedIndex } = useKeyboardNavigation({
 .animate-parallax-fore {
   animation: parallax linear infinite;
   will-change: transform;
-}
-
-@keyframes walk {
-  from { left: -10%; }
-  to { left: 110%; }
-}
-
-.animate-walk {
-  animation: walk linear infinite;
 }
 
 .animate-sway {
@@ -229,5 +246,45 @@ const { selectedIndex } = useKeyboardNavigation({
 
 .animate-progress-loop {
   animation: progress-loop 2s linear infinite;
+}
+
+/* Monster Showcase Animations */
+@keyframes showcase-bounce {
+  0% { transform: translate(-50%, 50px) scale(0); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
+  30% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, 50px) scale(0); opacity: 0; }
+}
+
+@keyframes showcase-spin {
+  0% { transform: translate(-50%, 50px) scale(0) rotate(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1) rotate(360deg); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(1) rotate(360deg); opacity: 1; }
+  100% { transform: translate(-50%, 50px) scale(0) rotate(720deg); opacity: 0; }
+}
+
+@keyframes showcase-flip {
+  0% { transform: translate(-50%, 50px) scale(0) rotateY(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1) rotateY(180deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1) rotateY(0deg); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1) rotateY(180deg); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(1) rotateY(0deg); opacity: 1; }
+  100% { transform: translate(-50%, 50px) scale(0) rotateY(0deg); opacity: 0; }
+}
+
+.animate-showcase-bounce {
+  animation: showcase-bounce 4s ease-in-out forwards;
+}
+
+.animate-showcase-spin {
+  animation: showcase-spin 4s ease-in-out forwards;
+}
+
+.animate-showcase-flip {
+  animation: showcase-flip 4s ease-in-out forwards;
 }
 </style>

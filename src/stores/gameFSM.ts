@@ -305,7 +305,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     const { isCorrect, isPerfect } = validateSpelling(params.input, ctx.session.battle.currentWord.word);
 
                     if (isCorrect) {
-                      ctx.session.recordDiscovery('masteredWords', ctx.session.player.currentArea, ctx.session.battle.currentWord.word);
+                      const status = isPerfect ? 'mastered' : 'correct';
+                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord.word, status);
                       const isPower = timeLeft > (ctx.session.battle.totalTime / 2);
 
                       let basePower = 30;
@@ -318,7 +319,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         params: { power: basePower, isPerfect, isPower, isCorrect: true }
                       };
                     } else {
-                      ctx.session.recordDiscovery('discoveredWords', ctx.session.player.currentArea, ctx.session.battle.currentWord.word);
+                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord.word, 'seen');
                       return {
                         target: GAME_STATES.BATTLE_ENEMY_TURN,
                         params: { isCorrect: false }

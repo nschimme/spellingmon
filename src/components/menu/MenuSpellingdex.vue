@@ -31,13 +31,13 @@
       <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
         <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.seen') }}</span>
         <div class="bg-blue-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
-          {{ seenCount }} / 40
+          {{ seenCount }}
         </div>
       </div>
       <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
         <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.mastered') }}</span>
         <div class="bg-green-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
-          {{ masteredCount }} / 40
+          {{ masteredCount }}
         </div>
       </div>
     </div>
@@ -132,11 +132,14 @@ const itemRefs = ref<(HTMLElement | null)[]>([]);
 
 const emit = defineEmits(['back']);
 
-const seenCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
-const masteredCount = computed(() => (session.dex.masteredWords[currentArea.value] || []).length);
+const areaWordStatus = computed(() => session.dex.words[currentArea.value] || {});
 
-const isSeen = (term: string) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
-const isMastered = (term: string) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
+const seenCount = computed(() => Object.values(areaWordStatus.value).filter(s => s === 'seen' || s === 'correct').length);
+const masteredCount = computed(() => Object.values(areaWordStatus.value).filter(s => s === 'mastered').length);
+
+const getStatus = (term: string) => areaWordStatus.value[term];
+const isSeen = (term: string) => getStatus(term) === 'seen' || getStatus(term) === 'correct';
+const isMastered = (term: string) => getStatus(term) === 'mastered';
 
 const fetchWords = async () => {
   loading.value = true;
