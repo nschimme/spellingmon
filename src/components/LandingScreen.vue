@@ -123,7 +123,7 @@
           <div class="h-full bg-white animate-progress-loop" />
         </div>
         <p class="text-blue-900/60 font-black uppercase text-xs tracking-[0.5em] animate-pulse">
-           {{ $t('landing.pressAnyKey') }}
+          {{ $t('landing.pressAnyKey') }}
         </p>
       </div>
     </div>

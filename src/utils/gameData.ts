@@ -320,7 +320,7 @@ export const TYPE_CHART = {
 };
 
 export function calculateStat(base: number, level: number, isHp: boolean = false): number {
-  // Simplified Pokemon stat formula
+  // Simplified monster stat formula
   // IV is assumed 31, EV is 0
   const iv = 31;
   if (isHp) {
@@ -345,7 +345,7 @@ export function calculateDamage(
   const defenderRawType = MONS[defender.species]?.type;
   const typeMod = TYPE_CHART[attackerRawType]?.[defenderRawType] || 1;
 
-  // Simplified Pokemon damage formula
+  // Simplified monster damage formula
   // Damage = (((2 * level / 5 + 2) * Power * A/D) / 50 + 2) * Multiplier
   const levelPart = (2 * attacker.level) / 5 + 2;
   const statRatio = atk / def;
@@ -387,7 +387,7 @@ export function createMon(species: string, level: number = 5): Monster {
 }
 
 export function calculateExpGain(enemyMon: { level: number }, isTrainer: boolean): number {
-  // Pokemon-inspired formula: (Base * Level) / 7
+  // Monster-inspired formula: (Base * Level) / 7
   const baseExp = 60;
   const trainerBonus = isTrainer ? 1.5 : 1.0;
   return Math.floor((baseExp * enemyMon.level / 7) * trainerBonus);

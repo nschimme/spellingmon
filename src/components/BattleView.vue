@@ -10,8 +10,8 @@
       <div
         class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
         :class="{
-            'animate-shake': isEnemyShaking,
-            'opacity-0 scale-0': isEnemyCaptured
+          'animate-shake': isEnemyShaking,
+          'opacity-0 scale-0': isEnemyCaptured
         }"
       >
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
@@ -106,10 +106,12 @@
         style="left: 0; top: 0;"
       >
         <template v-if="session.battle.isCapturing">
-            <div :class="{ 'animate-ball-wobble': isBallWobbling }">🔴</div>
+          <div :class="{ 'animate-ball-wobble': isBallWobbling }">
+            🔴
+          </div>
         </template>
         <template v-else>
-            {{ thrownWord }}
+          {{ thrownWord }}
         </template>
       </div>
     </div>
@@ -221,6 +223,10 @@
               :disabled="isSubmitting"
               class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
               :placeholder="$t('battle.typeHere')"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
               @keydown.enter="submitSpelling"
               @blur="refocusInput"
             >
@@ -234,7 +240,6 @@
             @continue="fsm.send(GAME_EVENTS.CONTINUE)"
           />
         </template>
-
       </div>
     </div>
   </div>

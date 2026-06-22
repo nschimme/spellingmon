@@ -97,7 +97,7 @@
         >
           <span class="font-black text-xs">{{ word.word }}</span>
           <p class="text-[8px] font-bold leading-tight mt-1 line-clamp-3">
-             {{ word.definition }}
+            {{ word.definition }}
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { audio } from '../../utils/audio';
@@ -169,7 +169,12 @@ const prevArea = () => {
   }
 };
 
-const gridCols = computed(() => window.innerWidth < 640 ? 2 : 4);
+const windowWidth = ref(window.innerWidth);
+const updateWidth = () => { windowWidth.value = window.innerWidth; };
+onMounted(() => { window.addEventListener('resize', updateWidth); });
+onUnmounted(() => { window.removeEventListener('resize', updateWidth); });
+
+const gridCols = computed(() => windowWidth.value < 640 ? 2 : 4);
 
 const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'menu-spellingdex',

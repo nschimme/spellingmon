@@ -98,7 +98,9 @@ onUnmounted(() => {
 
         <BattleView v-if="fsm.matches(GAME_STATES.BATTLE)" />
 
-        <WhiteoutView v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)" />
+        <transition name="whiteout-fade">
+          <WhiteoutView v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)" />
+        </transition>
 
         <MenuOverlay
           v-if="fsm.matches(GAME_STATES.MENU)"
@@ -162,6 +164,14 @@ body {
   transition: opacity 0.3s ease;
 }
 .fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.whiteout-fade-enter-active,
+.whiteout-fade-leave-active {
+  transition: opacity 1s ease;
+}
+.whiteout-fade-enter-from,
+.whiteout-fade-leave-to {
   opacity: 0;
 }
 </style>

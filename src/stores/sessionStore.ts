@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, GAME_CONSTANTS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
+import i18n from '../i18n';
 
 export interface PlayerState {
   name: string;
@@ -194,6 +195,9 @@ export const useSessionStore = defineStore('session', {
   },
 
   actions: {
+    t(key: string, params?: any) {
+      return i18n.global.t(key, params);
+    },
     setSlot(slotIndex: any) {
       const idx = typeof slotIndex === 'number' ? slotIndex : parseInt(slotIndex);
       if (isNaN(idx)) {
