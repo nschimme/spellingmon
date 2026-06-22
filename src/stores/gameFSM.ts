@@ -345,7 +345,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         if (added) {
                           setTimeout(() => {
                             ctx.fsm.transition(GAME_STATES.WORLD);
-                          }, 1500);
+                          }, 2000);
                         } else {
                           setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_PARTY_FULL), 1000);
                         }

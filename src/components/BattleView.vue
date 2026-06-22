@@ -9,7 +9,10 @@
       <!-- Enemy -->
       <div
         class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
-        :class="{ 'animate-shake': isEnemyShaking }"
+        :class="{
+            'animate-shake': isEnemyShaking,
+            'opacity-0 scale-0': isEnemyCaptured
+        }"
       >
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
           <div class="flex flex-col font-bold leading-tight">
@@ -67,13 +70,19 @@
         </div>
       </div>
 
-      <!-- Thrown Word -->
+      <!-- Thrown Word / Ball -->
       <div
         v-if="thrownWord"
-        class="fixed z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw pointer-events-none"
+        class="fixed z-50 pointer-events-none"
+        :class="session.battle.isCapturing ? 'text-6xl animate-throw-ball' : 'font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw'"
         style="left: 0; top: 0;"
       >
-        {{ thrownWord }}
+        <template v-if="session.battle.isCapturing">
+            <div :class="{ 'animate-ball-wobble': isBallWobbling }">🔴</div>
+        </template>
+        <template v-else>
+            {{ thrownWord }}
+        </template>
       </div>
 
       <div
@@ -209,16 +218,13 @@
           />
         </template>
 
-        <!-- Whited Out -->
+        <!-- Whited Out (Handled by full-screen overlay) -->
         <template v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)">
-          <button
-            ref="whiteoutButton"
-            class="bg-red-600 text-white py-4 rounded-xl border-b-8 border-red-800 font-black uppercase text-lg outline-none transition-all"
-            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': whiteoutIndex === 0 }"
-            @click="fsm.send(GAME_EVENTS.CONFIRM)"
-          >
-            {{ $t('common.confirm') }}
-          </button>
+          <div class="flex items-center justify-center h-full">
+            <p class="text-xs font-bold text-red-600 animate-pulse uppercase">
+              {{ $t('battle.whitedOutTitle') }}
+            </p>
+          </div>
         </template>
       </div>
     </div>
@@ -272,6 +278,8 @@ const showPerfect = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
+const isEnemyCaptured = ref(false);
+const isBallWobbling = ref(false);
 const thrownWord = ref('');
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
@@ -280,7 +288,6 @@ const spellingFocusTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
 const partyRefs = ref<(HTMLElement | null)[]>([]);
-const whiteoutButton = ref<HTMLElement | null>(null);
 
 const setActionRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) actionRefs.value[index] = el as HTMLElement;
@@ -339,7 +346,7 @@ const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
   id: 'battle-whiteout',
   isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)),
   maxIndex: 1,
-  itemRefs: computed(() => [whiteoutContinueButton.value || whiteoutButton.value]),
+  itemRefs: computed(() => [whiteoutContinueButton.value]),
   onConfirm: () => {
     speech.stop();
     fsm.send(GAME_EVENTS.CONFIRM);
@@ -355,12 +362,29 @@ const submitSpelling = () => {
   // Stop narrator immediately
   speech.stop();
 
+  const isCapturing = session.battle.isCapturing;
+  const animDuration = isCapturing ? 4000 : 1600;
+
+  if (isCapturing) {
+    // Stage 1: Ball hits enemy
+    setTimeout(() => {
+      isEnemyCaptured.value = true;
+      isBallWobbling.value = true;
+    }, 1800);
+
+    // Stage 2: Wobble ends
+    setTimeout(() => {
+      isBallWobbling.value = false;
+    }, 3500);
+  }
+
   setTimeout(() => {
     thrownWord.value = '';
+    isEnemyCaptured.value = false;
     fsm.send(GAME_EVENTS.SUBMIT, { input });
     userInput.value = '';
     isSubmitting.value = false;
-  }, 1600); // Slightly longer than CSS animation (1500ms)
+  }, animDuration);
 };
 
 const refocusInput = () => {
@@ -477,6 +501,27 @@ onUnmounted(() => {
 }
 .animate-throw {
   animation: throw-word 1.5s ease-in-out forwards;
+}
+
+@keyframes throw-ball {
+  0% { transform: translate(20vw, 80vh) scale(1) rotate(0deg); opacity: 1; }
+  30% { transform: translate(50vw, 20vh) scale(1.2) rotate(180deg); opacity: 1; }
+  45% { transform: translate(75vw, 25vh) scale(1) rotate(360deg); opacity: 1; }
+  100% { transform: translate(75vw, 25vh) scale(1) rotate(360deg); opacity: 1; }
+}
+.animate-throw-ball {
+  animation: throw-ball 4s ease-in-out forwards;
+}
+
+@keyframes ball-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+  75% { transform: rotate(-10deg); }
+}
+.animate-ball-wobble {
+  animation: ball-wobble 0.5s ease-in-out 3;
+  animation-delay: 1.5s;
 }
 
 .whiteout-fade-enter-active,

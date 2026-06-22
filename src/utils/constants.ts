@@ -20,6 +20,7 @@ export const SOUND_EFFECTS = {
   CAPTURE_FAIL: 'capture-fail',
   BATTLE_START: 'battle-start',
   VICTORY: 'victory',
+  LEVEL_UP: 'level-up',
   EVOLUTION: 'evolution',
   DISCOVERY: 'discovery',
 };

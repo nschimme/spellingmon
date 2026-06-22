@@ -11,7 +11,7 @@
       <div
         v-for="n in 3"
         :key="'mountain-'+n"
-        class="absolute bottom-40 text-[200px] opacity-30 animate-parallax-slow"
+        class="absolute bottom-24 text-[200px] opacity-30 animate-parallax-slow"
         :style="mountainStyle()"
       >
         ⛰️
@@ -31,7 +31,7 @@
       <div
         v-for="n in 8"
         :key="'tree-'+n"
-        class="absolute bottom-28 text-7xl opacity-50 animate-parallax-mid"
+        class="absolute bottom-20 text-7xl opacity-50 animate-parallax-mid"
         :style="treeStyle()"
       >
         🌲
@@ -41,7 +41,7 @@
       <div
         v-for="n in 3"
         :key="'bird-'+n"
-        class="absolute text-2xl opacity-60 animate-float-fast scale-x-[-1]"
+        class="absolute text-2xl opacity-60 animate-float-fast"
         :style="birdStyle(n)"
       >
         🕊️
@@ -186,8 +186,8 @@ const birdStyle = (n: number) => {
 }
 
 @keyframes float-horizontal-reverse {
-  from { transform: translateX(150%) scaleX(-1); }
-  to { transform: translateX(-1200%) scaleX(-1); }
+  from { transform: translateX(150%); }
+  to { transform: translateX(-1200%); }
 }
 
 .animate-parallax-slow {
