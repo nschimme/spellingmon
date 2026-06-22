@@ -53,10 +53,12 @@
           <div
             v-if="currentMonster"
             :key="monsterKey"
-            class="absolute bottom-12 left-1/2 -translate-x-1/2 text-8xl md:text-9xl z-10 transition-all duration-1000"
+            class="absolute bottom-16 left-1/2 -translate-x-1/2 text-9xl md:text-[12rem] z-10 transition-all duration-1000"
             :class="monsterAnimClass"
           >
-            {{ currentMonster }}
+            <div class="drop-shadow-[0_20px_20px_rgba(0,0,0,0.4)]">
+              {{ currentMonster }}
+            </div>
           </div>
 
           <div
@@ -72,25 +74,25 @@
     </div>
 
     <!-- UI Overlay -->
-    <div class="z-20 flex flex-col items-center w-full px-4">
+    <div class="z-20 flex flex-col items-center w-full px-4 pt-16 sm:pt-24">
       <!-- Logo/Title Section -->
-      <div class="relative group cursor-pointer transition-transform duration-500 hover:scale-110 mb-16">
+      <div class="relative group cursor-pointer transition-transform duration-500 hover:scale-105 mb-12 sm:mb-20 w-full max-w-[min(95vw,800px)] flex flex-col items-center px-4">
         <!-- Glow Effect behind title -->
-        <div class="absolute inset-0 bg-yellow-400/30 blur-3xl rounded-full scale-150 animate-pulse" />
+        <div class="absolute inset-0 bg-white/40 blur-3xl rounded-full scale-110 animate-pulse" />
 
         <h1
           id="landing-title"
-          class="text-7xl md:text-[10rem] font-black text-center uppercase tracking-tighter leading-none"
+          class="text-[clamp(2.5rem,14vw,8.5rem)] font-black text-center uppercase tracking-tighter leading-[0.9] w-full pt-4"
         >
-          <span class="block text-[#863bff] drop-shadow-[12px_12px_0_rgba(255,255,255,1)] transform -rotate-2">
+          <span class="block text-black drop-shadow-[0.05em_0.05em_0_white] drop-shadow-[0.08em_0.08em_0_rgba(0,0,0,0.5)] transform -rotate-1">
             SPELLING
           </span>
-          <span class="block text-white drop-shadow-[12px_12px_0_rgba(134,59,255,1)] transform rotate-1 -mt-4">
+          <span class="block text-[#facc15] drop-shadow-[0.05em_0.05em_0_black] drop-shadow-[0.08em_0.08em_0_rgba(255,255,255,0.3)] transform rotate-1 -mt-[0.1em]">
             MON
           </span>
         </h1>
 
-        <div class="absolute -right-8 top-0 bg-red-600 text-white px-6 py-2 rounded-full font-black text-lg md:text-2xl border-4 border-gray-800 shadow-xl rotate-12 animate-bounce-gentle">
+        <div class="absolute -right-1 sm:-right-4 top-[-5%] bg-white text-black px-3 py-1 sm:px-6 sm:py-2 rounded-full font-black text-[clamp(12px,4vw,24px)] border-2 sm:border-4 border-black shadow-[4px_4px_0_#facc15] rotate-12 animate-bounce-gentle whitespace-nowrap z-30 ring-2 ring-black/10">
           {{ $t('landing.subtitle') }}
         </div>
       </div>
@@ -99,18 +101,18 @@
       <div class="max-w-md w-full">
         <button
           ref="startButton"
-          class="w-full group relative bg-[#863bff] hover:bg-[#9d66ff] text-white font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-[#6d28d9] shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
-          :class="{ 'ring-8 ring-yellow-400 scale-105 border-yellow-700': selectedIndex === 0 }"
+          class="w-full group relative bg-[#facc15] hover:bg-yellow-300 text-black font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-black shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
+          :class="{ 'ring-8 ring-white scale-105 border-gray-800': selectedIndex === 0 }"
           @click.stop="handleContinue"
         >
           <!-- Shine effect -->
-          <div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] group-hover:animate-shine" />
+          <div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:animate-shine" />
 
           <div class="relative flex items-center justify-center gap-4">
-            <span class="text-3xl md:text-4xl uppercase tracking-[0.2em] drop-shadow-md">
+            <span class="text-3xl md:text-4xl uppercase tracking-[0.2em] drop-shadow-sm">
               {{ $t('landing.startGame') }}
             </span>
-            <span class="text-4xl animate-bounce">⚔️</span>
+            <span class="text-4xl animate-bounce">🐝</span>
           </div>
         </button>
       </div>

@@ -367,6 +367,10 @@ export const useSessionStore = defineStore('session', {
 
       // Mutually exclusive / Progressive status: mastered > correct > seen
       const statusPriority: Record<WordStatus, number> = { mastered: 3, correct: 2, seen: 1 };
+
+      // Ensure 'correct' and 'mastered' are treated as exclusive from 'seen'
+      // If we got 'correct', but was 'mastered', we don't downgrade.
+      // If we got 'seen', but was 'correct', we don't downgrade.
       if (!currentStatus || statusPriority[status] > statusPriority[currentStatus]) {
         this.dex.words[area][word] = status;
       }

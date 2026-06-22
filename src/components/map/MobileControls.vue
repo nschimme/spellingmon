@@ -9,7 +9,7 @@
   >
     <div class="flex flex-col items-center gap-1">
       <button
-        class="w-14 h-14 bg-[#863bff] border-b-4 border-[#6d28d9] text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
+        class="w-14 h-14 bg-[#facc15] border-b-4 border-black text-black rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all ring-2 ring-white/50"
         @mousedown="$emit('start', 'w')"
         @touchstart.prevent="$emit('start', 'w')"
       >
@@ -17,21 +17,21 @@
       </button>
       <div class="flex gap-1">
         <button
-          class="w-14 h-14 bg-[#863bff] border-b-4 border-[#6d28d9] text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
+          class="w-14 h-14 bg-[#facc15] border-b-4 border-black text-black rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all ring-2 ring-white/50"
           @mousedown="$emit('start', 'a')"
           @touchstart.prevent="$emit('start', 'a')"
         >
           ◀
         </button>
         <button
-          class="w-14 h-14 bg-[#863bff] border-b-4 border-[#6d28d9] text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
+          class="w-14 h-14 bg-[#facc15] border-b-4 border-black text-black rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all ring-2 ring-white/50"
           @mousedown="$emit('start', 's')"
           @touchstart.prevent="$emit('start', 's')"
         >
           ▼
         </button>
         <button
-          class="w-14 h-14 bg-[#863bff] border-b-4 border-[#6d28d9] text-white rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all"
+          class="w-14 h-14 bg-[#facc15] border-b-4 border-black text-black rounded-xl flex items-center justify-center text-2xl shadow-xl active:translate-y-1 active:border-b-0 transition-all ring-2 ring-white/50"
           @mousedown="$emit('start', 'd')"
           @touchstart.prevent="$emit('start', 'd')"
         >
