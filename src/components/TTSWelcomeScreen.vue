@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onUnmounted } from 'vue';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
@@ -118,10 +118,23 @@ const handleNo = () => {
   showTroubleshooting.value = true;
 };
 
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth < 640;
+};
+const isMobile = ref(window.innerWidth < 640);
+window.addEventListener('resize', updateIsMobile);
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile);
+});
+
 const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'tts-welcome',
   maxIndex: computed(() => fsm.matches(GAME_STATES.LANGUAGE_SELECT) ? SUPPORTED_LANGUAGES.length : 3),
-  gridColumns: computed(() => fsm.matches(GAME_STATES.LANGUAGE_SELECT) ? 2 : 2),
+  gridColumns: computed(() => {
+    if (isMobile.value) return 1;
+    return fsm.matches(GAME_STATES.LANGUAGE_SELECT) ? 2 : 2;
+  }),
   itemRefs,
   onConfirm: (idx) => {
     if (fsm.matches(GAME_STATES.LANGUAGE_SELECT)) {
@@ -156,6 +169,17 @@ watch(() => fsm.state as any, (newState, oldState) => {
     reset(1);
   } else if (newState === GAME_STATES.LANGUAGE_SELECT) {
     reset(0);
+  }
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (fsm.matches(GAME_STATES.LANGUAGE_SELECT)) {
+    const lang = SUPPORTED_LANGUAGES[newIdx];
+    if (lang) {
+      speech.stop();
+      // Speak the language name in its native tongue using the correct voice
+      speech.speak(lang.native, lang.code);
+    }
   }
 });
 </script>

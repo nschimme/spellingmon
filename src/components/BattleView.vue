@@ -24,7 +24,7 @@
             />
           </div>
         </div>
-        <div class="text-4xl sm:text-6xl mt-2 sm:mt-4">
+        <div class="text-6xl sm:text-8xl lg:text-[10rem] mt-2 sm:mt-4">
           {{ session.battle.enemyMon.emoji }}
         </div>
       </div>
@@ -34,7 +34,7 @@
         class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
         :class="{ 'animate-shake': isPlayerShaking }"
       >
-        <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">
+        <div class="text-6xl sm:text-8xl lg:text-[10rem] mb-2 sm:mb-4 scale-x-[-1]">
           {{ session.activePlayerMon.emoji }}
         </div>
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
@@ -70,7 +70,8 @@
       <!-- Thrown Word -->
       <div
         v-if="thrownWord"
-        class="absolute z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw"
+        class="fixed z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw pointer-events-none"
+        style="left: 0; top: 0;"
       >
         {{ thrownWord }}
       </div>
@@ -236,7 +237,9 @@
           {{ $t('battle.whitedOutDesc') }}
         </p>
         <button
-          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all"
+          ref="whiteoutContinueButton"
+          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all outline-none"
+          :class="{ 'ring-8 ring-yellow-400 border-yellow-400': whiteoutIndex === 0 }"
           @click="fsm.send(GAME_EVENTS.CONFIRM)"
         >
           {{ $t('common.continue') }}
@@ -328,12 +331,17 @@ const { selectedIndex: partyIndex } = useKeyboardNavigation({
   }
 });
 
+const whiteoutContinueButton = ref<HTMLElement | null>(null);
+
 const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
   id: 'battle-whiteout',
   isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)),
   maxIndex: 1,
-  itemRefs: computed(() => [whiteoutButton.value]),
-  onConfirm: () => fsm.send(GAME_EVENTS.CONFIRM)
+  itemRefs: computed(() => [whiteoutContinueButton.value || whiteoutButton.value]),
+  onConfirm: () => {
+    speech.stop();
+    fsm.send(GAME_EVENTS.CONFIRM);
+  }
 });
 
 const submitSpelling = () => {
@@ -424,6 +432,11 @@ watch(() => fsm.state as any, (newState, oldState) => {
     showPerfect.value = true;
     setTimeout(() => showPerfect.value = false, 1500);
   }
+
+  if (newState === GAME_STATES.BATTLE_WHITED_OUT) {
+    audio.playSound(SOUND_EFFECTS.FAINT);
+    speech.speak(`${session.t('battle.whitedOutTitle')}. ${session.t('battle.whitedOutDesc')}`);
+  }
 });
 
 onMounted(() => {
@@ -456,9 +469,9 @@ onUnmounted(() => {
 }
 
 @keyframes throw-word {
-  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
-  50% { left: 50%; bottom: 70%; opacity: 1; transform: scale(1.1) rotate(-10deg); }
-  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.6) rotate(20deg); }
+  0% { transform: translate(20vw, 80vh) scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: translate(50vw, 30vh) scale(1.1) rotate(-10deg); opacity: 1; }
+  100% { transform: translate(80vw, 15vh) scale(0.6) rotate(20deg); opacity: 0; }
 }
 .animate-throw {
   animation: throw-word 1.5s ease-in-out forwards;

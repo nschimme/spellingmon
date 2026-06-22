@@ -3,11 +3,15 @@ import { type Word } from '../utils/gameData';
 
 export interface VocabStoreState {
   vocabData: Record<string, Word[]>;
+  vocabPool: Record<string, Word[]>;
+  lastWord: Record<string, string>;
 }
 
 export const useVocabStore = defineStore('vocab', {
   state: (): VocabStoreState => ({
-    vocabData: {}, // area -> words
+    vocabData: {}, // cacheKey -> words (raw)
+    vocabPool: {}, // cacheKey -> shuffled pool
+    lastWord: {},  // cacheKey -> word string
   }),
   actions: {
     async loadVocab(area: number, lang = 'en-US') {
@@ -25,13 +29,28 @@ export const useVocabStore = defineStore('vocab', {
     },
     getRandomWord(area: number, lang = 'en-US'): Word | null {
       const cacheKey = `${lang}_${area}`;
-      const words = this.vocabData[cacheKey] || [];
-      if (words.length === 0) {
-        console.error(`No vocabulary data loaded for area ${area}.`);
-        return null;
+
+      if (!this.vocabPool[cacheKey] || this.vocabPool[cacheKey].length === 0) {
+        const words = this.vocabData[cacheKey] || [];
+        if (words.length === 0) {
+          console.error(`No vocabulary data loaded for area ${area}.`);
+          return null;
+        }
+
+        let shuffled = [...words].sort(() => Math.random() - 0.5);
+
+        // Avoid direct repeats when resorting
+        if (shuffled.length > 1 && shuffled[0].word === this.lastWord[cacheKey]) {
+          const first = shuffled.shift()!;
+          shuffled.push(first);
+        }
+
+        this.vocabPool[cacheKey] = shuffled;
       }
 
-      return words[Math.floor(Math.random() * words.length)];
+      const word = this.vocabPool[cacheKey].shift()!;
+      this.lastWord[cacheKey] = word.word;
+      return word;
     }
   }
 });
