@@ -16,6 +16,10 @@
             :class="{ 'ring-8 ring-yellow-400': selectedIndex === 0 }"
             class="w-full border-4 border-gray-800 p-3 rounded-xl bg-gray-50 font-bold outline-none focus:ring-8 focus:ring-blue-300"
             :placeholder="$t('character.enterName')"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
             @focus="selectedIndex = 0"
           >
         </div>

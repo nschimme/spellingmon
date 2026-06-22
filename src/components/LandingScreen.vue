@@ -1,108 +1,131 @@
 <template>
   <div
-    class="w-full h-full flex flex-col items-center justify-center bg-sky-400 p-8 relative overflow-hidden cursor-pointer"
+    class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-sky-400 via-sky-300 to-green-300 relative overflow-hidden cursor-pointer group"
     role="main"
     aria-labelledby="landing-title"
     @click="handleContinue"
   >
-    <!-- Parallax Background Elements -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <!-- Far Mountains -->
-      <div
-        v-for="n in 3"
-        :key="'mountain-'+n"
-        class="absolute bottom-24 text-[200px] opacity-30 animate-parallax-slow"
-        :style="mountainStyle()"
-      >
-        ⛰️
-      </div>
+    <!-- Background Layers (Distant to Close) -->
+    <div class="absolute inset-0 pointer-events-none select-none">
+      <!-- Sun Rays -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(255,255,255,0.4)_0%,transparent_60%)] animate-pulse-slow opacity-30" />
 
-      <!-- Clouds -->
-      <div
-        v-for="n in 5"
-        :key="'cloud-'+n"
-        class="absolute text-8xl opacity-40 animate-float"
-        :style="cloudStyle(n)"
-      >
-        ☁️
-      </div>
-
-      <!-- Mid Trees -->
-      <div
-        v-for="n in 8"
-        :key="'tree-'+n"
-        class="absolute bottom-20 text-7xl opacity-50 animate-parallax-mid"
-        :style="treeStyle()"
-      >
-        🌲
-      </div>
-
-      <!-- Birds (Flying Left) -->
-      <div
-        v-for="n in 3"
-        :key="'bird-'+n"
-        class="absolute text-2xl opacity-60 animate-float-fast"
-        :style="birdStyle(n)"
-      >
-        🕊️
-      </div>
-      <!-- Grass/Floor -->
-      <div class="absolute bottom-0 left-0 right-0 h-48 bg-green-500 border-t-8 border-green-700 shadow-[0_-20px_40px_rgba(20,83,45,0.3)]">
-        <!-- Hills/Bumps in the grass -->
-        <div class="absolute -top-12 left-0 right-0 flex justify-around opacity-90">
-          <div
-            v-for="n in 6"
-            :key="'hill-'+n"
-            class="w-64 h-32 bg-green-500 rounded-full -mx-8 blur-sm"
-          />
+      <!-- Distant Mountains -->
+      <div class="absolute bottom-[20%] left-0 right-0 flex justify-around items-end opacity-40">
+        <div
+          v-for="n in 4"
+          :key="'mt-far-'+n"
+          class="text-[250px] leading-none transform translate-y-20 animate-parallax-dist"
+          :style="{ animationDelay: `-${n * 15}s`, animationDuration: '120s' }"
+        >
+          ⛰️
         </div>
+      </div>
 
-        <div class="relative flex flex-wrap justify-around items-end h-full px-10 pb-4 overflow-hidden">
+      <!-- Mid Mountains -->
+      <div class="absolute bottom-[10%] left-0 right-0 flex justify-around items-end opacity-60">
+        <div
+          v-for="n in 3"
+          :key="'mt-mid-'+n"
+          class="text-[200px] leading-none transform translate-y-10 animate-parallax-mid"
+          :style="{ animationDelay: `-${n * 20}s`, animationDuration: '80s' }"
+        >
+          🏔️
+        </div>
+      </div>
+
+      <!-- Moving Silhouettes of Monsters -->
+      <div class="absolute bottom-32 left-0 right-0 overflow-hidden h-24">
+        <div
+          v-for="(emoji, i) in monsterSilhouettes"
+          :key="'sil-'+i"
+          class="absolute bottom-0 text-5xl opacity-10 grayscale brightness-0 animate-walk"
+          :style="{ animationDelay: `-${i * 5}s`, animationDuration: `${15 + (i % 3) * 5}s` }"
+        >
+          {{ emoji }}
+        </div>
+      </div>
+
+      <!-- Fore Trees -->
+      <div class="absolute bottom-20 left-0 right-0 flex justify-between items-end opacity-90 px-4">
+        <div
+          v-for="n in 12"
+          :key="'tree-'+n"
+          class="text-7xl leading-none animate-parallax-fore"
+          :style="{ animationDelay: `-${n * 3}s`, animationDuration: '40s' }"
+        >
+          🌲
+        </div>
+      </div>
+
+      <!-- Ground/Grass Layer -->
+      <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-green-500 to-green-700 border-t-8 border-green-600 shadow-[0_-20px_50px_rgba(0,0,0,0.2)]">
+        <div class="flex justify-around items-end h-full px-4 pb-4 overflow-hidden">
           <div
-            v-for="n in 24"
+            v-for="n in 30"
             :key="'grass-'+n"
-            class="text-2xl md:text-4xl animate-sway mb-2"
-            :style="{ animationDelay: (n * 0.15) + 's', opacity: 0.8 + (Math.random() * 0.2) }"
+            class="text-3xl md:text-5xl animate-sway"
+            :style="{ animationDelay: (n * 0.1) + 's' }"
           >
-            {{ n % 5 === 0 ? '🌸' : (n % 3 === 0 ? '🌼' : '🌿') }}
+            {{ n % 7 === 0 ? '🌸' : (n % 4 === 0 ? '🌿' : '🌱') }}
           </div>
         </div>
       </div>
     </div>
 
-    <div class="z-10 flex flex-col items-center max-w-2xl w-full">
-      <div class="relative mb-12">
+    <!-- UI Overlay -->
+    <div class="z-20 flex flex-col items-center w-full px-4">
+      <!-- Logo/Title Section -->
+      <div class="relative group cursor-pointer transition-transform duration-500 hover:scale-110 mb-16">
+        <!-- Glow Effect behind title -->
+        <div class="absolute inset-0 bg-yellow-400/30 blur-3xl rounded-full scale-150 animate-pulse" />
+
         <h1
           id="landing-title"
-          class="text-5xl md:text-8xl font-black text-center uppercase tracking-tighter text-yellow-400 drop-shadow-[8px_8px_0_rgba(30,58,138,1)] animate-bounce-gentle"
+          class="text-7xl md:text-[10rem] font-black text-center uppercase tracking-tighter leading-none"
         >
-          {{ $t('landing.title') }}
+          <span class="block text-yellow-400 drop-shadow-[12px_12px_0_rgba(30,58,138,1)] transform -rotate-2">
+            SPELLING
+          </span>
+          <span class="block text-white drop-shadow-[12px_12px_0_rgba(220,38,38,1)] transform rotate-1 -mt-4">
+            MON
+          </span>
         </h1>
-        <div class="absolute -right-4 -bottom-4 bg-red-500 text-white px-4 py-1 rounded-full font-black text-xs md:text-base border-4 border-gray-800 shadow-lg animate-pulse">
+
+        <div class="absolute -right-8 top-0 bg-red-600 text-white px-6 py-2 rounded-full font-black text-lg md:text-2xl border-4 border-gray-800 shadow-xl rotate-12 animate-bounce-gentle">
           {{ $t('landing.subtitle') }}
         </div>
       </div>
 
-      <div class="bg-white/90 backdrop-blur-sm border-8 border-gray-800 p-8 md:p-12 rounded-[3rem] shadow-2xl w-full max-w-md transform transition-all duration-500 hover:scale-105">
-        <div class="space-y-6">
-          <button
-            ref="startButton"
-            :class="{ 'ring-8 ring-yellow-400 scale-105': selectedIndex === 0 }"
-            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black py-4 md:py-6 px-6 md:px-12 rounded-2xl border-b-8 border-blue-800 text-xl md:text-3xl uppercase tracking-widest transition-all active:border-b-0 active:translate-y-2 group outline-none animate-pulse-slow"
-            :aria-label="$t('landing.startGame')"
-            @click.stop="handleContinue"
-          >
-            <span class="group-hover:scale-110 inline-block transition-transform">{{ $t('landing.startGame') }}</span>
-          </button>
-        </div>
+      <!-- Action Button Container -->
+      <div class="max-w-md w-full">
+        <button
+          ref="startButton"
+          class="w-full group relative bg-blue-600 hover:bg-blue-500 text-white font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-blue-900 shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
+          :class="{ 'ring-8 ring-yellow-400 scale-105 border-yellow-700': selectedIndex === 0 }"
+          @click.stop="handleContinue"
+        >
+          <!-- Shine effect -->
+          <div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] group-hover:animate-shine" />
+
+          <div class="relative flex items-center justify-center gap-4">
+            <span class="text-3xl md:text-4xl uppercase tracking-[0.2em] drop-shadow-md">
+              {{ $t('landing.startGame') }}
+            </span>
+            <span class="text-4xl animate-bounce">⚔️</span>
+          </div>
+        </button>
       </div>
 
-      <p
-        class="mt-12 text-blue-900 font-black uppercase text-xs md:text-sm tracking-[0.3em] animate-pulse drop-shadow-sm"
-        aria-live="polite"
-      >
-        {{ $t('landing.pressAnyKey') }}
-      </p>
+      <!-- Press Key Hint (More modern style) -->
+      <div class="mt-16 flex flex-col items-center gap-2">
+        <div class="h-1 w-32 bg-gray-800/20 rounded-full overflow-hidden">
+          <div class="h-full bg-white animate-progress-loop" />
+        </div>
+        <p class="text-blue-900/60 font-black uppercase text-xs tracking-[0.5em] animate-pulse">
+          {{ $t('landing.pressAnyKey') }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -121,81 +144,44 @@ const handleContinue = () => {
   emit('continue');
 };
 
+const monsterSilhouettes = ['🦎', '🐢', '🍃', '🐭', '🐛', '🐦', '🐀', '🐍', '🦔', '🦂', '🧚', '🦊', '🎈', '🦇', '🌱', '🍄', '🕷️', '⛰️', '🐱', '🦆', '🐒', '🐕', '🌀', '🧠', '💪', '🪨', '👻', '🦴', '🦵', '🥊', '💣', '🥚', '🔪', '🐟', '⛵', '👥', '🧜', '⚡', '🔥', '😴', '🐉', '👽', '✨'];
+
 const { selectedIndex } = useKeyboardNavigation({
   id: 'landing-screen',
   maxIndex: 1,
   itemRefs: computed(() => [startButton.value]),
   onConfirm: handleContinue
 });
-
-const cloudStyle = (n: number) => {
-  const duration = 15 + (n * 5);
-  const delay = -Math.random() * duration;
-  return {
-    top: `${5 + (n * 10)}%`,
-    left: `-20%`,
-    animationDelay: `${delay}s`,
-    animationDuration: `${duration}s`
-  };
-};
-
-const mountainStyle = () => {
-  const duration = 60;
-  const delay = -Math.random() * duration;
-  return {
-    left: `-20%`,
-    animationDelay: `${delay}s`,
-    animationDuration: `${duration}s`
-  };
-};
-
-const treeStyle = () => {
-  const duration = 30;
-  const delay = -Math.random() * duration;
-  return {
-    left: `-10%`,
-    animationDelay: `${delay}s`,
-    animationDuration: `${duration}s`
-  };
-};
-
-const birdStyle = (n: number) => {
-  const duration = 6 + (n * 2);
-  const delay = -Math.random() * duration;
-  return {
-    top: `${10 + (n * 12)}%`,
-    right: `-10%`,
-    animationDelay: `${delay}s`,
-    animationDuration: `${duration}s`
-  };
-};
 </script>
 
 <style scoped>
-.animate-float {
-  animation: float-horizontal 20s linear infinite;
+@keyframes parallax {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
 }
 
-.animate-float-fast {
-  animation: float-horizontal-reverse 8s linear infinite;
-}
-
-@keyframes float-horizontal {
-  from { transform: translateX(-150%); }
-  to { transform: translateX(1200%); }
-}
-
-@keyframes float-horizontal-reverse {
-  from { transform: translateX(150%); }
-  to { transform: translateX(-1200%); }
-}
-
-.animate-parallax-slow {
-  animation: float-horizontal 60s linear infinite;
+.animate-parallax-dist {
+  animation: parallax linear infinite;
+  will-change: transform;
 }
 
 .animate-parallax-mid {
-  animation: float-horizontal 30s linear infinite;
+  animation: parallax linear infinite;
+  will-change: transform;
+}
+
+.animate-parallax-fore {
+  animation: parallax linear infinite;
+  will-change: transform;
+}
+
+@keyframes walk {
+  from { left: -10%; }
+  to { left: 110%; }
+}
+
+.animate-walk {
+  animation: walk linear infinite;
 }
 
 .animate-sway {
@@ -210,19 +196,38 @@ const birdStyle = (n: number) => {
 
 @keyframes bounce-gentle {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-20px); }
 }
 
 .animate-bounce-gentle {
-  animation: bounce-gentle 3s ease-in-out infinite;
+  animation: bounce-gentle 2s ease-in-out infinite;
 }
 
 @keyframes pulse-slow {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
 }
 
 .animate-pulse-slow {
-  animation: pulse-slow 2s ease-in-out infinite;
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.animate-shine {
+  animation: shine 3s infinite;
+}
+
+@keyframes progress-loop {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-progress-loop {
+  animation: progress-loop 2s linear infinite;
 }
 </style>

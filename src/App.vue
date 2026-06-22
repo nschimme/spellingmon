@@ -13,6 +13,7 @@ import StarterSelection from './components/StarterSelection.vue';
 import LoadingScreen from './components/LoadingScreen.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
+import WhiteoutView from './components/WhiteoutView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
 import EvolutionView from './components/EvolutionView.vue';
 import StoryView from './components/StoryView.vue';
@@ -97,6 +98,10 @@ onUnmounted(() => {
 
         <BattleView v-if="fsm.matches(GAME_STATES.BATTLE)" />
 
+        <transition name="whiteout-fade">
+          <WhiteoutView v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)" />
+        </transition>
+
         <MenuOverlay
           v-if="fsm.matches(GAME_STATES.MENU)"
           @close="fsm.send(GAME_EVENTS.CLOSE)"
@@ -159,6 +164,14 @@ body {
   transition: opacity 0.3s ease;
 }
 .fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.whiteout-fade-enter-active,
+.whiteout-fade-leave-active {
+  transition: opacity 1s ease;
+}
+.whiteout-fade-enter-from,
+.whiteout-fade-leave-to {
   opacity: 0;
 }
 </style>
