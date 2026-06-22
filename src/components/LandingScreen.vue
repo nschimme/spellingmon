@@ -82,10 +82,10 @@
           id="landing-title"
           class="text-7xl md:text-[10rem] font-black text-center uppercase tracking-tighter leading-none"
         >
-          <span class="block text-yellow-400 drop-shadow-[12px_12px_0_rgba(30,58,138,1)] transform -rotate-2">
+          <span class="block text-[#863bff] drop-shadow-[12px_12px_0_rgba(255,255,255,1)] transform -rotate-2">
             SPELLING
           </span>
-          <span class="block text-white drop-shadow-[12px_12px_0_rgba(220,38,38,1)] transform rotate-1 -mt-4">
+          <span class="block text-white drop-shadow-[12px_12px_0_rgba(134,59,255,1)] transform rotate-1 -mt-4">
             MON
           </span>
         </h1>
@@ -99,7 +99,7 @@
       <div class="max-w-md w-full">
         <button
           ref="startButton"
-          class="w-full group relative bg-blue-600 hover:bg-blue-500 text-white font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-blue-900 shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
+          class="w-full group relative bg-[#863bff] hover:bg-[#9d66ff] text-white font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-[#6d28d9] shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
           :class="{ 'ring-8 ring-yellow-400 scale-105 border-yellow-700': selectedIndex === 0 }"
           @click.stop="handleContinue"
         >
@@ -133,6 +133,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
+import { MONS } from '../utils/gameData';
 
 const emit = defineEmits(['continue']);
 const startButton = ref<HTMLElement | null>(null);
@@ -142,7 +143,7 @@ const handleContinue = () => {
   emit('continue');
 };
 
-const monsters = ['🦎', '🐢', '🍃', '🐭', '🐛', '🐦', '🐀', '🐍', '🦔', '🦂', '🧚', '🦊', '🎈', '🦇', '🌱', '🍄', '🕷️', '🦖', '🦋', '🐝', '🦅', '🦁', '🐱', '🐶', '🐉', '👽', '✨'];
+const monsters = Object.values(MONS).map(m => m.emoji);
 const currentMonster = ref('');
 const monsterKey = ref(0);
 const monsterAnimClass = ref('');

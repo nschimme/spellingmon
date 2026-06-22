@@ -407,10 +407,16 @@ watch(() => fsm.state as any, (newState, oldState) => {
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     clearFocusTimer();
+    userInput.value = '';
     nextTick(() => {
+      // Immediate focus attempt
+      spellingInput.value?.focus();
+      // Staggered attempts for mobile keyboard reliability
+      setTimeout(() => spellingInput.value?.focus(), 10);
+      setTimeout(() => spellingInput.value?.focus(), 50);
       spellingFocusTimeout.value = setTimeout(() => {
         spellingInput.value?.focus();
-      }, 80);
+      }, 150);
     });
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
