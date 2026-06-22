@@ -55,20 +55,48 @@
         </div>
       </div>
 
-      <!-- Perfect/Mistake Feedback -->
-      <div
-        v-if="showMistake"
-        class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/20 backdrop-blur-sm"
-      >
-        <div class="bg-white border-8 border-red-600 p-8 rounded-3xl shadow-2xl text-center">
-          <p class="text-red-600 font-black text-xl mb-2">
-            {{ $t('battle.incorrect') }}
-          </p>
-          <p class="text-4xl font-black tracking-widest text-gray-800">
-            {{ session.battle.currentWord?.word }}
-          </p>
+      <!-- Perfect/Mistake Feedback Overlay -->
+      <transition name="pop-in">
+        <div
+          v-if="showMistake"
+          class="absolute inset-0 z-50 flex items-center justify-center bg-red-600/30 backdrop-blur-sm"
+        >
+          <div class="bg-white border-8 border-red-600 p-6 rounded-[2rem] shadow-2xl text-center transform scale-110">
+            <p class="text-red-600 font-black text-xl mb-2 uppercase tracking-tighter">
+              {{ $t('battle.incorrect') }}
+            </p>
+            <p class="text-4xl font-black tracking-widest text-gray-800">
+              {{ session.battle.currentWord?.word }}
+            </p>
+          </div>
         </div>
-      </div>
+      </transition>
+
+      <transition name="pop-in">
+        <div
+          v-if="showCorrect"
+          class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
+        >
+          <div class="bg-green-500 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce-gentle">
+            <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
+              {{ $t('battle.correct') }}
+            </p>
+          </div>
+        </div>
+      </transition>
+
+      <transition name="pop-in">
+        <div
+          v-if="showPerfect"
+          class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
+        >
+          <div class="bg-yellow-400 border-8 border-white p-8 rounded-full shadow-2xl animate-bounce-gentle ring-8 ring-yellow-400/50">
+            <p class="text-white font-black uppercase text-5xl italic tracking-tighter">
+              {{ $t('battle.perfect') }}
+            </p>
+          </div>
+        </div>
+      </transition>
 
       <!-- Thrown Word / Ball -->
       <div
@@ -83,17 +111,6 @@
         <template v-else>
             {{ thrownWord }}
         </template>
-      </div>
-
-      <div
-        v-if="showPerfect"
-        class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
-      >
-        <div class="bg-yellow-400 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce">
-          <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
-            {{ $t('battle.perfect') }}
-          </p>
-        </div>
       </div>
     </div>
 
@@ -218,42 +235,8 @@
           />
         </template>
 
-        <!-- Whited Out (Handled by full-screen overlay) -->
-        <template v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)">
-          <div class="flex items-center justify-center h-full">
-            <p class="text-xs font-bold text-red-600 animate-pulse uppercase">
-              {{ $t('battle.whitedOutTitle') }}
-            </p>
-          </div>
-        </template>
       </div>
     </div>
-
-    <!-- Whiteout Full Screen Transition -->
-    <transition name="whiteout-fade">
-      <div
-        v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)"
-        class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center"
-      >
-        <div class="text-9xl mb-8 animate-pulse">
-          🏥
-        </div>
-        <h2 class="text-4xl font-black text-red-600 mb-4 uppercase tracking-tighter">
-          {{ $t('battle.whitedOutTitle') }}
-        </h2>
-        <p class="text-xl font-bold text-gray-700 max-w-md mb-12">
-          {{ $t('battle.whitedOutDesc') }}
-        </p>
-        <button
-          ref="whiteoutContinueButton"
-          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all outline-none"
-          :class="{ 'ring-8 ring-yellow-400 border-yellow-400': whiteoutIndex === 0 }"
-          @click="fsm.send(GAME_EVENTS.CONFIRM)"
-        >
-          {{ $t('common.continue') }}
-        </button>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -274,6 +257,7 @@ const userInput = ref('');
 const isFlashing = ref(false);
 const timeLeft = ref(0);
 const showMistake = ref(false);
+const showCorrect = ref(false);
 const showPerfect = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
@@ -340,18 +324,6 @@ const { selectedIndex: partyIndex } = useKeyboardNavigation({
   }
 });
 
-const whiteoutContinueButton = ref<HTMLElement | null>(null);
-
-const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
-  id: 'battle-whiteout',
-  isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)),
-  maxIndex: 1,
-  itemRefs: computed(() => [whiteoutContinueButton.value]),
-  onConfirm: () => {
-    speech.stop();
-    fsm.send(GAME_EVENTS.CONFIRM);
-  }
-});
 
 const submitSpelling = () => {
   if (!session.battle.currentWord || isSubmitting.value) return;
@@ -454,15 +426,16 @@ watch(() => fsm.state as any, (newState, oldState) => {
     }
   }
 
-  if (fsm.params.isPerfect) {
-    showPerfect.value = true;
-    setTimeout(() => showPerfect.value = false, 1500);
+  if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK && fsm.params.isCorrect) {
+    if (fsm.params.isPerfect) {
+      showPerfect.value = true;
+      setTimeout(() => showPerfect.value = false, 1500);
+    } else {
+      showCorrect.value = true;
+      setTimeout(() => showCorrect.value = false, 1500);
+    }
   }
 
-  if (newState === GAME_STATES.BATTLE_WHITED_OUT) {
-    audio.playSound(SOUND_EFFECTS.FAINT);
-    speech.speak(`${session.t('battle.whitedOutTitle')}. ${session.t('battle.whitedOutDesc')}`);
-  }
 });
 
 onMounted(() => {
@@ -524,12 +497,4 @@ onUnmounted(() => {
   animation-delay: 1.5s;
 }
 
-.whiteout-fade-enter-active,
-.whiteout-fade-leave-active {
-  transition: opacity 1s ease;
-}
-.whiteout-fade-enter-from,
-.whiteout-fade-leave-to {
-  opacity: 0;
-}
 </style>

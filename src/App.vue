@@ -13,6 +13,7 @@ import StarterSelection from './components/StarterSelection.vue';
 import LoadingScreen from './components/LoadingScreen.vue';
 import WorldMap from './components/WorldMap.vue';
 import BattleView from './components/BattleView.vue';
+import WhiteoutView from './components/WhiteoutView.vue';
 import MenuOverlay from './components/MenuOverlay.vue';
 import EvolutionView from './components/EvolutionView.vue';
 import StoryView from './components/StoryView.vue';
@@ -96,6 +97,8 @@ onUnmounted(() => {
         />
 
         <BattleView v-if="fsm.matches(GAME_STATES.BATTLE)" />
+
+        <WhiteoutView v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)" />
 
         <MenuOverlay
           v-if="fsm.matches(GAME_STATES.MENU)"

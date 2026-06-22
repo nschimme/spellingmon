@@ -287,7 +287,6 @@ export const useGameFSM = defineStore('gameFSM', () => {
                      wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale);
                   }
                   ctx.session.battle.currentWord = wordObj;
-                  ctx.session.recordDiscovery('discoveredWords', ctx.session.player.currentArea, wordObj.word);
                   const time = calculateTimerDuration(wordObj, ctx.session.battle.isCapturing);
                   ctx.session.battle.totalTime = time;
                   ctx.session.battle.startTime = Date.now();
@@ -309,9 +308,6 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       ctx.session.recordDiscovery('masteredWords', ctx.session.player.currentArea, ctx.session.battle.currentWord.word);
                       const isPower = timeLeft > (ctx.session.battle.totalTime / 2);
 
-                      if (isPerfect) ctx.session.battle.log.push(ctx.t('battle.perfect'));
-                      if (isPower) ctx.session.battle.log.push(ctx.t('battle.timeBonus'));
-
                       let basePower = 30;
                       if (isPerfect && isPower) basePower = 75;
                       else if (isPerfect) basePower = 60;
@@ -322,7 +318,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         params: { power: basePower, isPerfect, isPower, isCorrect: true }
                       };
                     } else {
-                      ctx.session.battle.log.push(ctx.t('battle.incorrect'));
+                      ctx.session.recordDiscovery('discoveredWords', ctx.session.player.currentArea, ctx.session.battle.currentWord.word);
                       return {
                         target: GAME_STATES.BATTLE_ENEMY_TURN,
                         params: { isCorrect: false }

@@ -30,8 +30,8 @@
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
         <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.seen') }}</span>
-        <div class="bg-gray-700 px-2 py-1 rounded text-[8px] font-bold text-gray-300">
-          {{ discoveredCount }} / 40
+        <div class="bg-blue-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
+          {{ seenCount }} / 40
         </div>
       </div>
       <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
@@ -57,47 +57,48 @@
 
     <div
       v-else
-      class="grid grid-cols-1 gap-2"
+      class="grid grid-cols-2 sm:grid-cols-4 gap-2"
     >
       <div
         v-for="(word, index) in areaWords"
-        :key="word.term"
+        :key="word.word"
         :ref="el => { if (el) itemRefs[index] = el as HTMLElement }"
-        class="group relative overflow-hidden bg-white border-4 p-3 rounded-xl transition-all"
+        class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px]"
         :class="[
-          isMastered(word.term) ? 'border-green-500 shadow-md' : (isDiscovered(word.term) ? 'border-gray-400' : 'border-gray-200 opacity-40'),
-          selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
+          isMastered(word.word) ? 'border-green-500 bg-green-50 shadow-md' : (isSeen(word.word) ? 'border-blue-400 bg-blue-50' : 'border-gray-200 opacity-40'),
+          selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105 z-10' : ''
         ]"
       >
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <span class="font-black text-sm tracking-tight">
-                {{ isDiscovered(word.term) ? word.term : '???' }}
-              </span>
-              <span
-                v-if="isMastered(word.term)"
-                class="text-green-500"
-              >✅</span>
-            </div>
-            <p
-              v-if="isMastered(word.term)"
-              class="text-[9px] text-gray-500 font-bold leading-tight mt-1 line-clamp-2"
-            >
-              {{ word.definition }}
-            </p>
+        <div class="text-center">
+          <div class="text-2xl mb-1">
+            {{ isSeen(word.word) || isMastered(word.word) ? (word.emoji || '📖') : '❓' }}
           </div>
-          <div class="text-xs">
-            {{ isDiscovered(word.term) ? word.emoji : '❓' }}
+          <div class="font-black text-[10px] uppercase tracking-tighter truncate max-w-full">
+            {{ isSeen(word.word) || isMastered(word.word) ? word.word : '???' }}
+          </div>
+          <div
+            v-if="isMastered(word.word)"
+            class="text-[10px] text-green-600 font-bold"
+          >
+            {{ $t('menu.mastered') }}
+          </div>
+          <div
+            v-else-if="isSeen(word.word)"
+            class="text-[10px] text-blue-600 font-bold"
+          >
+            {{ $t('menu.seen') }}
           </div>
         </div>
 
-        <!-- Progress Mini-Bar (if discovered but not mastered) -->
+        <!-- Detail Tooltip (Desktop Hover) -->
         <div
-          v-if="isDiscovered(word.term) && !isMastered(word.term)"
-          class="mt-2 w-full bg-gray-100 h-1 rounded-full overflow-hidden"
+          v-if="(isSeen(word.word) || isMastered(word.word)) && selectedIndex === index"
+          class="absolute inset-0 bg-white/95 p-2 flex flex-col items-center justify-center text-center z-20"
         >
-          <div class="h-full bg-blue-400 w-1/2" />
+          <span class="font-black text-xs">{{ word.word }}</span>
+          <p class="text-[8px] font-bold leading-tight mt-1 line-clamp-3">
+             {{ word.definition }}
+          </p>
         </div>
       </div>
     </div>
@@ -131,10 +132,10 @@ const itemRefs = ref<(HTMLElement | null)[]>([]);
 
 const emit = defineEmits(['back']);
 
-const discoveredCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
+const seenCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
 const masteredCount = computed(() => (session.dex.masteredWords[currentArea.value] || []).length);
 
-const isDiscovered = (term: string) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
+const isSeen = (term: string) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
 const isMastered = (term: string) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
 
 const fetchWords = async () => {
@@ -168,13 +169,16 @@ const prevArea = () => {
   }
 };
 
+const gridCols = computed(() => window.innerWidth < 640 ? 2 : 4);
+
 const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'menu-spellingdex',
   maxIndex: () => areaWords.value.length,
+  gridColumns: gridCols,
   onConfirm: () => {},
   onCancel: () => emit('back'),
-  onLeft: () => prevArea(),
-  onRight: () => nextArea()
+  onLeft: (idx) => { if (idx % gridCols.value === 0) prevArea(); },
+  onRight: (idx) => { if (idx % gridCols.value === gridCols.value - 1 || idx === areaWords.value.length - 1) nextArea(); }
 });
 
 watch(selectedIndex, (newIdx) => {

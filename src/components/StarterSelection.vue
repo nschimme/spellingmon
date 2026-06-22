@@ -75,7 +75,7 @@ const starters = [
 ];
 
 const selectStarter = (mon: any) => {
-  const fullMon = createMon(mon.species, 1);
+  const fullMon = createMon(mon.species, 2);
   session.setStarter(fullMon);
   emit('complete');
 };
