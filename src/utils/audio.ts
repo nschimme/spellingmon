@@ -91,6 +91,9 @@ class AudioService {
       case SOUND_EFFECTS.VICTORY:
         this.playArpeggio([523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50], 0.1);
         break;
+      case SOUND_EFFECTS.LEVEL_UP:
+        this.playArpeggio([523.25, 659.25, 783.99, 1046.50], 0.1);
+        break;
       case SOUND_EFFECTS.EVOLUTION:
         this.playEvolution();
         break;

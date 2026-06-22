@@ -293,15 +293,11 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   ctx.session.battle.startTime = Date.now();
 
                   const spokenVersion = wordObj.spoken_version || wordObj.word;
-                  speech.speak(spokenVersion);
+                  let fullText = spokenVersion;
                   if (wordObj.sentence_context) {
-                    setTimeout(() => {
-                      speech.speak(`${ctx.t('battle.asIn')} ${wordObj.sentence_context}`);
-                      setTimeout(() => {
-                        speech.speak(spokenVersion);
-                      }, 3000);
-                    }, 1500);
+                    fullText = `${spokenVersion}. ${ctx.t('battle.asIn')} ${wordObj.sentence_context}. ${spokenVersion}.`;
                   }
+                  speech.speak(fullText);
                 },
                 on: {
                   [GAME_EVENTS.SUBMIT]: (ctx, params) => {
@@ -310,7 +306,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     const { isCorrect, isPerfect } = validateSpelling(params.input, ctx.session.battle.currentWord.word);
 
                     if (isCorrect) {
+                      ctx.session.recordDiscovery('masteredWords', ctx.session.player.currentArea, ctx.session.battle.currentWord.word);
                       const isPower = timeLeft > (ctx.session.battle.totalTime / 2);
+
+                      if (isPerfect) ctx.session.battle.log.push(ctx.t('battle.perfect'));
+                      if (isPower) ctx.session.battle.log.push(ctx.t('battle.timeBonus'));
+
                       let basePower = 30;
                       if (isPerfect && isPower) basePower = 75;
                       else if (isPerfect) basePower = 60;
@@ -344,7 +345,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         if (added) {
                           setTimeout(() => {
                             ctx.fsm.transition(GAME_STATES.WORLD);
-                          }, 1500);
+                          }, 2000);
                         } else {
                           setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_PARTY_FULL), 1000);
                         }

@@ -6,7 +6,17 @@
     @click="handleContinue"
   >
     <!-- Parallax Background Elements -->
-    <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <!-- Far Mountains -->
+      <div
+        v-for="n in 3"
+        :key="'mountain-'+n"
+        class="absolute bottom-24 text-[200px] opacity-30 animate-parallax-slow"
+        :style="mountainStyle()"
+      >
+        ⛰️
+      </div>
+
       <!-- Clouds -->
       <div
         v-for="n in 5"
@@ -16,7 +26,18 @@
       >
         ☁️
       </div>
-      <!-- Birds -->
+
+      <!-- Mid Trees -->
+      <div
+        v-for="n in 8"
+        :key="'tree-'+n"
+        class="absolute bottom-20 text-7xl opacity-50 animate-parallax-mid"
+        :style="treeStyle()"
+      >
+        🌲
+      </div>
+
+      <!-- Birds (Flying Left) -->
       <div
         v-for="n in 3"
         :key="'bird-'+n"
@@ -26,15 +47,24 @@
         🕊️
       </div>
       <!-- Grass/Floor -->
-      <div class="absolute bottom-0 left-0 right-0 h-32 bg-green-500 border-t-8 border-green-700">
-        <div class="flex justify-around items-end h-full px-10">
+      <div class="absolute bottom-0 left-0 right-0 h-48 bg-green-500 border-t-8 border-green-700 shadow-[0_-20px_40px_rgba(20,83,45,0.3)]">
+        <!-- Hills/Bumps in the grass -->
+        <div class="absolute -top-12 left-0 right-0 flex justify-around opacity-90">
           <div
-            v-for="n in 12"
+            v-for="n in 6"
+            :key="'hill-'+n"
+            class="w-64 h-32 bg-green-500 rounded-full -mx-8 blur-sm"
+          />
+        </div>
+
+        <div class="relative flex flex-wrap justify-around items-end h-full px-10 pb-4 overflow-hidden">
+          <div
+            v-for="n in 24"
             :key="'grass-'+n"
-            class="text-4xl animate-sway"
-            :style="{ animationDelay: (n * 0.2) + 's' }"
+            class="text-2xl md:text-4xl animate-sway mb-2"
+            :style="{ animationDelay: (n * 0.15) + 's', opacity: 0.8 + (Math.random() * 0.2) }"
           >
-            🌿
+            {{ n % 5 === 0 ? '🌸' : (n % 3 === 0 ? '🌼' : '🌿') }}
           </div>
         </div>
       </div>
@@ -100,22 +130,41 @@ const { selectedIndex } = useKeyboardNavigation({
 
 const cloudStyle = (n: number) => {
   const duration = 15 + (n * 5);
-  // Use negative delay to start animation at a random point immediately
   const delay = -Math.random() * duration;
   return {
-    top: `${10 + (n * 15)}%`,
+    top: `${5 + (n * 10)}%`,
     left: `-20%`,
     animationDelay: `${delay}s`,
     animationDuration: `${duration}s`
   };
 };
 
-const birdStyle = (n: number) => {
-  const duration = 8 + (n * 2);
+const mountainStyle = () => {
+  const duration = 60;
   const delay = -Math.random() * duration;
   return {
-    top: `${5 + (n * 10)}%`,
+    left: `-20%`,
+    animationDelay: `${delay}s`,
+    animationDuration: `${duration}s`
+  };
+};
+
+const treeStyle = () => {
+  const duration = 30;
+  const delay = -Math.random() * duration;
+  return {
     left: `-10%`,
+    animationDelay: `${delay}s`,
+    animationDuration: `${duration}s`
+  };
+};
+
+const birdStyle = (n: number) => {
+  const duration = 6 + (n * 2);
+  const delay = -Math.random() * duration;
+  return {
+    top: `${10 + (n * 12)}%`,
+    right: `-10%`,
     animationDelay: `${delay}s`,
     animationDuration: `${duration}s`
   };
@@ -128,12 +177,25 @@ const birdStyle = (n: number) => {
 }
 
 .animate-float-fast {
-  animation: float-horizontal 10s linear infinite;
+  animation: float-horizontal-reverse 8s linear infinite;
 }
 
 @keyframes float-horizontal {
   from { transform: translateX(-150%); }
-  to { transform: translateX(600%); }
+  to { transform: translateX(1200%); }
+}
+
+@keyframes float-horizontal-reverse {
+  from { transform: translateX(150%); }
+  to { transform: translateX(-1200%); }
+}
+
+.animate-parallax-slow {
+  animation: float-horizontal 60s linear infinite;
+}
+
+.animate-parallax-mid {
+  animation: float-horizontal 30s linear infinite;
 }
 
 .animate-sway {

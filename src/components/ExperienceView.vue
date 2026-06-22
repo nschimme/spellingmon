@@ -16,13 +16,13 @@
       </div>
 
       <div
-        class="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 overflow-y-auto"
+        class="flex-1 p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 overflow-y-auto max-h-[60vh]"
         role="list"
       >
         <div
           v-for="mon in (results as any[])"
           :key="mon.id"
-          class="bg-white border-4 border-gray-800 p-3 sm:p-4 rounded-2xl shadow-md h-fit"
+          class="bg-white border-4 border-gray-800 p-3 sm:p-4 rounded-2xl shadow-md h-fit min-w-0"
           role="listitem"
         >
           <div class="flex items-center gap-4 mb-3">
@@ -32,12 +32,12 @@
             >
               {{ mon.emoji }}
             </div>
-            <div class="flex-1">
-              <div class="flex justify-between items-end">
-                <h3 class="font-black text-xl text-gray-800 uppercase">
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-end gap-2">
+                <h3 class="font-black text-lg sm:text-xl text-gray-800 uppercase truncate">
                   {{ $t('monsters.' + mon.species) }}
                 </h3>
-                <span class="font-bold text-blue-600">Lv {{ mon.displayLevel }}</span>
+                <span class="font-bold text-blue-600 shrink-0">Lv {{ mon.displayLevel }}</span>
               </div>
               <div class="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">
                 {{ $t('battle.expGainedShort', { n: mon.expGained }) }}
@@ -47,7 +47,7 @@
 
           <!-- XP Bar -->
           <div
-            class="relative w-full bg-gray-200 h-6 border-4 border-gray-800 rounded-full overflow-hidden shadow-inner"
+            class="relative w-full bg-gray-200 h-7 border-4 border-gray-800 rounded-full overflow-hidden shadow-inner"
             role="progressbar"
             :aria-valuenow="mon.displayExpPercent"
             aria-valuemin="0"
@@ -89,6 +89,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
+import { audio } from '../utils/audio';
+import { SOUND_EFFECTS } from '../utils/constants';
 
 const props = defineProps({
   participatingMons: {
@@ -131,6 +133,9 @@ const animateExp = async (mon: any) => {
   // 3. Final level
   mon.displayExpPercent = 0;
   mon.displayLevel = mon.level;
+  if (mon.leveledUp) {
+    audio.playSound(SOUND_EFFECTS.LEVEL_UP);
+  }
   await new Promise(r => setTimeout(r, 50));
   mon.displayExp = mon.exp;
   mon.displayExpPercent = (mon.exp / mon.expToNext) * 100;

@@ -9,7 +9,10 @@
       <!-- Enemy -->
       <div
         class="absolute top-4 right-4 sm:top-10 sm:right-10 flex flex-col items-end transition-all duration-300"
-        :class="{ 'animate-shake': isEnemyShaking }"
+        :class="{
+            'animate-shake': isEnemyShaking,
+            'opacity-0 scale-0': isEnemyCaptured
+        }"
       >
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
           <div class="flex flex-col font-bold leading-tight">
@@ -24,7 +27,7 @@
             />
           </div>
         </div>
-        <div class="text-4xl sm:text-6xl mt-2 sm:mt-4">
+        <div class="text-6xl sm:text-8xl lg:text-[10rem] mt-2 sm:mt-4">
           {{ session.battle.enemyMon.emoji }}
         </div>
       </div>
@@ -34,7 +37,7 @@
         class="absolute bottom-4 left-4 sm:bottom-10 sm:left-10 flex flex-col items-start transition-all duration-300"
         :class="{ 'animate-shake': isPlayerShaking }"
       >
-        <div class="text-4xl sm:text-6xl mb-2 sm:mb-4 scale-x-[-1]">
+        <div class="text-6xl sm:text-8xl lg:text-[10rem] mb-2 sm:mb-4 scale-x-[-1]">
           {{ session.activePlayerMon.emoji }}
         </div>
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md">
@@ -67,12 +70,19 @@
         </div>
       </div>
 
-      <!-- Thrown Word -->
+      <!-- Thrown Word / Ball -->
       <div
         v-if="thrownWord"
-        class="absolute z-50 font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw"
+        class="fixed z-50 pointer-events-none"
+        :class="session.battle.isCapturing ? 'text-6xl animate-throw-ball' : 'font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw'"
+        style="left: 0; top: 0;"
       >
-        {{ thrownWord }}
+        <template v-if="session.battle.isCapturing">
+            <div :class="{ 'animate-ball-wobble': isBallWobbling }">🔴</div>
+        </template>
+        <template v-else>
+            {{ thrownWord }}
+        </template>
       </div>
 
       <div
@@ -208,16 +218,13 @@
           />
         </template>
 
-        <!-- Whited Out -->
+        <!-- Whited Out (Handled by full-screen overlay) -->
         <template v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)">
-          <button
-            ref="whiteoutButton"
-            class="bg-red-600 text-white py-4 rounded-xl border-b-8 border-red-800 font-black uppercase text-lg outline-none transition-all"
-            :class="{ 'ring-8 ring-yellow-400 border-yellow-400': whiteoutIndex === 0 }"
-            @click="fsm.send(GAME_EVENTS.CONFIRM)"
-          >
-            {{ $t('common.confirm') }}
-          </button>
+          <div class="flex items-center justify-center h-full">
+            <p class="text-xs font-bold text-red-600 animate-pulse uppercase">
+              {{ $t('battle.whitedOutTitle') }}
+            </p>
+          </div>
         </template>
       </div>
     </div>
@@ -228,7 +235,9 @@
         v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)"
         class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center"
       >
-        <div class="text-9xl mb-8 animate-pulse">🏥</div>
+        <div class="text-9xl mb-8 animate-pulse">
+          🏥
+        </div>
         <h2 class="text-4xl font-black text-red-600 mb-4 uppercase tracking-tighter">
           {{ $t('battle.whitedOutTitle') }}
         </h2>
@@ -236,7 +245,9 @@
           {{ $t('battle.whitedOutDesc') }}
         </p>
         <button
-          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all"
+          ref="whiteoutContinueButton"
+          class="bg-red-600 text-white px-12 py-4 rounded-2xl font-black uppercase text-2xl border-b-8 border-red-800 active:border-b-0 active:translate-y-2 transition-all outline-none"
+          :class="{ 'ring-8 ring-yellow-400 border-yellow-400': whiteoutIndex === 0 }"
           @click="fsm.send(GAME_EVENTS.CONFIRM)"
         >
           {{ $t('common.continue') }}
@@ -267,6 +278,8 @@ const showPerfect = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
+const isEnemyCaptured = ref(false);
+const isBallWobbling = ref(false);
 const thrownWord = ref('');
 const spellingInput = ref<HTMLInputElement | null>(null);
 const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
@@ -275,7 +288,6 @@ const spellingFocusTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
 const partyRefs = ref<(HTMLElement | null)[]>([]);
-const whiteoutButton = ref<HTMLElement | null>(null);
 
 const setActionRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) actionRefs.value[index] = el as HTMLElement;
@@ -328,12 +340,17 @@ const { selectedIndex: partyIndex } = useKeyboardNavigation({
   }
 });
 
+const whiteoutContinueButton = ref<HTMLElement | null>(null);
+
 const { selectedIndex: whiteoutIndex } = useKeyboardNavigation({
   id: 'battle-whiteout',
   isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)),
   maxIndex: 1,
-  itemRefs: computed(() => [whiteoutButton.value]),
-  onConfirm: () => fsm.send(GAME_EVENTS.CONFIRM)
+  itemRefs: computed(() => [whiteoutContinueButton.value]),
+  onConfirm: () => {
+    speech.stop();
+    fsm.send(GAME_EVENTS.CONFIRM);
+  }
 });
 
 const submitSpelling = () => {
@@ -345,12 +362,29 @@ const submitSpelling = () => {
   // Stop narrator immediately
   speech.stop();
 
+  const isCapturing = session.battle.isCapturing;
+  const animDuration = isCapturing ? 4000 : 1600;
+
+  if (isCapturing) {
+    // Stage 1: Ball hits enemy
+    setTimeout(() => {
+      isEnemyCaptured.value = true;
+      isBallWobbling.value = true;
+    }, 1800);
+
+    // Stage 2: Wobble ends
+    setTimeout(() => {
+      isBallWobbling.value = false;
+    }, 3500);
+  }
+
   setTimeout(() => {
     thrownWord.value = '';
+    isEnemyCaptured.value = false;
     fsm.send(GAME_EVENTS.SUBMIT, { input });
     userInput.value = '';
     isSubmitting.value = false;
-  }, 1600); // Slightly longer than CSS animation (1500ms)
+  }, animDuration);
 };
 
 const refocusInput = () => {
@@ -424,6 +458,11 @@ watch(() => fsm.state as any, (newState, oldState) => {
     showPerfect.value = true;
     setTimeout(() => showPerfect.value = false, 1500);
   }
+
+  if (newState === GAME_STATES.BATTLE_WHITED_OUT) {
+    audio.playSound(SOUND_EFFECTS.FAINT);
+    speech.speak(`${session.t('battle.whitedOutTitle')}. ${session.t('battle.whitedOutDesc')}`);
+  }
 });
 
 onMounted(() => {
@@ -456,12 +495,33 @@ onUnmounted(() => {
 }
 
 @keyframes throw-word {
-  0% { left: 20%; bottom: 20%; opacity: 1; transform: scale(1) rotate(0deg); }
-  50% { left: 50%; bottom: 70%; opacity: 1; transform: scale(1.1) rotate(-10deg); }
-  100% { left: 80%; top: 15%; opacity: 0; transform: scale(0.6) rotate(20deg); }
+  0% { transform: translate(20vw, 80vh) scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: translate(50vw, 30vh) scale(1.1) rotate(-10deg); opacity: 1; }
+  100% { transform: translate(80vw, 15vh) scale(0.6) rotate(20deg); opacity: 0; }
 }
 .animate-throw {
   animation: throw-word 1.5s ease-in-out forwards;
+}
+
+@keyframes throw-ball {
+  0% { transform: translate(20vw, 80vh) scale(1) rotate(0deg); opacity: 1; }
+  30% { transform: translate(50vw, 20vh) scale(1.2) rotate(180deg); opacity: 1; }
+  45% { transform: translate(75vw, 25vh) scale(1) rotate(360deg); opacity: 1; }
+  100% { transform: translate(75vw, 25vh) scale(1) rotate(360deg); opacity: 1; }
+}
+.animate-throw-ball {
+  animation: throw-ball 4s ease-in-out forwards;
+}
+
+@keyframes ball-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+  75% { transform: rotate(-10deg); }
+}
+.animate-ball-wobble {
+  animation: ball-wobble 0.5s ease-in-out 3;
+  animation-delay: 1.5s;
 }
 
 .whiteout-fade-enter-active,
