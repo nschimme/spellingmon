@@ -12,7 +12,7 @@
         v-for="n in 3"
         :key="'mountain-'+n"
         class="absolute bottom-40 text-[200px] opacity-30 animate-parallax-slow"
-        :style="mountainStyle(n)"
+        :style="mountainStyle()"
       >
         ⛰️
       </div>
@@ -32,7 +32,7 @@
         v-for="n in 8"
         :key="'tree-'+n"
         class="absolute bottom-28 text-7xl opacity-50 animate-parallax-mid"
-        :style="treeStyle(n)"
+        :style="treeStyle()"
       >
         🌲
       </div>
@@ -50,7 +50,11 @@
       <div class="absolute bottom-0 left-0 right-0 h-48 bg-green-500 border-t-8 border-green-700 shadow-[0_-20px_40px_rgba(20,83,45,0.3)]">
         <!-- Hills/Bumps in the grass -->
         <div class="absolute -top-12 left-0 right-0 flex justify-around opacity-90">
-            <div v-for="n in 6" :key="'hill-'+n" class="w-64 h-32 bg-green-500 rounded-full -mx-8 blur-sm"></div>
+          <div
+            v-for="n in 6"
+            :key="'hill-'+n"
+            class="w-64 h-32 bg-green-500 rounded-full -mx-8 blur-sm"
+          />
         </div>
 
         <div class="relative flex flex-wrap justify-around items-end h-full px-10 pb-4 overflow-hidden">
@@ -135,7 +139,7 @@ const cloudStyle = (n: number) => {
   };
 };
 
-const mountainStyle = (n: number) => {
+const mountainStyle = () => {
   const duration = 60;
   const delay = -Math.random() * duration;
   return {
@@ -145,7 +149,7 @@ const mountainStyle = (n: number) => {
   };
 };
 
-const treeStyle = (n: number) => {
+const treeStyle = () => {
   const duration = 30;
   const delay = -Math.random() * duration;
   return {

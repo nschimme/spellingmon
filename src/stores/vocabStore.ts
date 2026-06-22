@@ -37,7 +37,7 @@ export const useVocabStore = defineStore('vocab', {
           return null;
         }
 
-        let shuffled = [...words].sort(() => Math.random() - 0.5);
+        const shuffled = [...words].sort(() => Math.random() - 0.5);
 
         // Avoid direct repeats when resorting
         if (shuffled.length > 1 && shuffled[0].word === this.lastWord[cacheKey]) {

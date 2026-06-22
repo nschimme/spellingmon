@@ -229,7 +229,9 @@
         v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)"
         class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8 text-center"
       >
-        <div class="text-9xl mb-8 animate-pulse">🏥</div>
+        <div class="text-9xl mb-8 animate-pulse">
+          🏥
+        </div>
         <h2 class="text-4xl font-black text-red-600 mb-4 uppercase tracking-tighter">
           {{ $t('battle.whitedOutTitle') }}
         </h2>
