@@ -84,7 +84,7 @@
           id="landing-title"
           class="text-[clamp(1.2rem,6.5vw,4.5rem)] font-black text-center uppercase tracking-tighter leading-[0.9] w-full pt-4"
         >
-          <span class="block text-black drop-shadow-[0.05em_0.05em_0_white] drop-shadow-[0.08em_0.08em_0_rgba(0,0,0,0.5)] transform -rotate-1">
+          <span class="block text-black drop-shadow-[0.05em_0.05em_0_white] drop-shadow-[0.08em_0.08em_0_rgba(0,0,0,0.5)] transform -rotate-1 -translate-x-2 md:-translate-x-4">
             SPELLING
           </span>
           <span class="block text-[#facc15] drop-shadow-[0.05em_0.05em_0_black] drop-shadow-[0.08em_0.08em_0_rgba(255,255,255,0.3)] transform rotate-1 -mt-[0.1em]">

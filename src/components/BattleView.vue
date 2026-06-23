@@ -83,7 +83,10 @@
                 {{ $t('battle.good') }}
               </p>
             </div>
-            <div v-if="showFast" class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse">
+            <div
+              v-if="showFast"
+              class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse"
+            >
               <p class="text-white font-black uppercase text-xl italic">
                 {{ $t('battle.fast') }}
               </p>
@@ -103,7 +106,10 @@
                 {{ $t('battle.perfect') }}
               </p>
             </div>
-            <div v-if="showFast" class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse">
+            <div
+              v-if="showFast"
+              class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse"
+            >
               <p class="text-white font-black uppercase text-xl italic">
                 {{ $t('battle.fast') }}
               </p>
