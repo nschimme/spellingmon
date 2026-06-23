@@ -91,12 +91,14 @@ onUnmounted(() => {
 
       <template v-else-if="fsm.matches(GAME_STATES.PLAY)">
         <WorldMap
-          v-if="fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MENU) || fsm.matches(GAME_STATES.TRAINER_APPROACH)"
+          v-if="fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MENU) || fsm.matches(GAME_STATES.TRAINER_APPROACH) || fsm.matches(GAME_STATES.BATTLE_INTRO)"
           :is-menu-open="fsm.matches(GAME_STATES.MENU)"
           @toggle-menu="fsm.send(fsm.matches(GAME_STATES.MENU) ? GAME_EVENTS.CLOSE : GAME_EVENTS.OPEN_MENU)"
         />
 
-        <BattleView v-if="fsm.matches(GAME_STATES.BATTLE)" />
+        <transition name="battle-view-fade">
+          <BattleView v-if="fsm.matches(GAME_STATES.BATTLE) && !fsm.matches(GAME_STATES.BATTLE_INTRO)" />
+        </transition>
 
         <transition name="whiteout-fade">
           <WhiteoutView v-if="fsm.matches(GAME_STATES.BATTLE_WHITED_OUT)" />
@@ -128,8 +130,7 @@ onUnmounted(() => {
       <transition name="fade">
         <div
           v-if="session.notification"
-
-          class="absolute bottom-20 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]"
+          class="absolute top-28 left-1/2 -translate-x-1/2 bg-white border-4 border-gray-800 px-6 py-3 rounded-xl shadow-2xl z-30 min-w-[300px]"
         >
           <p class="text-[10px] font-black text-gray-800 text-center leading-relaxed">
             {{ session.notification }}
@@ -172,6 +173,13 @@ body {
 }
 .whiteout-fade-enter-from,
 .whiteout-fade-leave-to {
+  opacity: 0;
+}
+
+.battle-view-fade-enter-active {
+  transition: opacity 0.5s ease-in;
+}
+.battle-view-fade-enter-from {
   opacity: 0;
 }
 </style>

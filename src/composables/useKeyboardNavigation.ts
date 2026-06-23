@@ -79,8 +79,8 @@ export function useKeyboardNavigation({
     if (e.key === 'ArrowUp' || (!isInput && key === 'w')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.up !== undefined) {
         newIndex = spatialMap[selectedIndex.value].up!;
-    } else if (selectedIndex.value - cols >= 0) {
-      newIndex = selectedIndex.value - cols;
+      } else if (selectedIndex.value - cols >= 0) {
+        newIndex = selectedIndex.value - cols;
       } else if (loop) {
       const col = selectedIndex.value % cols;
       const rows = Math.ceil(max / cols);
@@ -90,8 +90,8 @@ export function useKeyboardNavigation({
     } else if (e.key === 'ArrowDown' || (!isInput && key === 's')) {
       if (spatialMap && spatialMap[selectedIndex.value]?.down !== undefined) {
         newIndex = spatialMap[selectedIndex.value].down!;
-    } else if (selectedIndex.value + cols < max) {
-      newIndex = selectedIndex.value + cols;
+      } else if (selectedIndex.value >= 0 && selectedIndex.value + cols < max) {
+        newIndex = selectedIndex.value + cols;
       } else if (loop) {
       newIndex = selectedIndex.value % cols;
       }
@@ -102,9 +102,9 @@ export function useKeyboardNavigation({
       }
       if (spatialMap && spatialMap[selectedIndex.value]?.left !== undefined) {
         newIndex = spatialMap[selectedIndex.value].left!;
-      } else if (selectedIndex.value % cols > 0) {
+      } else if (selectedIndex.value >= 0 && selectedIndex.value % cols > 0) {
         newIndex = selectedIndex.value - 1;
-      } else if (loop) {
+      } else if (loop && selectedIndex.value >= 0) {
         const rowStart = Math.floor(selectedIndex.value / cols) * cols;
         newIndex = Math.min(max - 1, rowStart + cols - 1);
       }
@@ -115,7 +115,7 @@ export function useKeyboardNavigation({
       }
       if (spatialMap && spatialMap[selectedIndex.value]?.right !== undefined) {
         newIndex = spatialMap[selectedIndex.value].right!;
-      } else {
+      } else if (selectedIndex.value >= 0) {
         const rowStart = Math.floor(selectedIndex.value / cols) * cols;
         if (selectedIndex.value < rowStart + cols - 1 && selectedIndex.value + 1 < max) {
           newIndex = selectedIndex.value + 1;
