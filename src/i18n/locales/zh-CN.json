@@ -146,7 +146,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "已解锁区域",
-    "badgesEarned": "获得徽章总数: {n}",
+    "badgesEarned": "获得徽章总数：{n}",
     "items": "道具",
     "party": "队伍",
     "spellingdex": "拼写图鉴",
@@ -329,47 +329,47 @@
     "tip5": "探索地图的每个角落来寻找隐藏的训练师！"
   },
   "home": {
-    "name": "Home"
+    "name": "家"
   },
   "spellingCenter": {
-    "name": "Spelling Center"
+    "name": "拼写中心"
   },
   "gym": {
-    "name": "Spelling Gym",
-    "notReady": "You aren't ready for me yet! Defeat all trainers and master every word in this area first!"
+    "name": "拼写道馆",
+    "notReady": "你还没准备好面对我！先击败该地区的所有训练家并掌握每个单词！"
   },
   "npc": {
     "mom": {
-      "name": "Mom",
-      "dialog": "Be careful out there, dear! Remember to visit the Spelling Center if your Spellingmon are tired."
+      "name": "妈妈",
+      "dialog": "在外要小心，亲爱的！如果你的拼写精灵累了，记得去拼写中心。"
     },
     "healer": {
-      "name": "Nurse Lexi",
-      "dialog": "Welcome to the Spelling Center! Let me heal your Spellingmon."
+      "name": "乔伊小姐",
+      "dialog": "欢迎来到拼写中心！让我来治愈你的拼写精灵。"
     },
     "gym_boss": {
-      "name": "Gym Master",
-      "intro": "So, you've mastered the local tongue? Let's see if you can spell your way to a victory!",
-      "defeat": "Impressive! You truly have a way with words. Here is your badge!"
+      "name": "道馆馆主",
+      "intro": "这么说你已经掌握了当地的语言？让我们看看你是否能拼出通往胜利的道路！",
+      "defeat": "令人印象深刻！你确实很擅长文字。这是你的徽章！"
     },
     "rival": {
-      "name": "Rival Robin",
-      "dialog": "I'm going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
-      "victory": "Words are power, and you've run out of them!",
-      "defeat": "Not bad! But don't think you've won yet. I'll be the one to master every word first!",
-      "mercy": "Don't worry, you'll get better! I'm off to save Spellinghome!"
+      "name": "劲敌罗宾",
+      "dialog": "我要成为史上最强的词汇侦察员，通过第一个掌握所有单词来拯救拼写家园！出招吧！",
+      "victory": "言语即力量，而你的力量已耗尽！",
+      "defeat": "不错！但别以为你已经赢了。我才是第一个掌握所有单词的人！",
+      "mercy": "别担心，你会变得更强的！我要去拯救拼写家园了！"
     }
   },
   "trainer": {
     "titles": {
-      "spelling_bee": "Spelling Bee",
-      "grammar_geek": "Grammar Geek",
-      "vocab_victor": "Vocab Victor",
-      "linguist": "Linguist",
-      "prose_pro": "Prose Pro",
-      "word_wizard": "Word Wizard",
-      "syntax_sage": "Syntax Sage",
-      "lexis_legend": "Lexis Legend"
+      "spelling_bee": "拼写小能手",
+      "grammar_geek": "语法极客",
+      "vocab_victor": "词汇胜利者",
+      "linguist": "语言学家",
+      "prose_pro": "散文高手",
+      "word_wizard": "文字巫师",
+      "syntax_sage": "句法贤者",
+      "lexis_legend": "词汇传奇"
     },
     "dialogs": {
       "intro_1": "I'll teach you a lesson in spelling!",

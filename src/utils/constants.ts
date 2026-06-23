@@ -133,7 +133,8 @@ export const SUPPORTED_LANGUAGES = [
   { code: 'fr-FR', name: 'French', flag: '🇫🇷', native: 'Français' },
   { code: 'pt-BR', name: 'Portuguese', flag: '🇧🇷', native: 'Português' },
   { code: 'ru-RU', name: 'Russian', flag: '🇷🇺', native: 'Русский' },
-  { code: 'zh-CN', name: 'Mandarin', flag: '🇨🇳', native: '普通话' }
+  { code: 'zh-CN', name: 'Mandarin', flag: '🇨🇳', native: '普通话' },
+  { code: 'ja-JP', name: 'Japanese', flag: '🇯🇵', native: '日本語' }
 ];
 
 export const MENU_TABS = {

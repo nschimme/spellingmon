@@ -146,7 +146,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Открытые зоны",
-    "badgesEarned": "Всего значков: {n}",
+    "badgesEarned": "Всего получено значков: {n}",
     "items": "Вещи",
     "party": "Команда",
     "spellingdex": "Словарь",
@@ -329,47 +329,47 @@
     "tip5": "Исследуйте каждый уголок карты, чтобы найти скрытых тренеров!"
   },
   "home": {
-    "name": "Home"
+    "name": "Дом"
   },
   "spellingCenter": {
-    "name": "Spelling Center"
+    "name": "Центр правописания"
   },
   "gym": {
-    "name": "Spelling Gym",
-    "notReady": "You aren't ready for me yet! Defeat all trainers and master every word in this area first!"
+    "name": "Зал правописания",
+    "notReady": "Ты еще не готов ко встрече со мной! Сначала победи всех тренеров и освой каждое слово в этой области!"
   },
   "npc": {
     "mom": {
-      "name": "Mom",
-      "dialog": "Be careful out there, dear! Remember to visit the Spelling Center if your Spellingmon are tired."
+      "name": "Мама",
+      "dialog": "Будь осторожнее, дорогой! Не забудь зайти в Центр правописания, если твои Спеллингмоны устанут."
     },
     "healer": {
-      "name": "Nurse Lexi",
-      "dialog": "Welcome to the Spelling Center! Let me heal your Spellingmon."
+      "name": "Сестра Лекси",
+      "dialog": "Добро пожаловать в Центр правописания! Позволь мне вылечить твоих Спеллингмонов."
     },
     "gym_boss": {
-      "name": "Gym Master",
-      "intro": "So, you've mastered the local tongue? Let's see if you can spell your way to a victory!",
-      "defeat": "Impressive! You truly have a way with words. Here is your badge!"
+      "name": "Мастер зала",
+      "intro": "Значит, ты освоил местный язык? Посмотрим, сможешь ли ты проложить себе путь к победе по буквам!",
+      "defeat": "Впечатляюще! У тебя действительно талант к словам. Вот твой значок!"
     },
     "rival": {
-      "name": "Rival Robin",
-      "dialog": "I'm going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
-      "victory": "Words are power, and you've run out of them!",
-      "defeat": "Not bad! But don't think you've won yet. I'll be the one to master every word first!",
-      "mercy": "Don't worry, you'll get better! I'm off to save Spellinghome!"
+      "name": "Соперник Робин",
+      "dialog": "Я стану лучшим лексикон-скаутом в истории и спасу Спеллингхоум, освоив каждое слово первым! К бою!",
+      "victory": "Слова — это сила, и твоя сила иссякла!",
+      "defeat": "Неплохо! Но не думай, что ты уже победил. Я буду тем, кто первым освоит каждое слово!",
+      "mercy": "Не волнуйся, ты станешь лучше! Я ухожу спасать Спеллингхоум!"
     }
   },
   "trainer": {
     "titles": {
-      "spelling_bee": "Spelling Bee",
-      "grammar_geek": "Grammar Geek",
-      "vocab_victor": "Vocab Victor",
-      "linguist": "Linguist",
-      "prose_pro": "Prose Pro",
-      "word_wizard": "Word Wizard",
-      "syntax_sage": "Syntax Sage",
-      "lexis_legend": "Lexis Legend"
+      "spelling_bee": "Пчела правописания",
+      "grammar_geek": "Грамматический гик",
+      "vocab_victor": "Победитель словаря",
+      "linguist": "Лингвист",
+      "prose_pro": "Профи прозы",
+      "word_wizard": "Мастер слов",
+      "syntax_sage": "Мудрец синтаксиса",
+      "lexis_legend": "Легенда лексики"
     },
     "dialogs": {
       "intro_1": "I'll teach you a lesson in spelling!",
