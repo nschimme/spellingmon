@@ -88,7 +88,7 @@ import { useVocabStore } from '../stores/vocabStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
-import { createMon } from '../utils/gameData';
+import { createMon, SPECIES } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
 import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
@@ -457,14 +457,15 @@ const handleTransition = (exit: any) => {
 const triggerRivalBattle = async () => {
   await vocabStore.loadVocab(1, settingsStore.locale);
   const species = SPECIES.Verminverb;
-  const enemyMon = createMon(species, 5);
+  const playerLevel = session.player.party[0]?.level || 5;
+  const enemyMon = createMon(species, playerLevel);
 
   fsm.send(GAME_EVENTS.ENCOUNTER, {
     enemy: enemyMon,
     type: BATTLE_TYPES.TRAINER,
     trainerId: 'rival_1',
-    trainerParty: [{ species, level: 5 }],
-    trainerName: settingsStore.t('npc.rival')
+    trainerParty: [{ species, level: playerLevel }],
+    trainerName: settingsStore.t('npc.rival.name')
   });
 };
 

@@ -35,6 +35,8 @@ ROOT
 │   └── STARTER_SELECTION
 └── PLAY
     ├── WORLD (Includes Interiors)
+    ├── TRAINER_APPROACH
+    ├── BATTLE
     │   ├── INTRO
     │   ├── ACTION_SELECT
     │   ├── SWITCHING
@@ -46,7 +48,8 @@ ROOT
     │   ├── RESULTS
     │   └── PARTY_FULL
     ├── MENU
-    └── EVOLUTION
+    ├── EVOLUTION
+    └── STORY_CUTSCENE
 ```
 
 ## Best Practices

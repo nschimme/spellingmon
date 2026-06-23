@@ -17,7 +17,10 @@
           top: `calc(${(session.player.position.y / mapSizeY) * 100}% - 12px)`
         }"
       />
-      <div v-if="session.player.currentInterior" class="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">
+      <div
+        v-if="session.player.currentInterior"
+        class="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-[10px] font-bold uppercase"
+      >
         {{ $t(currentInteriorData?.name || '') }} {{ session.player.currentInterior.includes('2f') ? '2F' : (session.player.currentInterior.includes('1f') ? '1F' : '') }}
       </div>
     </div>
@@ -53,7 +56,7 @@ import { ref, onMounted } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, TRANSITION_TYPES } from '../../utils/constants';
-import { TILE_TYPES, MapGenerator } from '../../utils/mapGenerator';
+import { TILE_TYPES } from '../../utils/mapGenerator';
 
 import { useMapStore } from '../../stores/mapStore';
 

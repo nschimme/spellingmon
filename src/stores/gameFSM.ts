@@ -143,7 +143,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
         onEnter: async (ctx, params) => {
           const startTime = Date.now();
           // Ensure we use the latest state from the session store which was just patched in setSlot
-          let target = params?.target || (ctx.session.player.characterCreationComplete
+          const target = params?.target || (ctx.session.player.characterCreationComplete
             ? (ctx.session.player.isStarterSelected ? GAME_STATES.WORLD : GAME_STATES.STARTER_SELECTION)
             : GAME_STATES.CHARACTER_CREATION);
 
@@ -238,7 +238,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
 
                     if (params.type === BATTLE_TYPES.TRAINER) {
-                      ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: params.trainerName || 'Trainer' })];
+                      let displayName = params.trainerName || 'Trainer';
+                      if (displayName.includes('::')) {
+                        const [key, raw] = displayName.split('::');
+                        displayName = `${ctx.t(key)} ${raw}`;
+                      }
+                      ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
                       ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
                     }
@@ -405,7 +410,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
                     if (ctx.session.battle.trainerId === 'rival_1') {
                       ctx.session.healParty();
-                      ctx.session.notify(ctx.t('battle.rival_mercy'));
+                      ctx.session.notify(ctx.t('npc.rival.mercy'));
                       return GAME_STATES.WORLD;
                     }
                     ctx.session.healParty();
@@ -445,7 +450,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 on: {
                   [GAME_EVENTS.CONTINUE]: (ctx) => {
                     if (ctx.session.battle.trainerId === 'rival_1') {
-                      ctx.session.notify(ctx.t('npc.rival_win_dialog'));
+                      ctx.session.notify(ctx.t('npc.rival.defeat'));
                     }
                     return GAME_STATES.WORLD;
                   }

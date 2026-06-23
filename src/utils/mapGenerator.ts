@@ -1,6 +1,6 @@
 import { AREA_CONFIGS } from './gameData';
 import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS } from './constants';
-import { SPECIAL_NPCS, TRAINER_DATA } from './npcData';
+import { TRAINER_DATA } from './npcData';
 
 const AREA_CONFIGS_MAX = GAME_CONSTANTS.MAX_AREAS;
 
@@ -292,7 +292,7 @@ export class MapGenerator {
           [2, 0, 0, 0, 0, 0, 0, 2],
           [2, 2, 2, 14, 14, 2, 2, 2]
         ],
-        npcs: [{ id: 'mom', type: 'mom', name: 'npc.mom', dialog: ['npc.mom_dialog'], x: 2, y: 2 }],
+        npcs: [{ id: 'mom', type: 'mom', name: 'npc.mom.name', dialog: ['npc.mom.dialog'], x: 2, y: 2 }],
         exits: [
           { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }, // targetPos will be set during world placement
           { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
@@ -329,7 +329,7 @@ export class MapGenerator {
         [2, 0, 0, 0, 0, 0, 0, 0, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
-      npcs: [{ id: 'healer', type: 'healer', name: 'npc.healer', dialog: ['npc.healer_dialog'], x: 4, y: 2 }],
+      npcs: [{ id: 'healer', type: 'healer', name: 'npc.healer.name', dialog: ['npc.healer.dialog'], x: 4, y: 2 }],
       exits: [
         { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
         { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
@@ -351,7 +351,7 @@ export class MapGenerator {
         [2, 0, 0, 0, 0, 0, 0, 0, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
-      npcs: [{ id: 'gym_boss', type: 'gym_boss', name: 'npc.gym_boss', dialog: ['npc.gym_boss_intro'], x: 4, y: 2 }],
+      npcs: [{ id: 'gym_boss', type: 'gym_boss', name: 'npc.gym_boss.name', dialog: ['npc.gym_boss.intro'], x: 4, y: 2 }],
       exits: [
         { x: 3, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
         { x: 4, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },

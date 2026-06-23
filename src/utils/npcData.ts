@@ -1,5 +1,3 @@
-import { TILE_TYPES } from './mapGenerator';
-
 export interface NPCConfig {
   id: string;
   type: 'mom' | 'healer' | 'gym_boss' | 'rival' | 'trainer';

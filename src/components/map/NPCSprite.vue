@@ -9,7 +9,10 @@
   >
     <div class="text-2xl drop-shadow-md relative">
       <span>{{ emoji }}</span>
-      <div v-if="showBubble" class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white px-2 py-0.5 rounded-full border-2 border-gray-800 text-[8px] font-bold animate-bounce">
+      <div
+        v-if="showBubble"
+        class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white px-2 py-0.5 rounded-full border-2 border-gray-800 text-[8px] font-bold animate-bounce"
+      >
         💬
       </div>
     </div>
@@ -29,8 +32,7 @@ const props = defineProps<{
 defineEmits(['interact']);
 
 const handleInteract = () => {
-  // Simulate 'e' keypress for handleInput to process
-  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'e' }));
+  emit('interact');
 };
 
 const emoji = computed(() => {

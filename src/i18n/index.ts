@@ -21,6 +21,7 @@ export async function loadLocaleMessages(locale: string) {
       case 'de-DE': module = await import('./locales/de-DE.json'); break;
       case 'es-MX': module = await import('./locales/es-MX.json'); break;
       case 'fr-FR': module = await import('./locales/fr-FR.json'); break;
+      case 'ja-JP': module = await import('./locales/ja-JP.json'); break;
       case 'pt-BR': module = await import('./locales/pt-BR.json'); break;
       case 'ru-RU': module = await import('./locales/ru-RU.json'); break;
       case 'zh-CN': module = await import('./locales/zh-CN.json'); break;

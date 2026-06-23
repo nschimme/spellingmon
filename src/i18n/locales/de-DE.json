@@ -82,6 +82,60 @@
       "Das Ende"
     ]
   },
+  "home": {
+    "name": "Zuhause"
+  },
+  "spellingCenter": {
+    "name": "Rechtschreibzentrum"
+  },
+  "gym": {
+    "name": "Rechtschreib-Arena",
+    "notReady": "Du bist noch nicht bereit für mich! Besiege alle Trainer und beherrsche zuerst jedes Wort in diesem Bereich!"
+  },
+  "npc": {
+    "mom": {
+      "name": "Mama",
+      "dialog": "Pass auf dich auf, Liebes! Denk daran, das Rechtschreibzentrum zu besuchen, wenn deine Spellingmon müde sind."
+    },
+    "healer": {
+      "name": "Schwester Lexi",
+      "dialog": "Willkommen im Rechtschreibzentrum! Lass mich deine Spellingmon heilen."
+    },
+    "gym_boss": {
+      "name": "Arenaleiter",
+      "intro": "Du beherrschst also die Landessprache? Mal sehen, ob du dich zum Sieg buchstabieren kannst!",
+      "defeat": "Beeindruckend! Du hast wirklich ein Händchen für Worte. Hier ist dein Orden!"
+    },
+    "rival": {
+      "name": "Rivale Robin",
+      "dialog": "Ich werde der beste Lexika-Scout aller Zeiten sein und Spellinghome retten, indem ich jedes Wort zuerst beherrsche! En garde!",
+      "victory": "Worte sind Macht, und dir sind sie ausgegangen!",
+      "defeat": "Nicht schlecht! Aber glaub nicht, dass du schon gewonnen hast. Ich werde derjenige sein, der jedes Wort zuerst beherrscht!",
+      "mercy": "Keine Sorge, du wirst besser werden! Ich mache mich auf den Weg, um Spellinghome zu retten!"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Buchstabier-Biene",
+      "grammar_geek": "Grammatik-Freak",
+      "vocab_victor": "Vokabel-Sieger",
+      "linguist": "Linguist",
+      "prose_pro": "Prosa-Profi",
+      "word_wizard": "Wort-Magier",
+      "syntax_sage": "Syntax-Weiser",
+      "lexis_legend": "Lexikon-Legende"
+    },
+    "dialogs": {
+      "intro_1": "I'll teach you a lesson in spelling!",
+      "intro_2": "My party is perfectly punctuated!",
+      "intro_3": "Can you define 'defeat'?",
+      "intro_4": "Your syntax is full of errors!",
+      "intro_5": "I've been studying this route for weeks.",
+      "defeat_1": "I need to hit the books...",
+      "defeat_2": "You corrected me!",
+      "defeat_3": "Your vocabulary is superior."
+    }
+  },
   "battle": {
     "experience": "Erfahrung",
     "expGainedShort": "EXP erhalten: +{n}",
@@ -146,7 +200,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Freigeschaltete Gebiete",
-    "badgesEarned": "Gesammelte Orden: {n}",
+    "badgesEarned": "Insgesamt verdiente Orden: {n}",
     "items": "Items",
     "party": "Team",
     "spellingdex": "Spellingdex",

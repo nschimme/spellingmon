@@ -7,9 +7,9 @@
     @touchstart.stop
   >
     <div class="flex flex-col gap-1">
-      <div class="w-6 h-1 bg-[#facc15] rounded-full"></div>
-      <div class="w-6 h-1 bg-[#facc15] rounded-full"></div>
-      <div class="w-6 h-1 bg-[#facc15] rounded-full"></div>
+      <div class="w-6 h-1 bg-[#facc15] rounded-full" />
+      <div class="w-6 h-1 bg-[#facc15] rounded-full" />
+      <div class="w-6 h-1 bg-[#facc15] rounded-full" />
     </div>
   </button>
 </template>

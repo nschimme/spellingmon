@@ -327,5 +327,59 @@
     "tip3": "Capturar novos Spellingmon ajuda você a construir uma equipe mais forte.",
     "tip4": "Seus Spellingmon serão curados automaticamente nos Centros de Magia.",
     "tip5": "Explore cada canto do mapa para encontrar treinadores escondidos!"
+  },
+  "home": {
+    "name": "Home"
+  },
+  "spellingCenter": {
+    "name": "Spelling Center"
+  },
+  "gym": {
+    "name": "Spelling Gym",
+    "notReady": "You aren't ready for me yet! Defeat all trainers and master every word in this area first!"
+  },
+  "npc": {
+    "mom": {
+      "name": "Mom",
+      "dialog": "Be careful out there, dear! Remember to visit the Spelling Center if your Spellingmon are tired."
+    },
+    "healer": {
+      "name": "Nurse Lexi",
+      "dialog": "Welcome to the Spelling Center! Let me heal your Spellingmon."
+    },
+    "gym_boss": {
+      "name": "Gym Master",
+      "intro": "So, you've mastered the local tongue? Let's see if you can spell your way to a victory!",
+      "defeat": "Impressive! You truly have a way with words. Here is your badge!"
+    },
+    "rival": {
+      "name": "Rival Robin",
+      "dialog": "I'm going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
+      "victory": "Words are power, and you've run out of them!",
+      "defeat": "Not bad! But don't think you've won yet. I'll be the one to master every word first!",
+      "mercy": "Don't worry, you'll get better! I'm off to save Spellinghome!"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Spelling Bee",
+      "grammar_geek": "Grammar Geek",
+      "vocab_victor": "Vocab Victor",
+      "linguist": "Linguist",
+      "prose_pro": "Prose Pro",
+      "word_wizard": "Word Wizard",
+      "syntax_sage": "Syntax Sage",
+      "lexis_legend": "Lexis Legend"
+    },
+    "dialogs": {
+      "intro_1": "I'll teach you a lesson in spelling!",
+      "intro_2": "My party is perfectly punctuated!",
+      "intro_3": "Can you define 'defeat'?",
+      "intro_4": "Your syntax is full of errors!",
+      "intro_5": "I've been studying this route for weeks.",
+      "defeat_1": "I need to hit the books...",
+      "defeat_2": "You corrected me!",
+      "defeat_3": "Your vocabulary is superior."
+    }
   }
 }

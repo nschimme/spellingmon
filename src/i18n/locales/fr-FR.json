@@ -82,6 +82,60 @@
       "Fin"
     ]
   },
+  "home": {
+    "name": "Maison"
+  },
+  "spellingCenter": {
+    "name": "Centre d'Orthographe"
+  },
+  "gym": {
+    "name": "Arène d'Orthographe",
+    "notReady": "Tu n'es pas encore prêt pour moi ! Battez tous les entraîneurs et maîtrisez chaque mot de cette zone d'abord !"
+  },
+  "npc": {
+    "mom": {
+      "name": "Maman",
+      "dialog": "Fais attention à toi, mon chéri ! N'oublie pas de te rendre au centre d'orthographe si tes Spellingmon sont fatigués."
+    },
+    "healer": {
+      "name": "Infirmière Lexi",
+      "dialog": "Bienvenue au centre d'orthographe ! Laisse-moi soigner tes Spellingmon."
+    },
+    "gym_boss": {
+      "name": "Maître d'Arène",
+      "intro": "Alors, tu maîtrises la langue locale ? Voyons si tu arrives à te frayer un chemin vers la victoire !",
+      "defeat": "Impressionnant ! Tu as vraiment un don avec les mots. Voici ton badge !"
+    },
+    "rival": {
+      "name": "Rival Robin",
+      "dialog": "Je vais devenir le meilleur scout du lexique et sauver Spellinghome en maîtrisant tous les mots en premier ! En garde !",
+      "victory": "Les mots sont le pouvoir, et tu n'en as plus !",
+      "defeat": "Pas mal ! Mais ne crois pas que tu as déjà gagné. C'est moi qui maîtriserai tous les mots en premier !",
+      "mercy": "Ne t'inquiète pas, tu vas t'améliorer ! Je pars sauver Spellinghome !"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Abeille d'Orthographe",
+      "grammar_geek": "Geek de la Grammaire",
+      "vocab_victor": "Vainqueur du Vocabulaire",
+      "linguist": "Linguiste",
+      "prose_pro": "Pro de la Prose",
+      "word_wizard": "Magicien des Mots",
+      "syntax_sage": "Sage de la Syntaxe",
+      "lexis_legend": "Légende du Lexique"
+    },
+    "dialogs": {
+      "intro_1": "I'll teach you a lesson in spelling!",
+      "intro_2": "My party is perfectly punctuated!",
+      "intro_3": "Can you define 'defeat'?",
+      "intro_4": "Your syntax is full of errors!",
+      "intro_5": "I've been studying this route for weeks.",
+      "defeat_1": "I need to hit the books...",
+      "defeat_2": "You corrected me!",
+      "defeat_3": "Your vocabulary is superior."
+    }
+  },
   "battle": {
     "experience": "Expérience",
     "expGainedShort": "EXP Gagné : +{n}",
@@ -146,7 +200,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Zones débloquées",
-    "badgesEarned": "Badges gagnés : {n}",
+    "badgesEarned": "Total des badges gagnés : {n}",
     "items": "Objets",
     "party": "Équipe",
     "spellingdex": "Lexique",
