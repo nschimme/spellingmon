@@ -6,6 +6,7 @@
     >
       <button
         class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -1 }"
         @click="prevArea"
       >
         ⬅️
@@ -20,6 +21,7 @@
       </div>
       <button
         class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -2 }"
         @click="nextArea"
       >
         ➡️
@@ -131,6 +133,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { audio } from '../../utils/audio';
+import { speech } from '../../utils/speech';
 import { SOUND_EFFECTS } from '../../utils/constants';
 
 import { useSettingsStore } from '../../stores/settingsStore';
@@ -198,16 +201,44 @@ const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'menu-spellingdex',
   maxIndex: () => areaWords.value.length,
   gridColumns: gridCols,
-  onConfirm: () => {},
+  onConfirm: (idx) => {
+    if (idx === -1) prevArea();
+    if (idx === -2) nextArea();
+  },
   onCancel: () => emit('back'),
-  onLeft: (idx) => { if (idx % gridCols.value === 0) prevArea(); },
-  onRight: (idx) => { if (idx % gridCols.value === gridCols.value - 1 || idx === areaWords.value.length - 1) nextArea(); }
+  spatialMap: computed(() => {
+    const map: Record<number, any> = {};
+    const cols = gridCols.value;
+    const max = areaWords.value.length;
+
+    // Prev Button (-1)
+    map[-1] = { right: -2, down: 0 };
+    // Next Button (-2)
+    map[-2] = { left: -1, down: Math.min(max - 1, Math.floor(cols / 2)) };
+
+    // Grid items
+    for (let i = 0; i < max; i++) {
+      const row = Math.floor(i / cols);
+      if (row === 0) {
+        map[i] = { up: i < cols / 2 ? -1 : -2 };
+      }
+    }
+    return map as any;
+  })
 });
 
 watch(selectedIndex, (newIdx) => {
   const el = itemRefs.value[newIdx];
   if (el) {
     el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  // TTS for selected word
+  if (newIdx >= 0 && areaWords.value[newIdx]) {
+    const word = areaWords.value[newIdx];
+    if (isAnySeen(word.word)) {
+      speech.speak(word.word);
+    }
   }
 });
 

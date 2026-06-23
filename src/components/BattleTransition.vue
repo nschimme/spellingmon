@@ -2,7 +2,7 @@
   <transition name="battle-transition">
     <div
       v-if="active"
-      class="fixed inset-0 z-[100] pointer-events-none overflow-hidden transition-all duration-1000"
+      class="absolute inset-0 z-[100] pointer-events-none overflow-hidden transition-all duration-1000"
     >
       <!-- Flashing Bars -->
       <div class="absolute inset-0 flex flex-col">

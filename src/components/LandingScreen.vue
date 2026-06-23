@@ -49,18 +49,6 @@
       <!-- Ground/Grass Layer -->
       <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-green-500 to-green-700 border-t-8 border-green-600 shadow-[0_-20px_50px_rgba(0,0,0,0.2)]">
         <div class="flex justify-around items-end h-full px-4 pb-4 overflow-hidden relative">
-          <!-- Dynamic Monster Showcase -->
-          <div
-            v-if="currentMonster"
-            :key="monsterKey"
-            class="absolute bottom-16 left-1/2 -translate-x-1/2 text-9xl md:text-[12rem] z-10 transition-all duration-1000"
-            :class="monsterAnimClass"
-          >
-            <div class="drop-shadow-[0_20px_20px_rgba(0,0,0,0.4)]">
-              {{ currentMonster }}
-            </div>
-          </div>
-
           <div
             v-for="n in 30"
             :key="'grass-'+n"
@@ -69,6 +57,18 @@
           >
             {{ n % 7 === 0 ? '🌸' : (n % 4 === 0 ? '🌿' : '🌱') }}
           </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Monster Showcase (Moved outside overflow-hidden grass) -->
+      <div
+        v-if="currentMonster"
+        :key="monsterKey"
+        class="absolute bottom-36 left-1/2 text-6xl md:text-7xl z-10"
+        :class="monsterAnimClass"
+      >
+        <div class="drop-shadow-[0_20px_20px_rgba(0,0,0,0.4)]">
+          {{ currentMonster }}
         </div>
       </div>
     </div>
@@ -163,13 +163,14 @@ const updateShowcase = () => {
   const randomMon = monsters[Math.floor(Math.random() * monsters.length)];
   const randomAnim = animVariations[Math.floor(Math.random() * animVariations.length)];
 
-  monsterAnimClass.value = 'opacity-0 scale-0 translate-y-20';
+  // Set to a state that doesn't trigger transitions incorrectly if any were left
+  monsterAnimClass.value = 'opacity-0';
 
   setTimeout(() => {
     currentMonster.value = randomMon;
     monsterKey.value++;
     monsterAnimClass.value = randomAnim;
-  }, 1000);
+  }, 100);
 };
 
 const { selectedIndex } = useKeyboardNavigation({
@@ -258,56 +259,55 @@ onUnmounted(() => {
 }
 
 /* Monster Showcase Animations */
+/* 0-20%: Slide In, 20-80%: Dance, 80-100%: Slide Out */
 @keyframes showcase-bounce {
-  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
-  15% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
-  25% { transform: translate(-50%, -40px) scale(1); opacity: 1; }
-  35% { transform: translate(-50%, 0) scale(1.1); opacity: 1; }
-  45% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
-  55% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  85% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
-  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  0% { transform: translate(-100vw, 0) scale(0.8); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  30% { transform: translate(-50%, -40px) scale(1); }
+  40% { transform: translate(-50%, 0) scale(1.1); }
+  50% { transform: translate(-50%, -20px) scale(1); }
+  60% { transform: translate(-50%, 0) scale(1); }
+  80% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  100% { transform: translate(100vw, 0) scale(0.8); opacity: 0; }
 }
 
 @keyframes showcase-spin {
-  0% { transform: translate(-50%, 100px) scale(0) rotate(0deg); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(1.5) rotate(360deg); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1) rotate(720deg); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1.2) rotate(1080deg); opacity: 1; }
+  0% { transform: translate(-100vw, 0) scale(0.8) rotate(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.2) rotate(360deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1) rotate(720deg); }
+  60% { transform: translate(-50%, 0) scale(1.2) rotate(1080deg); }
   80% { transform: translate(-50%, 0) scale(1) rotate(1440deg); opacity: 1; }
-  100% { transform: translate(-50%, 100px) scale(0) rotate(1800deg); opacity: 0; }
+  100% { transform: translate(100vw, 0) scale(0.8) rotate(1800deg); opacity: 0; }
 }
 
 @keyframes showcase-flip {
-  0% { transform: translate(-50%, 100px) scale(0) rotateY(0deg); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(1.3) rotateY(360deg); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1) rotateY(720deg); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1.3) rotateY(1080deg); opacity: 1; }
+  0% { transform: translate(-100vw, 0) scale(0.8) rotateY(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.2) rotateY(360deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1) rotateY(720deg); }
+  60% { transform: translate(-50%, 0) scale(1.2) rotateY(1080deg); }
   80% { transform: translate(-50%, 0) scale(1) rotateY(1440deg); opacity: 1; }
-  100% { transform: translate(-50%, 100px) scale(0) rotateY(1800deg); opacity: 0; }
+  100% { transform: translate(100vw, 0) scale(0.8) rotateY(1800deg); opacity: 0; }
 }
 
 @keyframes showcase-zoom-dance {
-  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(2); opacity: 1; }
-  30% { transform: translate(-50%, 0) scale(1.5) rotate(10deg); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1.5) rotate(-10deg); opacity: 1; }
-  50% { transform: translate(-50%, 0) scale(1.5) rotate(10deg); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1.5) rotate(-10deg); opacity: 1; }
-  80% { transform: translate(-50%, 0) scale(2); opacity: 1; }
-  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  0% { transform: translate(-100vw, 0) scale(0.8); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.5); opacity: 1; }
+  30% { transform: translate(-50%, 0) scale(1.2) rotate(10deg); }
+  40% { transform: translate(-50%, 0) scale(1.2) rotate(-10deg); }
+  50% { transform: translate(-50%, 0) scale(1.2) rotate(10deg); }
+  60% { transform: translate(-50%, 0) scale(1.2) rotate(-10deg); }
+  80% { transform: translate(-50%, 0) scale(1.5); opacity: 1; }
+  100% { transform: translate(100vw, 0) scale(0.8); opacity: 0; }
 }
 
 @keyframes showcase-hop {
-  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  0% { transform: translate(-100vw, 0) scale(0.8); opacity: 0; }
   20% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  30% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  70% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
-  85% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  30% { transform: translate(-50%, -50px) scale(1.1); }
+  45% { transform: translate(-50%, 0) scale(1); }
+  60% { transform: translate(-50%, -50px) scale(1.1); }
+  80% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  100% { transform: translate(100vw, 0) scale(0.8); opacity: 0; }
 }
 
 .animate-showcase-bounce {
