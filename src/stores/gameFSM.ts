@@ -143,9 +143,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
         onEnter: async (ctx, params) => {
           const startTime = Date.now();
           // Ensure we use the latest state from the session store which was just patched in setSlot
-          const target = params?.target || (ctx.session.player.characterCreationComplete
+          let target = params?.target || (ctx.session.player.characterCreationComplete
             ? (ctx.session.player.isStarterSelected ? GAME_STATES.WORLD : GAME_STATES.STARTER_SELECTION)
             : GAME_STATES.CHARACTER_CREATION);
+
+          if (target === GAME_STATES.WORLD && ctx.session.player.currentInterior) {
+            // Interior maps are rendered within the WorldMap component
+          }
 
           // SMART GATEWAY: Resolve requirements based on metadata
           // Recursively check metadata for the target state and its parents
@@ -204,6 +208,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [GAME_EVENTS.LOGOUT]: (ctx) => {
                 ctx.session.activeSlot = null;
                 return GAME_STATES.LANDING;
+              },
+              [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                if (params?.targetState === GAME_STATES.WORLD) {
+                   return { target: GAME_STATES.LOADING, params };
+                }
+                return null;
               }
             }
           },
@@ -378,6 +388,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         if (ctx.session.player.party.some((m: Monster) => m.hp > 0)) {
                           ctx.fsm.transition(GAME_STATES.BATTLE_SWITCHING);
                         } else {
+                          if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) {
+                            ctx.session.battle.log.push(ctx.t('battle.trainer_victory_quote'));
+                          }
                           ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
                         }
                      } else {
@@ -390,9 +403,15 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 onEnter: () => { audio.playSound(SOUND_EFFECTS.FAINT); },
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
+                    if (ctx.session.battle.trainerId === 'rival_1') {
+                      ctx.session.healParty();
+                      ctx.session.notify(ctx.t('battle.rival_mercy'));
+                      return GAME_STATES.WORLD;
+                    }
                     ctx.session.healParty();
                     if (ctx.session.player.lastSpellCenter) {
                        ctx.session.updatePlayerPosition({ x: ctx.session.player.lastSpellCenter.x, y: ctx.session.player.lastSpellCenter.y });
+                       ctx.session.player.currentInterior = ctx.session.player.lastSpellCenter.interior;
                     }
                     return GAME_STATES.WORLD;
                   }
@@ -402,13 +421,35 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 onEnter: async (ctx) => {
                   ctx.session.battle.log.push(ctx.t('battle.win', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
                   audio.playSound(SOUND_EFFECTS.VICTORY);
+
+                  if (ctx.session.battle.type === BATTLE_TYPES.TRAINER && ctx.session.battle.trainerId) {
+                    ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
+                  }
+
                   const exp = calculateExpGain(ctx.session.battle.enemyMon, ctx.session.battle.type === BATTLE_TYPES.TRAINER);
                   ctx.session.battle.results = ctx.session.awardExp(exp);
                   setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_RESULTS), 2000);
                 }
               },
               [s(GAME_STATES.BATTLE_RESULTS)]: {
-                on: { [GAME_EVENTS.CONTINUE]: GAME_STATES.WORLD }
+                onEnter: (ctx) => {
+                  if (ctx.session.battle.trainerId?.startsWith('gym_boss_')) {
+                    const area = parseInt(ctx.session.battle.trainerId.split('_')[2]);
+                    ctx.session.awardBadge(`badge_${area}`);
+                    if (!ctx.session.player.unlockedAreas.includes(area + 1)) {
+                       ctx.session.player.unlockedAreas.push(area + 1);
+                    }
+                    ctx.session.save();
+                  }
+                },
+                on: {
+                  [GAME_EVENTS.CONTINUE]: (ctx) => {
+                    if (ctx.session.battle.trainerId === 'rival_1') {
+                      ctx.session.notify(ctx.t('npc.rival_win_dialog'));
+                    }
+                    return GAME_STATES.WORLD;
+                  }
+                }
               },
               [s(GAME_STATES.BATTLE_PARTY_FULL)]: {
                 on: {

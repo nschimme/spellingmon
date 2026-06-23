@@ -35,6 +35,10 @@ const getTileClass = (type: any) => {
     case TILE_TYPES.PATH: return 'bg-orange-50';
     case TILE_TYPES.EMPTY: return 'bg-gray-100';
     case TILE_TYPES.TRAINER: return 'bg-orange-50'; // Render trainers on path color
+    case TILE_TYPES.NPC: return 'bg-gray-100';
+    case TILE_TYPES.STAIRS_UP: return 'bg-gray-200';
+    case TILE_TYPES.STAIRS_DOWN: return 'bg-gray-200';
+    case TILE_TYPES.CARPET: return 'bg-red-400';
     default: return 'bg-green-100';
   }
 };
@@ -49,6 +53,8 @@ const emoji = computed(() => {
     }
     case TILE_TYPES.WATER: return '💧';
     case TILE_TYPES.BUILDING: return '🏠';
+    case TILE_TYPES.STAIRS_UP: return '🔼';
+    case TILE_TYPES.STAIRS_DOWN: return '🔽';
     default: return '';
   }
 });

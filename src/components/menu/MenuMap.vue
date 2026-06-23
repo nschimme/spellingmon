@@ -13,10 +13,13 @@
         v-if="session.player.position"
         class="absolute w-6 h-6 bg-red-500 rounded-full animate-ping pointer-events-none opacity-75"
         :style="{
-          left: `calc(${(session.player.position.x / 100) * 100}% - 12px)`,
-          top: `calc(${(session.player.position.y / 100) * 100}% - 12px)`
+          left: `calc(${(session.player.position.x / mapSizeX) * 100}% - 12px)`,
+          top: `calc(${(session.player.position.y / mapSizeY) * 100}% - 12px)`
         }"
       />
+      <div v-if="session.player.currentInterior" class="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">
+        {{ $t(currentInteriorData?.name || '') }} {{ session.player.currentInterior.includes('2f') ? '2F' : (session.player.currentInterior.includes('1f') ? '1F' : '') }}
+      </div>
     </div>
 
     <div class="w-full mt-4">
@@ -52,10 +55,23 @@ import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
 import { GAME_CONSTANTS, TRANSITION_TYPES } from '../../utils/constants';
 import { TILE_TYPES, MapGenerator } from '../../utils/mapGenerator';
 
+import { useMapStore } from '../../stores/mapStore';
+
 const session = useSessionStore();
+const mapStore = useMapStore();
 const mapCanvas = ref<HTMLCanvasElement | null>(null);
 
 const emit = defineEmits(['back']);
+
+const currentMapData = computed(() => mapStore.currentMapData);
+
+const currentInteriorData = computed(() => {
+  if (!session.player.currentInterior || !currentMapData.value?.interiors) return null;
+  return currentMapData.value.interiors[session.player.currentInterior];
+});
+
+const mapSizeX = computed(() => currentInteriorData.value ? currentInteriorData.value.map[0].length : 100);
+const mapSizeY = computed(() => currentInteriorData.value ? currentInteriorData.value.map.length : 100);
 
 useKeyboardNavigation({
   id: 'menu-map',
@@ -65,38 +81,62 @@ useKeyboardNavigation({
 });
 
 const drawMap = () => {
-  if (!mapCanvas.value || !session.player.mapSeed) return;
+  if (!mapCanvas.value || !currentMapData.value) return;
   const ctx = mapCanvas.value.getContext('2d');
   if (!ctx) return;
+
+  const mapData = currentMapData.value;
+  const interior = session.player.currentInterior ? mapData.interiors?.[session.player.currentInterior] : null;
+  const map = interior ? interior.map : mapData.map;
+  const w = map[0].length;
+  const h = map.length;
+
+  const CANVAS_RES = 500; // Fixed resolution for better rendering
+  mapCanvas.value.width = CANVAS_RES;
+  mapCanvas.value.height = CANVAS_RES;
+
+  const tileSize = CANVAS_RES / Math.max(w, h);
+  const offsetX = (CANVAS_RES - w * tileSize) / 2;
+  const offsetY = (CANVAS_RES - h * tileSize) / 2;
+
+  ctx.fillStyle = '#111827';
+  ctx.fillRect(0, 0, CANVAS_RES, CANVAS_RES);
+
   const discovered = new Set(session.dex.discoveredTiles[session.player.currentArea] || []);
 
-  const MAP_SIZE = 100;
-  ctx.fillStyle = '#111827'; // bg-gray-900
-  ctx.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
-
-  const gen = new MapGenerator(session.player.mapSeed, MAP_SIZE, MAP_SIZE);
-  const mapData = gen.generate(session.player.currentArea);
-
-  ctx.font = '8px serif';
+  ctx.font = `${Math.floor(tileSize * 0.8)}px serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
-  for (let y = 0; y < MAP_SIZE; y++) {
-    for (let x = 0; x < MAP_SIZE; x++) {
-      if (!discovered.has(`${x},${y}`)) continue;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      if (!interior && !discovered.has(`${x},${y}`)) continue;
 
-      const type = mapData.map[y][x];
+      const type = map[y][x];
+      const drawX = offsetX + x * tileSize + tileSize / 2;
+      const drawY = offsetY + y * tileSize + tileSize / 2;
+      const rectX = offsetX + x * tileSize;
+      const rectY = offsetY + y * tileSize;
 
-      if (type === TILE_TYPES.PATH) {
-        ctx.fillStyle = '#e5e7eb';
-        ctx.fillRect(x, y, 1, 1);
-      } else if (type === TILE_TYPES.EMPTY) {
-        ctx.fillStyle = '#9ca3af';
-        ctx.fillRect(x, y, 1, 1);
+      if (type === TILE_TYPES.PATH || type === TILE_TYPES.EMPTY || type === TILE_TYPES.NPC) {
+        ctx.fillStyle = type === TILE_TYPES.PATH ? '#e5e7eb' : (type === TILE_TYPES.NPC ? '#d1d5db' : '#374151');
+        ctx.fillRect(rectX, rectY, tileSize, tileSize);
+      } else if (type === TILE_TYPES.WALL || type === TILE_TYPES.CAVE_WALL) {
+        ctx.fillStyle = type === TILE_TYPES.WALL ? '#1f2937' : '#451a03';
+        ctx.fillRect(rectX, rectY, tileSize, tileSize);
       } else if (type === TILE_TYPES.GRASS) {
-        ctx.fillText('🌿', x, y);
+        ctx.fillText('🌿', drawX, drawY);
       } else if (type === TILE_TYPES.SPELL_CENTER) {
-        ctx.fillText('🏥', x, y);
+        ctx.fillText('🏥', drawX, drawY);
+      } else if (type === TILE_TYPES.BUILDING) {
+        ctx.fillText('🏠', drawX, drawY);
+      } else if (type === TILE_TYPES.STAIRS_UP) {
+        ctx.fillText('🔼', drawX, drawY);
+      } else if (type === TILE_TYPES.STAIRS_DOWN) {
+        ctx.fillText('🔽', drawX, drawY);
+      } else if (type === TILE_TYPES.CARPET) {
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(rectX, rectY, tileSize, tileSize);
       } else if (type === TILE_TYPES.TRANSITION) {
         const transition = mapData.transitions.find(t => t.x === x && t.y === y);
         if (transition?.type === TRANSITION_TYPES.NEXT) {
@@ -111,7 +151,9 @@ const drawMap = () => {
   // Draw player
   if (session.player.position) {
     ctx.fillStyle = '#ef4444';
-    ctx.fillRect(session.player.position.x, session.player.position.y, 1, 1);
+        const pX = offsetX + session.player.position.x * tileSize;
+        const pY = offsetY + session.player.position.y * tileSize;
+        ctx.fillRect(pX, pY, tileSize, tileSize);
   }
 };
 

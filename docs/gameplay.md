@@ -9,6 +9,7 @@
    - **Rewards:** Correct spelling deals damage or captures wild monsters. "Perfect" spelling (matching case and diacritics) provides a power bonus.
 3. **Growth:** Gain experience, level up, and evolve your Spellingmon.
 4. **The SpellCenter:** Heal your party and set a respawn point.
+5. **Gyms & Badges:** Defeat the Gym Boss of an area to earn a badge and unlock the next area. Bosses require mastering all words in the area first.
 
 ## Spelling System
 
@@ -18,6 +19,11 @@
 - **Difficulty Tiers:** Damage scales based on word difficulty (Easy/Hard) and player performance (Fast/Perfect).
 
 ## Vocabulary & Areas
+
+To progress from one area to the next, a player must:
+1. Defeat all trainers in the current area.
+2. Master all words in the current area's vocabulary pool.
+3. Defeat the area's Gym Boss.
 
 The game world is divided into 9 areas, each focusing on specific linguistic patterns:
 
