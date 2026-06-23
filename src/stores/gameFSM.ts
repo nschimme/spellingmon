@@ -235,6 +235,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.type = params.type || BATTLE_TYPES.WILD;
                     ctx.session.battle.trainerId = params.trainerId;
                     ctx.session.battle.trainerParty = params.trainerParty || [];
+                    ctx.session.battle.trainerDefeatDialog = params.trainerDefeatDialog || null;
+                    ctx.session.battle.isStorm = !!params.isStorm;
                     ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
 
                     if (params.type === BATTLE_TYPES.TRAINER) {
@@ -449,8 +451,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 },
                 on: {
                   [GAME_EVENTS.CONTINUE]: (ctx) => {
-                    if (ctx.session.battle.trainerId === 'rival_1') {
-                      ctx.session.notify(ctx.t('npc.rival.defeat'));
+                    if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) {
+                      let defeatMsg = '';
+                      if (ctx.session.battle.trainerId === 'rival_1') {
+                        defeatMsg = ctx.t('npc.rival.defeat');
+                      } else if (ctx.session.battle.trainerDefeatDialog) {
+                        defeatMsg = ctx.t(ctx.session.battle.trainerDefeatDialog);
+                      }
+
+                      if (defeatMsg) {
+                        if (ctx.session.battle.isStorm) {
+                          ctx.session.notify(`${defeatMsg} "${ctx.t('trainer.dialogs.storm_catchphrase')}"`);
+                        } else {
+                          ctx.session.notify(defeatMsg);
+                        }
+                      }
                     }
                     return GAME_STATES.WORLD;
                   }

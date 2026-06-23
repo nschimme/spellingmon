@@ -102,6 +102,51 @@
       "dialog": "Bienvenue au centre d'orthographe ! Laisse-moi soigner tes Spellingmon."
     },
     "gym_boss": {
+      "1": {
+        "name": "Arthur Alphabet",
+        "intro": "A is for Action! B is for Battle! Let's see if you know your ABCs!",
+        "defeat": "Z is for... Zero chance I thought I'd lose! You've mastered the Alphabet!"
+      },
+      "2": {
+        "name": "Blenda Boulevard",
+        "intro": "I'll blend your team into a smoothie of defeat! Smooth spelling only!",
+        "defeat": "You blended your words perfectly. A smooth victory indeed!"
+      },
+      "3": {
+        "name": "Silas Syllable",
+        "intro": "One, two, three! Count the beats, feel the rhythm of the duel!",
+        "defeat": "Your rhythm was superior. You didn't skip a single beat!"
+      },
+      "4": {
+        "name": "Sophie Suffix",
+        "intro": "I'll add 'defeated' to the end of your name! How's that for a suffix?",
+        "defeat": "I guess I'm the one who's 'finished' now. Great job!"
+      },
+      "5": {
+        "name": "Preston Prefix",
+        "intro": "I always have the first word! Prepare to be pre-empted!",
+        "defeat": "I didn't foresee this outcome. You pre-vented my victory!"
+      },
+      "6": {
+        "name": "Homer Homophone",
+        "intro": "You'll see that I'm the sea king here! Or is it 'see'? You'll know soon enough!",
+        "defeat": "I knew I should have stayed at sea... or is it 'see'? You're too good!"
+      },
+      "7": {
+        "name": "Lana Loanword",
+        "intro": "I've borrowed techniques from all over the world. Can you keep up with my foreign flair?",
+        "defeat": "Your vocabulary is truly international. Merci for the battle!"
+      },
+      "8": {
+        "name": "Phona Phoneme",
+        "intro": "Every sound matters! If you miss a single note, it's game over!",
+        "defeat": "Sounded like a victory for you. Your spelling is pitch-perfect!"
+      },
+      "9": {
+        "name": "Malphas the Muted",
+        "intro": "The Silent Storm is my creation! With the Lexicon erased, I shall be the only one with a voice!",
+        "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
+      },
       "name": "Maître d'Arène",
       "intro": "Alors, tu maîtrises la langue locale ? Voyons si tu arrives à te frayer un chemin vers la victoire !",
       "defeat": "Impressionnant ! Tu as vraiment un don avec les mots. Voici ton badge !"
@@ -123,7 +168,10 @@
       "prose_pro": "Pro de la Prose",
       "word_wizard": "Magicien des Mots",
       "syntax_sage": "Sage de la Syntaxe",
-      "lexis_legend": "Légende du Lexique"
+      "lexis_legend": "Légende du Lexique",
+      "storm_grunt": "Storm Grunt",
+      "storm_scout": "Storm Scout",
+      "storm_operative": "Storm Operative"
     },
     "dialogs": {
       "intro_1": "Je vais te donner une leçon d'orthographe !",
@@ -133,7 +181,16 @@
       "intro_5": "J'étudie cet itinéraire depuis des semaines.",
       "defeat_1": "Je dois me replonger dans les livres...",
       "defeat_2": "Tu m'as corrigé !",
-      "defeat_3": "Ton vocabulaire est supérieur."
+      "defeat_3": "Ton vocabulaire est supérieur.",
+      "storm_intro_1": "Silence is golden, and we're here to collect!",
+      "storm_intro_2": "Soon, all the words in this world will belong to Team Storm!",
+      "storm_intro_3": "Why bother learning words when we can just erase them?",
+      "storm_intro_4": "The Silent Storm is coming, and you're in its path!",
+      "storm_intro_5": "We're cleaning up this world, one word at a time!",
+      "storm_defeat_1": "Curses! Our plans for total silence... delayed!",
+      "storm_defeat_2": "You might have won this round, but the Storm is brewing...",
+      "storm_defeat_3": "The Leader will not be pleased about this interruption.",
+      "storm_catchphrase": "Words are weak, silence is peak! Team Storm will make the world unique!"
     }
   },
   "battle": {

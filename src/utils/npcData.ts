@@ -1,6 +1,6 @@
 export interface NPCConfig {
   id: string;
-  type: 'mom' | 'healer' | 'gym_boss' | 'rival' | 'trainer';
+  type: 'mom' | 'healer' | 'gym_boss' | 'rival' | 'trainer' | 'team_storm';
   nameKey: string;
   emoji: string;
   dialogs: {
@@ -44,16 +44,31 @@ export const SPECIAL_NPCS: Record<string, NPCConfig> = {
   }
 };
 
-export const getGymBossConfig = (area: number): NPCConfig => ({
-  id: `gym_boss_${area}`,
-  type: 'gym_boss',
-  nameKey: 'npc.gym_boss.name',
-  emoji: '🏋️',
-  dialogs: {
-    intro: 'npc.gym_boss.intro',
-    defeat: 'npc.gym_boss.defeat'
-  }
-});
+export const GYM_BOSS_CONFIGS: Record<number, { name: string; emoji: string }> = {
+  1: { name: 'npc.gym_boss.1.name', emoji: '🍎' },
+  2: { name: 'npc.gym_boss.2.name', emoji: '🌪️' },
+  3: { name: 'npc.gym_boss.3.name', emoji: '💧' },
+  4: { name: 'npc.gym_boss.4.name', emoji: '⛰️' },
+  5: { name: 'npc.gym_boss.5.name', emoji: '🏔️' },
+  6: { name: 'npc.gym_boss.6.name', emoji: '⚓' },
+  7: { name: 'npc.gym_boss.7.name', emoji: '🌀' },
+  8: { name: 'npc.gym_boss.8.name', emoji: '🌲' },
+  9: { name: 'npc.gym_boss.9.name', emoji: '🧙' }
+};
+
+export const getGymBossConfig = (area: number): NPCConfig => {
+  const config = GYM_BOSS_CONFIGS[area] || { name: 'npc.gym_boss.name', emoji: '🏋️' };
+  return {
+    id: `gym_boss_${area}`,
+    type: area === 9 ? 'team_storm' : 'gym_boss',
+    nameKey: config.name,
+    emoji: config.emoji,
+    dialogs: {
+      intro: `npc.gym_boss.${area}.intro`,
+      defeat: `npc.gym_boss.${area}.defeat`
+    }
+  };
+};
 
 export const TRAINER_DATA = {
   titles: [
@@ -65,6 +80,11 @@ export const TRAINER_DATA = {
     'trainer.titles.word_wizard',
     'trainer.titles.syntax_sage',
     'trainer.titles.lexis_legend'
+  ],
+  storm_titles: [
+    'trainer.titles.storm_grunt',
+    'trainer.titles.storm_scout',
+    'trainer.titles.storm_operative'
   ],
   dialogs: {
     intro: [
@@ -78,6 +98,19 @@ export const TRAINER_DATA = {
       'trainer.dialogs.defeat_1',
       'trainer.dialogs.defeat_2',
       'trainer.dialogs.defeat_3'
-    ]
+    ],
+    storm_intro: [
+      'trainer.dialogs.storm_intro_1',
+      'trainer.dialogs.storm_intro_2',
+      'trainer.dialogs.storm_intro_3',
+      'trainer.dialogs.storm_intro_4',
+      'trainer.dialogs.storm_intro_5'
+    ],
+    storm_defeat: [
+      'trainer.dialogs.storm_defeat_1',
+      'trainer.dialogs.storm_defeat_2',
+      'trainer.dialogs.storm_defeat_3'
+    ],
+    storm_catchphrase: 'trainer.dialogs.storm_catchphrase'
   }
 };

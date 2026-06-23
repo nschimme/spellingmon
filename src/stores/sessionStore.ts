@@ -31,6 +31,8 @@ export interface BattleState {
   isPlayerTurn: boolean;
   trainerId: string | null;
   trainerParty: Monster[];
+  trainerDefeatDialog: string | null;
+  isStorm: boolean;
   participatingMonIds: string[];
   currentWord: Word | null;
   totalTime: number;
@@ -244,6 +246,8 @@ export const useSessionStore = defineStore('session', {
         isPlayerTurn: true,
         trainerId: null,
         trainerParty: [],
+        trainerDefeatDialog: null,
+        isStorm: false,
         participatingMonIds: [],
         currentWord: null,
         totalTime: 0,
@@ -257,7 +261,7 @@ export const useSessionStore = defineStore('session', {
         gender: 'Boy',
         skinTone: 'neutral',
         party: [],
-        position: { x: 6, y: 1 },
+        position: { x: 3, y: 2 },
         currentArea: 1,
         currentInterior: 'home_2f',
         currentFloor: null,

@@ -1,6 +1,6 @@
 import { AREA_CONFIGS } from './gameData';
 import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS } from './constants';
-import { TRAINER_DATA } from './npcData';
+import { TRAINER_DATA, getGymBossConfig } from './npcData';
 
 const AREA_CONFIGS_MAX = GAME_CONSTANTS.MAX_AREAS;
 
@@ -25,6 +25,12 @@ export const TILE_TYPES = {
   DOOR: 12,
   NPC: 13,
   CARPET: 14,
+  BED: 15,
+  TABLE: 16,
+  CHAIR: 17,
+  BOOKSHELF: 18,
+  PLANT: 19,
+  COUNTER: 20,
 };
 
 export interface Point {
@@ -48,8 +54,10 @@ export interface Transition extends Point {
 export interface Trainer extends Point {
   name: string;
   dialog: string;
+  defeatDialog?: string;
   party: Array<{ species: string; level: number }>;
   direction: string;
+  isStorm?: boolean;
 }
 
 export interface NPC extends Point {
@@ -286,17 +294,17 @@ export class MapGenerator {
         name: 'home.name',
         map: [
           [2, 2, 2, 2, 2, 2, 2, 2],
-          [2, 0, 0, 0, 0, 0, 10, 2],
+          [2, 19, 0, 0, 0, 0, 10, 2],
+          [2, 0, 0, 16, 17, 0, 0, 2],
           [2, 0, 0, 0, 0, 0, 0, 2],
-          [2, 0, 0, 0, 0, 0, 0, 2],
-          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 18, 0, 0, 0, 0, 0, 2],
           [2, 2, 2, 14, 14, 2, 2, 2]
         ],
         npcs: [{ id: 'mom', type: 'mom', name: 'npc.mom.name', dialog: ['npc.mom.dialog'], x: 2, y: 2 }],
         exits: [
           { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }, // targetPos will be set during world placement
           { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
-          { x: 6, y: 1, target: 'home_2f', targetPos: { x: 6, y: 1 } }
+          { x: 6, y: 1, target: 'home_2f', targetPos: { x: 5, y: 1 } }
         ]
       };
       // Home 2F
@@ -305,14 +313,14 @@ export class MapGenerator {
         name: 'home.name',
         map: [
           [2, 2, 2, 2, 2, 2, 2, 2],
-          [2, 0, 0, 0, 0, 0, 11, 2],
-          [2, 0, 0, 0, 0, 0, 0, 2],
-          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 15, 0, 0, 0, 0, 11, 2],
+          [2, 15, 0, 16, 0, 0, 0, 2],
+          [2, 0, 0, 17, 0, 18, 19, 2],
           [2, 2, 2, 2, 2, 2, 2, 2]
         ],
         npcs: [],
         exits: [
-          { x: 6, y: 1, target: 'home_1f', targetPos: { x: 6, y: 1 } }
+          { x: 6, y: 1, target: 'home_1f', targetPos: { x: 5, y: 1 } }
         ]
       };
     }
@@ -323,10 +331,10 @@ export class MapGenerator {
       name: 'spellingCenter.name',
       map: [
         [2, 2, 2, 2, 2, 2, 2, 2, 2],
+        [2, 19, 0, 0, 0, 0, 0, 19, 2],
+        [2, 0, 0, 20, 13, 20, 0, 0, 2],
         [2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 13, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 17, 17, 0, 0, 0, 17, 17, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
       npcs: [{ id: 'healer', type: 'healer', name: 'npc.healer.name', dialog: ['npc.healer.dialog'], x: 4, y: 2 }],
@@ -338,20 +346,21 @@ export class MapGenerator {
     };
 
     // Gym (Every Area)
+    const gymBossCfg = getGymBossConfig(areaNum);
     interiors['gym'] = {
       id: 'gym',
       name: 'gym.name',
       map: [
         [2, 2, 2, 2, 2, 2, 2, 2, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 19, 0, 0, 0, 0, 0, 19, 2],
         [2, 0, 0, 0, 13, 0, 0, 0, 2],
+        [2, 0, 0, 16, 16, 16, 0, 0, 2],
         [2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 17, 0, 0, 0, 0, 0, 17, 2],
+        [2, 0, 17, 0, 0, 0, 17, 0, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
-      npcs: [{ id: 'gym_boss', type: 'gym_boss', name: 'npc.gym_boss.name', dialog: ['npc.gym_boss.intro'], x: 4, y: 2 }],
+      npcs: [{ id: 'gym_boss', type: gymBossCfg.type, name: gymBossCfg.nameKey, dialog: [gymBossCfg.dialogs.intro], x: 4, y: 2 }],
       exits: [
         { x: 3, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
         { x: 4, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
@@ -520,12 +529,21 @@ export class MapGenerator {
           party.push({ species, level });
         }
 
+        const isStorm = i === 0; // First trainer is always Team Storm
+        const actualTitleKey = isStorm ? TRAINER_DATA.storm_titles[this.randomRange(0, TRAINER_DATA.storm_titles.length - 1)] : titleKey;
+        const actualDialogKey = isStorm ? TRAINER_DATA.dialogs.storm_intro[this.randomRange(0, TRAINER_DATA.dialogs.storm_intro.length - 1)] : dialogKey;
+        const actualDefeatKey = isStorm
+           ? TRAINER_DATA.dialogs.storm_defeat[this.randomRange(0, TRAINER_DATA.dialogs.storm_defeat.length - 1)]
+           : TRAINER_DATA.dialogs.defeat[this.randomRange(0, TRAINER_DATA.dialogs.defeat.length - 1)];
+
         trainers.push({
           x, y,
-          name: `${titleKey}::${name}`,
-          dialog: dialogKey,
+          name: `${actualTitleKey}::${name}`,
+          dialog: actualDialogKey,
+          defeatDialog: actualDefeatKey,
           party,
-          direction
+          direction,
+          isStorm
         });
       }
     }
