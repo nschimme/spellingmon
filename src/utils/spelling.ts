@@ -28,9 +28,11 @@ export const validateSpelling = (input: string, target: string) => {
   const normalizedTarget = normalizeWord(target);
   const isCorrect = normalizedInput === normalizedTarget;
 
-  const isPerfect = isCorrect &&
-                    (input.trim() === target.trim()) &&
-                    hasSpellingChallenge(target);
+  const isChallenge = hasSpellingChallenge(target);
+  const isPerfect = isCorrect && (input.trim() === target.trim()) && isChallenge;
 
-  return { isCorrect, isPerfect };
+  // If the word has no challenge, correct is treated as mastered
+  const finalIsPerfect = isPerfect || (isCorrect && !isChallenge);
+
+  return { isCorrect, isPerfect: finalIsPerfect };
 };

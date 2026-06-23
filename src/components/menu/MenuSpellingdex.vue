@@ -27,17 +27,23 @@
     </div>
 
     <!-- Stats Bar -->
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
-        <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.seen') }}</span>
-        <div class="bg-blue-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
-          {{ seenCount }} / 40
+    <div class="grid grid-cols-3 gap-2">
+      <div class="bg-gray-800 p-2 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
+        <span class="text-[7px] font-bold text-gray-400 leading-none mb-1 uppercase">{{ $t('menu.seen') }}</span>
+        <div class="bg-gray-600 px-2 py-0.5 rounded text-[8px] font-bold text-white shadow-inner">
+          {{ seenCount }}
         </div>
       </div>
-      <div class="bg-gray-800 p-3 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
-        <span class="text-[8px] font-bold text-gray-400 leading-none mb-1">{{ $t('menu.mastered') }}</span>
-        <div class="bg-green-600 px-2 py-1 rounded text-[8px] font-bold text-white shadow-inner">
-          {{ masteredCount }} / 40
+      <div class="bg-gray-800 p-2 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
+        <span class="text-[7px] font-bold text-gray-400 leading-none mb-1 uppercase">{{ $t('battle.good') }}</span>
+        <div class="bg-blue-600 px-2 py-0.5 rounded text-[8px] font-bold text-white shadow-inner">
+          {{ correctCount }}
+        </div>
+      </div>
+      <div class="bg-gray-800 p-2 rounded-xl border-b-4 border-gray-900 flex flex-col items-center">
+        <span class="text-[7px] font-bold text-gray-400 leading-none mb-1 uppercase">{{ $t('menu.mastered') }}</span>
+        <div class="bg-green-600 px-2 py-0.5 rounded text-[8px] font-bold text-white shadow-inner">
+          {{ masteredCount }}
         </div>
       </div>
     </div>
@@ -65,26 +71,32 @@
         :ref="el => { if (el) itemRefs[index] = el as HTMLElement }"
         class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px]"
         :class="[
-          isMastered(word.word) ? 'border-green-500 bg-green-50 shadow-md' : (isSeen(word.word) ? 'border-blue-400 bg-blue-50' : 'border-gray-200 opacity-40'),
+          isMastered(word.word) ? 'border-green-500 bg-green-50 shadow-md' : (isCorrect(word.word) ? 'border-blue-400 bg-blue-50' : (isSeen(word.word) ? 'border-gray-400 bg-gray-100' : 'border-gray-200 opacity-40')),
           selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105 z-10' : ''
         ]"
       >
         <div class="text-center">
           <div class="text-2xl mb-1">
-            {{ isSeen(word.word) || isMastered(word.word) ? (word.emoji || '📖') : '❓' }}
+            {{ isAnySeen(word.word) ? (word.emoji || '📖') : '❓' }}
           </div>
           <div class="font-black text-[10px] uppercase tracking-tighter truncate max-w-full">
-            {{ isSeen(word.word) || isMastered(word.word) ? word.word : '???' }}
+            {{ isAnySeen(word.word) ? word.word : '???' }}
           </div>
           <div
             v-if="isMastered(word.word)"
-            class="text-[10px] text-green-600 font-bold"
+            class="text-[8px] text-green-600 font-bold uppercase"
           >
             {{ $t('menu.mastered') }}
           </div>
           <div
+            v-else-if="isCorrect(word.word)"
+            class="text-[8px] text-blue-600 font-bold uppercase"
+          >
+            {{ $t('battle.good') }}
+          </div>
+          <div
             v-else-if="isSeen(word.word)"
-            class="text-[10px] text-blue-600 font-bold"
+            class="text-[8px] text-gray-500 font-bold uppercase"
           >
             {{ $t('menu.seen') }}
           </div>
@@ -92,7 +104,7 @@
 
         <!-- Detail Tooltip (Desktop Hover) -->
         <div
-          v-if="(isSeen(word.word) || isMastered(word.word)) && selectedIndex === index"
+          v-if="isAnySeen(word.word) && selectedIndex === index"
           class="absolute inset-0 bg-white/95 p-2 flex flex-col items-center justify-center text-center z-20"
         >
           <span class="font-black text-xs">{{ word.word }}</span>
@@ -132,11 +144,17 @@ const itemRefs = ref<(HTMLElement | null)[]>([]);
 
 const emit = defineEmits(['back']);
 
-const seenCount = computed(() => (session.dex.discoveredWords[currentArea.value] || []).length);
-const masteredCount = computed(() => (session.dex.masteredWords[currentArea.value] || []).length);
+const areaWordStatus = computed(() => session.dex.words[currentArea.value] || {});
 
-const isSeen = (term: string) => (session.dex.discoveredWords[currentArea.value] || []).includes(term);
-const isMastered = (term: string) => (session.dex.masteredWords[currentArea.value] || []).includes(term);
+const seenCount = computed(() => Object.values(areaWordStatus.value).filter(s => s === 'seen').length);
+const correctCount = computed(() => Object.values(areaWordStatus.value).filter(s => s === 'correct').length);
+const masteredCount = computed(() => Object.values(areaWordStatus.value).filter(s => s === 'mastered').length);
+
+const getStatus = (term: string) => areaWordStatus.value[term];
+const isSeen = (term: string) => getStatus(term) === 'seen';
+const isCorrect = (term: string) => getStatus(term) === 'correct';
+const isMastered = (term: string) => getStatus(term) === 'mastered';
+const isAnySeen = (term: string) => !!getStatus(term);
 
 const fetchWords = async () => {
   loading.value = true;

@@ -45,6 +45,7 @@
     </div>
 
     <MapHUD
+      v-if="session.player.party[0]"
       :area-name="$t('menu.areaNames.' + session.player.currentArea)"
       :biome="currentMapData?.biome"
       :leader-name="$t('monsters.' + session.player.party[0]?.species)"

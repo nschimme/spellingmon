@@ -77,10 +77,20 @@
           v-if="showCorrect"
           class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
         >
-          <div class="bg-green-500 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce-gentle">
-            <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
-              {{ $t('battle.correct') }}
-            </p>
+          <div class="flex flex-col items-center gap-4">
+            <div class="bg-green-500 border-8 border-white p-6 rounded-full shadow-2xl animate-bounce-gentle">
+              <p class="text-white font-black uppercase text-3xl italic tracking-tighter">
+                {{ $t('battle.good') }}
+              </p>
+            </div>
+            <div
+              v-if="showFast"
+              class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse"
+            >
+              <p class="text-white font-black uppercase text-xl italic">
+                {{ $t('battle.fast') }}
+              </p>
+            </div>
           </div>
         </div>
       </transition>
@@ -90,10 +100,20 @@
           v-if="showPerfect"
           class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
         >
-          <div class="bg-yellow-400 border-8 border-white p-8 rounded-full shadow-2xl animate-bounce-gentle ring-8 ring-yellow-400/50">
-            <p class="text-white font-black uppercase text-5xl italic tracking-tighter">
-              {{ $t('battle.perfect') }}
-            </p>
+          <div class="flex flex-col items-center gap-4">
+            <div class="bg-yellow-400 border-8 border-white p-8 rounded-full shadow-2xl animate-bounce-gentle ring-8 ring-yellow-400/50">
+              <p class="text-white font-black uppercase text-5xl italic tracking-tighter">
+                {{ $t('battle.perfect') }}
+              </p>
+            </div>
+            <div
+              v-if="showFast"
+              class="bg-blue-500 border-4 border-white px-4 py-2 rounded-xl shadow-xl animate-pulse"
+            >
+              <p class="text-white font-black uppercase text-xl italic">
+                {{ $t('battle.fast') }}
+              </p>
+            </div>
           </div>
         </div>
       </transition>
@@ -139,7 +159,7 @@
               :ref="el => setActionRef(el, 0)"
               class="col-span-2 bg-blue-600 text-white py-3 rounded-lg font-black border-b-4 border-blue-800 text-sm tracking-widest outline-none transition-all"
               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionIndex === 0 }"
-              @click="fsm.send(GAME_EVENTS.ATTACK)"
+              @click="handleAction(GAME_EVENTS.ATTACK)"
             >
               {{ $t('battle.attack') }}
             </button>
@@ -147,7 +167,7 @@
               :ref="el => setActionRef(el, 1)"
               class="bg-red-500 text-white py-2 rounded-lg font-bold border-b-4 border-red-700 text-xs outline-none transition-all"
               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionIndex === 1 }"
-              @click="fsm.send(GAME_EVENTS.CAPTURE)"
+              @click="handleAction(GAME_EVENTS.CAPTURE)"
             >
               {{ $t('battle.capture') }}
             </button>
@@ -200,38 +220,39 @@
         </template>
 
         <!-- Spelling -->
-        <template v-if="fsm.matches(GAME_STATES.BATTLE_SPELLING)">
-          <div class="text-center flex flex-col h-full justify-between">
-            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-2 border border-gray-400">
-              <div
-                class="h-full transition-all duration-100"
-                :class="timeLeft > (session.battle.totalTime / 2) ? 'bg-yellow-400' : 'bg-red-500'"
-                :style="{ width: `${(timeLeft / session.battle.totalTime) * 100}%` }"
-              />
-            </div>
-            <div class="overflow-y-auto max-h-16 mb-2">
-              <p
-                v-if="session.battle.currentWord?.definition"
-                class="text-[10px] leading-tight italic"
-              >
-                "{{ session.battle.currentWord.definition }}"
-              </p>
-            </div>
-            <input
-              ref="spellingInput"
-              v-model="userInput"
-              :disabled="isSubmitting"
-              class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
-              :placeholder="$t('battle.typeHere')"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              @keydown.enter="submitSpelling"
-              @blur="refocusInput"
-            >
+        <div
+          v-show="fsm.matches(GAME_STATES.BATTLE_SPELLING)"
+          class="text-center flex flex-col h-full justify-between"
+        >
+          <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-2 border border-gray-400">
+            <div
+              class="h-full transition-all duration-100"
+              :class="timeLeft > (session.battle.totalTime / 2) ? 'bg-yellow-400' : 'bg-red-500'"
+              :style="{ width: `${(timeLeft / session.battle.totalTime) * 100}%` }"
+            />
           </div>
-        </template>
+          <div class="overflow-y-auto max-h-16 mb-2">
+            <p
+              v-if="session.battle.currentWord?.definition"
+              class="text-[10px] leading-tight italic"
+            >
+              "{{ session.battle.currentWord.definition }}"
+            </p>
+          </div>
+          <input
+            ref="spellingInput"
+            v-model="userInput"
+            :disabled="isSubmitting"
+            class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
+            :placeholder="$t('battle.typeHere')"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            @keydown.enter="submitSpelling"
+            @blur="refocusInput"
+          >
+        </div>
 
         <!-- Results -->
         <template v-if="fsm.matches(GAME_STATES.BATTLE_RESULTS)">
@@ -264,6 +285,7 @@ const timeLeft = ref(0);
 const showMistake = ref(false);
 const showCorrect = ref(false);
 const showPerfect = ref(false);
+const showFast = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
@@ -300,12 +322,20 @@ const { selectedIndex: actionIndex } = useKeyboardNavigation({
     { up: 1, left: 0, right: 0 }   // Run (3)
   ],
   onConfirm: (idx) => {
-    if (idx === 0) fsm.send(GAME_EVENTS.ATTACK);
-    else if (idx === 1) fsm.send(GAME_EVENTS.CAPTURE);
-    else if (idx === 2) fsm.send(GAME_EVENTS.SWITCH);
-    else if (idx === 3) fsm.send(GAME_EVENTS.RUN);
+    if (idx === 0) handleAction(GAME_EVENTS.ATTACK);
+    else if (idx === 1) handleAction(GAME_EVENTS.CAPTURE);
+    else if (idx === 2) handleAction(GAME_EVENTS.SWITCH);
+    else if (idx === 3) handleAction(GAME_EVENTS.RUN);
   }
 });
+
+const handleAction = (event: string) => {
+  if (event === GAME_EVENTS.ATTACK || event === GAME_EVENTS.CAPTURE) {
+    // Crucial for iOS: Focus MUST be triggered inside the same click event handler
+    spellingInput.value?.focus();
+  }
+  fsm.send(event);
+};
 
 const { selectedIndex: partyIndex } = useKeyboardNavigation({
   id: 'battle-party',
@@ -392,10 +422,16 @@ watch(() => fsm.state as any, (newState, oldState) => {
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     clearFocusTimer();
+    userInput.value = '';
     nextTick(() => {
+      // Immediate focus attempt
+      spellingInput.value?.focus();
+      // Staggered attempts for mobile keyboard reliability
+      setTimeout(() => spellingInput.value?.focus(), 10);
+      setTimeout(() => spellingInput.value?.focus(), 50);
       spellingFocusTimeout.value = setTimeout(() => {
         spellingInput.value?.focus();
-      }, 80);
+      }, 150);
     });
     timeLeft.value = session.battle.totalTime;
     if (timerInterval.value) clearInterval(timerInterval.value);
@@ -432,6 +468,11 @@ watch(() => fsm.state as any, (newState, oldState) => {
   }
 
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK && fsm.params.isCorrect) {
+    if (fsm.params.isPower) {
+      showFast.value = true;
+      setTimeout(() => showFast.value = false, 1500);
+    }
+
     if (fsm.params.isPerfect) {
       showPerfect.value = true;
       setTimeout(() => showPerfect.value = false, 1500);

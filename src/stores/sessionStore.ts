@@ -37,10 +37,11 @@ export interface BattleState {
   debugWord?: string | null;
 }
 
+export type WordStatus = 'seen' | 'correct' | 'mastered';
+
 export interface DexState {
   discoveredTiles: Record<number, string[]>;
-  discoveredWords: Record<number, string[]>;
-  masteredWords: Record<number, string[]>;
+  words: Record<number, Record<string, WordStatus>>;
 }
 
 export interface SessionStoreState {
@@ -179,8 +180,7 @@ export const useSessionStore = defineStore('session', {
 
     dex: {
       discoveredTiles: {},
-      discoveredWords: {},
-      masteredWords: {},
+      words: {},
     },
 
     notification: null,
@@ -263,8 +263,7 @@ export const useSessionStore = defineStore('session', {
       this.resetBattle();
       this.dex = {
         discoveredTiles: {},
-        discoveredWords: {},
-        masteredWords: {},
+        words: {},
       };
     },
 
@@ -353,10 +352,27 @@ export const useSessionStore = defineStore('session', {
       this.evolutionPending = null;
     },
 
-    recordDiscovery(type: keyof DexState, area: number, value: string) {
-      if (!this.dex[type][area]) this.dex[type][area] = [];
-      if (!this.dex[type][area].includes(value)) {
-        this.dex[type][area].push(value);
+    recordDiscovery(type: keyof DexState, area: number, value: any) {
+      if (type === 'discoveredTiles') {
+        if (!this.dex.discoveredTiles[area]) this.dex.discoveredTiles[area] = [];
+        if (!this.dex.discoveredTiles[area].includes(value)) {
+          this.dex.discoveredTiles[area].push(value);
+        }
+      }
+    },
+
+    recordWord(area: number, word: string, status: WordStatus) {
+      if (!this.dex.words[area]) this.dex.words[area] = {};
+      const currentStatus = this.dex.words[area][word];
+
+      // Mutually exclusive / Progressive status: mastered > correct > seen
+      const statusPriority: Record<WordStatus, number> = { mastered: 3, correct: 2, seen: 1 };
+
+      // Special case: if it is currently 'seen', we want to REPLACE it with 'correct' or 'mastered'.
+      // If it is 'correct', we can upgrade to 'mastered'.
+      // We NEVER downgrade.
+      if (!currentStatus || statusPriority[status] > statusPriority[currentStatus]) {
+        this.dex.words[area][word] = status;
       }
     },
 
