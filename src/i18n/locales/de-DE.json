@@ -126,14 +126,14 @@
       "lexis_legend": "Lexikon-Legende"
     },
     "dialogs": {
-      "intro_1": "I'll teach you a lesson in spelling!",
-      "intro_2": "My party is perfectly punctuated!",
-      "intro_3": "Can you define 'defeat'?",
-      "intro_4": "Your syntax is full of errors!",
-      "intro_5": "I've been studying this route for weeks.",
-      "defeat_1": "I need to hit the books...",
-      "defeat_2": "You corrected me!",
-      "defeat_3": "Your vocabulary is superior."
+      "intro_1": "Ich werde dir eine Lektion in Rechtschreibung erteilen!",
+      "intro_2": "Mein Team ist perfekt interpunktiert!",
+      "intro_3": "Kannst du 'Niederlage' definieren?",
+      "intro_4": "Deine Syntax ist voller Fehler!",
+      "intro_5": "Ich studiere diese Route seit Wochen.",
+      "defeat_1": "Ich muss wohl mal wieder in die Bücher schauen...",
+      "defeat_2": "Du hast mich korrigiert!",
+      "defeat_3": "Dein Wortschatz ist überlegen."
     }
   },
   "battle": {

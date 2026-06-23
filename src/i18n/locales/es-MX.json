@@ -126,14 +126,14 @@
       "lexis_legend": "Leyenda del Léxico"
     },
     "dialogs": {
-      "intro_1": "I'll teach you a lesson in spelling!",
-      "intro_2": "My party is perfectly punctuated!",
-      "intro_3": "Can you define 'defeat'?",
-      "intro_4": "Your syntax is full of errors!",
-      "intro_5": "I've been studying this route for weeks.",
-      "defeat_1": "I need to hit the books...",
-      "defeat_2": "You corrected me!",
-      "defeat_3": "Your vocabulary is superior."
+      "intro_1": "¡Te daré una lección de ortografía!",
+      "intro_2": "¡Mi equipo tiene una puntuación perfecta!",
+      "intro_3": "¿Puedes definir 'derrota'?",
+      "intro_4": "¡Tu sintaxis está llena de errores!",
+      "intro_5": "He estado estudiando esta ruta por semanas.",
+      "defeat_1": "Necesito revisar los libros...",
+      "defeat_2": "¡Me corregiste!",
+      "defeat_3": "Tu vocabulario es superior."
     }
   },
   "battle": {

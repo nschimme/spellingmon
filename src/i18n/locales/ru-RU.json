@@ -372,14 +372,14 @@
       "lexis_legend": "Легенда лексики"
     },
     "dialogs": {
-      "intro_1": "I'll teach you a lesson in spelling!",
-      "intro_2": "My party is perfectly punctuated!",
-      "intro_3": "Can you define 'defeat'?",
-      "intro_4": "Your syntax is full of errors!",
-      "intro_5": "I've been studying this route for weeks.",
-      "defeat_1": "I need to hit the books...",
-      "defeat_2": "You corrected me!",
-      "defeat_3": "Your vocabulary is superior."
+      "intro_1": "Я преподам тебе урок правописания!",
+      "intro_2": "Моя команда идеально пунктуирована!",
+      "intro_3": "Можешь дать определение слову «поражение»?",
+      "intro_4": "В твоем синтаксисе полно ошибок!",
+      "intro_5": "Я изучал этот маршрут неделями.",
+      "defeat_1": "Мне нужно засесть за книги...",
+      "defeat_2": "Ты меня исправил!",
+      "defeat_3": "Твой словарный запас превосходен."
     }
   }
 }

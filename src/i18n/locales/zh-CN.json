@@ -372,14 +372,14 @@
       "lexis_legend": "词汇传奇"
     },
     "dialogs": {
-      "intro_1": "I'll teach you a lesson in spelling!",
-      "intro_2": "My party is perfectly punctuated!",
-      "intro_3": "Can you define 'defeat'?",
-      "intro_4": "Your syntax is full of errors!",
-      "intro_5": "I've been studying this route for weeks.",
-      "defeat_1": "I need to hit the books...",
-      "defeat_2": "You corrected me!",
-      "defeat_3": "Your vocabulary is superior."
+      "intro_1": "我要给你上一堂拼写课！",
+      "intro_2": "我的队伍标点符号非常完美！",
+      "intro_3": "你能定义“失败”吗？",
+      "intro_4": "你的句法充满了错误！",
+      "intro_5": "我已经研究这条路线好几周了。",
+      "defeat_1": "我需要回去看书了...",
+      "defeat_2": "你纠正了我！",
+      "defeat_3": "你的词汇量更高一筹。"
     }
   }
 }
