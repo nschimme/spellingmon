@@ -34,6 +34,7 @@
           :x="trainer.x"
           :y="trainer.y"
           :direction="trainer.direction"
+          :is-storm="trainer.isStorm"
           :is-alerting="alertingTrainer === trainer.trainerId"
         />
       </template>
@@ -215,7 +216,9 @@ const handleInput = (e: any) => {
       type: BATTLE_TYPES.TRAINER,
       trainerId,
       trainerParty: party,
-      trainerName: trainer.name
+      trainerName: trainer.name,
+      trainerDefeatDialog: trainer.defeatDialog,
+      isStorm: trainer.isStorm
     });
   } else {
     // 2. Wild battle triggers
@@ -430,7 +433,9 @@ const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
     type: BATTLE_TYPES.TRAINER,
     trainerId,
     trainerParty: party,
-    trainerName: trainer.name
+    trainerName: trainer.name,
+    trainerDefeatDialog: trainer.defeatDialog,
+    isStorm: trainer.isStorm
   });
 };
 
@@ -511,7 +516,9 @@ const triggerGymBossBattle = async (npc: any) => {
     type: BATTLE_TYPES.TRAINER,
     trainerId: `gym_boss_${session.player.currentArea}`,
     trainerParty: [{ species, level }],
-    trainerName: settingsStore.t(npc.name)
+    trainerName: settingsStore.t(npc.name),
+    trainerDefeatDialog: `npc.gym_boss.${session.player.currentArea}.defeat`,
+    isStorm: npc.type === 'team_storm'
   });
 };
 

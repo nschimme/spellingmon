@@ -18,10 +18,14 @@ const props = defineProps({
   x: { type: Number, required: true },
   y: { type: Number, required: true },
   direction: { type: String, default: 'down' },
+  isStorm: { type: Boolean, default: false },
   isAlerting: { type: Boolean, default: false }
 });
 
 const emoji = computed(() => {
+  if (props.isStorm) {
+     return '🕴️'; // Mysterious suited person for Team Storm
+  }
   switch (props.direction) {
     case 'up': return '🧒';
     case 'down': return '👦';

@@ -102,6 +102,51 @@
       "dialog": "Bienvenue au centre d'orthographe ! Laisse-moi soigner tes Spellingmon."
     },
     "gym_boss": {
+      "1": {
+        "name": "Arthur Alphabet",
+        "intro": "A pour Action ! B pour Bataille ! Voyons si tu connais ton alphabet !",
+        "defeat": "Z pour... Zéro chance que je perde ! Tu as maîtrisé l'alphabet !"
+      },
+      "2": {
+        "name": "Blenda Boulevard",
+        "intro": "Je vais mixer ton équipe en un smoothie de défaite ! Orthographe fluide exigée !",
+        "defeat": "Tu as mixé tes mots à la perfection. Une victoire sans accroc !"
+      },
+      "3": {
+        "name": "Silas Syllabe",
+        "intro": "Un, deux, trois ! Compte les battements, ressens le rythme du duel !",
+        "defeat": "Ton rythme était supérieur. Tu n'as pas manqué une seule mesure !"
+      },
+      "4": {
+        "name": "Sophie Suffixe",
+        "intro": "Je vais ajouter 'vaincu' à la fin de ton nom ! Ça te plaît comme suffixe ?",
+        "defeat": "Je suppose que c'est moi qui suis 'finie' maintenant. Bon travail !"
+      },
+      "5": {
+        "name": "Preston Préfixe",
+        "intro": "J'ai toujours le premier mot ! Prépare-toi à être devancé !",
+        "defeat": "Je n'avais pas prévu ce résultat. Tu as pré-venu ma victoire !"
+      },
+      "6": {
+        "name": "Homer Homophone",
+        "intro": "Tu verras que je suis le roi de la mer ici ! Ou est-ce 'maire' ? Tu le sauras bien assez tôt !",
+        "defeat": "J'aurais dû rester en mer... ou est-ce 'maire' ? Tu es trop fort !"
+      },
+      "7": {
+        "name": "Lana Loanword",
+        "intro": "J'ai emprunté des techniques au monde entier. Peux-tu rivaliser avec mon flair international ?",
+        "defeat": "Ton vocabulaire est vraiment international. Merci pour le combat !"
+      },
+      "8": {
+        "name": "Phona Phonème",
+        "intro": "Chaque son compte ! Si tu manques une seule note, c'est fini !",
+        "defeat": "Ça sonnait comme une victoire pour toi. Ton orthographe est un sans-faute !"
+      },
+      "9": {
+        "name": "Malphas le Muet",
+        "intro": "La Tempête Silencieuse est ma création ! Une fois le Lexique effacé, je serai le seul à avoir une voix !",
+        "defeat": "Mon silence... a été brisé. Les mots... ils reviennent. La tempête est finie."
+      },
       "name": "Maître d'Arène",
       "intro": "Alors, tu maîtrises la langue locale ? Voyons si tu arrives à te frayer un chemin vers la victoire !",
       "defeat": "Impressionnant ! Tu as vraiment un don avec les mots. Voici ton badge !"
@@ -123,7 +168,10 @@
       "prose_pro": "Pro de la Prose",
       "word_wizard": "Magicien des Mots",
       "syntax_sage": "Sage de la Syntaxe",
-      "lexis_legend": "Légende du Lexique"
+      "lexis_legend": "Légende du Lexique",
+      "storm_grunt": "Sbire Storm",
+      "storm_scout": "Éclaireur Storm",
+      "storm_operative": "Agent Storm"
     },
     "dialogs": {
       "intro_1": "Je vais te donner une leçon d'orthographe !",
@@ -133,7 +181,16 @@
       "intro_5": "J'étudie cet itinéraire depuis des semaines.",
       "defeat_1": "Je dois me replonger dans les livres...",
       "defeat_2": "Tu m'as corrigé !",
-      "defeat_3": "Ton vocabulaire est supérieur."
+      "defeat_3": "Ton vocabulaire est supérieur.",
+      "storm_intro_1": "Le silence est d'or, et nous sommes venus encaisser !",
+      "storm_intro_2": "Bientôt, tous les mots du monde appartiendront à la Team Storm !",
+      "storm_intro_3": "Pourquoi s'embêter à apprendre des mots quand on peut juste les effacer ?",
+      "storm_intro_4": "La Tempête Silencieuse arrive, et tu es sur son chemin !",
+      "storm_intro_5": "Nous nettoyons ce monde, un mot à la fois !",
+      "storm_defeat_1": "Maudit soit-il ! Nos plans de silence total... retardés !",
+      "storm_defeat_2": "Tu as peut-être gagné cette manche, mais la Tempête gronde...",
+      "storm_defeat_3": "Le Leader ne sera pas content de cette interruption.",
+      "storm_catchphrase": "Les mots sont fragiles, le silence est agile ! La Team Storm rend le monde plus tranquille !"
     }
   },
   "battle": {

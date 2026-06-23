@@ -102,6 +102,51 @@
       "dialog": "¡Bienvenido al Centro de Ortografía! Déjame curar a tus Spellingmon."
     },
     "gym_boss": {
+      "1": {
+        "name": "Arturo Alfabeto",
+        "intro": "¡A de Acción! ¡B de Batalla! ¡Veamos si conoces el abecedario!",
+        "defeat": "¡Z de... Zero posibilidades de perder, creí! ¡Has dominado el Alfabeto!"
+      },
+      "2": {
+        "name": "Berta Bulevar",
+        "intro": "¡Mezclaré a tu equipo en un batido de derrota! ¡Solo ortografía fluida!",
+        "defeat": "Mezclaste tus palabras perfectamente. ¡Una victoria muy fluida!"
+      },
+      "3": {
+        "name": "Silvio Sílaba",
+        "intro": "¡Uno, dos, tres! ¡Cuenta los pulsos, siente el ritmo del duelo!",
+        "defeat": "Tu ritmo fue superior. ¡No saltaste ni una sílaba!"
+      },
+      "4": {
+        "name": "Sofía Sufijo",
+        "intro": "¡Añadiré 'derrotado' al final de tu nombre! ¿Qué te parece ese sufijo?",
+        "defeat": "Supongo que soy yo la que ha 'terminado' ahora. ¡Buen trabajo!"
+      },
+      "5": {
+        "name": "Pedro Prefijo",
+        "intro": "¡Yo siempre tengo la primera palabra! ¡Prepárate para ser anticipado!",
+        "defeat": "No preví este resultado. ¡Pre-veniste mi victoria!"
+      },
+      "6": {
+        "name": "Homero Homófono",
+        "intro": "¡Verás que soy el rey de los bienes! ¿O era 'vienes'? ¡Lo sabrás pronto!",
+        "defeat": "Sabía que debía haberme quedado en la cima... ¿o era 'cima'? ¡Eres muy bueno!"
+      },
+      "7": {
+        "name": "Lara Extranjerismo",
+        "intro": "He tomado prestadas técnicas de todo el mundo. ¿Puedes seguir mi estilo extranjero?",
+        "defeat": "Tu vocabulario es verdaderamente internacional. ¡Merci por la batalla!"
+      },
+      "8": {
+        "name": "Fona Fonema",
+        "intro": "¡Cada sonido importa! ¡Si fallas una sola nota, se acabó el juego!",
+        "defeat": "Sonó como una victoria para ti. ¡Tu ortografía es perfecta!"
+      },
+      "9": {
+        "name": "Malfas el Mudo",
+        "intro": "¡La Tormenta Silenciosa es mi creación! ¡Con el Léxico borrado, seré el único con voz!",
+        "defeat": "Mi silencio... se ha roto. Las palabras... están volviendo. La tormenta ha terminado."
+      },
       "name": "Líder de Gimnasio",
       "intro": "¿Así que has dominado el idioma local? ¡Veamos si puedes deletrear tu camino a la victoria!",
       "defeat": "¡Impresionante! Realmente tienes un don con las palabras. ¡Aquí tienes tu medalla!"
@@ -123,7 +168,10 @@
       "prose_pro": "Pro de la Prosa",
       "word_wizard": "Mago de las Palabras",
       "syntax_sage": "Sabio de la Sintaxis",
-      "lexis_legend": "Leyenda del Léxico"
+      "lexis_legend": "Leyenda del Léxico",
+      "storm_grunt": "Recluta Storm",
+      "storm_scout": "Explorador Storm",
+      "storm_operative": "Agente Storm"
     },
     "dialogs": {
       "intro_1": "¡Te daré una lección de ortografía!",
@@ -133,7 +181,16 @@
       "intro_5": "He estado estudiando esta ruta por semanas.",
       "defeat_1": "Necesito revisar los libros...",
       "defeat_2": "¡Me corregiste!",
-      "defeat_3": "Tu vocabulario es superior."
+      "defeat_3": "Tu vocabulario es superior.",
+      "storm_intro_1": "¡El silencio es oro, y venimos a cobrar!",
+      "storm_intro_2": "¡Pronto, todas las palabras de este mundo pertenecerán al Team Storm!",
+      "storm_intro_3": "¿Para qué molestarse en aprender palabras si podemos borrarlas?",
+      "storm_intro_4": "¡La Tormenta Silenciosa se acerca, y estás en su camino!",
+      "storm_intro_5": "¡Estamos limpiando este mundo, palabra por palabra!",
+      "storm_defeat_1": "¡Maldición! Nuestros planes de silencio total... ¡retrasados!",
+      "storm_defeat_2": "Puede que hayas ganado esta ronda, pero la Tormenta se avecina...",
+      "storm_defeat_3": "El Líder no estará complacido con esta interrupción.",
+      "storm_catchphrase": "¡Las palabras son flojas, el silencio es mejor! ¡Team Storm hará un mundo superior!"
     }
   },
   "battle": {
