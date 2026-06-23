@@ -15,7 +15,7 @@ export function useTrainerAI(
   const alertingTrainer = ref<string | null>(null);
 
   const checkTrainerLOS = (engagedTrainers: Set<string>) => {
-    if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value) return;
+    if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value || session.player.currentInterior) return;
 
     const trainers = currentMapData.value.trainers;
     const LOS_RANGE = 5;
@@ -67,7 +67,12 @@ export function useTrainerAI(
     fsm.send(GAME_EVENTS.ENCOUNTER, { type: BATTLE_TYPES.TRAINER });
 
     // Initial speech notification using i18n
-    session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: trainer.name }));
+    let displayName = trainer.name;
+    if (displayName.includes('::')) {
+      const [key, raw] = displayName.split('::');
+      displayName = `${i18n.global.t(key)} ${raw}`;
+    }
+    session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: displayName }));
 
     setTimeout(async () => {
       const dx = playerX.value - trainer.x;
@@ -92,7 +97,12 @@ export function useTrainerAI(
 
       alertingTrainer.value = null;
       // Show trainer dialog on the map before battle
-      session.notify(`${trainer.name}: "${trainer.dialog}"`);
+      let logName = trainer.name;
+      if (logName.includes('::')) {
+        const [key, raw] = logName.split('::');
+        logName = `${i18n.global.t(key)} ${raw}`;
+      }
+      session.notify(`${logName}: "${trainer.dialog}"`);
 
       // Extra delay to allow reading the dialog on the map
       setTimeout(() => {

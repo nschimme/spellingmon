@@ -82,6 +82,60 @@
       "Das Ende"
     ]
   },
+  "home": {
+    "name": "Zuhause"
+  },
+  "spellingCenter": {
+    "name": "Rechtschreibzentrum"
+  },
+  "gym": {
+    "name": "Rechtschreib-Arena",
+    "notReady": "Du bist noch nicht bereit für mich! Besiege alle Trainer und beherrsche zuerst jedes Wort in diesem Bereich!"
+  },
+  "npc": {
+    "mom": {
+      "name": "Mama",
+      "dialog": "Pass auf dich auf, Liebes! Denk daran, das Rechtschreibzentrum zu besuchen, wenn deine Spellingmon müde sind."
+    },
+    "healer": {
+      "name": "Schwester Lexi",
+      "dialog": "Willkommen im Rechtschreibzentrum! Lass mich deine Spellingmon heilen."
+    },
+    "gym_boss": {
+      "name": "Arenaleiter",
+      "intro": "Du beherrschst also die Landessprache? Mal sehen, ob du dich zum Sieg buchstabieren kannst!",
+      "defeat": "Beeindruckend! Du hast wirklich ein Händchen für Worte. Hier ist dein Orden!"
+    },
+    "rival": {
+      "name": "Rivale Robin",
+      "dialog": "Ich werde der beste Lexika-Scout aller Zeiten sein und Spellinghome retten, indem ich jedes Wort zuerst beherrsche! En garde!",
+      "victory": "Worte sind Macht, und dir sind sie ausgegangen!",
+      "defeat": "Nicht schlecht! Aber glaub nicht, dass du schon gewonnen hast. Ich werde derjenige sein, der jedes Wort zuerst beherrscht!",
+      "mercy": "Keine Sorge, du wirst besser werden! Ich mache mich auf den Weg, um Spellinghome zu retten!"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Buchstabier-Biene",
+      "grammar_geek": "Grammatik-Freak",
+      "vocab_victor": "Vokabel-Sieger",
+      "linguist": "Linguist",
+      "prose_pro": "Prosa-Profi",
+      "word_wizard": "Wort-Magier",
+      "syntax_sage": "Syntax-Weiser",
+      "lexis_legend": "Lexikon-Legende"
+    },
+    "dialogs": {
+      "intro_1": "Ich werde dir eine Lektion in Rechtschreibung erteilen!",
+      "intro_2": "Mein Team ist perfekt interpunktiert!",
+      "intro_3": "Kannst du 'Niederlage' definieren?",
+      "intro_4": "Deine Syntax ist voller Fehler!",
+      "intro_5": "Ich studiere diese Route seit Wochen.",
+      "defeat_1": "Ich muss wohl mal wieder in die Bücher schauen...",
+      "defeat_2": "Du hast mich korrigiert!",
+      "defeat_3": "Dein Wortschatz ist überlegen."
+    }
+  },
   "battle": {
     "experience": "Erfahrung",
     "expGainedShort": "EXP erhalten: +{n}",
@@ -146,7 +200,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Freigeschaltete Gebiete",
-    "badgesEarned": "Gesammelte Orden: {n}",
+    "badgesEarned": "Insgesamt verdiente Orden: {n}",
     "items": "Items",
     "party": "Team",
     "spellingdex": "Spellingdex",

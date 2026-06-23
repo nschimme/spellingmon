@@ -31,12 +31,12 @@
       >
         <div class="flex justify-between text-[10px] font-bold text-gray-600">
           <span>{{ $t('menu.wordsMastered') }}</span>
-          <span>{{ (session.dex.masteredWords[i] || []).length }} / 40</span>
+          <span>{{ Object.values(session.dex.words[i] || {}).filter(s => s === 'mastered').length }} / 40</span>
         </div>
         <div class="w-full bg-gray-200 h-3 border-2 border-gray-800 rounded-full overflow-hidden">
           <div
             class="h-full bg-green-500 transition-all duration-500"
-            :style="{ width: `${((session.dex.masteredWords[i] || []).length / 40) * 100}%` }"
+            :style="{ width: `${(Object.values(session.dex.words[i] || {}).filter(s => s === 'mastered').length / 40) * 100}%` }"
           />
         </div>
       </div>
@@ -85,20 +85,21 @@ const emit = defineEmits(['back']);
 const globalProgress = computed(() => {
   let totalMastered = 0;
   for (let i = 1; i <= GAME_CONSTANTS.MAX_AREAS; i++) {
-    totalMastered += (session.dex.masteredWords[i] || []).length;
+    const words = session.dex.words[i] || {};
+    totalMastered += Object.values(words).filter(s => s === 'mastered').length;
   }
   return (totalMastered / (GAME_CONSTANTS.MAX_AREAS * 40)) * 100;
 });
 
 const totalBadges = computed(() => {
-  return Object.keys(session.dex.masteredWords).filter(area => (session.dex.masteredWords[Number(area)] || []).length >= 40).length;
+  return session.player.badges.length;
 });
 
 const getAreaBadge = (area: number) => {
-  const masteredCount = (session.dex.masteredWords[area] || []).length;
-  if (masteredCount >= 40) return '🏆';
-  if (masteredCount >= 20) return '🥈';
-  if (masteredCount > 0) return '🥉';
+  if (session.player.badges.includes(`badge_${area}`)) {
+    const badges = ['🧱', '💧', '⚡', '🍃', '🔥', '🧠', '🐲', '👻', '💎'];
+    return badges[area - 1] || '🏆';
+  }
   return '🌑';
 };
 

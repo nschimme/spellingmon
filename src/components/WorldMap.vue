@@ -1,6 +1,7 @@
 <template>
   <div
-    class="relative w-full h-full bg-green-200 overflow-hidden select-none"
+    class="relative w-full h-full overflow-hidden select-none"
+    :class="session.player.currentInterior ? 'bg-gray-900' : 'bg-green-200'"
     @mousedown="handleMapInteractionStart"
     @touchstart.prevent="handleMapInteractionStart"
     @mouseup="stopMovement"
@@ -12,12 +13,7 @@
     <div
       class="absolute transition-all duration-200 linear"
       :class="{ 'duration-0': isJumping }"
-      :style="{
-        left: `calc(50% - ${playerX * 40}px - 20px)`,
-        top: `calc(50% - ${playerY * 40}px - 20px)`,
-        width: `${MAP_WIDTH * 40}px`,
-        height: `${MAP_HEIGHT * 40}px`
-      }"
+      :style="mapContainerStyle"
     >
       <transition-group name="tile-fade">
         <MapTile
@@ -31,13 +27,25 @@
       </transition-group>
 
       <!-- Trainer Layer -->
-      <TrainerSprite
-        v-for="trainer in viewportTrainers"
-        :key="trainer.trainerId"
-        :x="trainer.x"
-        :y="trainer.y"
-        :direction="trainer.direction"
-        :is-alerting="alertingTrainer === trainer.trainerId"
+      <template v-if="!session.player.currentInterior">
+        <TrainerSprite
+          v-for="trainer in viewportTrainers"
+          :key="trainer.trainerId"
+          :x="trainer.x"
+          :y="trainer.y"
+          :direction="trainer.direction"
+          :is-alerting="alertingTrainer === trainer.trainerId"
+        />
+      </template>
+
+      <!-- NPC Layer -->
+      <NPCSprite
+        v-for="npc in currentInteriorData?.npcs"
+        :key="npc.id"
+        :type="npc.type"
+        :x="npc.x"
+        :y="npc.y"
+        @interact="handleNPCInteract(npc)"
       />
     </div>
 
@@ -80,7 +88,7 @@ import { useVocabStore } from '../stores/vocabStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
-import { createMon } from '../utils/gameData';
+import { createMon, SPECIES } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
 import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
@@ -91,6 +99,7 @@ import { usePlayerMovement } from '../composables/usePlayerMovement';
 import MapHUD from './map/MapHUD.vue';
 import MapTile from './map/MapTile.vue';
 import TrainerSprite from './map/TrainerSprite.vue';
+import NPCSprite from './map/NPCSprite.vue';
 import MobileControls from './map/MobileControls.vue';
 
 const session = useSessionStore();
@@ -117,6 +126,31 @@ const {
   generateMap, getTileType, getTrainerAt, updateDiscovery
 } = useMapManager(session);
 
+const mapContainerStyle = computed(() => {
+  if (session.player.currentInterior && currentInteriorData.value) {
+    const intMap = currentInteriorData.value.map;
+    const w = intMap[0].length;
+    const h = intMap.length;
+    return {
+      left: `calc(50% - ${playerX.value * 40}px - 20px)`,
+      top: `calc(50% - ${playerY.value * 40}px - 20px)`,
+      width: `${w * 40}px`,
+      height: `${h * 40}px`
+    };
+  }
+  return {
+    left: `calc(50% - ${playerX.value * 40}px - 20px)`,
+    top: `calc(50% - ${playerY.value * 40}px - 20px)`,
+    width: `${MAP_WIDTH.value * 40}px`,
+    height: `${MAP_HEIGHT.value * 40}px`
+  };
+});
+
+const currentInteriorData = computed(() => {
+  if (!session.player.currentInterior || !currentMapData.value?.interiors) return null;
+  return currentMapData.value.interiors[session.player.currentInterior];
+});
+
 const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach } = useTrainerAI(
   session, fsm, currentMapData, playerX, playerY, getTileType
 );
@@ -125,6 +159,18 @@ const handleInput = (e: any) => {
   if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return false;
 
   const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
+
+  if (key === 'e' || key === ' ') {
+    const adj = [[0, -1], [0, 1], [-1, 0], [1, 0], [0, 0]]; // [0,0] for mobile direct tap
+    const npc = currentInteriorData.value?.npcs.find(n =>
+      adj.some(([dx, dy]) => playerX.value + dx === n.x && playerY.value + dy === n.y)
+    );
+    if (npc) {
+      handleNPCInteract(npc);
+      return true;
+    }
+  }
+
   let newX = playerX.value;
   let newY = playerY.value;
   let moved = false;
@@ -137,7 +183,18 @@ const handleInput = (e: any) => {
   if (!moved) return false;
 
   const targetTile = getTileType(newX, newY);
-  const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION];
+  const walkable = [
+    TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS,
+    TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION,
+    TILE_TYPES.BUILDING, TILE_TYPES.DOOR, TILE_TYPES.STAIRS_UP, TILE_TYPES.STAIRS_DOWN,
+    TILE_TYPES.CARPET
+  ];
+
+  if (targetTile === TILE_TYPES.NPC) {
+    const npc = currentInteriorData.value?.npcs.find(n => n.x === newX && n.y === newY);
+    if (npc) handleNPCInteract(npc);
+    return false;
+  }
 
   if (!walkable.includes(targetTile)) return false;
 
@@ -239,6 +296,16 @@ watch(() => session.player.position, (newPos, oldPos) => {
 
 const viewportTiles = computed(() => {
   if (!currentMapData.value) return [];
+  if (currentInteriorData.value) {
+    const tiles = [];
+    const intMap = currentInteriorData.value.map;
+    for (let y = 0; y < intMap.length; y++) {
+      for (let x = 0; x < intMap[0].length; x++) {
+        tiles.push({ x, y, type: intMap[y][x] });
+      }
+    }
+    return tiles;
+  }
   const tiles = [];
   const half = Math.floor(VIEWPORT_SIZE / 2);
   const startX = Math.max(0, Math.min(MAP_WIDTH.value - VIEWPORT_SIZE, playerX.value - half));
@@ -262,18 +329,35 @@ const viewportTrainers = computed(() => {
 
   return currentMapData.value.trainers
     .map((t, i) => ({ ...t, trainerId: `area${session.player.currentArea}_${i}` }))
-    .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY);
+    .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !session.player.defeatedTrainers.includes(t.trainerId));
 });
 
 const checkTriggers = (x: number, y: number) => {
   const type = getTileType(x, y);
 
-  if (type === TILE_TYPES.SPELL_CENTER) {
-    session.healParty();
-    audio.playSound(SOUND_EFFECTS.HEAL);
-    session.notify(settingsStore.t('menu.healed'));
-    session.player.lastSpellCenter = { x, y } as any;
-    session.save();
+  if (type === TILE_TYPES.STAIRS_UP || type === TILE_TYPES.STAIRS_DOWN || type === TILE_TYPES.CARPET || type === TILE_TYPES.BUILDING) {
+    const exit = currentInteriorData.value?.exits.find(e => e.x === x && e.y === y);
+    if (exit) {
+      handleTransition(exit);
+      return;
+    }
+    // World map building entry
+    if (type === TILE_TYPES.BUILDING || type === TILE_TYPES.SPELL_CENTER) {
+       // Find which interior has an exit pointing to the tile below this building
+       const interiorEntry = Object.values(currentMapData.value?.interiors || {}).find(int =>
+         int.exits.some(e => e.target === 'world' && e.targetPos.x === x && e.targetPos.y === y + 1)
+       );
+       if (interiorEntry) {
+          // Find the carpet exit to get its coordinates as entry point
+          const carpetExit = interiorEntry.exits.find(e => e.target === 'world');
+          handleTransition({ target: interiorEntry.id, targetPos: { x: carpetExit?.x || 0, y: (carpetExit?.y || 1) - 1 } });
+       }
+       return;
+    }
+  }
+
+  if (type === TILE_TYPES.SPELL_CENTER && !session.player.currentInterior) {
+    handleTransition({ target: 'spelling_center', targetPos: { x: 4, y: 4 } });
     return;
   }
 
@@ -347,6 +431,87 @@ const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
     trainerId,
     trainerParty: party,
     trainerName: trainer.name
+  });
+};
+
+const handleTransition = (exit: any) => {
+  const fromHome = session.player.currentInterior === 'home_1f' && exit.target === 'world';
+  fsm.send(GAME_EVENTS.CONFIRM, {
+    targetState: GAME_STATES.WORLD,
+    target: GAME_STATES.WORLD, // For LOADING gateway
+    onComplete: () => {
+      if (exit.target === 'world') {
+        session.player.currentInterior = null;
+      } else {
+        session.player.currentInterior = exit.target;
+      }
+      session.updatePlayerPosition(exit.targetPos);
+
+      if (fromHome && !session.player.defeatedTrainers.includes('rival_1')) {
+        triggerRivalBattle();
+      }
+    }
+  });
+};
+
+const triggerRivalBattle = async () => {
+  await vocabStore.loadVocab(1, settingsStore.locale);
+  const species = SPECIES.Verminverb;
+  const playerLevel = session.player.party[0]?.level || 5;
+  const enemyMon = createMon(species, playerLevel);
+
+  fsm.send(GAME_EVENTS.ENCOUNTER, {
+    enemy: enemyMon,
+    type: BATTLE_TYPES.TRAINER,
+    trainerId: 'rival_1',
+    trainerParty: [{ species, level: playerLevel }],
+    trainerName: settingsStore.t('npc.rival.name')
+  });
+};
+
+const handleNPCInteract = (npc: any) => {
+  // Check Proximity
+  const dist = Math.abs(playerX.value - npc.x) + Math.abs(playerY.value - npc.y);
+  if (dist > 1) return;
+
+  if (npc.type === 'healer') {
+    session.healParty();
+    audio.playSound(SOUND_EFFECTS.HEAL);
+    session.notify(settingsStore.t('menu.healed'));
+    session.player.lastSpellCenter = { x: 4, y: 4, interior: 'spelling_center', floor: null } as any;
+    session.save();
+  }
+  session.notify(`${settingsStore.t(npc.name)}: "${settingsStore.t(npc.dialog[0])}"`);
+
+  if (npc.type === 'gym_boss') {
+    // Check requirements
+    const vocabCount = vocabStore.vocabData[`${settingsStore.locale}_${session.player.currentArea}`]?.length || 40;
+    const mastered = session.isAreaMastered(session.player.currentArea, vocabCount);
+    const trainersDefeated = currentMapData.value?.trainers.every((_, i) =>
+      session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
+    );
+
+    if (mastered && trainersDefeated) {
+       triggerGymBossBattle(npc);
+    } else {
+       session.notify(settingsStore.t('gym.notReady'));
+    }
+  }
+};
+
+const triggerGymBossBattle = async (npc: any) => {
+  await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
+  const area = areaConfig.value;
+  const level = area.maxLevel + 2;
+  const species = area.encounters[area.encounters.length - 1]; // Use last encounter as boss mon
+  const enemyMon = createMon(species, level);
+
+  fsm.send(GAME_EVENTS.ENCOUNTER, {
+    enemy: enemyMon,
+    type: BATTLE_TYPES.TRAINER,
+    trainerId: `gym_boss_${session.player.currentArea}`,
+    trainerParty: [{ species, level }],
+    trainerName: settingsStore.t(npc.name)
   });
 };
 

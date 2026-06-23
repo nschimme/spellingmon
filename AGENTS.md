@@ -24,3 +24,13 @@ You are working on a game engine built with Vue 3, Pinia, and a custom HFSM. To 
 
 ## 6. Documentation
 - If you change the state tree or the session data structure, you MUST update `docs/architecture.md`.
+
+## 7. Internationalization (i18n)
+- When adding new UI text, you MUST add it to `src/i18n/locales/en-US.json`.
+- After adding keys to `en-US.json`, run `node scripts/sync-i18n.cjs` to propagate those keys to all other locale files. This is required to pass the `lint` check in CI.
+- Avoid using dynamic strings that the i18n checker cannot find via `grep`. If you must use dynamic keys, add them to the `dynamicPrefixes` list in `scripts/check-i18n.cjs`.
+
+## 8. Code Style & CI
+- Always use `const` for variables that are not reassigned. The CI will fail on `let` variables that should be `const`.
+- Ensure all imports are used. Unused imports will cause linting failures.
+- When working with the FSM, ensure transitions are handled via `fsm.send` where possible, and avoid manual state assignments unless necessary for complex routing.

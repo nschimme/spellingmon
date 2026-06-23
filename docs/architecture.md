@@ -34,7 +34,8 @@ ROOT
 │   ├── CHARACTER_CREATION
 │   └── STARTER_SELECTION
 └── PLAY
-    ├── WORLD
+    ├── WORLD (Includes Interiors)
+    ├── TRAINER_APPROACH
     ├── BATTLE
     │   ├── INTRO
     │   ├── ACTION_SELECT
@@ -47,7 +48,8 @@ ROOT
     │   ├── RESULTS
     │   └── PARTY_FULL
     ├── MENU
-    └── EVOLUTION
+    ├── EVOLUTION
+    └── STORY_CUTSCENE
 ```
 
 ## Best Practices
@@ -63,6 +65,9 @@ if (fsm.matches(GAME_STATES.BATTLE_SPELLING)) { ... }
 fsm.send('ATTACK');
 if (fsm.state.value === 'PLAY.BATTLE.SPELLING') { ... }
 ```
+
+## Interior System
+Interiors (Home, Gyms, Spelling Centers) are defined as sub-maps within `MapGenerator.ts`. The `WorldMap.vue` component dynamically switches between rendering the world map and the current interior based on `session.player.currentInterior`.
 
 ## Adding a Feature
 

@@ -11,8 +11,11 @@ export interface PlayerState {
   party: Monster[];
   position: { x: number; y: number } | null;
   currentArea: number;
+  currentInterior: string | null;
+  currentFloor: string | null;
+  badges: string[];
   unlockedAreas: number[];
-  lastSpellCenter: { x: number; y: number } | null;
+  lastSpellCenter: { x: number; y: number; interior: string | null; floor: string | null } | null;
   defeatedTrainers: string[];
   mapSeed: string | null;
   characterCreationComplete: boolean;
@@ -155,6 +158,9 @@ export const useSessionStore = defineStore('session', {
       party: [],
       position: null,
       currentArea: 1,
+      currentInterior: 'home_2f',
+      currentFloor: null,
+      badges: [],
       unlockedAreas: [1],
       lastSpellCenter: null,
       defeatedTrainers: [],
@@ -251,8 +257,11 @@ export const useSessionStore = defineStore('session', {
         gender: 'Boy',
         skinTone: 'neutral',
         party: [],
-        position: null,
+        position: { x: 6, y: 1 },
         currentArea: 1,
+        currentInterior: 'home_2f',
+        currentFloor: null,
+        badges: [],
         unlockedAreas: [1],
         lastSpellCenter: null,
         defeatedTrainers: [],
@@ -273,6 +282,12 @@ export const useSessionStore = defineStore('session', {
 
     healParty() {
       this.player.party.forEach(mon => { mon.hp = mon.maxHp; });
+    },
+
+    awardBadge(badge: string) {
+      if (!this.player.badges.includes(badge)) {
+        this.player.badges.push(badge);
+      }
     },
 
     addMonToParty(mon: Monster) {
@@ -376,6 +391,13 @@ export const useSessionStore = defineStore('session', {
       }
     },
 
+    isAreaMastered(area: number, vocabCount: number): boolean {
+      const words = this.dex.words[area];
+      if (!words) return false;
+      const masteredCount = Object.values(words).filter(s => s === 'mastered').length;
+      return masteredCount >= vocabCount;
+    },
+
     discoverTile(area: number, x: number, y: number) {
       this.recordDiscovery('discoveredTiles', area, `${x},${y}`);
     },
@@ -396,6 +418,12 @@ export const useSessionStore = defineStore('session', {
     setStarter(mon: Monster) {
       this.player.party = [mon];
       this.player.isStarterSelected = true;
+    },
+
+    recordTrainerDefeat(trainerId: string) {
+      if (!this.player.defeatedTrainers.includes(trainerId)) {
+        this.player.defeatedTrainers.push(trainerId);
+      }
     },
 
     loadSlot(index: number) {

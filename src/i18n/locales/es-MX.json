@@ -82,6 +82,60 @@
       "Fin"
     ]
   },
+  "home": {
+    "name": "Hogar"
+  },
+  "spellingCenter": {
+    "name": "Centro de Ortografía"
+  },
+  "gym": {
+    "name": "Gimnasio de Ortografía",
+    "notReady": "¡Aún no estás listo para mí! ¡Derrota a todos los entrenadores y domina cada palabra de esta zona primero!"
+  },
+  "npc": {
+    "mom": {
+      "name": "Mamá",
+      "dialog": "¡Ten cuidado ahí fuera, cielo! Recuerda visitar el Centro de Ortografía si tus Spellingmon están cansados."
+    },
+    "healer": {
+      "name": "Enfermera Lexi",
+      "dialog": "¡Bienvenido al Centro de Ortografía! Déjame curar a tus Spellingmon."
+    },
+    "gym_boss": {
+      "name": "Líder de Gimnasio",
+      "intro": "¿Así que has dominado el idioma local? ¡Veamos si puedes deletrear tu camino a la victoria!",
+      "defeat": "¡Impresionante! Realmente tienes un don con las palabras. ¡Aquí tienes tu medalla!"
+    },
+    "rival": {
+      "name": "Rival Robin",
+      "dialog": "¡Voy a ser el mejor explorador de léxico y salvaré Spellinghome dominando cada palabra primero! ¡En guardia!",
+      "victory": "¡Las palabras son poder, y te has quedado sin ellas!",
+      "defeat": "¡Nada mal! Pero no creas que ya ganaste. ¡Yo seré quien domine cada palabra primero!",
+      "mercy": "¡No te preocupes, mejorarás! ¡Me voy a salvar Spellinghome!"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Abeja de Ortografía",
+      "grammar_geek": "Friki de la Gramática",
+      "vocab_victor": "Víctor del Vocabulario",
+      "linguist": "Lingüista",
+      "prose_pro": "Pro de la Prosa",
+      "word_wizard": "Mago de las Palabras",
+      "syntax_sage": "Sabio de la Sintaxis",
+      "lexis_legend": "Leyenda del Léxico"
+    },
+    "dialogs": {
+      "intro_1": "¡Te daré una lección de ortografía!",
+      "intro_2": "¡Mi equipo tiene una puntuación perfecta!",
+      "intro_3": "¿Puedes definir 'derrota'?",
+      "intro_4": "¡Tu sintaxis está llena de errores!",
+      "intro_5": "He estado estudiando esta ruta por semanas.",
+      "defeat_1": "Necesito revisar los libros...",
+      "defeat_2": "¡Me corregiste!",
+      "defeat_3": "Tu vocabulario es superior."
+    }
+  },
   "battle": {
     "experience": "Experiencia",
     "expGainedShort": "EXP Ganada: +{n}",
@@ -146,7 +200,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Áreas desbloqueadas",
-    "badgesEarned": "Medallas ganadas: {n}",
+    "badgesEarned": "Total de medallas ganadas: {n}",
     "items": "Objetos",
     "party": "Equipo",
     "spellingdex": "Spellingdex",

@@ -146,7 +146,7 @@
   "menu": {
     "monCount": "{n} / 6 MONS",
     "unlockedAreas": "Áreas desbloqueadas",
-    "badgesEarned": "Total de Insígnias: {n}",
+    "badgesEarned": "Total de insígnias ganhas: {n}",
     "items": "Itens",
     "party": "Equipe",
     "spellingdex": "Spellingdex",
@@ -327,5 +327,59 @@
     "tip3": "Capturar novos Spellingmon ajuda você a construir uma equipe mais forte.",
     "tip4": "Seus Spellingmon serão curados automaticamente nos Centros de Magia.",
     "tip5": "Explore cada canto do mapa para encontrar treinadores escondidos!"
+  },
+  "home": {
+    "name": "Casa"
+  },
+  "spellingCenter": {
+    "name": "Centro de Ortografia"
+  },
+  "gym": {
+    "name": "Ginásio de Ortografia",
+    "notReady": "Você ainda não está pronto para mim! Derrote todos os treinadores e domine cada palavra desta área primeiro!"
+  },
+  "npc": {
+    "mom": {
+      "name": "Mãe",
+      "dialog": "Tome cuidado lá fora, querido! Lembre-se de visitar o Centro de Ortografia se seus Spellingmon estiverem cansados."
+    },
+    "healer": {
+      "name": "Enfermeira Lexi",
+      "dialog": "Bem-vindo ao Centro de Ortografia! Deixe-me curar seus Spellingmon."
+    },
+    "gym_boss": {
+      "name": "Mestre de Ginásio",
+      "intro": "Então você dominou a língua local? Vamos ver se você consegue soletrar seu caminho até a vitória!",
+      "defeat": "Impressionante! Você realmente leva jeito com as palavras. Aqui está sua insígnia!"
+    },
+    "rival": {
+      "name": "Rival Robin",
+      "dialog": "Eu vou ser o melhor Lexicon Scout de todos os tempos e salvar Spellinghome dominando cada palavra primeiro! Em guarda!",
+      "victory": "Palavras são poder, e as suas acabaram!",
+      "defeat": "Nada mal! Mas não pense que já venceu. Eu serei aquele que dominará cada palavra primeiro!",
+      "mercy": "Não se preocupe, você vai melhorar! Estou indo salvar Spellinghome!"
+    }
+  },
+  "trainer": {
+    "titles": {
+      "spelling_bee": "Abelha de Soletrar",
+      "grammar_geek": "Geek da Gramática",
+      "vocab_victor": "Vitor do Vocabulário",
+      "linguist": "Linguista",
+      "prose_pro": "Pró da Prosa",
+      "word_wizard": "Mago das Palavras",
+      "syntax_sage": "Sábio da Sintaxe",
+      "lexis_legend": "Lenda do Léxico"
+    },
+    "dialogs": {
+      "intro_1": "Vou te dar uma lição de soletrar!",
+      "intro_2": "Meu grupo está perfeitamente pontuado!",
+      "intro_3": "Você consegue definir 'derrota'?",
+      "intro_4": "Sua sintaxe está cheia de erros!",
+      "intro_5": "Tenho estudado esta rota por semanas.",
+      "defeat_1": "Preciso voltar aos livros...",
+      "defeat_2": "Você me corrigiu!",
+      "defeat_3": "Seu vocabulário é superior."
+    }
   }
 }

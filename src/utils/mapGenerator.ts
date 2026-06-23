@@ -1,5 +1,6 @@
 import { AREA_CONFIGS } from './gameData';
 import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS } from './constants';
+import { TRAINER_DATA } from './npcData';
 
 const AREA_CONFIGS_MAX = GAME_CONSTANTS.MAX_AREAS;
 
@@ -19,6 +20,11 @@ export const TILE_TYPES = {
   PATH: 7,
   CAVE_WALL: 8,
   BUILDING: 9,
+  STAIRS_UP: 10,
+  STAIRS_DOWN: 11,
+  DOOR: 12,
+  NPC: 13,
+  CARPET: 14,
 };
 
 export interface Point {
@@ -46,6 +52,13 @@ export interface Trainer extends Point {
   direction: string;
 }
 
+export interface NPC extends Point {
+  id: string;
+  type: string;
+  name: string;
+  dialog: string[];
+}
+
 export interface MapResult {
   map: number[][];
   levelMap: number[][];
@@ -53,6 +66,15 @@ export interface MapResult {
   trainers: Trainer[];
   transitions: Transition[];
   biome: string;
+  interiors?: Record<string, InteriorResult>;
+}
+
+export interface InteriorResult {
+  id: string;
+  name: string;
+  map: number[][];
+  npcs: NPC[];
+  exits: Array<Point & { target: string; targetPos: Point }>;
 }
 
 class BSPNode {
@@ -186,7 +208,38 @@ export class MapGenerator {
     // 6. Level Map generation (moved up to inform trainer placement)
     this.generateLevelMap(map, levelMap, areaNum, entryRoom);
 
-    const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap);
+    const interiors = this.generateInteriors(areaNum);
+
+    // Place Interior Buildings
+    const occupied = [...transitions, spellCenter].filter(Boolean);
+    const placeBuilding = (room: Room, interiorId: string, type: number) => {
+      const x = room.centerX;
+      const y = room.centerY;
+      if (occupied.some(o => Math.abs(o!.x - x) < 3 && Math.abs(o!.y - y) < 3)) return null;
+
+      map[y][x] = type;
+      occupied.push({ x, y });
+
+      const interior = interiors[interiorId];
+      if (interior) {
+        interior.exits.forEach(exit => {
+          if (exit.target === 'world') {
+            exit.targetPos = { x, y: y + 1 };
+          }
+        });
+      }
+      return { x, y };
+    };
+
+    // Home (Area 1 only)
+    if (areaNum === 1) {
+      placeBuilding(rooms[1], 'home_1f', TILE_TYPES.BUILDING);
+    }
+
+    // Gym
+    placeBuilding(exitRoom, 'gym', TILE_TYPES.BUILDING);
+
+    const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap, occupied);
 
     // 4. Features
     this.addFeatures(map, biome);
@@ -218,8 +271,104 @@ export class MapGenerator {
       spellCenter,
       trainers,
       transitions,
-      biome
+      biome,
+      interiors
     };
+  }
+
+  generateInteriors(areaNum: number): Record<string, InteriorResult> {
+    const interiors: Record<string, InteriorResult> = {};
+
+    if (areaNum === 1) {
+      // Home 1F
+      interiors['home_1f'] = {
+        id: 'home_1f',
+        name: 'home.name',
+        map: [
+          [2, 2, 2, 2, 2, 2, 2, 2],
+          [2, 0, 0, 0, 0, 0, 10, 2],
+          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 2, 2, 14, 14, 2, 2, 2]
+        ],
+        npcs: [{ id: 'mom', type: 'mom', name: 'npc.mom.name', dialog: ['npc.mom.dialog'], x: 2, y: 2 }],
+        exits: [
+          { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }, // targetPos will be set during world placement
+          { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
+          { x: 6, y: 1, target: 'home_2f', targetPos: { x: 6, y: 1 } }
+        ]
+      };
+      // Home 2F
+      interiors['home_2f'] = {
+        id: 'home_2f',
+        name: 'home.name',
+        map: [
+          [2, 2, 2, 2, 2, 2, 2, 2],
+          [2, 0, 0, 0, 0, 0, 11, 2],
+          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 0, 0, 0, 0, 0, 0, 2],
+          [2, 2, 2, 2, 2, 2, 2, 2]
+        ],
+        npcs: [],
+        exits: [
+          { x: 6, y: 1, target: 'home_1f', targetPos: { x: 6, y: 1 } }
+        ]
+      };
+    }
+
+    // Spelling Center (Every Area)
+    interiors['spelling_center'] = {
+      id: 'spelling_center',
+      name: 'spellingCenter.name',
+      map: [
+        [2, 2, 2, 2, 2, 2, 2, 2, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 13, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 2, 2, 14, 14, 14, 2, 2, 2]
+      ],
+      npcs: [{ id: 'healer', type: 'healer', name: 'npc.healer.name', dialog: ['npc.healer.dialog'], x: 4, y: 2 }],
+      exits: [
+        { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
+        { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
+        { x: 5, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }
+      ]
+    };
+
+    // Gym (Every Area)
+    interiors['gym'] = {
+      id: 'gym',
+      name: 'gym.name',
+      map: [
+        [2, 2, 2, 2, 2, 2, 2, 2, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 13, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 2, 2, 14, 14, 14, 2, 2, 2]
+      ],
+      npcs: [{ id: 'gym_boss', type: 'gym_boss', name: 'npc.gym_boss.name', dialog: ['npc.gym_boss.intro'], x: 4, y: 2 }],
+      exits: [
+        { x: 3, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
+        { x: 4, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
+        { x: 5, y: 7, target: 'world', targetPos: { x: 0, y: 0 } }
+      ]
+    };
+
+    // Ensure NPC tiles are marked as NPC on the interior maps
+    Object.values(interiors).forEach(interior => {
+      interior.npcs.forEach(npc => {
+        if (interior.map[npc.y] && interior.map[npc.y][npc.x] !== undefined) {
+           interior.map[npc.y][npc.x] = TILE_TYPES.NPC;
+        }
+      });
+    });
+
+    return interiors;
   }
 
   isMapNavigable(map: number[][], transitions: Transition[], spellCenter: Point | null): boolean {
@@ -331,23 +480,11 @@ export class MapGenerator {
     }
   }
 
-  placeTrainers(rooms: Room[], map: number[][], areaNum: number, transitions: Transition[], spellCenter: Point | null, levelMap: number[][]): Trainer[] {
+  placeTrainers(rooms: Room[], map: number[][], areaNum: number, transitions: Transition[], spellCenter: Point | null, levelMap: number[][], occupied: Point[]): Trainer[] {
     const trainers: Trainer[] = [];
     const count = this.randomRange(8, 12);
-    const titles = ['Spelling Bee', 'Grammar Geek', 'Vocab Victor', 'Linguist', 'Prose Pro', 'Word Wizard', 'Syntax Sage', 'Lexis Legend'];
     const names = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Robin', 'Jamie', 'Morgan', 'Quinn', 'Skyler', 'Sasha'];
-    const dialogs = [
-      "I'll teach you a lesson in spelling!",
-      "My party is perfectly punctuated!",
-      "Can you define 'defeat'?",
-      "Your syntax is full of errors!",
-      "I've been studying this route for weeks.",
-      "Words are my strongest weapons!",
-      "A well-placed comma could save your life.",
-      "You're about to be edited out of the game!"
-    ];
 
-    const occupied = [...transitions, spellCenter].filter(Boolean);
     const directions = ['up', 'down', 'left', 'right'];
 
     for (let i = 0; i < count; i++) {
@@ -363,9 +500,9 @@ export class MapGenerator {
         map[y][x] = TILE_TYPES.TRAINER;
         occupied.push({ x, y });
 
-        const title = titles[this.randomRange(0, titles.length - 1)];
+        const titleKey = TRAINER_DATA.titles[this.randomRange(0, TRAINER_DATA.titles.length - 1)];
         const name = names[this.randomRange(0, names.length - 1)];
-        const dialog = dialogs[this.randomRange(0, dialogs.length - 1)];
+        const dialogKey = TRAINER_DATA.dialogs.intro[this.randomRange(0, TRAINER_DATA.dialogs.intro.length - 1)];
         const direction = directions[this.randomRange(0, directions.length - 1)];
 
         const area = AREA_CONFIGS[areaNum];
@@ -385,8 +522,8 @@ export class MapGenerator {
 
         trainers.push({
           x, y,
-          name: `${title} ${name}`,
-          dialog,
+          name: `${titleKey}::${name}`,
+          dialog: dialogKey,
           party,
           direction
         });
