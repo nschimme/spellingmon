@@ -12,7 +12,7 @@ export interface PersistOptions {
 }
 
 declare module 'pinia' {
-  export interface DefineStoreOptionsBase {
+  export interface DefineStoreOptionsBase<S, Store> {
     persist?: PersistOptions;
   }
 }

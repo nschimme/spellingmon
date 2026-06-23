@@ -30,7 +30,7 @@ const props = defineProps<{
   showBubble?: boolean;
 }>();
 
-defineEmits(['interact']);
+const emit = defineEmits(['interact']);
 
 const handleInteract = () => {
   emit('interact');
