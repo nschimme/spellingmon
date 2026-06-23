@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { NPC_TYPES } from '../../utils/constants';
 
 const props = defineProps<{
   type: string;
@@ -37,10 +38,11 @@ const handleInteract = () => {
 
 const emoji = computed(() => {
   switch (props.type) {
-    case 'mom': return '👩‍🍳';
-    case 'healer': return '👩‍⚕️';
-    case 'gym_boss': return '🏋️';
-    case 'rival': return '🏃';
+    case NPC_TYPES.MOM: return '👩‍🍳';
+    case NPC_TYPES.HEALER: return '👩‍⚕️';
+    case NPC_TYPES.GYM_BOSS: return '🏋️';
+    case NPC_TYPES.TEAM_STORM: return '⚡';
+    case NPC_TYPES.RIVAL: return '🏃';
     default: return '👤';
   }
 });

@@ -1,6 +1,8 @@
+import { NPC_TYPES } from './constants';
+
 export interface NPCConfig {
   id: string;
-  type: 'mom' | 'healer' | 'gym_boss' | 'rival' | 'trainer' | 'team_storm';
+  type: string;
   nameKey: string;
   emoji: string;
   dialogs: {
@@ -14,7 +16,7 @@ export interface NPCConfig {
 export const SPECIAL_NPCS: Record<string, NPCConfig> = {
   mom: {
     id: 'mom',
-    type: 'mom',
+    type: NPC_TYPES.MOM,
     nameKey: 'npc.mom.name',
     emoji: '👩‍🍳',
     dialogs: {
@@ -23,7 +25,7 @@ export const SPECIAL_NPCS: Record<string, NPCConfig> = {
   },
   healer: {
     id: 'healer',
-    type: 'healer',
+    type: NPC_TYPES.HEALER,
     nameKey: 'npc.healer.name',
     emoji: '👩‍⚕️',
     dialogs: {
@@ -32,7 +34,7 @@ export const SPECIAL_NPCS: Record<string, NPCConfig> = {
   },
   rival_1: {
     id: 'rival_1',
-    type: 'rival',
+    type: NPC_TYPES.RIVAL,
     nameKey: 'npc.rival.name',
     emoji: '🏃',
     dialogs: {
@@ -60,7 +62,7 @@ export const getGymBossConfig = (area: number): NPCConfig => {
   const config = GYM_BOSS_CONFIGS[area] || { name: 'npc.gym_boss.name', emoji: '🏋️' };
   return {
     id: `gym_boss_${area}`,
-    type: area === 9 ? 'team_storm' : 'gym_boss',
+    type: area === 9 ? NPC_TYPES.TEAM_STORM : NPC_TYPES.GYM_BOSS,
     nameKey: config.name,
     emoji: config.emoji,
     dialogs: {

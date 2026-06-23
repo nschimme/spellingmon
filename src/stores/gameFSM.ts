@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS } from '../utils/constants';
 import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
@@ -142,6 +142,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
       [GAME_STATES.LOADING]: {
         onEnter: async (ctx, params) => {
           const startTime = Date.now();
+
+          // Execute transition-specific logic before map generation
+          if (params?.onComplete) {
+            await params.onComplete();
+          }
+
           // Ensure we use the latest state from the session store which was just patched in setSlot
           const target = params?.target || (ctx.session.player.characterCreationComplete
             ? (ctx.session.player.isStarterSelected ? GAME_STATES.WORLD : GAME_STATES.STARTER_SELECTION)
@@ -419,6 +425,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     if (ctx.session.player.lastSpellCenter) {
                        ctx.session.updatePlayerPosition({ x: ctx.session.player.lastSpellCenter.x, y: ctx.session.player.lastSpellCenter.y });
                        ctx.session.player.currentInterior = ctx.session.player.lastSpellCenter.interior;
+                    } else {
+                       // Fallback to Home Bed
+                       ctx.session.updatePlayerPosition({ x: 1, y: 1 });
+                       ctx.session.player.currentInterior = INTERIORS.HOME_2F;
                     }
                     return GAME_STATES.WORLD;
                   }
