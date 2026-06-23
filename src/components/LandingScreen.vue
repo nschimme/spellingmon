@@ -82,7 +82,7 @@
 
         <h1
           id="landing-title"
-          class="text-[clamp(2.5rem,14vw,8.5rem)] font-black text-center uppercase tracking-tighter leading-[0.9] w-full pt-4"
+          class="text-[clamp(1.2rem,6.5vw,4.5rem)] font-black text-center uppercase tracking-tighter leading-[0.9] w-full pt-4"
         >
           <span class="block text-black drop-shadow-[0.05em_0.05em_0_white] drop-shadow-[0.08em_0.08em_0_rgba(0,0,0,0.5)] transform -rotate-1">
             SPELLING
@@ -92,27 +92,27 @@
           </span>
         </h1>
 
-        <div class="absolute -right-1 sm:-right-4 top-[-5%] bg-white text-black px-3 py-1 sm:px-6 sm:py-2 rounded-full font-black text-[clamp(12px,4vw,24px)] border-2 sm:border-4 border-black shadow-[4px_4px_0_#facc15] rotate-12 animate-bounce-gentle whitespace-nowrap z-30 ring-2 ring-black/10">
+        <div class="absolute -right-2 sm:-right-8 top-[-100%] sm:top-[-90%] bg-white text-black px-3 py-1 sm:px-6 sm:py-2 rounded-full font-black text-[clamp(10px,3vw,18px)] border-2 sm:border-4 border-black shadow-[4px_4px_0_#facc15] rotate-12 animate-bounce-gentle whitespace-nowrap z-30 ring-2 ring-black/10">
           {{ $t('landing.subtitle') }}
         </div>
       </div>
 
       <!-- Action Button Container -->
-      <div class="max-w-md w-full">
+      <div class="max-w-xs w-full">
         <button
           ref="startButton"
-          class="w-full group relative bg-[#facc15] hover:bg-yellow-300 text-black font-black py-8 px-12 rounded-[2.5rem] border-b-[12px] border-black shadow-2xl transition-all active:border-b-0 active:translate-y-4 overflow-hidden"
+          class="w-full group relative bg-[#facc15] hover:bg-yellow-300 text-black font-black py-4 px-8 rounded-[2rem] border-b-[8px] border-black shadow-xl transition-all active:border-b-0 active:translate-y-2 overflow-hidden"
           :class="{ 'ring-8 ring-white scale-105 border-gray-800': selectedIndex === 0 }"
           @click.stop="handleContinue"
         >
           <!-- Shine effect -->
           <div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:animate-shine" />
 
-          <div class="relative flex items-center justify-center gap-4">
-            <span class="text-3xl md:text-4xl uppercase tracking-[0.2em] drop-shadow-sm">
+          <div class="relative flex items-center justify-center gap-2">
+            <span class="text-xl md:text-2xl uppercase tracking-[0.1em] drop-shadow-sm">
               {{ $t('landing.startGame') }}
             </span>
-            <span class="text-4xl animate-bounce">🐝</span>
+            <span class="text-2xl animate-bounce">🐝</span>
           </div>
         </button>
       </div>
@@ -151,13 +151,19 @@ const monsterKey = ref(0);
 const monsterAnimClass = ref('');
 let showcaseInterval: any = null;
 
-const animVariations = ['animate-showcase-bounce', 'animate-showcase-spin', 'animate-showcase-flip'];
+const animVariations = [
+  'animate-showcase-bounce',
+  'animate-showcase-spin',
+  'animate-showcase-flip',
+  'animate-showcase-zoom-dance',
+  'animate-showcase-hop'
+];
 
 const updateShowcase = () => {
   const randomMon = monsters[Math.floor(Math.random() * monsters.length)];
   const randomAnim = animVariations[Math.floor(Math.random() * animVariations.length)];
 
-  monsterAnimClass.value = 'opacity-0 scale-0';
+  monsterAnimClass.value = 'opacity-0 scale-0 translate-y-20';
 
   setTimeout(() => {
     currentMonster.value = randomMon;
@@ -253,41 +259,74 @@ onUnmounted(() => {
 
 /* Monster Showcase Animations */
 @keyframes showcase-bounce {
-  0% { transform: translate(-50%, 50px) scale(0); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
-  30% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  80% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
-  100% { transform: translate(-50%, 50px) scale(0); opacity: 0; }
+  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  15% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
+  25% { transform: translate(-50%, -40px) scale(1); opacity: 1; }
+  35% { transform: translate(-50%, 0) scale(1.1); opacity: 1; }
+  45% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
+  55% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  85% { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
 }
 
 @keyframes showcase-spin {
-  0% { transform: translate(-50%, 50px) scale(0) rotate(0deg); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(1) rotate(360deg); opacity: 1; }
-  80% { transform: translate(-50%, 0) scale(1) rotate(360deg); opacity: 1; }
-  100% { transform: translate(-50%, 50px) scale(0) rotate(720deg); opacity: 0; }
+  0% { transform: translate(-50%, 100px) scale(0) rotate(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.5) rotate(360deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1) rotate(720deg); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1.2) rotate(1080deg); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(1) rotate(1440deg); opacity: 1; }
+  100% { transform: translate(-50%, 100px) scale(0) rotate(1800deg); opacity: 0; }
 }
 
 @keyframes showcase-flip {
-  0% { transform: translate(-50%, 50px) scale(0) rotateY(0deg); opacity: 0; }
-  20% { transform: translate(-50%, 0) scale(1) rotateY(180deg); opacity: 1; }
-  40% { transform: translate(-50%, 0) scale(1) rotateY(0deg); opacity: 1; }
-  60% { transform: translate(-50%, 0) scale(1) rotateY(180deg); opacity: 1; }
-  80% { transform: translate(-50%, 0) scale(1) rotateY(0deg); opacity: 1; }
-  100% { transform: translate(-50%, 50px) scale(0) rotateY(0deg); opacity: 0; }
+  0% { transform: translate(-50%, 100px) scale(0) rotateY(0deg); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1.3) rotateY(360deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1) rotateY(720deg); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1.3) rotateY(1080deg); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(1) rotateY(1440deg); opacity: 1; }
+  100% { transform: translate(-50%, 100px) scale(0) rotateY(1800deg); opacity: 0; }
+}
+
+@keyframes showcase-zoom-dance {
+  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(2); opacity: 1; }
+  30% { transform: translate(-50%, 0) scale(1.5) rotate(10deg); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1.5) rotate(-10deg); opacity: 1; }
+  50% { transform: translate(-50%, 0) scale(1.5) rotate(10deg); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1.5) rotate(-10deg); opacity: 1; }
+  80% { transform: translate(-50%, 0) scale(2); opacity: 1; }
+  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+}
+
+@keyframes showcase-hop {
+  0% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
+  20% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  30% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
+  40% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
+  60% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  70% { transform: translate(-50%, -50px) scale(1.1); opacity: 1; }
+  85% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, 100px) scale(0); opacity: 0; }
 }
 
 .animate-showcase-bounce {
-  animation: showcase-bounce 4s ease-in-out forwards;
+  animation: showcase-bounce 4.5s ease-in-out forwards;
 }
 
 .animate-showcase-spin {
-  animation: showcase-spin 4s ease-in-out forwards;
+  animation: showcase-spin 4.5s ease-in-out forwards;
 }
 
 .animate-showcase-flip {
-  animation: showcase-flip 4s ease-in-out forwards;
+  animation: showcase-flip 4.5s ease-in-out forwards;
+}
+
+.animate-showcase-zoom-dance {
+  animation: showcase-zoom-dance 4.5s ease-in-out forwards;
+}
+
+.animate-showcase-hop {
+  animation: showcase-hop 4.5s ease-in-out forwards;
 }
 </style>

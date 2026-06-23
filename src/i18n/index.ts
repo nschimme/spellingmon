@@ -16,17 +16,19 @@ export async function loadLocaleMessages(locale: string) {
   }
 
   try {
-    let messages;
+    let module;
     switch (locale) {
-      case 'de-DE': messages = await import('./locales/de-DE.json'); break;
-      case 'es-MX': messages = await import('./locales/es-MX.json'); break;
-      case 'fr-FR': messages = await import('./locales/fr-FR.json'); break;
-      case 'pt-BR': messages = await import('./locales/pt-BR.json'); break;
-      case 'ru-RU': messages = await import('./locales/ru-RU.json'); break;
-      case 'zh-CN': messages = await import('./locales/zh-CN.json'); break;
+      case 'de-DE': module = await import('./locales/de-DE.json'); break;
+      case 'es-MX': module = await import('./locales/es-MX.json'); break;
+      case 'fr-FR': module = await import('./locales/fr-FR.json'); break;
+      case 'pt-BR': module = await import('./locales/pt-BR.json'); break;
+      case 'ru-RU': module = await import('./locales/ru-RU.json'); break;
+      case 'zh-CN': module = await import('./locales/zh-CN.json'); break;
       default: throw new Error('Unknown locale');
     }
-    i18n.global.setLocaleMessage(locale, messages.default);
+    // Handle both Module.default and plain objects for maximum compatibility
+    const messages = module.default || module;
+    i18n.global.setLocaleMessage(locale, messages);
   } catch (error) {
     console.error(`Failed to load locale messages for ${locale}:`, error);
   }
