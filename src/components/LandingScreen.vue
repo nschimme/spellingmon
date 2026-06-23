@@ -98,31 +98,31 @@
       </div>
 
       <!-- Action Button Container -->
-      <div class="max-w-xs w-full">
+      <div class="max-w-[240px] w-full">
         <button
           ref="startButton"
-          class="w-full group relative bg-[#facc15] hover:bg-yellow-300 text-black font-black py-4 px-8 rounded-[2rem] border-b-[8px] border-black shadow-xl transition-all active:border-b-0 active:translate-y-2 overflow-hidden"
-          :class="{ 'ring-8 ring-white scale-105 border-gray-800': selectedIndex === 0 }"
+          class="w-full group relative bg-[#facc15] hover:bg-yellow-300 text-black font-black py-2 px-6 rounded-[2rem] border-b-[6px] border-black shadow-xl transition-all active:border-b-0 active:translate-y-2 overflow-hidden"
+          :class="{ 'ring-4 ring-white scale-105 border-gray-800': selectedIndex === 0 }"
           @click.stop="handleContinue"
         >
           <!-- Shine effect -->
           <div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:animate-shine" />
 
           <div class="relative flex items-center justify-center gap-2">
-            <span class="text-xl md:text-2xl uppercase tracking-[0.1em] drop-shadow-sm">
+            <span class="text-lg md:text-xl uppercase tracking-[0.1em] drop-shadow-sm">
               {{ $t('landing.startGame') }}
             </span>
-            <span class="text-2xl animate-bounce">🐝</span>
+            <span class="text-xl animate-bounce">🐝</span>
           </div>
         </button>
       </div>
 
       <!-- Press Key Hint (More modern style) -->
-      <div class="mt-16 flex flex-col items-center gap-2">
-        <div class="h-1 w-32 bg-gray-800/20 rounded-full overflow-hidden">
+      <div class="mt-12 flex flex-col items-center gap-2">
+        <div class="h-1 w-24 bg-gray-800/20 rounded-full overflow-hidden">
           <div class="h-full bg-white animate-progress-loop" />
         </div>
-        <p class="text-blue-900/60 font-black uppercase text-xs tracking-[0.5em] animate-pulse">
+        <p class="text-blue-900/60 font-black uppercase text-[10px] tracking-[0.5em] animate-pulse">
           {{ $t('landing.pressAnyKey') }}
         </p>
       </div>

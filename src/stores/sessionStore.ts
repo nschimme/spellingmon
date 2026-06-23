@@ -180,6 +180,8 @@ export const useSessionStore = defineStore('session', {
       isPlayerTurn: true,
       trainerId: null,
       trainerParty: [],
+      trainerDefeatDialog: null,
+      isStorm: false,
       participatingMonIds: [],
       currentWord: null,
       totalTime: 0,
