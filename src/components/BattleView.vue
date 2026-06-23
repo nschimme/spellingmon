@@ -239,19 +239,27 @@
               "{{ session.battle.currentWord.definition }}"
             </p>
           </div>
-          <input
-            ref="spellingInput"
-            v-model="userInput"
-            :disabled="isSubmitting"
-            class="w-full border-2 border-gray-800 p-1 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
-            :placeholder="$t('battle.typeHere')"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            @keydown.enter="submitSpelling"
-            @blur="refocusInput"
-          >
+          <div class="relative flex items-center">
+            <input
+              ref="spellingInput"
+              v-model="userInput"
+              :disabled="isSubmitting"
+              class="w-full border-2 border-gray-800 p-1 pr-12 text-center text-lg rounded-lg outline-none focus:ring-4 focus:ring-blue-400 disabled:opacity-50"
+              :placeholder="$t('battle.typeHere')"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              @keydown.enter="submitSpelling"
+              @blur="refocusInput"
+            >
+            <button
+              class="absolute right-1 w-10 h-10 bg-blue-600 text-white rounded-md flex items-center justify-center text-xl active:bg-blue-800 transition-colors shadow-sm"
+              @click="submitSpelling"
+            >
+              ➜
+            </button>
+          </div>
         </div>
 
         <!-- Results -->

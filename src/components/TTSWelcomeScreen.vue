@@ -90,12 +90,14 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
 import { useGameFSM } from '../stores/gameFSM';
+import { useSettingsStore } from '../stores/settingsStore';
 import { speech } from '../utils/speech';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, SUPPORTED_LANGUAGES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
 const fsm = useGameFSM();
+const settingsStore = useSettingsStore();
 const showTroubleshooting = ref(false);
 const itemRefs = ref<(HTMLElement | null)[]>([]);
 
@@ -110,7 +112,7 @@ const selectLanguage = (lang: any) => {
 
 const testVoice = () => {
   audio.playSound(SOUND_EFFECTS.CLICK);
-  speech.speak("Welcome to Spellingmon!");
+  speech.speak(settingsStore.t('tts.testPhrase'), settingsStore.locale);
 };
 
 const handleNo = () => {
