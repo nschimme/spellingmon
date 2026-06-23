@@ -172,49 +172,49 @@
     },
     "gym_boss": {
       "1": {
-        "name": "Arthur Alphabet",
-        "intro": "A is for Action! B is for Battle! Let's see if you know your ABCs!",
-        "defeat": "Z is for... Zero chance I thought I'd lose! You've mastered the Alphabet!"
+        "name": "アルファベットのアーサー",
+        "intro": "Aはアクション！Bはバトルだ！君のABCを試してやろう！",
+        "defeat": "Zは... ゼロ（Zero）だ、僕が負ける確率がね！アルファベットをマスターしたようだな！"
       },
       "2": {
-        "name": "Blenda Boulevard",
-        "intro": "I'll blend your team into a smoothie of defeat! Smooth spelling only!",
-        "defeat": "You blended your words perfectly. A smooth victory indeed!"
+        "name": "ブレンドのブレンダ",
+        "intro": "君のチームを敗北のスムージーにしてやるわ！滑らかなスペリングを見せて！",
+        "defeat": "完璧なブレンドだったわ。実になめらかな勝利ね！"
       },
       "3": {
-        "name": "Silas Syllable",
-        "intro": "One, two, three! Count the beats, feel the rhythm of the duel!",
-        "defeat": "Your rhythm was superior. You didn't skip a single beat!"
+        "name": "シラブルのサイラス",
+        "intro": "ワン、ツー、スリー！拍子を数え、決闘のリズムを感じろ！",
+        "defeat": "君のリズムは最高だった。一拍も欠かさなかったな！"
       },
       "4": {
-        "name": "Sophie Suffix",
-        "intro": "I'll add 'defeated' to the end of your name! How's that for a suffix?",
-        "defeat": "I guess I'm the one who's 'finished' now. Great job!"
+        "name": "接尾辞のソフィー",
+        "intro": "君の名前に「敗北者」という接尾辞をつけてあげる！どうかしら？",
+        "defeat": "「おしまい（finished）」なのは私の方だったみたい。お見事！"
       },
       "5": {
-        "name": "Preston Prefix",
-        "intro": "I always have the first word! Prepare to be pre-empted!",
-        "defeat": "I didn't foresee this outcome. You pre-vented my victory!"
+        "name": "接頭辞のプレストン",
+        "intro": "常に先手（prefix）を打つのが僕のスタイルだ！覚悟しろ！",
+        "defeat": "この結末は予想（foresee）できなかった。僕の勝利を阻む（pre-vented）とは！"
       },
       "6": {
-        "name": "Homer Homophone",
-        "intro": "You'll see that I'm the sea king here! Or is it 'see'? You'll know soon enough!",
-        "defeat": "I knew I should have stayed at sea... or is it 'see'? You're too good!"
+        "name": "同音異義語のホーマー",
+        "intro": "僕がこの海の王者であることを証明しよう！それとも「意思」かな？すぐわかるさ！",
+        "defeat": "海（sea）に留まっておくべきだったかな... それとも「見る（see）」べきだったか？君は強すぎる！"
       },
       "7": {
-        "name": "Lana Loanword",
-        "intro": "I've borrowed techniques from all over the world. Can you keep up with my foreign flair?",
-        "defeat": "Your vocabulary is truly international. Merci for the battle!"
+        "name": "外来語のラナ",
+        "intro": "世界中からテクニックを借りてきたわ。私の国際的なセンスについてこれるかしら？",
+        "defeat": "君の語彙はまさにインターナショナルね。メルシー、いい戦いだったわ！"
       },
       "8": {
-        "name": "Phona Phoneme",
-        "intro": "Every sound matters! If you miss a single note, it's game over!",
-        "defeat": "Sounded like a victory for you. Your spelling is pitch-perfect!"
+        "name": "音素のフォナ",
+        "intro": "すべての音が重要よ！一音でも外したら、ゲームオーバーなんだから！",
+        "defeat": "君の勝利が響き渡ったわ。音程（ピッチ）もスペリングも完璧よ！"
       },
       "9": {
-        "name": "Malphas the Muted",
-        "intro": "The Silent Storm is my creation! With the Lexicon erased, I shall be the only one with a voice!",
-        "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
+        "name": "沈黙のマルファス",
+        "intro": "サイレントストームは我が創造物！レキシコンが消え去れば、声を持つのは我一人となる！",
+        "defeat": "我が沈黙が... 破られたというのか。言葉が... 戻ってくる。嵐は去ったのだ。"
       },
       "name": "ジムリーダー",
       "intro": "地元の言葉をマスターしたのか？勝利への道を綴れるか試してみよう！",
@@ -238,9 +238,9 @@
       "word_wizard": "言葉の魔術師",
       "syntax_sage": "構文の賢者",
       "lexis_legend": "語彙の伝説",
-      "storm_grunt": "Storm Grunt",
-      "storm_scout": "Storm Scout",
-      "storm_operative": "Storm Operative"
+      "storm_grunt": "ストームしたっぱ",
+      "storm_scout": "ストームスカウト",
+      "storm_operative": "ストームエージェント"
     },
     "dialogs": {
       "intro_1": "スペリングのレッスンをしてあげよう！",
@@ -251,15 +251,15 @@
       "defeat_1": "勉強し直さないと...",
       "defeat_2": "訂正されちゃった！",
       "defeat_3": "君の語彙力は素晴らしいね。",
-      "storm_intro_1": "Silence is golden, and we're here to collect!",
-      "storm_intro_2": "Soon, all the words in this world will belong to Team Storm!",
-      "storm_intro_3": "Why bother learning words when we can just erase them?",
-      "storm_intro_4": "The Silent Storm is coming, and you're in its path!",
-      "storm_intro_5": "We're cleaning up this world, one word at a time!",
-      "storm_defeat_1": "Curses! Our plans for total silence... delayed!",
-      "storm_defeat_2": "You might have won this round, but the Storm is brewing...",
-      "storm_defeat_3": "The Leader will not be pleased about this interruption.",
-      "storm_catchphrase": "Words are weak, silence is peak! Team Storm will make the world unique!"
+      "storm_intro_1": "沈黙は金なり。我々がそれを回収しに来た！",
+      "storm_intro_2": "間もなく、この世のすべての言葉はチーム・ストームのものとなる！",
+      "storm_intro_3": "消し去ってしまえばいいものを、なぜわざわざ言葉を学ぶ必要がある？",
+      "storm_intro_4": "サイレントストームが近づいている。君はその進路上にいるのだ！",
+      "storm_intro_5": "我々はこの世界を掃除しているのだ。一語ずつ、確実にな！",
+      "storm_defeat_1": "くそっ！完全なる静寂への計画が... 遅れてしまう！",
+      "storm_defeat_2": "今回は君の勝ちかもしれないが、嵐は確実に育っているぞ...",
+      "storm_defeat_3": "リーダーはこの邪魔者を決して許さないだろう。",
+      "storm_catchphrase": "言葉は弱く、沈黙は頂点！チーム・ストームが世界を塗り替える！"
     }
   },
   "menu": {

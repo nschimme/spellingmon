@@ -40,7 +40,6 @@ const getTileClass = (type: any) => {
     case TILE_TYPES.STAIRS_DOWN: return 'bg-gray-200';
     case TILE_TYPES.CARPET: return 'bg-red-400';
     case TILE_TYPES.BED: return 'bg-blue-50';
-    case TILE_TYPES.TABLE: return 'bg-amber-100';
     case TILE_TYPES.CHAIR: return 'bg-amber-50';
     case TILE_TYPES.BOOKSHELF: return 'bg-amber-200';
     case TILE_TYPES.PLANT: return 'bg-green-50';
@@ -62,7 +61,6 @@ const emoji = computed(() => {
     case TILE_TYPES.STAIRS_UP: return '🔼';
     case TILE_TYPES.STAIRS_DOWN: return '🔽';
     case TILE_TYPES.BED: return '🛏️';
-    case TILE_TYPES.TABLE: return '🪑'; // Using chair as part of table/set
     case TILE_TYPES.CHAIR: return '🪑';
     case TILE_TYPES.BOOKSHELF: return '📚';
     case TILE_TYPES.PLANT: return '🪴';

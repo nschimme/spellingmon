@@ -349,49 +349,49 @@
     },
     "gym_boss": {
       "1": {
-        "name": "Arthur Alphabet",
-        "intro": "A is for Action! B is for Battle! Let's see if you know your ABCs!",
-        "defeat": "Z is for... Zero chance I thought I'd lose! You've mastered the Alphabet!"
+        "name": "Артур Алфавит",
+        "intro": "А — значит Атака! Б — значит Битва! Покажи, как ты знаешь азбуку!",
+        "defeat": "Я — это... Явно не тот результат, которого я ждал! Ты мастер алфавита!"
       },
       "2": {
-        "name": "Blenda Boulevard",
-        "intro": "I'll blend your team into a smoothie of defeat! Smooth spelling only!",
-        "defeat": "You blended your words perfectly. A smooth victory indeed!"
+        "name": "Бленда Бульвар",
+        "intro": "Я смешаю твою команду в смузи поражения! Здесь ценят только гладкое письмо!",
+        "defeat": "Твои слова смешаны идеально. Гладкая победа, ничего не скажешь!"
       },
       "3": {
-        "name": "Silas Syllable",
-        "intro": "One, two, three! Count the beats, feel the rhythm of the duel!",
-        "defeat": "Your rhythm was superior. You didn't skip a single beat!"
+        "name": "Силас Слог",
+        "intro": "Раз, два, три! Считай такты, чувствуй ритм дуэли!",
+        "defeat": "Твой ритм был лучше. Ты не пропустил ни единого удара!"
       },
       "4": {
-        "name": "Sophie Suffix",
-        "intro": "I'll add 'defeated' to the end of your name! How's that for a suffix?",
-        "defeat": "I guess I'm the one who's 'finished' now. Great job!"
+        "name": "Софи Суффикс",
+        "intro": "Я добавлю «побежденный» к твоему имени! Как тебе такой суффикс?",
+        "defeat": "Похоже, это я теперь в «прошедшем» времени. Отличная работа!"
       },
       "5": {
-        "name": "Preston Prefix",
-        "intro": "I always have the first word! Prepare to be pre-empted!",
-        "defeat": "I didn't foresee this outcome. You pre-vented my victory!"
+        "name": "Престон Префикс",
+        "intro": "Первое слово всегда за мной! Готовься к предрешенному финалу!",
+        "defeat": "Я не предвидел такого исхода. Ты пред-отвратил мою победу!"
       },
       "6": {
-        "name": "Homer Homophone",
-        "intro": "You'll see that I'm the sea king here! Or is it 'see'? You'll know soon enough!",
-        "defeat": "I knew I should have stayed at sea... or is it 'see'? You're too good!"
+        "name": "Гомер Омофон",
+        "intro": "Ты увидишь, что я здесь морской король! Или «марской»? Скоро узнаешь!",
+        "defeat": "Мне стоило остаться в море... или в «мори»? Ты слишком хорош!"
       },
       "7": {
-        "name": "Lana Loanword",
-        "intro": "I've borrowed techniques from all over the world. Can you keep up with my foreign flair?",
-        "defeat": "Your vocabulary is truly international. Merci for the battle!"
+        "name": "Лана Заимствование",
+        "intro": "Я позаимствовала техники со всего мира. Сможешь ли ты тягаться с моим интернациональным стилем?",
+        "defeat": "Твой словарный запас поистине международный. Merci за битву!"
       },
       "8": {
-        "name": "Phona Phoneme",
-        "intro": "Every sound matters! If you miss a single note, it's game over!",
-        "defeat": "Sounded like a victory for you. Your spelling is pitch-perfect!"
+        "name": "Фона Фонема",
+        "intro": "Каждый звук важен! Пропустишь хоть одну ноту — и игра окончена!",
+        "defeat": "Звучало как твоя победа. Твое правописание идеально по тону!"
       },
       "9": {
-        "name": "Malphas the Muted",
-        "intro": "The Silent Storm is my creation! With the Lexicon erased, I shall be the only one with a voice!",
-        "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
+        "name": "Малфас Безмолвный",
+        "intro": "Безмолвный Шторм — мое творение! Когда Лексикон будет стерт, я буду единственным, у кого есть голос!",
+        "defeat": "Мое молчание... нарушено. Слова... они возвращаются. Шторм окончен."
       },
       "name": "Мастер зала",
       "intro": "Значит, ты освоил местный язык? Посмотрим, сможешь ли ты проложить себе путь к победе по буквам!",
@@ -415,9 +415,9 @@
       "word_wizard": "Мастер слов",
       "syntax_sage": "Мудрец синтаксиса",
       "lexis_legend": "Легенда лексики",
-      "storm_grunt": "Storm Grunt",
-      "storm_scout": "Storm Scout",
-      "storm_operative": "Storm Operative"
+      "storm_grunt": "Рядовой Шторма",
+      "storm_scout": "Скаут Шторма",
+      "storm_operative": "Оперативник Шторма"
     },
     "dialogs": {
       "intro_1": "Я преподам тебе урок правописания!",
@@ -428,15 +428,15 @@
       "defeat_1": "Мне нужно засесть за книги...",
       "defeat_2": "Ты меня исправил!",
       "defeat_3": "Твой словарный запас превосходен.",
-      "storm_intro_1": "Silence is golden, and we're here to collect!",
-      "storm_intro_2": "Soon, all the words in this world will belong to Team Storm!",
-      "storm_intro_3": "Why bother learning words when we can just erase them?",
-      "storm_intro_4": "The Silent Storm is coming, and you're in its path!",
-      "storm_intro_5": "We're cleaning up this world, one word at a time!",
-      "storm_defeat_1": "Curses! Our plans for total silence... delayed!",
-      "storm_defeat_2": "You might have won this round, but the Storm is brewing...",
-      "storm_defeat_3": "The Leader will not be pleased about this interruption.",
-      "storm_catchphrase": "Words are weak, silence is peak! Team Storm will make the world unique!"
+      "storm_intro_1": "Молчание — золото, и мы пришли за ним!",
+      "storm_intro_2": "Скоро все слова в этом мире будут принадлежать Команде Шторм!",
+      "storm_intro_3": "Зачем учить слова, если их можно просто стереть?",
+      "storm_intro_4": "Безмолвный Шторм приближается, и ты у него на пути!",
+      "storm_intro_5": "Мы очищаем этот мир, слово за словом!",
+      "storm_defeat_1": "Проклятье! Наши планы на полное безмолвие... откладываются!",
+      "storm_defeat_2": "Может, ты и выиграл этот раунд, но Шторм только зарождается...",
+      "storm_defeat_3": "Лидер будет недоволен этой задержкой.",
+      "storm_catchphrase": "Слова — это прах, в молчанье — размах! Команда Шторм повергнет мир в страх!"
     }
   }
 }

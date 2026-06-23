@@ -349,49 +349,49 @@
     },
     "gym_boss": {
       "1": {
-        "name": "Arthur Alphabet",
-        "intro": "A is for Action! B is for Battle! Let's see if you know your ABCs!",
-        "defeat": "Z is for... Zero chance I thought I'd lose! You've mastered the Alphabet!"
+        "name": "亚瑟·字母",
+        "intro": "A 代表行动！B 代表战斗！让我看看你是否掌握了 ABC！",
+        "defeat": "Z 代表... 最终我还是输了！你已经掌握了字母表！"
       },
       "2": {
-        "name": "Blenda Boulevard",
-        "intro": "I'll blend your team into a smoothie of defeat! Smooth spelling only!",
-        "defeat": "You blended your words perfectly. A smooth victory indeed!"
+        "name": "布兰达·拼读",
+        "intro": "我会把你的队伍搅拌成失败的奶昔！只有流畅的拼写才能过关！",
+        "defeat": "你的拼写非常流畅。真是一场完美的胜利！"
       },
       "3": {
-        "name": "Silas Syllable",
-        "intro": "One, two, three! Count the beats, feel the rhythm of the duel!",
-        "defeat": "Your rhythm was superior. You didn't skip a single beat!"
+        "name": "塞拉斯·音节",
+        "intro": "一，二，三！数好拍子，感受对决的节奏！",
+        "defeat": "你的节奏感更胜一筹。你没有漏掉任何一个音拍！"
       },
       "4": {
-        "name": "Sophie Suffix",
-        "intro": "I'll add 'defeated' to the end of your name! How's that for a suffix?",
-        "defeat": "I guess I'm the one who's 'finished' now. Great job!"
+        "name": "苏菲·后缀",
+        "intro": "我会给你的名字加上“战败”作为后缀！你觉得这个后缀怎么样？",
+        "defeat": "我想我现在是被“终结”的那个人了。干得漂亮！"
       },
       "5": {
-        "name": "Preston Prefix",
-        "intro": "I always have the first word! Prepare to be pre-empted!",
-        "defeat": "I didn't foresee this outcome. You pre-vented my victory!"
+        "name": "普雷斯顿·前缀",
+        "intro": "我总是掌握着先机！准备好迎接被预判的命运吧！",
+        "defeat": "我没预料到这个结果。你成功预-防了我的胜利！"
       },
       "6": {
-        "name": "Homer Homophone",
-        "intro": "You'll see that I'm the sea king here! Or is it 'see'? You'll know soon enough!",
-        "defeat": "I knew I should have stayed at sea... or is it 'see'? You're too good!"
+        "name": "荷马·同音",
+        "intro": "你会看到我才是这里的“海”王！或者说是“孩”王？你很快就会知道了！",
+        "defeat": "我知道我应该待在“海”里……或者说是“孩”堆里？你太强了！"
       },
       "7": {
-        "name": "Lana Loanword",
-        "intro": "I've borrowed techniques from all over the world. Can you keep up with my foreign flair?",
-        "defeat": "Your vocabulary is truly international. Merci for the battle!"
+        "name": "拉娜·外来语",
+        "intro": "我借鉴了来自世界各地的技巧。你能跟上我的国际范儿吗？",
+        "defeat": "你的词汇量真的很国际化。Merci，感谢这场对战！"
       },
       "8": {
-        "name": "Phona Phoneme",
-        "intro": "Every sound matters! If you miss a single note, it's game over!",
-        "defeat": "Sounded like a victory for you. Your spelling is pitch-perfect!"
+        "name": "菲娜·音素",
+        "intro": "每一个发音都至关重要！如果你漏掉一个音符，游戏就结束了！",
+        "defeat": "听起来你赢了。你的拼写音调非常完美！"
       },
       "9": {
-        "name": "Malphas the Muted",
-        "intro": "The Silent Storm is my creation! With the Lexicon erased, I shall be the only one with a voice!",
-        "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
+        "name": "无声者马尔法斯",
+        "intro": "无声风暴是我的杰作！当词典被抹去，我将成为唯一拥有声音的人！",
+        "defeat": "我的沉默……被打破了。文字……正在回归。风暴结束了。"
       },
       "name": "道馆馆主",
       "intro": "这么说你已经掌握了当地的语言？让我们看看你是否能拼出通往胜利的道路！",
@@ -415,9 +415,9 @@
       "word_wizard": "文字巫师",
       "syntax_sage": "句法贤者",
       "lexis_legend": "词汇传奇",
-      "storm_grunt": "Storm Grunt",
-      "storm_scout": "Storm Scout",
-      "storm_operative": "Storm Operative"
+      "storm_grunt": "风暴小兵",
+      "storm_scout": "风暴侦察兵",
+      "storm_operative": "风暴特工"
     },
     "dialogs": {
       "intro_1": "我要给你上一堂拼写课！",
@@ -428,15 +428,15 @@
       "defeat_1": "我需要回去看书了...",
       "defeat_2": "你纠正了我！",
       "defeat_3": "你的词汇量更高一筹。",
-      "storm_intro_1": "Silence is golden, and we're here to collect!",
-      "storm_intro_2": "Soon, all the words in this world will belong to Team Storm!",
-      "storm_intro_3": "Why bother learning words when we can just erase them?",
-      "storm_intro_4": "The Silent Storm is coming, and you're in its path!",
-      "storm_intro_5": "We're cleaning up this world, one word at a time!",
-      "storm_defeat_1": "Curses! Our plans for total silence... delayed!",
-      "storm_defeat_2": "You might have won this round, but the Storm is brewing...",
-      "storm_defeat_3": "The Leader will not be pleased about this interruption.",
-      "storm_catchphrase": "Words are weak, silence is peak! Team Storm will make the world unique!"
+      "storm_intro_1": "沉默是金，而我们是来淘金的！",
+      "storm_intro_2": "很快，这个世界上所有的文字都将属于风暴队！",
+      "storm_intro_3": "既然可以把文字抹去，为什么还要费劲去学它们呢？",
+      "storm_intro_4": "无声风暴即将来临，而你挡了我们的路！",
+      "storm_intro_5": "我们要清理这个世界，一次抹去一个词！",
+      "storm_defeat_1": "该死！我们实现永恒沉默的计划……被推迟了！",
+      "storm_defeat_2": "你可能赢了这一轮，但风暴正在酝酿……",
+      "storm_defeat_3": "首领会对这次干扰感到不满的。",
+      "storm_catchphrase": "言语无力，沉默无敌！风暴来袭，世界唯一！"
     }
   }
 }

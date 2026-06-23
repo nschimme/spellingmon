@@ -104,48 +104,48 @@
     "gym_boss": {
       "1": {
         "name": "Arthur Alphabet",
-        "intro": "A is for Action! B is for Battle! Let's see if you know your ABCs!",
-        "defeat": "Z is for... Zero chance I thought I'd lose! You've mastered the Alphabet!"
+        "intro": "A steht für Action! B für Battle! Zeig mir, ob du dein ABC beherrschst!",
+        "defeat": "Z steht für... Zero Chance! Du hast das Alphabet gemeistert!"
       },
       "2": {
         "name": "Blenda Boulevard",
-        "intro": "I'll blend your team into a smoothie of defeat! Smooth spelling only!",
-        "defeat": "You blended your words perfectly. A smooth victory indeed!"
+        "intro": "Ich mixe dein Team zu einem Smoothie der Niederlage! Nur saubere Rechtschreibung zählt!",
+        "defeat": "Du hast deine Wörter perfekt gemixt. Ein glatter Sieg!"
       },
       "3": {
         "name": "Silas Syllable",
-        "intro": "One, two, three! Count the beats, feel the rhythm of the duel!",
-        "defeat": "Your rhythm was superior. You didn't skip a single beat!"
+        "intro": "Eins, zwei, drei! Zähl den Takt, fühl den Rhythmus des Duells!",
+        "defeat": "Dein Rhythmus war überlegen. Du hast keinen Schlag ausgelassen!"
       },
       "4": {
         "name": "Sophie Suffix",
-        "intro": "I'll add 'defeated' to the end of your name! How's that for a suffix?",
-        "defeat": "I guess I'm the one who's 'finished' now. Great job!"
+        "intro": "Ich hänge 'besiegt' an das Ende deines Namens! Wie gefällt dir dieser Suffix?",
+        "defeat": "Ich schätze, ich bin diejenige, die jetzt 'fertig' ist. Gute Arbeit!"
       },
       "5": {
         "name": "Preston Prefix",
-        "intro": "I always have the first word! Prepare to be pre-empted!",
-        "defeat": "I didn't foresee this outcome. You pre-vented my victory!"
+        "intro": "Ich habe immer das erste Wort! Bereite dich darauf vor, überholt zu werden!",
+        "defeat": "Diesen Ausgang habe ich nicht vorhergesehen. Du hast meinen Sieg ver-hindert!"
       },
       "6": {
         "name": "Homer Homophone",
-        "intro": "You'll see that I'm the sea king here! Or is it 'see'? You'll know soon enough!",
-        "defeat": "I knew I should have stayed at sea... or is it 'see'? You're too good!"
+        "intro": "Du wirst sehen, dass ich hier der Meer-König bin! Oder ist es 'mehr'? Du wirst es bald wissen!",
+        "defeat": "Ich wusste, ich hätte am Meer bleiben sollen... oder war es 'mehr'? Du bist zu gut!"
       },
       "7": {
         "name": "Lana Loanword",
-        "intro": "I've borrowed techniques from all over the world. Can you keep up with my foreign flair?",
-        "defeat": "Your vocabulary is truly international. Merci for the battle!"
+        "intro": "Ich habe Techniken aus der ganzen Welt geliehen. Kannst du mit meinem internationalen Flair mithalten?",
+        "defeat": "Dein Wortschatz ist wirklich international. Merci für den Kampf!"
       },
       "8": {
         "name": "Phona Phoneme",
-        "intro": "Every sound matters! If you miss a single note, it's game over!",
-        "defeat": "Sounded like a victory for you. Your spelling is pitch-perfect!"
+        "intro": "Jeder Laut zählt! Wenn du eine einzige Note verpasst, ist es vorbei!",
+        "defeat": "Das klang nach einem Sieg für dich. Deine Rechtschreibung ist absolut stimmig!"
       },
       "9": {
-        "name": "Malphas the Muted",
-        "intro": "The Silent Storm is my creation! With the Lexicon erased, I shall be the only one with a voice!",
-        "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
+        "name": "Malphas der Stumme",
+        "intro": "Der Stumme Sturm ist meine Schöpfung! Wenn das Lexikon gelöscht ist, werde ich der Einzige mit einer Stimme sein!",
+        "defeat": "Meine Stille... wurde gebrochen. Die Worte... sie kehren zurück. Der Sturm ist vorbei."
       },
       "name": "Arenaleiter",
       "intro": "Du beherrschst also die Landessprache? Mal sehen, ob du dich zum Sieg buchstabieren kannst!",
@@ -169,9 +169,9 @@
       "word_wizard": "Wort-Magier",
       "syntax_sage": "Syntax-Weiser",
       "lexis_legend": "Lexikon-Legende",
-      "storm_grunt": "Storm Grunt",
-      "storm_scout": "Storm Scout",
-      "storm_operative": "Storm Operative"
+      "storm_grunt": "Storm-Rüpel",
+      "storm_scout": "Storm-Späher",
+      "storm_operative": "Storm-Agent"
     },
     "dialogs": {
       "intro_1": "Ich werde dir eine Lektion in Rechtschreibung erteilen!",
@@ -182,15 +182,15 @@
       "defeat_1": "Ich muss wohl mal wieder in die Bücher schauen...",
       "defeat_2": "Du hast mich korrigiert!",
       "defeat_3": "Dein Wortschatz ist überlegen.",
-      "storm_intro_1": "Silence is golden, and we're here to collect!",
-      "storm_intro_2": "Soon, all the words in this world will belong to Team Storm!",
-      "storm_intro_3": "Why bother learning words when we can just erase them?",
-      "storm_intro_4": "The Silent Storm is coming, and you're in its path!",
-      "storm_intro_5": "We're cleaning up this world, one word at a time!",
-      "storm_defeat_1": "Curses! Our plans for total silence... delayed!",
-      "storm_defeat_2": "You might have won this round, but the Storm is brewing...",
-      "storm_defeat_3": "The Leader will not be pleased about this interruption.",
-      "storm_catchphrase": "Words are weak, silence is peak! Team Storm will make the world unique!"
+      "storm_intro_1": "Schweigen ist Gold, und wir sind hier, um zu kassieren!",
+      "storm_intro_2": "Bald werden alle Wörter dieser Welt Team Storm gehören!",
+      "storm_intro_3": "Warum sich mit Wörtern abmühen, wenn wir sie einfach löschen können?",
+      "storm_intro_4": "Der Stumme Sturm kommt, und du stehst ihm im Weg!",
+      "storm_intro_5": "Wir räumen diese Welt auf, ein Wort nach dem anderen!",
+      "storm_defeat_1": "Verdammt! Unsere Pläne für totale Stille... verzögert!",
+      "storm_defeat_2": "Du magst diese Runde gewonnen haben, aber der Sturm braut sich zusammen...",
+      "storm_defeat_3": "Der Anführer wird über diese Unterbrechung nicht erfreut sein.",
+      "storm_catchphrase": "Wörter sind schwach, Stille bringt Macht! Team Storm hat die Welt neu erdacht!"
     }
   },
   "battle": {

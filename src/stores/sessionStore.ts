@@ -261,7 +261,7 @@ export const useSessionStore = defineStore('session', {
         gender: 'Boy',
         skinTone: 'neutral',
         party: [],
-        position: { x: 3, y: 2 },
+        position: { x: 4, y: 2 },
         currentArea: 1,
         currentInterior: 'home_2f',
         currentFloor: null,
