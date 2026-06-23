@@ -136,8 +136,8 @@ export const useMapStore = defineStore('map', () => {
     };
 
     // 1. Bounds Check
-    let nx = Math.max(0, Math.min(width - 1, x));
-    let ny = Math.max(0, Math.min(height - 1, y));
+    const nx = Math.max(0, Math.min(width - 1, x));
+    const ny = Math.max(0, Math.min(height - 1, y));
 
     // 2. Walkability & Reachability Check
     if (walkableTypes.includes(map[ny][nx]) && isReachable(nx, ny)) {
