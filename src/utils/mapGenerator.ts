@@ -1,5 +1,5 @@
 import { AREA_CONFIGS } from './gameData';
-import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS } from './constants';
+import { BIOMES, TRANSITION_TYPES, GAME_CONSTANTS, NPC_TYPES, INTERIORS } from './constants';
 import { TRAINER_DATA, getGymBossConfig } from './npcData';
 
 const AREA_CONFIGS_MAX = GAME_CONSTANTS.MAX_AREAS;
@@ -230,7 +230,7 @@ export class MapGenerator {
       const interior = interiors[interiorId];
       if (interior) {
         interior.exits.forEach(exit => {
-          if (exit.target === 'world') {
+          if (exit.target === INTERIORS.WORLD) {
             exit.targetPos = { x, y: y + 1 };
           }
         });
@@ -240,11 +240,23 @@ export class MapGenerator {
 
     // Home (Area 1 only)
     if (areaNum === 1) {
-      placeBuilding(rooms[1], 'home_1f', TILE_TYPES.BUILDING);
+      placeBuilding(rooms[1], INTERIORS.HOME_1F, TILE_TYPES.BUILDING);
     }
 
     // Gym
-    placeBuilding(exitRoom, 'gym', TILE_TYPES.BUILDING);
+    placeBuilding(exitRoom, INTERIORS.GYM, TILE_TYPES.BUILDING);
+
+    // Update Spelling Center exits
+    if (spellCenter) {
+      const sc = interiors[INTERIORS.SPELLING_CENTER];
+      if (sc) {
+        sc.exits.forEach(exit => {
+          if (exit.target === INTERIORS.WORLD) {
+            exit.targetPos = { x: spellCenter!.x, y: spellCenter!.y + 1 };
+          }
+        });
+      }
+    }
 
     const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap, occupied);
 
@@ -288,8 +300,8 @@ export class MapGenerator {
 
     if (areaNum === 1) {
       // Home 1F
-      interiors['home_1f'] = {
-        id: 'home_1f',
+      interiors[INTERIORS.HOME_1F] = {
+        id: INTERIORS.HOME_1F,
         name: 'home.name',
         map: [
           [2, 2, 2, 2, 2, 2, 2, 2],
@@ -299,16 +311,16 @@ export class MapGenerator {
           [2, 17, 0, 0, 0, 0, 0, 2],
           [2, 2, 2, 14, 14, 2, 2, 2]
         ],
-        npcs: [{ id: 'mom', type: 'mom', name: 'npc.mom.name', dialog: ['npc.mom.dialog'], x: 2, y: 2 }],
+        npcs: [{ id: 'mom', type: NPC_TYPES.MOM, name: 'npc.mom.name', dialog: ['npc.mom.dialog'], x: 2, y: 2 }],
         exits: [
-          { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }, // targetPos will be set during world placement
-          { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
-          { x: 6, y: 1, target: 'home_2f', targetPos: { x: 5, y: 1 } }
+          { x: 3, y: 5, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } }, // targetPos will be set during world placement
+          { x: 4, y: 5, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } },
+          { x: 6, y: 1, target: INTERIORS.HOME_2F, targetPos: { x: 5, y: 1 } }
         ]
       };
       // Home 2F
-      interiors['home_2f'] = {
-        id: 'home_2f',
+      interiors[INTERIORS.HOME_2F] = {
+        id: INTERIORS.HOME_2F,
         name: 'home.name',
         map: [
           [2, 2, 2, 2, 2, 2, 2, 2],
@@ -319,14 +331,14 @@ export class MapGenerator {
         ],
         npcs: [],
         exits: [
-          { x: 6, y: 1, target: 'home_1f', targetPos: { x: 5, y: 1 } }
+          { x: 6, y: 1, target: INTERIORS.HOME_1F, targetPos: { x: 5, y: 1 } }
         ]
       };
     }
 
     // Spelling Center (Every Area)
-    interiors['spelling_center'] = {
-      id: 'spelling_center',
+    interiors[INTERIORS.SPELLING_CENTER] = {
+      id: INTERIORS.SPELLING_CENTER,
       name: 'spellingCenter.name',
       map: [
         [2, 2, 2, 2, 2, 2, 2, 2, 2],
@@ -336,18 +348,18 @@ export class MapGenerator {
         [2, 16, 16, 0, 0, 0, 16, 16, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
-      npcs: [{ id: 'healer', type: 'healer', name: 'npc.healer.name', dialog: ['npc.healer.dialog'], x: 4, y: 2 }],
+      npcs: [{ id: 'healer', type: NPC_TYPES.HEALER, name: 'npc.healer.name', dialog: ['npc.healer.dialog'], x: 4, y: 2 }],
       exits: [
-        { x: 3, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
-        { x: 4, y: 5, target: 'world', targetPos: { x: 0, y: 0 } },
-        { x: 5, y: 5, target: 'world', targetPos: { x: 0, y: 0 } }
+        { x: 3, y: 5, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } },
+        { x: 4, y: 5, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } },
+        { x: 5, y: 5, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } }
       ]
     };
 
     // Gym (Every Area)
     const gymBossCfg = getGymBossConfig(areaNum);
-    interiors['gym'] = {
-      id: 'gym',
+    interiors[INTERIORS.GYM] = {
+      id: INTERIORS.GYM,
       name: 'gym.name',
       map: [
         [2, 2, 2, 2, 2, 2, 2, 2, 2],
@@ -359,11 +371,11 @@ export class MapGenerator {
         [2, 0, 16, 0, 0, 0, 16, 0, 2],
         [2, 2, 2, 14, 14, 14, 2, 2, 2]
       ],
-      npcs: [{ id: 'gym_boss', type: gymBossCfg.type, name: gymBossCfg.nameKey, dialog: [gymBossCfg.dialogs.intro], x: 4, y: 2 }],
+      npcs: [{ id: 'gym_boss', type: gymBossCfg.type || NPC_TYPES.GYM_BOSS, name: gymBossCfg.nameKey, dialog: [gymBossCfg.dialogs.intro], x: 4, y: 2 }],
       exits: [
-        { x: 3, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
-        { x: 4, y: 7, target: 'world', targetPos: { x: 0, y: 0 } },
-        { x: 5, y: 7, target: 'world', targetPos: { x: 0, y: 0 } }
+        { x: 3, y: 7, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } },
+        { x: 4, y: 7, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } },
+        { x: 5, y: 7, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } }
       ]
     };
 

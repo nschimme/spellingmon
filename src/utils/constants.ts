@@ -145,6 +145,22 @@ export const MENU_TABS = {
   SETTINGS: 'settings',
 };
 
+export const NPC_TYPES = {
+  MOM: 'mom',
+  HEALER: 'healer',
+  GYM_BOSS: 'gym_boss',
+  TEAM_STORM: 'team_storm',
+  RIVAL: 'rival',
+};
+
+export const INTERIORS = {
+  WORLD: 'world',
+  HOME_1F: 'home_1f',
+  HOME_2F: 'home_2f',
+  SPELLING_CENTER: 'spelling_center',
+  GYM: 'gym',
+};
+
 export const GAME_STATES = {
   BOOTING: 'BOOTING',
   LANGUAGE_SELECT: 'LANGUAGE_SELECT',

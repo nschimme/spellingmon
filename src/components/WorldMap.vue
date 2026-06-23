@@ -90,7 +90,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon, SPECIES } from '../utils/gameData';
-import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES } from '../utils/constants';
+import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES } from '../utils/constants';
 import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
@@ -188,7 +188,7 @@ const handleInput = (e: any) => {
     TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS,
     TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION,
     TILE_TYPES.BUILDING, TILE_TYPES.DOOR, TILE_TYPES.STAIRS_UP, TILE_TYPES.STAIRS_DOWN,
-    TILE_TYPES.CARPET
+    TILE_TYPES.CARPET, TILE_TYPES.BED
   ];
 
   if (targetTile === TILE_TYPES.NPC) {
@@ -348,11 +348,11 @@ const checkTriggers = (x: number, y: number) => {
     if (type === TILE_TYPES.BUILDING || type === TILE_TYPES.SPELL_CENTER) {
        // Find which interior has an exit pointing to the tile below this building
        const interiorEntry = Object.values(currentMapData.value?.interiors || {}).find(int =>
-         int.exits.some(e => e.target === 'world' && e.targetPos.x === x && e.targetPos.y === y + 1)
+         int.exits.some(e => e.target === INTERIORS.WORLD && e.targetPos.x === x && e.targetPos.y === y + 1)
        );
        if (interiorEntry) {
           // Find the carpet exit to get its coordinates as entry point
-          const carpetExit = interiorEntry.exits.find(e => e.target === 'world');
+          const carpetExit = interiorEntry.exits.find(e => e.target === INTERIORS.WORLD);
           handleTransition({ target: interiorEntry.id, targetPos: { x: carpetExit?.x || 0, y: (carpetExit?.y || 1) - 1 } });
        }
        return;
@@ -360,7 +360,7 @@ const checkTriggers = (x: number, y: number) => {
   }
 
   if (type === TILE_TYPES.SPELL_CENTER && !session.player.currentInterior) {
-    handleTransition({ target: 'spelling_center', targetPos: { x: 4, y: 4 } });
+    handleTransition({ target: INTERIORS.SPELLING_CENTER, targetPos: { x: 4, y: 4 } });
     return;
   }
 
@@ -440,12 +440,12 @@ const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
 };
 
 const handleTransition = (exit: any) => {
-  const fromHome = session.player.currentInterior === 'home_1f' && exit.target === 'world';
+  const fromHome = session.player.currentInterior === INTERIORS.HOME_1F && exit.target === INTERIORS.WORLD;
   fsm.send(GAME_EVENTS.CONFIRM, {
     targetState: GAME_STATES.WORLD,
     target: GAME_STATES.WORLD, // For LOADING gateway
     onComplete: () => {
-      if (exit.target === 'world') {
+      if (exit.target === INTERIORS.WORLD) {
         session.player.currentInterior = null;
       } else {
         session.player.currentInterior = exit.target;
@@ -479,16 +479,18 @@ const handleNPCInteract = (npc: any) => {
   const dist = Math.abs(playerX.value - npc.x) + Math.abs(playerY.value - npc.y);
   if (dist > 1) return;
 
-  if (npc.type === 'healer') {
+  if (npc.type === NPC_TYPES.HEALER || npc.type === NPC_TYPES.MOM) {
     session.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
     session.notify(settingsStore.t('menu.healed'));
-    session.player.lastSpellCenter = { x: 4, y: 4, interior: 'spelling_center', floor: null } as any;
+    if (npc.type === NPC_TYPES.HEALER) {
+      session.player.lastSpellCenter = { x: 4, y: 4, interior: INTERIORS.SPELLING_CENTER, floor: null } as any;
+    }
     session.save();
   }
   session.notify(`${settingsStore.t(npc.name)}: "${settingsStore.t(npc.dialog[0])}"`);
 
-  if (npc.type === 'gym_boss') {
+  if (npc.type === NPC_TYPES.GYM_BOSS || npc.type === NPC_TYPES.TEAM_STORM) {
     // Check requirements
     const vocabCount = vocabStore.vocabData[`${settingsStore.locale}_${session.player.currentArea}`]?.length || 40;
     const mastered = session.isAreaMastered(session.player.currentArea, vocabCount);

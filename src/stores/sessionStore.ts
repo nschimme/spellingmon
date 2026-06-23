@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -160,7 +160,7 @@ export const useSessionStore = defineStore('session', {
       party: [],
       position: null,
       currentArea: 1,
-      currentInterior: 'home_2f',
+      currentInterior: INTERIORS.HOME_2F,
       currentFloor: null,
       badges: [],
       unlockedAreas: [1],
@@ -261,9 +261,9 @@ export const useSessionStore = defineStore('session', {
         gender: 'Boy',
         skinTone: 'neutral',
         party: [],
-        position: { x: 4, y: 2 },
+        position: { x: 1, y: 1 },
         currentArea: 1,
-        currentInterior: 'home_2f',
+        currentInterior: INTERIORS.HOME_2F,
         currentFloor: null,
         badges: [],
         unlockedAreas: [1],
