@@ -1,5 +1,13 @@
 <template>
-  <div class="relative w-full h-full bg-green-200 overflow-hidden select-none">
+  <div
+    class="relative w-full h-full bg-green-200 overflow-hidden select-none"
+    @mousedown="handleMapInteractionStart"
+    @touchstart.prevent="handleMapInteractionStart"
+    @mouseup="stopMovement"
+    @mouseleave="stopMovement"
+    @touchend="stopMovement"
+    @touchcancel="stopMovement"
+  >
     <!-- Map Rendering -->
     <div
       class="absolute transition-all duration-200 linear"
@@ -162,6 +170,30 @@ const handleInput = (e: any) => {
 };
 
 const { startMovement, stopMovement } = usePlayerMovement(playerX, playerY, handleInput);
+
+const handleMapInteractionStart = (e: MouseEvent | TouchEvent) => {
+  if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return;
+
+  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  const dx = clientX - centerX;
+  const dy = clientY - centerY;
+
+  let key = '';
+  if (Math.abs(dx) > Math.abs(dy)) {
+    key = dx > 0 ? 'd' : 'a';
+  } else {
+    key = dy > 0 ? 's' : 'w';
+  }
+
+  if (key) {
+    startMovement(key);
+  }
+};
 
 const playerEmoji = computed(() => {
   const gender = session.player.gender;

@@ -71,11 +71,12 @@
         v-for="(word, index) in areaWords"
         :key="word.word"
         :ref="el => { if (el) itemRefs[index] = el as HTMLElement }"
-        class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px]"
+        class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px] cursor-pointer"
         :class="[
           isMastered(word.word) ? 'border-green-500 bg-green-50 shadow-md' : (isCorrect(word.word) ? 'border-blue-400 bg-blue-50' : (isSeen(word.word) ? 'border-gray-400 bg-gray-100' : 'border-gray-200 opacity-40')),
           selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105 z-10' : ''
         ]"
+        @click="reset(index)"
       >
         <div class="text-center">
           <div class="text-2xl mb-1">
