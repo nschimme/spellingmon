@@ -419,10 +419,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 onEnter: () => { audio.playSound(SOUND_EFFECTS.FAINT); },
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
-                    if (ctx.session.battle.isRival) {
-                      if (ctx.session.battle.trainerId) {
-                        ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
-                      }
+                    // Check both the battle state flag and the trainerId for robustness
+                    if (ctx.session.battle.isRival || ctx.session.battle.trainerId === 'rival_1') {
                       ctx.session.healParty();
                       ctx.session.notify(ctx.t('npc.rival.mercy'));
                       return GAME_STATES.WORLD;
@@ -446,6 +444,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   audio.playSound(SOUND_EFFECTS.VICTORY);
 
                   if (ctx.session.battle.type === BATTLE_TYPES.TRAINER && ctx.session.battle.trainerId) {
+                    // Don't mark Rival as defeated on victory here if we want them to stay?
+                    // Actually, usually Rivals disappear AFTER defeat.
+                    // But if they stay for rematch, they should only be marked defeated if they LOSE (player WINS).
                     ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
                   }
 

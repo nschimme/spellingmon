@@ -74,6 +74,7 @@ export function useTrainerAI(
     } else {
       displayName = i18n.global.t(displayName);
     }
+    const dialog = i18n.global.t(trainer.dialog);
     session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: displayName }));
 
     setTimeout(async () => {
@@ -99,15 +100,7 @@ export function useTrainerAI(
 
       alertingTrainer.value = null;
       // Show trainer dialog on the map before battle
-      let logName = trainer.name;
-      if (logName.includes('::')) {
-        const [key, raw] = logName.split('::');
-        logName = `${i18n.global.t(key)} ${raw}`;
-      } else {
-        logName = i18n.global.t(logName);
-      }
-      const dialog = i18n.global.t(trainer.dialog);
-      session.notify(`${logName}: "${dialog}"`);
+      session.notify(`${displayName}: "${dialog}"`);
 
       // Extra delay to allow reading the dialog on the map
       setTimeout(() => {

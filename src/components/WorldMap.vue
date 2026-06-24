@@ -334,7 +334,10 @@ const viewportTrainers = computed(() => {
   const endY = startY + VIEWPORT_SIZE;
 
   return currentMapData.value.trainers
-    .map((t, i) => ({ ...t, trainerId: t.trainerId || `area${session.player.currentArea}_${i}` }))
+    .map((t, i) => {
+      const trainerId = t.trainerId || `area${session.player.currentArea}_${i}`;
+      return { ...t, trainerId };
+    })
     .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !session.player.defeatedTrainers.includes(t.trainerId));
 });
 
@@ -369,15 +372,22 @@ const checkTriggers = (x: number, y: number) => {
 
   if (type === TILE_TYPES.TRAINER) {
     const trainerData = getTrainerAt(x, y);
-    if (trainerData) {
+    if (trainerData && !engagedTrainers.has(trainerData.trainerId)) {
       const { trainer, trainerId } = trainerData;
-      if (engagedTrainers.has(trainerId)) return;
-      engagedTrainers.add(trainerId);
-      session.notify(`${(trainer as any).name}: "${trainer.dialog}"`);
-      setTimeout(() => {
-        triggerTrainerBattle(trainer, trainerId);
-        engagedTrainers.delete(trainerId);
-      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS);
+      const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
+      const firstMonCfg = party[0];
+      const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
+
+      initiateTrainerApproach(trainer, trainerId, engagedTrainers, {
+        enemy: enemyMon,
+        type: BATTLE_TYPES.TRAINER,
+        trainerId,
+        trainerParty: party,
+        trainerName: trainer.name,
+        trainerDefeatDialog: trainer.defeatDialog,
+        isStorm: trainer.isStorm,
+        isRival: trainer.isRival
+      });
     }
     return;
   }
@@ -387,9 +397,10 @@ const checkTriggers = (x: number, y: number) => {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
     if (!transition) return;
     if (transition.type === TRANSITION_TYPES.NEXT) {
-      const allDefeated = currentMapData.value.trainers.every((t, i) =>
-        session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
-      );
+      const allDefeated = currentMapData.value.trainers.every((t, i) => {
+        const tid = t.trainerId || `area${session.player.currentArea}_${i}`;
+        return session.player.defeatedTrainers.includes(tid);
+      });
       if (!allDefeated) {
         session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
@@ -426,22 +437,6 @@ const triggerWildBattle = async () => {
   fsm.send(GAME_EVENTS.ENCOUNTER, { enemy: wildMon, type: BATTLE_TYPES.WILD });
 };
 
-const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
-  await vocabStore.loadVocab(session.player.currentArea, settingsStore.locale);
-  const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
-  const firstMonCfg = party[0];
-  const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
-  fsm.send(GAME_EVENTS.ENCOUNTER, {
-    enemy: enemyMon,
-    type: BATTLE_TYPES.TRAINER,
-    trainerId,
-    trainerParty: party,
-    trainerName: trainer.name,
-    trainerDefeatDialog: trainer.defeatDialog,
-    isStorm: trainer.isStorm,
-    isRival: trainer.isRival
-  });
-};
 
 const handleTransition = (exit: any) => {
   fsm.send(GAME_EVENTS.CONFIRM, {
@@ -478,9 +473,10 @@ const handleNPCInteract = (npc: any) => {
     // Check requirements
     const vocabCount = vocabStore.vocabData[`${settingsStore.locale}_${session.player.currentArea}`]?.length || 40;
     const mastered = session.isAreaMastered(session.player.currentArea, vocabCount);
-    const trainersDefeated = currentMapData.value?.trainers.every((_, i) =>
-      session.player.defeatedTrainers.includes(`area${session.player.currentArea}_${i}`)
-    );
+    const trainersDefeated = currentMapData.value?.trainers.every((t, i) => {
+      const tid = t.trainerId || `area${session.player.currentArea}_${i}`;
+      return session.player.defeatedTrainers.includes(tid);
+    });
 
     if (mastered && trainersDefeated) {
        triggerGymBossBattle(npc);
@@ -497,15 +493,20 @@ const triggerGymBossBattle = async (npc: any) => {
   const species = area.encounters[area.encounters.length - 1]; // Use last encounter as boss mon
   const enemyMon = createMon(species, level);
 
-  fsm.send(GAME_EVENTS.ENCOUNTER, {
+  const params = {
     enemy: enemyMon,
     type: BATTLE_TYPES.TRAINER,
     trainerId: `gym_boss_${session.player.currentArea}`,
     trainerParty: [{ species, level }],
-    trainerName: settingsStore.t(npc.name),
+    trainerName: npc.name,
     trainerDefeatDialog: `npc.gym_boss.${session.player.currentArea}.defeat`,
     isStorm: npc.type === 'team_storm'
-  });
+  };
+
+  fsm.send(GAME_EVENTS.ENCOUNTER, params);
+  setTimeout(() => {
+    fsm.send(GAME_EVENTS.CONFIRM, params);
+  }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + GAME_CONSTANTS.TRAINER_DIALOG_DELAY_MS);
 };
 
 onMounted(async () => {

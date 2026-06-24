@@ -220,7 +220,12 @@
         "defeat": "My silence... has been broken. The words... they are returning. The storm is over."
       }
     },
-    "rival": {
+    "npc.rival.name": "Rival Robin",
+    "npc.rival.dialog": "I am going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
+    "npc.rival.victory": "Words are power, and you have run out of them!",
+    "npc.rival.defeat": "Not bad! But don t think you have won yet. I ll be the one to master every word first!",
+    "npc.rival.mercy": "Don t worry, you ll get better! I am off to save Spellinghome!",
+    "rival_DISABLED": {
       "name": "Rival Robin",
       "dialog": "I'm going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
       "victory": "Words are power, and you've run out of them!",
