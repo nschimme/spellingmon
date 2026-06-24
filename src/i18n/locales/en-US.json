@@ -222,10 +222,10 @@
     },
     "rival": {
       "name": "Rival Robin",
-      "dialog": "I am going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
+      "dialog": "I'm going to be the best Lexicon Scout ever and save Spellinghome by mastering every word first! En garde!",
       "victory": "Words are power, and you have run out of them!",
-      "defeat": "Not bad! But don t think you have won yet. I ll be the one to master every word first!",
-      "mercy": "Don t worry, you ll get better! I am off to save Spellinghome!"
+      "defeat": "Not bad! But don't think you've won yet. I'll be the one to master every word first!",
+      "mercy": "Don't worry, you'll get better! I'm off to save Spellinghome!"
     }
   },
   "trainer": {
