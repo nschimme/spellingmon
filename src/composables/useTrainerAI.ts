@@ -16,7 +16,8 @@ export function useTrainerAI(
   const alertingTrainer = ref<string | null>(null);
 
   const checkTrainerLOS = (engagedTrainers: Set<string>) => {
-    if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value || session.player.currentInterior) return;
+    const isWorld = fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MOVING);
+    if (!isWorld || alertingTrainer.value || !currentMapData.value || session.player.currentInterior) return;
 
     const trainers = currentMapData.value.trainers;
     const LOS_RANGE = 5;
@@ -111,9 +112,82 @@ export function useTrainerAI(
     }, 600);
   };
 
+  const findFleePath = (startX: number, startY: number) => {
+    if (!currentMapData.value) return [];
+    const map = currentMapData.value.map;
+    const w = map[0].length;
+    const h = map.length;
+    const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION, TILE_TYPES.CARPET];
+
+    const queue: [number, number, { x: number, y: number, dir: string }[]][] = [[startX, startY, []]];
+    const visited = new Set([`${startX},${startY}`]);
+
+    while (queue.length > 0) {
+      const [x, y, path] = queue.shift()!;
+
+      // Goal: Reach any edge or a distance of 15 from start
+      const dist = Math.abs(x - startX) + Math.abs(y - startY);
+      if (x <= 0 || x >= w - 1 || y <= 0 || y >= h - 1 || dist >= 15) {
+        return path;
+      }
+
+      const neighbors: [number, number, string][] = [
+        [x + 1, y, 'right'],
+        [x - 1, y, 'left'],
+        [x, y + 1, 'down'],
+        [x, y - 1, 'up']
+      ];
+      for (const [nx, ny, dir] of neighbors) {
+        const key = `${nx},${ny}`;
+        if (nx >= 0 && nx < w && ny >= 0 && ny < h && walkable.includes(map[ny][nx]) && !visited.has(key)) {
+          visited.add(key);
+          queue.push([nx, ny, [...path, { x: nx, y: ny, dir }]]);
+        }
+      }
+    }
+    return [];
+  };
+
+  const startTrainerFleeing = async (trainer: any, trainerId: string, fleeingList: Ref<any[]>) => {
+    // 1. Remove from map tile occupancy so player can walk there immediately
+    if (currentMapData.value) {
+       currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.PATH;
+    }
+
+    // 2. Add to fleeing list for independent rendering
+    const fleeingTrainer = {
+      ...trainer,
+      trainerId,
+      opacity: 1
+    };
+    fleeingList.value.push(fleeingTrainer);
+
+    // 3. Follow path
+    const path = findFleePath(trainer.x, trainer.y);
+    if (path.length === 0) {
+      // Fallback: just fade out
+      fleeingTrainer.opacity = 0;
+    } else {
+      for (const step of path) {
+        fleeingTrainer.x = step.x;
+        fleeingTrainer.y = step.y;
+        fleeingTrainer.direction = step.dir;
+        await new Promise(r => setTimeout(r, 200));
+      }
+      fleeingTrainer.opacity = 0;
+    }
+
+    // 4. Cleanup
+    setTimeout(() => {
+      const idx = fleeingList.value.indexOf(fleeingTrainer);
+      if (idx !== -1) fleeingList.value.splice(idx, 1);
+    }, 1000);
+  };
+
   return {
     alertingTrainer,
     checkTrainerLOS,
-    initiateTrainerApproach
+    initiateTrainerApproach,
+    startTrainerFleeing
   };
 }

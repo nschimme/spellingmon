@@ -269,6 +269,35 @@
             @continue="fsm.send(GAME_EVENTS.CONTINUE)"
           />
         </template>
+
+        <!-- Party Full -->
+        <template v-if="fsm.matches(GAME_STATES.BATTLE_PARTY_FULL)">
+          <div class="flex flex-col h-full">
+            <p class="text-[10px] font-bold text-center mb-1 text-red-600">
+              {{ $t('battle.partyFull') }}
+            </p>
+            <div class="flex-1 overflow-y-auto pr-1">
+              <button
+                v-for="(mon, index) in session.player.party"
+                :key="mon.id"
+                :ref="el => setReplaceRef(el, index)"
+                class="w-full mb-1 p-1 border-2 border-gray-800 rounded text-[10px] font-bold outline-none transition-all"
+                :class="{ 'ring-8 ring-yellow-400 border-yellow-400': replaceIndex === index }"
+                @click="fsm.send(GAME_EVENTS.REPLACE, { replaceMonId: mon.id })"
+              >
+                {{ $t('monsters.' + mon.species) }} (Lv {{ mon.level }})
+              </button>
+              <button
+                :ref="el => setReplaceRef(el, session.player.party.length)"
+                class="w-full text-xs text-red-500 font-bold mt-1 outline-none transition-all"
+                :class="{ 'ring-8 ring-yellow-400 border-yellow-400': replaceIndex === session.player.party.length }"
+                @click="fsm.send(GAME_EVENTS.RELEASE)"
+              >
+                {{ $t('battle.release') }}
+              </button>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -307,6 +336,7 @@ const spellingFocusTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 const battleLog = ref<HTMLElement | null>(null);
 const actionRefs = ref<(HTMLElement | null)[]>([]);
 const partyRefs = ref<(HTMLElement | null)[]>([]);
+const replaceRefs = ref<(HTMLElement | null)[]>([]);
 
 const setActionRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) actionRefs.value[index] = el as HTMLElement;
@@ -316,6 +346,11 @@ const setActionRef = (el: Element | ComponentPublicInstance | null, index: numbe
 const setPartyRef = (el: Element | ComponentPublicInstance | null, index: number) => {
   if (el) partyRefs.value[index] = el as HTMLElement;
   else partyRefs.value[index] = null;
+};
+
+const setReplaceRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el) replaceRefs.value[index] = el as HTMLElement;
+  else replaceRefs.value[index] = null;
 };
 
 const { selectedIndex: actionIndex } = useKeyboardNavigation({
@@ -363,6 +398,21 @@ const { selectedIndex: partyIndex } = useKeyboardNavigation({
   onCancel: () => {
     if (session.activePlayerMon && session.activePlayerMon.hp > 0) {
       fsm.send(GAME_EVENTS.CANCEL);
+    }
+  }
+});
+
+const { selectedIndex: replaceIndex } = useKeyboardNavigation({
+  id: 'battle-replace',
+  isActive: computed(() => fsm.matches(GAME_STATES.BATTLE_PARTY_FULL)),
+  maxIndex: computed(() => session.player.party.length + 1),
+  itemRefs: computed(() => replaceRefs.value),
+  onConfirm: (idx) => {
+    if (idx < session.player.party.length) {
+      const mon = session.player.party[idx];
+      fsm.send(GAME_EVENTS.REPLACE, { replaceMonId: mon.id });
+    } else {
+      fsm.send(GAME_EVENTS.RELEASE);
     }
   }
 });
@@ -427,6 +477,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
   // Clear refs on state change to avoid stale elements
   actionRefs.value = [];
   partyRefs.value = [];
+  replaceRefs.value = [];
 
   if (newState === GAME_STATES.BATTLE_SPELLING) {
     clearFocusTimer();

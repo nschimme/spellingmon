@@ -321,7 +321,7 @@ export const useSessionStore = defineStore('session', {
     },
 
     awardExp(totalAmount: number) {
-      const healthyMons = this.player.party.filter(m => m.hp > 0 && this.battle.participatingMonIds.includes(m.id));
+      const healthyMons = this.player.party.filter(m => m.hp > 0);
       if (healthyMons.length === 0) return [];
 
       const splitAmount = Math.floor(totalAmount / healthyMons.length);
