@@ -51,6 +51,7 @@ export interface Transition extends Point {
 }
 
 export interface Trainer extends Point {
+  trainerId: string;
   name: string;
   dialog: string;
   defeatDialog?: string;
