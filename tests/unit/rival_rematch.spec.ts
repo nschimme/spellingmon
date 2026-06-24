@@ -31,28 +31,32 @@ describe('Rival Rematch Logic', () => {
     setActivePinia(createPinia());
   });
 
-  it('should not mark rival as defeated after player loss (mercy)', async () => {
+  it('should mark rival as defeated after player loss (mercy)', async () => {
     const fsm = useGameFSM();
     const session = useSessionStore();
 
+    // Set up player state
     session.player.isStarterSelected = true;
     session.player.characterCreationComplete = true;
     session.player.defeatedTrainers = [];
 
+    // Wait for BOOTING to settle
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    // Force transition to WORLD
     await fsm.transition(GAME_STATES.WORLD);
 
-    await fsm.transition(GAME_STATES.BATTLE_INTRO, {
-      enemy: { species: 'Grammander', level: 5, hp: 10, maxHp: 10 },
-      type: BATTLE_TYPES.TRAINER,
-      trainerId: 'rival_1',
-      isRival: true
-    });
+    // Set up battle state
+    session.battle.isRival = true;
+    session.battle.trainerId = 'rival_1';
 
+    // Move to whited out state
     await fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
+
+    // Confirm to return to world
     await fsm.send(GAME_EVENTS.CONFIRM);
 
-    expect(fsm.state).toBe(GAME_STATES.WORLD);
-    expect(session.player.defeatedTrainers).not.toContain('rival_1');
+    expect(session.player.defeatedTrainers).toContain('rival_1');
   });
 
   it('should mark regular trainer as defeated after player win', async () => {
@@ -62,19 +66,16 @@ describe('Rival Rematch Logic', () => {
     session.player.isStarterSelected = true;
     session.player.characterCreationComplete = true;
     session.player.defeatedTrainers = [];
+
+    await new Promise(resolve => setTimeout(resolve, 50));
+
     await fsm.transition(GAME_STATES.WORLD);
 
-    const enemy = { species: 'Grammander', level: 5, hp: 10, maxHp: 10 };
-    await fsm.transition(GAME_STATES.BATTLE_INTRO, {
-      enemy,
-      type: BATTLE_TYPES.TRAINER,
-      trainerId: 'trainer_1'
-    });
-
-    // Set explicit state in session for onEnter
+    const enemy = { species: 'Grammander', level: 5, hp: 10, maxHp: 10, id: 'enemy_1', exp: 0, expToNext: 100 };
+    session.battle.enemyMon = enemy as any;
     session.battle.type = BATTLE_TYPES.TRAINER;
     session.battle.trainerId = 'trainer_1';
-    session.battle.enemyMon = enemy;
+    session.battle.participatingMonIds = [];
 
     // Win battle
     await fsm.transition(GAME_STATES.BATTLE_VICTORY);

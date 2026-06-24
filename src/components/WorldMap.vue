@@ -154,7 +154,7 @@ const currentInteriorData = computed(() => {
 });
 
 const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach } = useTrainerAI(
-  session, fsm, currentMapData, playerX, playerY, getTileType
+  session, fsm, currentMapData, playerX, playerY, getTileType, getTrainerId
 );
 
 const handleInput = (e: any) => {
@@ -498,7 +498,7 @@ const triggerGymBossBattle = async (npc: any) => {
     type: BATTLE_TYPES.TRAINER,
     trainerId: `gym_boss_${session.player.currentArea}`,
     trainerParty: [{ species, level }],
-    trainerName: npc.name,
+    trainerName: settingsStore.t(npc.name),
     trainerDefeatDialog: `npc.gym_boss.${session.player.currentArea}.defeat`,
     isStorm: npc.type === 'team_storm'
   };

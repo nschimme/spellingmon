@@ -10,7 +10,8 @@ export function useTrainerAI(
   currentMapData: Ref<MapResult | null>,
   playerX: Ref<number>,
   playerY: Ref<number>,
-  getTileType: (x: number, y: number) => number
+  getTileType: (x: number, y: number) => number,
+  getTrainerId: (trainer: any) => string
 ) {
   const alertingTrainer = ref<string | null>(null);
 
@@ -22,7 +23,7 @@ export function useTrainerAI(
 
     for (let i = 0; i < trainers.length; i++) {
       const t = trainers[i];
-      const trainerId = (t as any).trainerId || `area${session.player.currentArea}_${i}`;
+      const trainerId = getTrainerId(t);
       if (session.player.defeatedTrainers.includes(trainerId)) continue;
       if (engagedTrainers.has(trainerId)) continue;
 
