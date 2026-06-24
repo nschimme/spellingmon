@@ -35,7 +35,7 @@
           :y="trainer.y"
           :direction="trainer.direction"
           :is-storm="trainer.isStorm"
-          :is-rival="trainer.trainerId === 'rival_1'"
+          :is-rival="trainer.isRival"
           :is-alerting="alertingTrainer === trainer.trainerId"
         />
       </template>

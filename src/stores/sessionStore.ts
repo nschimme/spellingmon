@@ -183,6 +183,7 @@ export const useSessionStore = defineStore('session', {
       trainerParty: [],
       trainerDefeatDialog: null,
       isStorm: false,
+      isRival: false,
       participatingMonIds: [],
       currentWord: null,
       totalTime: 0,
