@@ -199,6 +199,18 @@ export const useGameFSM = defineStore('gameFSM', () => {
               }
             },
             on: {
+              [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                if (params?.targetState === GAME_STATES.WORLD) {
+                   return { target: GAME_STATES.LOADING, params };
+                }
+                if (params?.moving) {
+                  return { target: GAME_STATES.MOVING, params };
+                }
+                if (params?.dialog) {
+                  return { target: GAME_STATES.DIALOG, params };
+                }
+                return null;
+              },
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
                  if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
                  return GAME_STATES.BATTLE_INTRO;
@@ -214,13 +226,33 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [GAME_EVENTS.LOGOUT]: (ctx) => {
                 ctx.session.activeSlot = null;
                 return GAME_STATES.LANDING;
-              },
-              [GAME_EVENTS.CONFIRM]: (ctx, params) => {
-                if (params?.targetState === GAME_STATES.WORLD) {
-                   return { target: GAME_STATES.LOADING, params };
-                }
-                return null;
               }
+            }
+          },
+          [s(GAME_STATES.MOVING)]: {
+            onEnter: (ctx, params) => {
+              setTimeout(() => {
+                ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
+              }, 200); // Match WorldMap animation duration
+            },
+            on: {
+              [GAME_EVENTS.COMPLETE]: (ctx, params) => {
+                if (params?.onComplete) params.onComplete();
+                return GAME_STATES.WORLD;
+              },
+              [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
+                 if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
+                 return GAME_STATES.BATTLE_INTRO;
+              }
+            }
+          },
+          [s(GAME_STATES.DIALOG)]: {
+            on: {
+              [GAME_EVENTS.CONFIRM]: (ctx) => {
+                ctx.session.notification = null;
+                return GAME_STATES.WORLD;
+              },
+              [GAME_EVENTS.CLOSE]: GAME_STATES.WORLD
             }
           },
           [s(GAME_STATES.TRAINER_APPROACH)]: {
@@ -364,7 +396,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       if (Math.random() < successChance) {
                         audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
                         ctx.session.battle.log.push(ctx.t('battle.catchSuccess', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
-                        const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp});
+                        const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon});
                         if (added) {
                           setTimeout(() => {
                             ctx.fsm.transition(GAME_STATES.WORLD);
@@ -493,13 +525,16 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 on: {
                   [GAME_EVENTS.REPLACE]: (ctx, params) => {
                     const index = ctx.session.player.party.findIndex((m: Monster) => m.id === params.replaceMonId);
-                    if (index !== -1) {
-                      ctx.session.player.party[index] = {...ctx.session.battle.enemyMon, hp: ctx.session.battle.enemyMon.maxHp};
+                    if (index !== -1 && ctx.session.battle.enemyMon) {
+                      ctx.session.player.party[index] = { ...ctx.session.battle.enemyMon };
                       ctx.session.save();
                     }
                     return GAME_STATES.WORLD;
                   },
-                  [GAME_EVENTS.RELEASE]: GAME_STATES.WORLD
+                  [GAME_EVENTS.RELEASE]: (ctx) => {
+                    ctx.session.notify(ctx.t('battle.released'));
+                    return GAME_STATES.WORLD;
+                  }
                 }
               }
             }

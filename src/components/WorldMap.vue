@@ -38,6 +38,17 @@
           :is-rival="trainer.isRival"
           :is-alerting="alertingTrainer === trainer.trainerId"
         />
+        <!-- Fleeing Trainers -->
+        <TrainerSprite
+          v-for="trainer in fleeingTrainers"
+          :key="`fleeing-${trainer.trainerId}`"
+          :x="trainer.x"
+          :y="trainer.y"
+          :direction="trainer.direction"
+          :is-storm="trainer.isStorm"
+          :is-rival="trainer.isRival"
+          :opacity="trainer.opacity"
+        />
       </template>
 
       <!-- NPC Layer -->
@@ -110,6 +121,7 @@ const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
+const fleeingTrainers = ref<any[]>([]);
 
 const VIEWPORT_SIZE = 27;
 
@@ -153,7 +165,7 @@ const currentInteriorData = computed(() => {
   return currentMapData.value.interiors[session.player.currentInterior];
 });
 
-const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach } = useTrainerAI(
+const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach, startTrainerFleeing } = useTrainerAI(
   session, fsm, currentMapData, playerX, playerY, getTileType, getTrainerId
 );
 
@@ -200,40 +212,51 @@ const handleInput = (e: any) => {
 
   if (!walkable.includes(targetTile)) return false;
 
-  playerX.value = newX;
-  playerY.value = newY;
-  session.updatePlayerPosition({ x: newX, y: newY });
+  fsm.send(GAME_EVENTS.CONFIRM, {
+    moving: true,
+    onComplete: () => {
+      playerX.value = newX;
+      playerY.value = newY;
+      session.updatePlayerPosition({ x: newX, y: newY });
 
-  // 1. Check for Trainers FIRST
-  const triggeredTrainer = checkTrainerLOS(engagedTrainers);
-  if (triggeredTrainer) {
-    const { trainer, trainerId } = triggeredTrainer;
-    const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
-    const firstMonCfg = party[0];
-    const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
+      // 1. Check for Trainers FIRST
+      const triggeredTrainer = checkTrainerLOS(engagedTrainers);
+      if (triggeredTrainer) {
+        const { trainer, trainerId } = triggeredTrainer;
+        const party = trainer.party.map(p => ({ ...p, isDefeated: false }));
+        const firstMonCfg = party[0];
+        const enemyMon = createMon(firstMonCfg.species, firstMonCfg.level);
 
-    initiateTrainerApproach(trainer, trainerId, engagedTrainers, {
-      enemy: enemyMon,
-      type: BATTLE_TYPES.TRAINER,
-      trainerId,
-      trainerParty: party,
-      trainerName: trainer.name,
-      trainerDefeatDialog: trainer.defeatDialog,
-      isStorm: trainer.isStorm,
-      isRival: trainer.isRival
-    });
-  } else {
-    // 2. Wild battle triggers
-    checkTriggers(newX, newY);
-  }
+        initiateTrainerApproach(trainer, trainerId, engagedTrainers, {
+          enemy: enemyMon,
+          type: BATTLE_TYPES.TRAINER,
+          trainerId,
+          trainerParty: party,
+          trainerName: trainer.name,
+          trainerDefeatDialog: trainer.defeatDialog,
+          isStorm: trainer.isStorm,
+          isRival: trainer.isRival
+        });
+      } else {
+        // 2. Wild battle triggers
+        checkTriggers(newX, newY);
+      }
 
-  updateDiscovery(newX, newY);
+      updateDiscovery(newX, newY);
+    }
+  });
+
   return true;
 };
 
 const { startMovement, stopMovement } = usePlayerMovement(playerX, playerY, handleInput);
 
 const handleMapInteractionStart = (e: MouseEvent | TouchEvent) => {
+  if (fsm.matches(GAME_STATES.DIALOG)) {
+    fsm.send(GAME_EVENTS.CONFIRM);
+    return;
+  }
+
   if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return;
 
   const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -281,6 +304,33 @@ watch(() => session.player.mapSeed, (newSeed) => {
   if (newSeed) fsm.transition(GAME_STATES.LOADING);
 });
 
+
+watch(() => session.player.defeatedTrainers, (newList, oldList) => {
+  if (!fsm.matches(GAME_STATES.WORLD)) return;
+  const newlyDefeated = newList.filter(id => !oldList.includes(id));
+  newlyDefeated.forEach(id => {
+    const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
+    if (trainer) {
+      startTrainerFleeing(trainer, id, fleeingTrainers);
+    }
+  });
+}, { deep: true });
+
+watch(() => fsm.state as any, (newState, oldState) => {
+  if (newState === GAME_STATES.WORLD && oldState === GAME_STATES.BATTLE) {
+    const trainersToAnimate = session.player.defeatedTrainers.filter(id => {
+       const t = currentMapData.value?.trainers.find(tr => getTrainerId(tr) === id);
+       return t && !fleeingTrainers.value.some(ft => ft.trainerId === id);
+    });
+
+    trainersToAnimate.forEach(id => {
+       const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
+       if (trainer) {
+         startTrainerFleeing(trainer, id, fleeingTrainers);
+       }
+    });
+  }
+});
 
 watch(() => session.player.position, (newPos, oldPos) => {
   if (newPos) {
@@ -418,12 +468,10 @@ const checkTriggers = (x: number, y: number) => {
 
   if (type === TILE_TYPES.GRASS) {
     if (Math.random() < GAME_CONSTANTS.GRASS_ENCOUNTER_CHANCE) {
-      setTimeout(() => {
-        // Double check alertingTrainer and state to prevent wild battles before trainer
-        if (fsm.matches(GAME_STATES.WORLD) && !alertingTrainer.value) {
-          triggerWildBattle();
-        }
-      }, 300);
+      // Double check alertingTrainer and state to prevent wild battles before trainer
+      if ((fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MOVING)) && !alertingTrainer.value) {
+        triggerWildBattle();
+      }
     }
   }
 };
@@ -461,13 +509,18 @@ const handleNPCInteract = (npc: any) => {
   if (npc.type === NPC_TYPES.HEALER || npc.type === NPC_TYPES.MOM) {
     session.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
-    session.notify(settingsStore.t('menu.healed'));
     if (npc.type === NPC_TYPES.HEALER) {
       session.player.lastSpellCenter = { x: 4, y: 4, interior: INTERIORS.SPELLING_CENTER, floor: null } as any;
     }
     session.save();
   }
-  session.notify(`${settingsStore.t(npc.name)}: "${settingsStore.t(npc.dialog[0])}"`);
+
+  fsm.send(GAME_EVENTS.CONFIRM, {
+    dialog: true,
+    onEnter: () => {
+      session.notify(`${settingsStore.t(npc.name)}: "${settingsStore.t(npc.dialog[0])}"`);
+    }
+  });
 
   if (npc.type === NPC_TYPES.GYM_BOSS || npc.type === NPC_TYPES.TEAM_STORM) {
     // Check requirements

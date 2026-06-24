@@ -1,7 +1,12 @@
 <template>
   <div
     class="absolute w-10 h-10 flex items-center justify-center text-lg transition-all duration-200 linear z-10"
-    :style="{ left: `${x * 40}px`, top: `${y * 40}px` }"
+    :style="{
+      left: `${x * 40}px`,
+      top: `${y * 40}px`,
+      opacity: opacity,
+      transition: 'all 0.2s linear, opacity 0.5s ease'
+    }"
   >
     <span
       v-if="isAlerting"
@@ -20,7 +25,8 @@ const props = defineProps({
   direction: { type: String, default: 'down' },
   isStorm: { type: Boolean, default: false },
   isRival: { type: Boolean, default: false },
-  isAlerting: { type: Boolean, default: false }
+  isAlerting: { type: Boolean, default: false },
+  opacity: { type: Number, default: 1 }
 });
 
 const emoji = computed(() => {
