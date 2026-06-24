@@ -19,10 +19,14 @@ const props = defineProps({
   y: { type: Number, required: true },
   direction: { type: String, default: 'down' },
   isStorm: { type: Boolean, default: false },
+  isRival: { type: Boolean, default: false },
   isAlerting: { type: Boolean, default: false }
 });
 
 const emoji = computed(() => {
+  if (props.isRival) {
+    return '🏃';
+  }
   if (props.isStorm) {
      return '🕴️'; // Mysterious suited person for Team Storm
   }

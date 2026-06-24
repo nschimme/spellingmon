@@ -363,6 +363,14 @@ export function calculateExpToNext(level: number): number {
   return Math.floor(5 * Math.pow(level, 2)) + 10;
 }
 
+export function getRivalStarter(playerSpecies: string): string {
+  const playerType = MONS[playerSpecies]?.type;
+  if (playerType === MONSTER_TYPES.FIRE) return SPECIES.Squirtspell;
+  if (playerType === MONSTER_TYPES.WATER) return SPECIES.Bulbaword;
+  if (playerType === MONSTER_TYPES.GRASS) return SPECIES.Grammander;
+  return SPECIES.Verminverb;
+}
+
 export function createMon(species: string, level: number = 5): Monster {
   const base = MONS[species] || MONS[SPECIES.Verminverb];
   const hp = calculateStat(base.baseHp, level, true);

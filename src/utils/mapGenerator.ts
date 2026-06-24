@@ -140,7 +140,7 @@ export class MapGenerator {
     return Math.floor(this.random() * (max - min + 1)) + min;
   }
 
-  generate(areaNum: number, retryCount: number = 0): MapResult {
+  generate(areaNum: number, rivalStarter: string | null = null, rivalLevel: number = 5, retryCount: number = 0): MapResult {
     const MAX_RETRIES = 10;
     const map = Array(this.height).fill(0).map(() => Array(this.width).fill(TILE_TYPES.WALL));
     const levelMap = Array(this.height).fill(0).map(() => Array(this.width).fill(0));
@@ -239,12 +239,18 @@ export class MapGenerator {
     };
 
     // Home (Area 1 only)
+    let homePos: Point | null = null;
     if (areaNum === 1) {
-      placeBuilding(rooms[1], INTERIORS.HOME_1F, TILE_TYPES.BUILDING);
+      for (let i = 1; i < rooms.length - 1; i++) {
+        homePos = placeBuilding(rooms[i], INTERIORS.HOME_1F, TILE_TYPES.BUILDING);
+        if (homePos) break;
+      }
     }
 
     // Gym
-    placeBuilding(exitRoom, INTERIORS.GYM, TILE_TYPES.BUILDING);
+    for (let i = rooms.length - 1; i >= 1; i--) {
+      if (placeBuilding(rooms[i], INTERIORS.GYM, TILE_TYPES.BUILDING)) break;
+    }
 
     // Update Spelling Center exits
     if (spellCenter) {
@@ -259,6 +265,34 @@ export class MapGenerator {
     }
 
     const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap, occupied);
+
+    // Place Rival Robin
+    if (areaNum === 1 && homePos && rivalStarter) {
+      const rx = homePos.x;
+      const ry = homePos.y + 3; // Positioned to intercept house exit
+
+      // Ensure reachability and Line-of-Sight by clearing a vertical path
+      for (let y = homePos.y + 1; y <= ry; y++) {
+        if (y < this.height) {
+          map[y][rx] = TILE_TYPES.PATH;
+        }
+      }
+
+      if (ry < this.height) {
+        trainers.push({
+          x: rx,
+          y: ry,
+          name: 'npc.rival.name',
+          dialog: 'npc.rival.dialog',
+          defeatDialog: 'npc.rival.defeat',
+          party: [{ species: rivalStarter, level: rivalLevel }],
+          direction: 'up',
+          trainerId: 'rival_1'
+        } as any);
+        map[ry][rx] = TILE_TYPES.TRAINER;
+        occupied.push({ x: rx, y: ry });
+      }
+    }
 
     // 4. Features
     this.addFeatures(map, biome);
@@ -278,7 +312,7 @@ export class MapGenerator {
         // If map is invalid, retry with a slightly modified seed
         this.seed = this.seed + "_retry" + retryCount;
         this.rng = this.mulberry32(this.hashString(this.seed));
-        return this.generate(areaNum, retryCount + 1);
+        return this.generate(areaNum, rivalStarter, rivalLevel, retryCount + 1);
       } else {
         console.error(`Map generation failed after ${MAX_RETRIES} attempts for area ${areaNum}. Using potentially disconnected map.`);
       }
@@ -549,6 +583,7 @@ export class MapGenerator {
 
         trainers.push({
           x, y,
+          trainerId: `area${areaNum}_${i}`,
           name: `${actualTitleKey}::${name}`,
           dialog: actualDialogKey,
           defeatDialog: actualDefeatKey,
