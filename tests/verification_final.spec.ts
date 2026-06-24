@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Trainer encounter has correct i18n display in battle', async ({ page }) => {
-  await page.goto('http://localhost:5174/?debug=true&state=PLAY.WORLD&starter=Squirtspell');
+  await page.goto('http://localhost:5173/?debug=true&state=PLAY.WORLD&starter=Squirtspell');
 
   // Wait for map to load
   await page.waitForTimeout(5000);
@@ -16,9 +16,9 @@ test('Trainer encounter has correct i18n display in battle', async ({ page }) =>
   });
 
   // Walk into LOS
-  await page.keyboard.press('KeyS');
+  await page.keyboard.press('ArrowDown');
   await page.waitForTimeout(500);
-  await page.keyboard.press('KeyS');
+  await page.keyboard.press('ArrowDown');
 
   // Wait for approach, dialogue, and transition to battle (Total ~10s)
   await page.waitForTimeout(12000);
