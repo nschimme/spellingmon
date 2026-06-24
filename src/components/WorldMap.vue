@@ -219,7 +219,8 @@ const handleInput = (e: any) => {
       trainerParty: party,
       trainerName: trainer.name,
       trainerDefeatDialog: trainer.defeatDialog,
-      isStorm: trainer.isStorm
+      isStorm: trainer.isStorm,
+      isRival: trainer.isRival
     });
   } else {
     // 2. Wild battle triggers
@@ -437,7 +438,8 @@ const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
     trainerParty: party,
     trainerName: trainer.name,
     trainerDefeatDialog: trainer.defeatDialog,
-    isStorm: trainer.isStorm
+    isStorm: trainer.isStorm,
+    isRival: trainer.isRival
   });
 };
 

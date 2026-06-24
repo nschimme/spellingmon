@@ -33,6 +33,7 @@ export interface BattleState {
   trainerParty: Monster[];
   trainerDefeatDialog: string | null;
   isStorm: boolean;
+  isRival: boolean;
   participatingMonIds: string[];
   currentWord: Word | null;
   totalTime: number;
@@ -250,6 +251,7 @@ export const useSessionStore = defineStore('session', {
         trainerParty: [],
         trainerDefeatDialog: null,
         isStorm: false,
+        isRival: false,
         participatingMonIds: [],
         currentWord: null,
         totalTime: 0,
