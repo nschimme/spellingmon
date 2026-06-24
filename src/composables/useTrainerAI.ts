@@ -16,7 +16,8 @@ export function useTrainerAI(
   const alertingTrainer = ref<string | null>(null);
 
   const checkTrainerLOS = (engagedTrainers: Set<string>) => {
-    if (!fsm.matches(GAME_STATES.WORLD) || alertingTrainer.value || !currentMapData.value || session.player.currentInterior) return;
+    const isWorld = fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MOVING);
+    if (!isWorld || alertingTrainer.value || !currentMapData.value || session.player.currentInterior) return;
 
     const trainers = currentMapData.value.trainers;
     const LOS_RANGE = 5;

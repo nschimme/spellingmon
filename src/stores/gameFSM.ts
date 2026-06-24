@@ -238,6 +238,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
             on: {
               [GAME_EVENTS.COMPLETE]: (ctx, params) => {
                 if (params?.onComplete) params.onComplete();
+                if (!ctx.fsm.matches(GAME_STATES.MOVING)) return null;
                 return GAME_STATES.WORLD;
               },
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
@@ -532,7 +533,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     return GAME_STATES.WORLD;
                   },
                   [GAME_EVENTS.RELEASE]: (ctx) => {
-                    ctx.session.notify(ctx.t('battle.released'));
+                    if (ctx.session.battle.enemyMon) {
+                      ctx.session.notify(ctx.t('battle.releasedWild', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
+                    }
                     return GAME_STATES.WORLD;
                   }
                 }
