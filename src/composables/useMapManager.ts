@@ -17,12 +17,18 @@ export function useMapManager(session: any) {
     return mapStore.getTileType(x, y);
   };
 
+  const getTrainerId = (trainer: any) => {
+    if (!currentMapData.value) return '';
+    if (trainer.trainerId) return trainer.trainerId;
+    const index = currentMapData.value.trainers.indexOf(trainer);
+    return `area${session.player.currentArea}_${index}`;
+  };
+
   const getTrainerAt = (x: number, y: number) => {
     if (!currentMapData.value) return null;
     const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
     if (!trainer) return null;
-    const index = currentMapData.value.trainers.indexOf(trainer);
-    const trainerId = `area${session.player.currentArea}_${index}`;
+    const trainerId = getTrainerId(trainer);
     if (session.player.defeatedTrainers.includes(trainerId)) return null;
     return { trainer, trainerId };
   };
@@ -38,6 +44,7 @@ export function useMapManager(session: any) {
     areaConfig,
     generateMap,
     getTileType,
+    getTrainerId,
     getTrainerAt,
     updateDiscovery
   };

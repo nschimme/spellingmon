@@ -10,7 +10,8 @@ export function useTrainerAI(
   currentMapData: Ref<MapResult | null>,
   playerX: Ref<number>,
   playerY: Ref<number>,
-  getTileType: (x: number, y: number) => number
+  getTileType: (x: number, y: number) => number,
+  getTrainerId: (trainer: any) => string
 ) {
   const alertingTrainer = ref<string | null>(null);
 
@@ -22,7 +23,7 @@ export function useTrainerAI(
 
     for (let i = 0; i < trainers.length; i++) {
       const t = trainers[i];
-      const trainerId = (t as any).trainerId || `area${session.player.currentArea}_${i}`;
+      const trainerId = getTrainerId(t);
       if (session.player.defeatedTrainers.includes(trainerId)) continue;
       if (engagedTrainers.has(trainerId)) continue;
 
@@ -74,6 +75,7 @@ export function useTrainerAI(
     } else {
       displayName = i18n.global.t(displayName);
     }
+    const dialog = i18n.global.t(trainer.dialog);
     session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: displayName }));
 
     setTimeout(async () => {
@@ -99,15 +101,7 @@ export function useTrainerAI(
 
       alertingTrainer.value = null;
       // Show trainer dialog on the map before battle
-      let logName = trainer.name;
-      if (logName.includes('::')) {
-        const [key, raw] = logName.split('::');
-        logName = `${i18n.global.t(key)} ${raw}`;
-      } else {
-        logName = i18n.global.t(logName);
-      }
-      const dialog = i18n.global.t(trainer.dialog);
-      session.notify(`${logName}: "${dialog}"`);
+      session.notify(`${displayName}: "${dialog}"`);
 
       // Extra delay to allow reading the dialog on the map
       setTimeout(() => {

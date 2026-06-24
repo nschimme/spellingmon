@@ -419,7 +419,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 onEnter: () => { audio.playSound(SOUND_EFFECTS.FAINT); },
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
-                    if (ctx.session.battle.isRival) {
+                    // Check both the battle state flag and the trainerId for robustness
+                    if (ctx.session.battle.isRival || ctx.session.battle.trainerId?.startsWith('rival_')) {
                       if (ctx.session.battle.trainerId) {
                         ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
                       }
@@ -446,6 +447,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   audio.playSound(SOUND_EFFECTS.VICTORY);
 
                   if (ctx.session.battle.type === BATTLE_TYPES.TRAINER && ctx.session.battle.trainerId) {
+                    // Mark trainer as defeated when player wins
                     ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
                   }
 

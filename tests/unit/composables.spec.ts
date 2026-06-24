@@ -95,8 +95,9 @@ describe('useTrainerAI', () => {
     const playerX = ref(12);
     const playerY = ref(10);
     const getTileType = () => TILE_TYPES.EMPTY;
+    const getTrainerId = (t) => t.trainerId || 'test_trainer';
 
-    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType);
+    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType, getTrainerId);
 
     const result = checkTrainerLOS(new Set());
     expect(result).not.toBeNull();
@@ -107,8 +108,9 @@ describe('useTrainerAI', () => {
     const playerX = ref(15);
     const playerY = ref(10);
     const getTileType = (x, y) => (x === 12) ? TILE_TYPES.WALL : TILE_TYPES.EMPTY;
+    const getTrainerId = (t) => t.trainerId || 'test_trainer';
 
-    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType);
+    const { checkTrainerLOS } = useTrainerAI(session, fsm, currentMapData, playerX, playerY, getTileType, getTrainerId);
 
     const result = checkTrainerLOS(new Set());
     expect(result).toBeNull();
