@@ -58,6 +58,7 @@ export interface Trainer extends Point {
   party: Array<{ species: string; level: number }>;
   direction: string;
   isStorm?: boolean;
+  isRival?: boolean;
 }
 
 export interface NPC extends Point {
@@ -288,7 +289,8 @@ export class MapGenerator {
           defeatDialog: 'npc.rival.defeat',
           party: [{ species: rivalStarter, level: rivalLevel }],
           direction: 'up',
-          trainerId: 'rival_1'
+          trainerId: 'rival_1',
+          isRival: true
         } as any);
         map[ry][rx] = TILE_TYPES.TRAINER;
         occupied.push({ x: rx, y: ry });

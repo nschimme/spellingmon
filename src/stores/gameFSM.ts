@@ -243,6 +243,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.trainerParty = params.trainerParty || [];
                     ctx.session.battle.trainerDefeatDialog = params.trainerDefeatDialog || null;
                     ctx.session.battle.isStorm = !!params.isStorm;
+                    ctx.session.battle.isRival = !!params.isRival;
                     ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
 
                     if (params.type === BATTLE_TYPES.TRAINER) {
@@ -250,6 +251,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       if (displayName.includes('::')) {
                         const [key, raw] = displayName.split('::');
                         displayName = `${ctx.t(key)} ${raw}`;
+                      } else if (displayName.startsWith('npc.') || displayName.startsWith('trainer.')) {
+                        displayName = ctx.t(displayName);
                       }
                       ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
@@ -416,7 +419,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 onEnter: () => { audio.playSound(SOUND_EFFECTS.FAINT); },
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
-                    if (ctx.session.battle.trainerId === 'rival_1') {
+                    if (ctx.session.battle.isRival) {
+                      if (ctx.session.battle.trainerId) {
+                        ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
+                      }
                       ctx.session.healParty();
                       ctx.session.notify(ctx.t('npc.rival.mercy'));
                       return GAME_STATES.WORLD;
@@ -463,7 +469,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   [GAME_EVENTS.CONTINUE]: (ctx) => {
                     if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) {
                       let defeatMsg = '';
-                      if (ctx.session.battle.trainerId === 'rival_1') {
+                      if (ctx.session.battle.isRival) {
                         defeatMsg = ctx.t('npc.rival.defeat');
                       } else if (ctx.session.battle.trainerDefeatDialog) {
                         defeatMsg = ctx.t(ctx.session.battle.trainerDefeatDialog);

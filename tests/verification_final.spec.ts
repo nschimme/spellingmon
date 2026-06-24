@@ -12,6 +12,7 @@ test('Trainer encounter has correct i18n display in battle', async ({ page }) =>
     context.session.player.currentInterior = null;
     const trainers = context.map.currentMapData.trainers;
     const t = trainers[0];
+    t.direction = 'up'; // Force direction for LOS
     context.session.updatePlayerPosition({ x: t.x, y: t.y - 3 });
   });
 
