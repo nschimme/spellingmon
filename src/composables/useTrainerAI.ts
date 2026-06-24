@@ -119,7 +119,7 @@ export function useTrainerAI(
     const h = map.length;
     const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS, TILE_TYPES.SPELL_CENTER, TILE_TYPES.TRAINER, TILE_TYPES.TRANSITION, TILE_TYPES.CARPET];
 
-    const queue: [number, number, {x:number, y:number}[]][] = [[startX, startY, []]];
+    const queue: [number, number, { x: number, y: number, dir: string }[]][] = [[startX, startY, []]];
     const visited = new Set([`${startX},${startY}`]);
 
     while (queue.length > 0) {
@@ -131,12 +131,17 @@ export function useTrainerAI(
         return path;
       }
 
-      const neighbors = [[x + 1, y, 'right'], [x - 1, y, 'left'], [x, y + 1, 'down'], [x, y - 1, 'up']];
+      const neighbors: [number, number, string][] = [
+        [x + 1, y, 'right'],
+        [x - 1, y, 'left'],
+        [x, y + 1, 'down'],
+        [x, y - 1, 'up']
+      ];
       for (const [nx, ny, dir] of neighbors) {
         const key = `${nx},${ny}`;
-        if (nx >= 0 && nx < w && ny >= 0 && ny < h && walkable.includes(map[ny as number][nx as number]) && !visited.has(key)) {
+        if (nx >= 0 && nx < w && ny >= 0 && ny < h && walkable.includes(map[ny][nx]) && !visited.has(key)) {
           visited.add(key);
-          queue.push([nx as number, ny as number, [...path, { x: nx as number, y: ny as number, dir: dir as string }]]);
+          queue.push([nx, ny, [...path, { x: nx, y: ny, dir }]]);
         }
       }
     }
