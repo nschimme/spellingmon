@@ -35,6 +35,7 @@
           :y="trainer.y"
           :direction="trainer.direction"
           :is-storm="trainer.isStorm"
+          :is-rival="trainer.trainerId === 'rival_1'"
           :is-alerting="alertingTrainer === trainer.trainerId"
         />
       </template>
@@ -89,7 +90,7 @@ import { useVocabStore } from '../stores/vocabStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
-import { createMon, SPECIES } from '../utils/gameData';
+import { createMon } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS } from '../utils/constants';
 import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
 
@@ -279,6 +280,7 @@ watch(() => session.player.mapSeed, (newSeed) => {
   if (newSeed) fsm.transition(GAME_STATES.LOADING);
 });
 
+
 watch(() => session.player.position, (newPos, oldPos) => {
   if (newPos) {
     // If distance > 1, it's a jump (teleport/respawn)
@@ -331,7 +333,7 @@ const viewportTrainers = computed(() => {
   const endY = startY + VIEWPORT_SIZE;
 
   return currentMapData.value.trainers
-    .map((t, i) => ({ ...t, trainerId: `area${session.player.currentArea}_${i}` }))
+    .map((t, i) => ({ ...t, trainerId: t.trainerId || `area${session.player.currentArea}_${i}` }))
     .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !session.player.defeatedTrainers.includes(t.trainerId));
 });
 
@@ -440,7 +442,6 @@ const triggerTrainerBattle = async (trainer: Trainer, trainerId: string) => {
 };
 
 const handleTransition = (exit: any) => {
-  const fromHome = session.player.currentInterior === INTERIORS.HOME_1F && exit.target === INTERIORS.WORLD;
   fsm.send(GAME_EVENTS.CONFIRM, {
     targetState: GAME_STATES.WORLD,
     target: GAME_STATES.WORLD, // For LOADING gateway
@@ -451,26 +452,7 @@ const handleTransition = (exit: any) => {
         session.player.currentInterior = exit.target;
       }
       session.updatePlayerPosition(exit.targetPos);
-
-      if (fromHome && !session.player.defeatedTrainers.includes('rival_1')) {
-        triggerRivalBattle();
-      }
     }
-  });
-};
-
-const triggerRivalBattle = async () => {
-  await vocabStore.loadVocab(1, settingsStore.locale);
-  const species = SPECIES.Verminverb;
-  const playerLevel = session.player.party[0]?.level || 5;
-  const enemyMon = createMon(species, playerLevel);
-
-  fsm.send(GAME_EVENTS.ENCOUNTER, {
-    enemy: enemyMon,
-    type: BATTLE_TYPES.TRAINER,
-    trainerId: 'rival_1',
-    trainerParty: [{ species, level: playerLevel }],
-    trainerName: settingsStore.t('npc.rival.name')
   });
 };
 

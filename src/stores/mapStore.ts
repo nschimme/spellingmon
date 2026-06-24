@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { MapGenerator, type MapResult, TILE_TYPES } from '../utils/mapGenerator';
 import { useSessionStore } from './sessionStore';
 import { INTERIORS, GAME_CONSTANTS } from '../utils/constants';
+import { getRivalStarter } from '../utils/gameData';
 
 export const useMapStore = defineStore('map', () => {
   const session = useSessionStore();
@@ -29,7 +30,15 @@ export const useMapStore = defineStore('map', () => {
     await new Promise(resolve => setTimeout(resolve, 0));
 
     const gen = new MapGenerator(session.player.mapSeed, MAP_WIDTH, MAP_HEIGHT);
-    const result = gen.generate(session.player.currentArea);
+
+    let rivalStarter = null;
+    let rivalLevel = 5;
+    if (session.player.currentArea === 1 && session.player.party.length > 0) {
+      rivalStarter = getRivalStarter(session.player.party[0].species);
+      rivalLevel = session.player.party[0].level;
+    }
+
+    const result = gen.generate(session.player.currentArea, rivalStarter, rivalLevel);
     currentMapData.value = result;
     lastSeed = session.player.mapSeed;
     lastArea = session.player.currentArea;

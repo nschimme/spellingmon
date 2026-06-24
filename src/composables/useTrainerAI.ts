@@ -22,7 +22,7 @@ export function useTrainerAI(
 
     for (let i = 0; i < trainers.length; i++) {
       const t = trainers[i];
-      const trainerId = `area${session.player.currentArea}_${i}`;
+      const trainerId = (t as any).trainerId || `area${session.player.currentArea}_${i}`;
       if (session.player.defeatedTrainers.includes(trainerId)) continue;
       if (engagedTrainers.has(trainerId)) continue;
 
@@ -71,6 +71,8 @@ export function useTrainerAI(
     if (displayName.includes('::')) {
       const [key, raw] = displayName.split('::');
       displayName = `${i18n.global.t(key)} ${raw}`;
+    } else {
+      displayName = i18n.global.t(displayName);
     }
     session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: displayName }));
 
@@ -101,8 +103,11 @@ export function useTrainerAI(
       if (logName.includes('::')) {
         const [key, raw] = logName.split('::');
         logName = `${i18n.global.t(key)} ${raw}`;
+      } else {
+        logName = i18n.global.t(logName);
       }
-      session.notify(`${logName}: "${trainer.dialog}"`);
+      const dialog = i18n.global.t(trainer.dialog);
+      session.notify(`${logName}: "${dialog}"`);
 
       // Extra delay to allow reading the dialog on the map
       setTimeout(() => {
