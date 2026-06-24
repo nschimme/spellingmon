@@ -420,7 +420,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
                     // Check both the battle state flag and the trainerId for robustness
-                    if (ctx.session.battle.isRival || ctx.session.battle.trainerId === 'rival_1') {
+                    if (ctx.session.battle.isRival || ctx.session.battle.trainerId?.startsWith('rival_')) {
                       ctx.session.healParty();
                       ctx.session.notify(ctx.t('npc.rival.mercy'));
                       return GAME_STATES.WORLD;

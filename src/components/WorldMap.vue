@@ -92,7 +92,7 @@ import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
 import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS } from '../utils/constants';
-import { TILE_TYPES, type Trainer } from '../utils/mapGenerator';
+import { TILE_TYPES } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
 import { useTrainerAI } from '../composables/useTrainerAI';
@@ -125,7 +125,7 @@ const isJumping = ref(false);
 
 const {
   MAP_WIDTH, MAP_HEIGHT, currentMapData, areaConfig,
-  generateMap, getTileType, getTrainerAt, updateDiscovery
+  generateMap, getTileType, getTrainerId, getTrainerAt, updateDiscovery
 } = useMapManager(session);
 
 const mapContainerStyle = computed(() => {
@@ -334,8 +334,8 @@ const viewportTrainers = computed(() => {
   const endY = startY + VIEWPORT_SIZE;
 
   return currentMapData.value.trainers
-    .map((t, i) => {
-      const trainerId = t.trainerId || `area${session.player.currentArea}_${i}`;
+    .map((t) => {
+      const trainerId = getTrainerId(t);
       return { ...t, trainerId };
     })
     .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !session.player.defeatedTrainers.includes(t.trainerId));
@@ -397,8 +397,8 @@ const checkTriggers = (x: number, y: number) => {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
     if (!transition) return;
     if (transition.type === TRANSITION_TYPES.NEXT) {
-      const allDefeated = currentMapData.value.trainers.every((t, i) => {
-        const tid = t.trainerId || `area${session.player.currentArea}_${i}`;
+      const allDefeated = currentMapData.value.trainers.every((t) => {
+        const tid = getTrainerId(t);
         return session.player.defeatedTrainers.includes(tid);
       });
       if (!allDefeated) {
@@ -473,8 +473,8 @@ const handleNPCInteract = (npc: any) => {
     // Check requirements
     const vocabCount = vocabStore.vocabData[`${settingsStore.locale}_${session.player.currentArea}`]?.length || 40;
     const mastered = session.isAreaMastered(session.player.currentArea, vocabCount);
-    const trainersDefeated = currentMapData.value?.trainers.every((t, i) => {
-      const tid = t.trainerId || `area${session.player.currentArea}_${i}`;
+    const trainersDefeated = currentMapData.value?.trainers.every((t) => {
+      const tid = getTrainerId(t);
       return session.player.defeatedTrainers.includes(tid);
     });
 

@@ -44,6 +44,7 @@ export function useMapManager(session: any) {
     areaConfig,
     generateMap,
     getTileType,
+    getTrainerId,
     getTrainerAt,
     updateDiscovery
   };
