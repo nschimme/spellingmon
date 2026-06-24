@@ -250,6 +250,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       if (displayName.includes('::')) {
                         const [key, raw] = displayName.split('::');
                         displayName = `${ctx.t(key)} ${raw}`;
+                      } else {
+                        displayName = ctx.t(displayName);
                       }
                       ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
@@ -417,6 +419,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx) => {
                     if (ctx.session.battle.trainerId === 'rival_1') {
+                      ctx.session.recordTrainerDefeat('rival_1');
                       ctx.session.healParty();
                       ctx.session.notify(ctx.t('npc.rival.mercy'));
                       return GAME_STATES.WORLD;
