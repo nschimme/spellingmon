@@ -22,34 +22,41 @@ describe('Spellingmon Stats and Mechanics', () => {
   });
 
   it('calculates damage with type advantages', () => {
-    const attacker = { species: 'Squirtspell', type: 'Water', level: 10, atk: 20 };
-    const defender = { species: 'Grammander', type: 'Fire', level: 10, def: 15 };
+    const attacker = { species: 'Squirtspell', types: ['Water'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {} } as any;
+    const defender = { species: 'Grammander', types: ['Fire'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {} } as any;
+    const move = { type: 'Water', category: 'Special', power: 40, accuracy: 100 } as any;
 
     // Water vs Fire should have 2x multiplier
-    const result = calculateDamage(attacker, defender, 40);
+    const result = calculateDamage(attacker, defender, move, { isCorrect: true, isPerfect: false, isPower: true });
     expect(result.typeMod).toBe(2);
     expect(result.damage).toBeGreaterThan(1);
   });
 
   it('calculates damage with type resistances', () => {
-    const attacker = { species: 'Grammander', type: 'Fire', level: 10, atk: 20 };
-    const defender = { species: 'Squirtspell', type: 'Water', level: 10, def: 15 };
+    const attacker = { species: 'Grammander', types: ['Fire'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {} } as any;
+    const defender = { species: 'Squirtspell', types: ['Water'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {} } as any;
+    const move = { type: 'Fire', category: 'Special', power: 40, accuracy: 100 } as any;
 
     // Fire vs Water should have 0.5x multiplier
-    const result = calculateDamage(attacker, defender, 40);
+    const result = calculateDamage(attacker, defender, move, { isCorrect: true, isPerfect: false, isPower: true });
     expect(result.typeMod).toBe(0.5);
   });
 
-  it('calculates damage incorporating word difficulty', () => {
-    const attacker = { species: 'Grammander', type: 'Fire', level: 10, atk: 20 };
-    const defender = { species: 'Caterspell', type: 'Bug', level: 10, def: 15 };
+  it('calculates damage incorporating word difficulty (performance)', () => {
+    const attacker = { species: 'Grammander', types: ['Fire'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {}, status: 'None' } as any;
+    const defender = { species: 'Caterspell', types: ['Bug'], level: 10, atk: 20, spa: 20, def: 20, spd: 20, spe: 20, stages: {}, status: 'None' } as any;
+    const move = { type: 'Fire', category: 'Special', power: 40, accuracy: 100 } as any;
 
-    // Easy word (difficulty 1)
-    const resultEasy = calculateDamage(attacker, defender, 40, 1);
-    // Hard word (difficulty 2)
-    const resultHard = calculateDamage(attacker, defender, 40, 2);
+    // Fix random factor for test
+    vi.spyOn(Math, 'random').mockReturnValue(0.9);
 
-    // Using toBeCloseTo or checking if it's within 1 because of Math.floor during calculation
-    expect(resultHard.damage).toBeGreaterThanOrEqual(Math.floor(resultEasy.damage * 1.5));
+    // Normal word (isPower false)
+    const resultNormal = calculateDamage(attacker, defender, move, { isCorrect: true, isPerfect: false, isPower: false });
+    // Power word (isPower true)
+    const resultPower = calculateDamage(attacker, defender, move, { isCorrect: true, isPerfect: false, isPower: true });
+
+    expect(resultPower.damage).toBeGreaterThan(resultNormal.damage);
+
+    vi.restoreAllMocks();
   });
 });

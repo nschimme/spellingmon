@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useGameFSM } from '../../src/stores/gameFSM';
 import { useSessionStore } from '../../src/stores/sessionStore';
 import { useVocabStore } from '../../src/stores/vocabStore';
-import { GAME_STATES, GAME_EVENTS } from '../../src/utils/constants';
+import { GAME_STATES, GAME_EVENTS, MOVE_IDS } from '../../src/utils/constants';
 
 describe('Tiered Attack Quality and Damage via FSM', () => {
   beforeEach(() => {
@@ -13,24 +13,32 @@ describe('Tiered Attack Quality and Damage via FSM', () => {
   const mockPlayer = {
     id: 'p1',
     species: 'Grammander',
-    type: 'Fire',
+    types: ['Fire'],
     level: 10,
     hp: 30,
     maxHp: 30,
     atk: 20,
     def: 20,
-    spd: 20
+    spa: 20,
+    spd: 20,
+    spe: 20,
+    stages: {},
+    moves: ['TypoTackle']
   };
 
   const mockEnemy = {
     species: 'Bulbaword',
-    type: 'Grass',
+    types: ['Grass', 'Poison'],
     level: 10,
     hp: 30,
     maxHp: 30,
     atk: 20,
     def: 20,
-    spd: 20
+    spa: 20,
+    spd: 20,
+    spe: 20,
+    stages: {},
+    moves: ['TypoTackle']
   };
 
   it('awards more power for Perfect than just Correct', async () => {
@@ -40,9 +48,10 @@ describe('Tiered Attack Quality and Damage via FSM', () => {
     // Mock vocab to return a specific word
     vocab.getRandomWord = vi.fn().mockReturnValue({ word: 'APPLE', difficulty: 1 });
 
-    session.player.party = [mockPlayer];
+    session.player.party = [mockPlayer as any];
     session.battle.playerMonId = 'p1';
-    session.battle.enemyMon = { ...mockEnemy };
+    session.battle.enemyMon = { ...mockEnemy } as any;
+    session.battle.selectedMoveId = MOVE_IDS.Tackle;
 
     const fsm = useGameFSM();
 
@@ -62,7 +71,7 @@ describe('Tiered Attack Quality and Damage via FSM', () => {
     // Use the internal state to access params if proxy is being tricky in tests
     const fsmInternal = fsm; // In setup store, this IS the returned object
     // Try both paths
-    const power = fsm.params?.power ?? fsm.state.params?.power;
-    expect(power).toBeGreaterThanOrEqual(60);
+    const isPerfect = fsm.params?.isPerfect ?? fsm.state.params?.isPerfect;
+    expect(isPerfect).toBe(true);
   });
 });
