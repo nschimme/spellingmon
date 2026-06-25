@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
 import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
@@ -24,15 +24,15 @@ function applyMoveEffect(ctx: any, attacker: Monster, defender: Monster, move: M
   const stat = move.effectStat;
   const amount = move.effectAmount || 1;
 
-  if (type === 'STAT_DOWN') {
+  if (type === MOVE_EFFECT_TYPES.STAT_DOWN) {
      const target = defender;
      target.stages[stat!] = Math.max(-6, (target.stages[stat!] || 0) - amount);
      log.push(t(amount > 1 ? 'battle.statDown2' : 'battle.statDown', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
-  } else if (type === 'STAT_UP') {
+  } else if (type === MOVE_EFFECT_TYPES.STAT_UP) {
      const target = attacker;
      target.stages[stat!] = Math.min(6, (target.stages[stat!] || 0) + amount);
      log.push(t(amount > 1 ? 'battle.statUp2' : 'battle.statUp', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
-  } else if (type === 'STATUS') {
+  } else if (type === MOVE_EFFECT_TYPES.STATUS) {
      if (stat === 'CONFUSION') {
         if (!defender.confusionTurns) {
            defender.confusionTurns = 2 + Math.floor(Math.random() * 4);
@@ -53,15 +53,15 @@ function applyMoveEffect(ctx: any, attacker: Monster, defender: Monster, move: M
         }
         log.push(t('battle.statusApplied', { mon: t('monsters.' + defender.species), status: t('battle.status.' + stat!.toLowerCase()) }));
      }
-  } else if (type === 'HEAL') {
+  } else if (type === MOVE_EFFECT_TYPES.HEAL) {
      const heal = Math.floor(attacker.maxHp / 2);
      attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
      log.push(t('battle.healed', { name: t('monsters.' + attacker.species) }));
-  } else if (type === 'DRAIN') {
+  } else if (type === MOVE_EFFECT_TYPES.DRAIN) {
      const heal = Math.floor(damage / 2);
      attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
      log.push(t('battle.drained', { name: t('monsters.' + attacker.species) }));
-  } else if (type === 'RECOIL') {
+  } else if (type === MOVE_EFFECT_TYPES.RECOIL) {
      const recoil = Math.floor(damage / 4);
      attacker.hp = Math.max(0, attacker.hp - recoil);
      log.push(t('battle.recoil', { name: t('monsters.' + attacker.species) }));
@@ -694,7 +694,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                    }
 
                    // AI: Pick a random move
-                   const moveId = enemyMon.moves[Math.floor(Math.random() * enemyMon.moves.length)] || 'TypoTackle';
+                   const moveId = enemyMon.moves[Math.floor(Math.random() * enemyMon.moves.length)] || MOVE_IDS.Tackle;
                    const move = MOVES[moveId];
 
                    ctx.session.battle.log.push(ctx.t('battle.usedMove', { mon: ctx.t('monsters.' + enemyMon.species), move: ctx.t('moves.' + move.id) }));
