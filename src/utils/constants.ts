@@ -298,6 +298,7 @@ export const MOVE_IDS = {
   Thrash: 'Thrash',
   Thunder: 'Thunder',
   ThunderPunch: 'ThunderPunch',
+  TripleKick: 'TripleKick',
   ThunderShock: 'ThunderShock',
   ThunderWave: 'ThunderWave',
   Thunderbolt: 'Thunderbolt',
@@ -310,6 +311,7 @@ export const MOVE_IDS = {
   Waterfall: 'Waterfall',
   Whirlwind: 'Whirlwind',
   WingAttack: 'WingAttack',
+  Withdraw: 'Withdraw',
   Wrap: 'Wrap',
 };
 
