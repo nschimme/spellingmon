@@ -413,7 +413,6 @@ export const useSessionStore = defineStore('session', {
 
     notify(message: string) {
       this.notification = message;
-      setTimeout(() => { if (this.notification === message) this.notification = null; }, 3000);
     },
 
     setPlayerData(data: { name?: string; gender?: string; skinTone?: string }) {

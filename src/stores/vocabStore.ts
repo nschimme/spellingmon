@@ -27,7 +27,7 @@ export const useVocabStore = defineStore('vocab', {
         console.error(`Failed to load vocab for area ${area} in ${lang}:`, error);
       }
     },
-    getRandomWord(area: number, lang = 'en-US'): Word | null {
+    getRandomWord(area: number, lang = 'en-US', session?: any): Word | null {
       const cacheKey = `${lang}_${area}`;
 
       if (!this.vocabPool[cacheKey] || this.vocabPool[cacheKey].length === 0) {
@@ -37,7 +37,18 @@ export const useVocabStore = defineStore('vocab', {
           return null;
         }
 
-        const shuffled = [...words].sort(() => Math.random() - 0.5);
+        const areaStats = session?.dex?.words?.[area] || {};
+
+        const shuffled = [...words].sort((a, b) => {
+          const stateA = areaStats[a.word] || 'seen';
+          const stateB = areaStats[b.word] || 'seen';
+
+          // Prioritize non-mastered words
+          if (stateA !== 'mastered' && stateB === 'mastered') return -1;
+          if (stateA === 'mastered' && stateB !== 'mastered') return 1;
+
+          return Math.random() - 0.5;
+        });
 
         // Avoid direct repeats when resorting
         if (shuffled.length > 1 && shuffled[0].word === this.lastWord[cacheKey]) {

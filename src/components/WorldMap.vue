@@ -11,9 +11,11 @@
   >
     <!-- Map Rendering -->
     <div
-      class="absolute transition-all duration-200 linear"
-      :class="{ 'duration-0': isJumping }"
-      :style="mapContainerStyle"
+      class="absolute transition-all linear"
+      :style="{
+        ...mapContainerStyle,
+        transitionDuration: isJumping ? '0ms' : `${GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS}ms`
+      }"
     >
       <transition-group name="tile-fade">
         <MapTile
@@ -58,6 +60,7 @@
         :type="npc.type"
         :x="npc.x"
         :y="npc.y"
+        :show-bubble="Math.abs(playerX - npc.x) + Math.abs(playerY - npc.y) <= 1"
         @interact="handleNPCInteract(npc)"
       />
     </div>
@@ -170,7 +173,13 @@ const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach, startTrainerF
 );
 
 const handleInput = (e: any) => {
-  if (!fsm.matches(GAME_STATES.WORLD) || props.isMenuOpen) return false;
+  if (fsm.matches(GAME_STATES.DIALOG)) {
+    fsm.send(GAME_EVENTS.CONFIRM);
+    return true;
+  }
+
+  const isMapAccessible = fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MOVING);
+  if (!isMapAccessible || props.isMenuOpen) return false;
 
   const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
 
@@ -196,6 +205,9 @@ const handleInput = (e: any) => {
 
   if (!moved) return false;
 
+  // Clear any existing notification when starting to move
+  session.notification = null;
+
   const targetTile = getTileType(newX, newY);
   const walkable = [
     TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.GRASS,
@@ -214,6 +226,7 @@ const handleInput = (e: any) => {
 
   fsm.send(GAME_EVENTS.CONFIRM, {
     moving: true,
+    duration: GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS,
     onComplete: () => {
       playerX.value = newX;
       playerY.value = newY;
@@ -252,6 +265,11 @@ const handleInput = (e: any) => {
 const { startMovement, stopMovement } = usePlayerMovement(playerX, playerY, handleInput);
 
 const handleMapInteractionStart = (e: MouseEvent | TouchEvent) => {
+  // Clear notification on any interaction
+  if (session.notification) {
+    session.notification = null;
+  }
+
   if (fsm.matches(GAME_STATES.DIALOG)) {
     fsm.send(GAME_EVENTS.CONFIRM);
     return;
@@ -447,11 +465,8 @@ const checkTriggers = (x: number, y: number) => {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
     if (!transition) return;
     if (transition.type === TRANSITION_TYPES.NEXT) {
-      const allDefeated = currentMapData.value.trainers.every((t) => {
-        const tid = getTrainerId(t);
-        return session.player.defeatedTrainers.includes(tid);
-      });
-      if (!allDefeated) {
+      const hasBadge = session.player.badges.includes(`badge_${session.player.currentArea}`);
+      if (!hasBadge) {
         session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;
       }
@@ -526,12 +541,8 @@ const handleNPCInteract = (npc: any) => {
     // Check requirements
     const vocabCount = vocabStore.vocabData[`${settingsStore.locale}_${session.player.currentArea}`]?.length || 40;
     const mastered = session.isAreaMastered(session.player.currentArea, vocabCount);
-    const trainersDefeated = currentMapData.value?.trainers.every((t) => {
-      const tid = getTrainerId(t);
-      return session.player.defeatedTrainers.includes(tid);
-    });
 
-    if (mastered && trainersDefeated) {
+    if (mastered) {
        triggerGymBossBattle(npc);
     } else {
        session.notify(settingsStore.t('gym.notReady'));

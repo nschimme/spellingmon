@@ -37,11 +37,9 @@ const handleGlobalInput = (e: KeyboardEvent) => {
     }
   }
 
-  if (e.key === ' ' || e.key === 'Enter') {
-    if (fsm.matches(GAME_STATES.DIALOG)) {
-      fsm.send(GAME_EVENTS.CONFIRM);
-      return true;
-    }
+  if (fsm.matches(GAME_STATES.DIALOG)) {
+    fsm.send(GAME_EVENTS.CONFIRM);
+    return true;
   }
   return false;
 };
@@ -98,7 +96,7 @@ onUnmounted(() => {
 
       <template v-else-if="fsm.matches(GAME_STATES.PLAY)">
         <WorldMap
-          v-if="fsm.matches(GAME_STATES.PLAY)"
+          v-show="!fsm.matches(GAME_STATES.BATTLE) || fsm.matches(GAME_STATES.BATTLE_INTRO)"
           :is-menu-open="fsm.matches(GAME_STATES.MENU)"
           @toggle-menu="fsm.send(fsm.matches(GAME_STATES.MENU) ? GAME_EVENTS.CLOSE : GAME_EVENTS.OPEN_MENU)"
         />

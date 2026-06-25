@@ -231,11 +231,19 @@ export const useGameFSM = defineStore('gameFSM', () => {
           },
           [s(GAME_STATES.MOVING)]: {
             onEnter: (ctx, params) => {
+              const duration = params?.duration ?? 150;
               setTimeout(() => {
                 ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
-              }, 200); // Match WorldMap animation duration
+              }, duration);
             },
             on: {
+              [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                 if (params?.moving) {
+                    // Chained movement: restart MOVING state
+                    return { target: GAME_STATES.MOVING, params };
+                 }
+                 return null;
+              },
               [GAME_EVENTS.COMPLETE]: (ctx, params) => {
                 if (params?.onComplete) params.onComplete();
                 if (!ctx.fsm.matches(GAME_STATES.MOVING)) return null;
@@ -248,10 +256,17 @@ export const useGameFSM = defineStore('gameFSM', () => {
             }
           },
           [s(GAME_STATES.DIALOG)]: {
+            onEnter: (ctx, params) => {
+              if (params?.onEnter) params.onEnter();
+            },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx) => {
                 ctx.session.notification = null;
                 return GAME_STATES.WORLD;
+              },
+              [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
+                if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
+                return GAME_STATES.BATTLE_INTRO;
               },
               [GAME_EVENTS.CLOSE]: GAME_STATES.WORLD
             }
@@ -270,10 +285,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [s(GAME_STATES.BATTLE_INTRO)]: {
                 onEnter: async (ctx, params) => {
                   if (params.enemy) {
-                    ctx.session.battle.enemyMon = params.enemy;
+                    let enemy = params.enemy;
+                    let trainerParty = params.trainerParty || [];
+
+                    // Rival Scaling Logic
+                    if (params.trainerId === 'rival_1' && ctx.session.player.party.length > 0) {
+                      const lead = ctx.session.player.party[0];
+                      const rivalSpecies = getRivalStarter(lead.species);
+                      enemy = createMon(rivalSpecies, lead.level);
+                      trainerParty = [{ species: rivalSpecies, level: lead.level }];
+                    }
+
+                    ctx.session.battle.enemyMon = enemy;
                     ctx.session.battle.type = params.type || BATTLE_TYPES.WILD;
                     ctx.session.battle.trainerId = params.trainerId;
-                    ctx.session.battle.trainerParty = params.trainerParty || [];
+                    ctx.session.battle.trainerParty = trainerParty;
                     ctx.session.battle.trainerDefeatDialog = params.trainerDefeatDialog || null;
                     ctx.session.battle.isStorm = !!params.isStorm;
                     ctx.session.battle.isRival = !!params.isRival;
@@ -289,7 +315,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       }
                       ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
-                      ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
+                      ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + enemy.species) })];
                     }
 
                     ctx.session.battle.participatingMonIds = [ctx.session.battle.playerMonId];
@@ -343,7 +369,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                      wordObj = { word: ctx.session.battle.debugWord, difficulty: 1, definition: 'Debug word', sentence_context: 'Debug.' };
                      ctx.session.battle.debugWord = null;
                   } else {
-                     wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale);
+                     wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale, ctx.session);
                   }
                   ctx.session.battle.currentWord = wordObj;
                   const time = calculateTimerDuration(wordObj, ctx.session.battle.isCapturing);
