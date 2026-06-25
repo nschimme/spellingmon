@@ -577,7 +577,7 @@ const triggerGymBossBattle = async (npc: any) => {
 
   const displayName = settingsStore.t(npc.name);
   const dialogLines = [
-    fsm.t('battle.trainerWantsToBattle', { name: displayName }),
+    settingsStore.t('battle.trainerWantsToBattle', { name: displayName }),
     `"${settingsStore.t(npc.dialog[0])}"`
   ];
 
