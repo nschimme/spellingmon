@@ -523,7 +523,6 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [s(GAME_STATES.BATTLE_PLAYER_ATTACK)]: {
                 onEnter: async (ctx, params) => {
                    const attacker = ctx.session.activePlayerMon!;
-                   const defender = ctx.session.battle.enemyMon!;
 
                    if (attacker.status === STATUS_CONDITIONS.PARALYSIS && Math.random() < 0.25) {
                       ctx.session.battle.log.push(ctx.t('battle.isParalyzed', { name: ctx.t('monsters.' + attacker.species) }));

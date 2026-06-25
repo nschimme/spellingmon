@@ -235,25 +235,37 @@
               v-for="(moveId, idx) in session.activePlayerMon?.moves"
               :key="moveId"
               :ref="el => setMoveRef(el, idx)"
-              class="relative overflow-hidden text-white p-2 rounded-lg font-black border-b-4 border-black/20 text-[10px] uppercase tracking-tighter outline-none transition-all h-12 flex flex-col items-center justify-center leading-none"
+              class="relative flex h-12 flex-col items-center justify-center overflow-hidden rounded-lg border-b-4 border-black/20 p-2 text-[10px] font-black uppercase tracking-tighter text-white outline-none transition-all"
               :class="[TYPE_COLORS[MOVES[moveId]?.type], { 'ring-4 ring-yellow-400 scale-105 z-10': moveIndex === idx }]"
               @click="fsm.send(GAME_EVENTS.CONFIRM, { moveId })"
             >
               <span>{{ $t('moves.' + moveId) }}</span>
-              <div class="flex items-center gap-1 mt-1">
-                 <span v-if="MOVES[moveId]?.category === 'Physical'" title="Physical">💥</span>
-                 <span v-else-if="MOVES[moveId]?.category === 'Special'" title="Special">✨</span>
-                 <span v-else title="Status">🛡️</span>
-                 <span v-if="getEffectiveness(moveId)" class="bg-black/30 px-1 rounded text-[8px] italic">
-                    {{ getEffectiveness(moveId) }}
-                 </span>
+              <div class="mt-1 flex items-center gap-1">
+                <span
+                  v-if="MOVES[moveId]?.category === 'Physical'"
+                  title="Physical"
+                >💥</span>
+                <span
+                  v-else-if="MOVES[moveId]?.category === 'Special'"
+                  title="Special"
+                >✨</span>
+                <span
+                  v-else
+                  title="Status"
+                >🛡️</span>
+                <span
+                  v-if="getEffectiveness(moveId)"
+                  class="bg-black/30 px-1 rounded text-[8px] italic"
+                >
+                  {{ getEffectiveness(moveId) }}
+                </span>
               </div>
             </button>
             <button
-               class="col-span-2 text-[10px] font-bold text-gray-500 hover:text-gray-800 uppercase tracking-widest mt-1"
-               @click="fsm.send(GAME_EVENTS.BACK)"
+              class="col-span-2 mt-1 text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-gray-800"
+              @click="fsm.send(GAME_EVENTS.BACK)"
             >
-               &lt; {{ $t('common.back') }}
+              &lt; {{ $t('common.back') }}
             </button>
           </div>
         </template>
@@ -332,24 +344,27 @@
 
         <!-- Learn Move -->
         <template v-if="session.moveLearningPending">
-           <div class="flex flex-col h-full text-center">
-              <p class="text-[10px] font-bold mb-1">
-                 {{ $t('battle.learnMovePrompt', { move: $t('moves.' + session.moveLearningPending.moveId) }) }}
-              </p>
-              <div class="grid grid-cols-2 gap-1 flex-1 overflow-y-auto">
-                 <button
-                    v-for="mId in session.player.party.find(m => m.id === session.moveLearningPending!.monId)?.moves"
-                    :key="mId"
-                    class="bg-gray-200 border-2 border-gray-800 p-1 rounded text-[8px] font-bold"
-                    @click="session.learnMove(session.moveLearningPending!.monId, session.moveLearningPending!.moveId, mId)"
-                 >
-                    {{ $t('battle.replaceMove', { move: $t('moves.' + mId) }) }}
-                 </button>
-              </div>
-              <button class="text-[10px] text-red-500 font-bold mt-1" @click="session.cancelMoveLearning()">
-                 Don't learn
+          <div class="flex h-full flex-col text-center">
+            <p class="mb-1 text-[10px] font-bold">
+              {{ $t('battle.learnMovePrompt', { move: $t('moves.' + session.moveLearningPending.moveId) }) }}
+            </p>
+            <div class="grid flex-1 grid-cols-2 gap-1 overflow-y-auto">
+              <button
+                v-for="mId in session.player.party.find(m => m.id === session.moveLearningPending!.monId)?.moves"
+                :key="mId"
+                class="rounded border-2 border-gray-800 bg-gray-200 p-1 text-[8px] font-bold"
+                @click="session.learnMove(session.moveLearningPending!.monId, session.moveLearningPending!.moveId, mId)"
+              >
+                {{ $t('battle.replaceMove', { move: $t('moves.' + mId) }) }}
               </button>
-           </div>
+            </div>
+            <button
+              class="mt-1 text-[10px] font-bold text-red-500"
+              @click="session.cancelMoveLearning()"
+            >
+              Don't learn
+            </button>
+          </div>
         </template>
 
         <!-- Results -->
