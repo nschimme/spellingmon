@@ -8,6 +8,7 @@
     @mouseleave="stopMovement"
     @touchend="stopMovement"
     @touchcancel="stopMovement"
+    @click="handleGlobalInteraction"
   >
     <!-- Map Rendering -->
     <div
@@ -206,7 +207,7 @@ const handleInput = (e: any) => {
   if (!moved) return false;
 
   // Clear any existing notification when starting to move
-  session.notification = null;
+  session.clearNotification();
 
   const targetTile = getTileType(newX, newY);
   const walkable = [
@@ -265,13 +266,9 @@ const handleInput = (e: any) => {
 const { startMovement, stopMovement } = usePlayerMovement(playerX, playerY, handleInput);
 
 const handleMapInteractionStart = (e: MouseEvent | TouchEvent) => {
-  // Clear notification on any interaction
-  if (session.notification) {
-    session.notification = null;
-  }
+  fsm.dismiss();
 
   if (fsm.matches(GAME_STATES.DIALOG)) {
-    fsm.send(GAME_EVENTS.CONFIRM);
     return;
   }
 
@@ -296,6 +293,10 @@ const handleMapInteractionStart = (e: MouseEvent | TouchEvent) => {
   if (key) {
     startMovement(key);
   }
+};
+
+const handleGlobalInteraction = () => {
+  fsm.dismiss();
 };
 
 const playerEmoji = computed(() => {

@@ -415,6 +415,10 @@ export const useSessionStore = defineStore('session', {
       this.notification = message;
     },
 
+    clearNotification() {
+      this.notification = null;
+    },
+
     setPlayerData(data: { name?: string; gender?: string; skinTone?: string }) {
       this.player.name = data.name || this.player.name;
       this.player.gender = data.gender || this.player.gender;

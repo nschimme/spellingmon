@@ -8,7 +8,7 @@ import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
 import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS } from '../utils/constants';
-import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, SPECIES } from '../utils/gameData';
+import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
 
@@ -203,7 +203,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 if (params?.targetState === GAME_STATES.WORLD) {
                    return { target: GAME_STATES.LOADING, params };
                 }
-                if (params?.moving) {
+                if (params?.moving === true) {
                   return { target: GAME_STATES.MOVING, params };
                 }
                 if (params?.dialog) {
@@ -231,6 +231,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
           },
           [s(GAME_STATES.MOVING)]: {
             onEnter: (ctx, params) => {
+              ctx.session.clearNotification();
               const duration = params?.duration ?? 150;
               setTimeout(() => {
                 ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
@@ -238,7 +239,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
             },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx, params) => {
-                 if (params?.moving) {
+                 if (params?.moving === true) {
                     // Chained movement: restart MOVING state
                     return { target: GAME_STATES.MOVING, params };
                  }
@@ -261,7 +262,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
             },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx) => {
-                ctx.session.notification = null;
+                ctx.session.clearNotification();
                 return GAME_STATES.WORLD;
               },
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
@@ -291,9 +292,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     // Rival Scaling Logic
                     if (params.trainerId === 'rival_1' && ctx.session.player.party.length > 0) {
                       const lead = ctx.session.player.party[0];
-                      const rivalSpecies = getRivalStarter(lead.species);
-                      enemy = createMon(rivalSpecies, lead.level);
-                      trainerParty = [{ species: rivalSpecies, level: lead.level }];
+
+                      // Scale entire party based on player's lead level
+                      trainerParty = (params.trainerParty || []).map((p: any) => ({
+                         ...p,
+                         level: lead.level
+                      }));
+
+                      // Select elemental opposite for the Rival's first mon
+                      if (trainerParty.length > 0) {
+                         trainerParty[0].species = getRivalStarter(lead.species);
+                      } else {
+                         trainerParty = [{ species: getRivalStarter(lead.species), level: lead.level }];
+                      }
+
+                      enemy = createMon(trainerParty[0].species, trainerParty[0].level);
                     }
 
                     ctx.session.battle.enemyMon = enemy;
@@ -609,11 +622,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
   const currentParams = computed(() => fsm.params.value);
 
+  const dismiss = () => {
+    if (!session.notification) return;
+    if (fsm.matches(GAME_STATES.DIALOG)) {
+      fsm.send(GAME_EVENTS.CONFIRM);
+    } else {
+      session.clearNotification();
+    }
+  };
+
   return {
     state: fsm.state,
     params: currentParams,
     send: fsm.send,
     transition: fsm.transition,
-    matches: fsm.matches
+    matches: fsm.matches,
+    dismiss
   };
 });

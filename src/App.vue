@@ -25,7 +25,13 @@ const inputStore = useInputStore();
 
 const isBattleTransitioning = computed(() => fsm.matches(GAME_STATES.BATTLE_INTRO));
 
+const handleGlobalInteraction = () => {
+  fsm.dismiss();
+};
+
 const handleGlobalInput = (e: KeyboardEvent) => {
+  handleGlobalInteraction();
+
   if (e.key === 'Escape') {
     if (fsm.matches(GAME_STATES.MENU)) {
       fsm.send(GAME_EVENTS.CLOSE);
@@ -50,11 +56,15 @@ onMounted(async () => {
   });
   inputStore.init();
   inputStore.addListener('global', handleGlobalInput);
+  window.addEventListener('click', handleGlobalInteraction);
+  window.addEventListener('touchstart', handleGlobalInteraction);
 });
 
 onUnmounted(() => {
   speech.onError(() => {});
   inputStore.removeListener('global');
+  window.removeEventListener('click', handleGlobalInteraction);
+  window.removeEventListener('touchstart', handleGlobalInteraction);
   inputStore.cleanup();
 });
 </script>
