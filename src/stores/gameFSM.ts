@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS, SPAWN_POINTS } from '../utils/constants';
 import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
@@ -262,18 +262,38 @@ export const useGameFSM = defineStore('gameFSM', () => {
             },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx) => {
-                ctx.session.clearNotification();
-                return GAME_STATES.WORLD;
+                const hasNext = ctx.session.nextDialog();
+                if (!hasNext) {
+                   const onComplete = ctx.fsm.params.value?.onComplete;
+                   if (onComplete) onComplete();
+
+                   if (ctx.fsm.params.value?.encounterParams) {
+                      return {
+                        target: GAME_STATES.BATTLE_INTRO,
+                        params: ctx.fsm.params.value.encounterParams
+                      };
+                   }
+                   return GAME_STATES.WORLD;
+                }
+                return null;
               },
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
                 if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
                 return GAME_STATES.BATTLE_INTRO;
               },
-              [GAME_EVENTS.CLOSE]: GAME_STATES.WORLD
+              [GAME_EVENTS.CLOSE]: (ctx) => {
+                ctx.session.clearDialog();
+                return GAME_STATES.WORLD;
+              }
             }
           },
           [s(GAME_STATES.TRAINER_APPROACH)]: {
-             on: { [GAME_EVENTS.CONFIRM]: GAME_STATES.BATTLE_INTRO }
+             on: {
+               [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                 if (params?.dialog) return { target: GAME_STATES.DIALOG, params };
+                 return GAME_STATES.BATTLE_INTRO;
+               }
+             }
           },
           [s(GAME_STATES.BATTLE)]: {
             initial: s(GAME_STATES.BATTLE_INTRO),
@@ -506,8 +526,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        ctx.session.player.currentInterior = ctx.session.player.lastSpellCenter.interior;
                     } else {
                        // Fallback to Home Bed
-                       ctx.session.updatePlayerPosition({ x: 1, y: 1 });
-                       ctx.session.player.currentInterior = INTERIORS.HOME_2F;
+                       ctx.session.updatePlayerPosition({ x: SPAWN_POINTS.HOME.x, y: SPAWN_POINTS.HOME.y });
+                       ctx.session.player.currentInterior = SPAWN_POINTS.HOME.interior;
                     }
                     return GAME_STATES.WORLD;
                   }
@@ -623,10 +643,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
   const currentParams = computed(() => fsm.params.value);
 
   const dismiss = () => {
-    if (!session.notification) return;
     if (fsm.matches(GAME_STATES.DIALOG)) {
       fsm.send(GAME_EVENTS.CONFIRM);
-    } else {
+    } else if (session.notification) {
       session.clearNotification();
     }
   };

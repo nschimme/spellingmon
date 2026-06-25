@@ -95,7 +95,10 @@
   "npc": {
     "mom": {
       "name": "Maman",
-      "dialog": "Fais attention à toi, mon chéri ! N'oublie pas de te rendre au centre d'orthographe si tes Spellingmon sont fatigués."
+      "dialog": [
+        "Fais attention à toi, mon cœur !",
+        "N'oublie pas de te rendre au Centre d'Orthographe si tes Spellingmon sont fatigués."
+      ]
     },
     "healer": {
       "name": "Infirmière Lexi",

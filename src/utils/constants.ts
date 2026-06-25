@@ -161,6 +161,11 @@ export const INTERIORS = {
   GYM: 'gym',
 };
 
+export const SPAWN_POINTS = {
+  HOME: { x: 1, y: 1, interior: INTERIORS.HOME_2F },
+  SPELLING_CENTER: { x: 4, y: 4, interior: INTERIORS.SPELLING_CENTER }
+};
+
 export const GAME_STATES = {
   BOOTING: 'BOOTING',
   LANGUAGE_SELECT: 'LANGUAGE_SELECT',

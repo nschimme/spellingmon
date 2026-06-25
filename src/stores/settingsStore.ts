@@ -105,8 +105,9 @@ export const useSettingsStore = defineStore('settings', {
     toggleMute() {
       this.setMuted(!this.isMuted);
     },
-    t(key: string, params?: any) {
-      return i18n.global.t(key, params);
+    t(key: string, params?: any): any {
+      const translation = i18n.global.t(key, params);
+      return translation;
     },
     confirmTtsVerified() {
       this.ttsVerified = true;

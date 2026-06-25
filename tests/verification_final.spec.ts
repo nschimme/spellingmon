@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Trainer encounter has correct i18n display in battle', async ({ page }) => {
+  test.setTimeout(60000);
   await page.goto('http://localhost:5173/?debug=true&state=PLAY.WORLD&starter=Squirtspell');
 
   // Wait for map to load
@@ -18,11 +19,20 @@ test('Trainer encounter has correct i18n display in battle', async ({ page }) =>
 
   // Walk into LOS
   await page.keyboard.press('ArrowDown');
-  await page.waitForTimeout(500);
-  await page.keyboard.press('ArrowDown');
 
-  // Wait for approach, dialogue, and transition to battle (Total ~10s)
-  await page.waitForTimeout(12000);
+  // Wait for dialog to appear and click through it
+  // The dialog opens automatically after approach animation (~2s)
+  const nextButton = page.locator('#dialog-next-button');
+  await expect(nextButton).toBeVisible({ timeout: 20000 });
+
+  // Click through all lines until dialog is gone
+  while (await nextButton.isVisible()) {
+    await nextButton.click();
+    await page.waitForTimeout(500);
+  }
+
+  // Wait for transition to battle
+  await page.waitForTimeout(5000);
 
   // Check state - should be in battle
   const state = await page.evaluate(() => (window as any).__FSM__.state.value);
@@ -37,5 +47,5 @@ test('Trainer encounter has correct i18n display in battle', async ({ page }) =>
 
   expect(logContent).not.toContain('trainer.titles');
   expect(logContent).not.toContain('npc.rival');
-  expect(logContent).toContain('Trainer'); // Usually starts with "Trainer [Title] [Name] wants to battle"
+  expect(logContent).toContain('Trainer');
 });

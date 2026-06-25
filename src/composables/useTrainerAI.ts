@@ -1,7 +1,7 @@
 import { ref, type Ref } from 'vue';
 import i18n from '../i18n';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, GAME_STATES, GAME_EVENTS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { TILE_TYPES, type MapResult, type Trainer } from '../utils/mapGenerator';
 
 export function useTrainerAI(
@@ -77,7 +77,6 @@ export function useTrainerAI(
       displayName = i18n.global.t(displayName);
     }
     const dialog = i18n.global.t(trainer.dialog);
-    session.notify(i18n.global.t('battle.trainerWantsToBattle', { name: displayName }));
 
     setTimeout(async () => {
       const dx = playerX.value - trainer.x;
@@ -101,14 +100,23 @@ export function useTrainerAI(
       }
 
       alertingTrainer.value = null;
-      // Show trainer dialog on the map before battle
-      session.notify(`${displayName}: "${dialog}"`);
 
-      // Extra delay to allow reading the dialog on the map
-      setTimeout(() => {
-        fsm.send(GAME_EVENTS.CONFIRM, triggerBattleParams);
-        engagedTrainers.delete(trainerId);
-      }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + GAME_CONSTANTS.TRAINER_DIALOG_DELAY_MS);
+      // Unify dialog: Name, then "Wants to Battle", then their quote
+      const dialogLines = [
+        i18n.global.t('battle.trainerWantsToBattle', { name: displayName }),
+        `"${dialog}"`
+      ];
+
+      fsm.send(GAME_EVENTS.CONFIRM, {
+        dialog: true,
+        onEnter: () => {
+          session.showDialog(dialogLines, displayName);
+        },
+        encounterParams: triggerBattleParams,
+        onComplete: () => {
+          engagedTrainers.delete(trainerId);
+        }
+      });
     }, 600);
   };
 
