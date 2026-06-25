@@ -534,7 +534,11 @@ const handleNPCInteract = (npc: any) => {
   fsm.send(GAME_EVENTS.CONFIRM, {
     dialog: true,
     onEnter: () => {
-      session.notify(`${settingsStore.t(npc.name)}: "${settingsStore.t(npc.dialog[0])}"`);
+      const lines = npc.dialog.flatMap((d: string) => {
+        const translation = settingsStore.t(d);
+        return Array.isArray(translation) ? translation : [translation];
+      });
+      session.showDialog(lines, settingsStore.t(npc.name));
     }
   });
 
@@ -568,10 +572,22 @@ const triggerGymBossBattle = async (npc: any) => {
     isStorm: npc.type === 'team_storm'
   };
 
+  // Gym Bosses now use the unified dialog system
   fsm.send(GAME_EVENTS.ENCOUNTER, params);
-  setTimeout(() => {
-    fsm.send(GAME_EVENTS.CONFIRM, params);
-  }, GAME_CONSTANTS.TRAINER_ENGAGEMENT_DELAY_MS + GAME_CONSTANTS.TRAINER_DIALOG_DELAY_MS);
+
+  const displayName = settingsStore.t(npc.name);
+  const dialogLines = [
+    fsm.t('battle.trainerWantsToBattle', { name: displayName }),
+    `"${settingsStore.t(npc.dialog[0])}"`
+  ];
+
+  fsm.send(GAME_EVENTS.CONFIRM, {
+    dialog: true,
+    onEnter: () => {
+      session.showDialog(dialogLines, displayName);
+    },
+    encounterParams: params
+  });
 };
 
 onMounted(async () => {

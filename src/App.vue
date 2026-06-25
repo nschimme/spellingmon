@@ -18,6 +18,7 @@ import MenuOverlay from './components/MenuOverlay.vue';
 import EvolutionView from './components/EvolutionView.vue';
 import StoryView from './components/StoryView.vue';
 import BattleTransition from './components/BattleTransition.vue';
+import DialogBox from './components/DialogBox.vue';
 
 const fsm = useGameFSM();
 const session = useSessionStore();
@@ -26,13 +27,24 @@ const inputStore = useInputStore();
 const isBattleTransitioning = computed(() => fsm.matches(GAME_STATES.BATTLE_INTRO));
 
 const handleGlobalInteraction = () => {
+  if (fsm.matches(GAME_STATES.DIALOG)) return;
   fsm.dismiss();
 };
 
 const handleGlobalInput = (e: KeyboardEvent) => {
+  const key = e.key;
+
+  if (fsm.matches(GAME_STATES.DIALOG)) {
+    if (key === 'Enter' || key === ' ') {
+      fsm.send(GAME_EVENTS.CONFIRM);
+      return true;
+    }
+    return false;
+  }
+
   handleGlobalInteraction();
 
-  if (e.key === 'Escape') {
+  if (key === 'Escape') {
     if (fsm.matches(GAME_STATES.MENU)) {
       fsm.send(GAME_EVENTS.CLOSE);
       return true;
@@ -151,6 +163,10 @@ onUnmounted(() => {
             {{ session.notification }}
           </p>
         </div>
+      </transition>
+
+      <transition name="fade">
+        <DialogBox v-if="fsm.matches(GAME_STATES.DIALOG) && session.dialog" />
       </transition>
     </div>
   </div>

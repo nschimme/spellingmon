@@ -50,12 +50,19 @@ export interface DexState {
   words: Record<number, Record<string, WordStatus>>;
 }
 
+export interface DialogState {
+  lines: string[];
+  currentIndex: number;
+  speakerName: string | null;
+}
+
 export interface SessionStoreState {
   activeSlot: number | null;
   player: PlayerState;
   battle: BattleState;
   dex: DexState;
   notification: string | null;
+  dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
   _saveTimeout?: ReturnType<typeof setTimeout>;
 }
@@ -149,7 +156,7 @@ export const useSessionStore = defineStore('session', {
     slotDependent: true,
     migrate: migrateSessionData,
     sanitize: sanitizeSessionData,
-    exclude: ['battle', 'activeSlot', 'notification', 'evolutionPending', '_saveTimeout']
+    exclude: ['battle', 'activeSlot', 'notification', 'dialog', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
     activeSlot: null,
@@ -196,6 +203,7 @@ export const useSessionStore = defineStore('session', {
     },
 
     notification: null,
+    dialog: null,
     evolutionPending: null,
   }),
 
@@ -417,6 +425,28 @@ export const useSessionStore = defineStore('session', {
 
     clearNotification() {
       this.notification = null;
+    },
+
+    showDialog(lines: string | string[], speakerName: string | null = null) {
+      this.dialog = {
+        lines: Array.isArray(lines) ? lines : [lines],
+        currentIndex: 0,
+        speakerName
+      };
+    },
+
+    nextDialog() {
+      if (!this.dialog) return false;
+      if (this.dialog.currentIndex < this.dialog.lines.length - 1) {
+        this.dialog.currentIndex++;
+        return true;
+      }
+      this.dialog = null;
+      return false;
+    },
+
+    clearDialog() {
+      this.dialog = null;
     },
 
     setPlayerData(data: { name?: string; gender?: string; skinTone?: string }) {

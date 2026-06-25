@@ -262,14 +262,31 @@ export const useGameFSM = defineStore('gameFSM', () => {
             },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx) => {
-                ctx.session.clearNotification();
-                return GAME_STATES.WORLD;
+                const hasNext = ctx.session.nextDialog();
+                if (!hasNext) {
+                   const onComplete = ctx.fsm.params.value?.onComplete;
+                   if (onComplete) onComplete();
+
+                   if (ctx.fsm.params.value?.encounterParams) {
+                      return {
+                        target: ctx.fsm.params.value.encounterParams.type === BATTLE_TYPES.TRAINER
+                          ? GAME_STATES.TRAINER_APPROACH
+                          : GAME_STATES.BATTLE_INTRO,
+                        params: ctx.fsm.params.value.encounterParams
+                      };
+                   }
+                   return GAME_STATES.WORLD;
+                }
+                return null;
               },
               [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
                 if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
                 return GAME_STATES.BATTLE_INTRO;
               },
-              [GAME_EVENTS.CLOSE]: GAME_STATES.WORLD
+              [GAME_EVENTS.CLOSE]: (ctx) => {
+                ctx.session.clearDialog();
+                return GAME_STATES.WORLD;
+              }
             }
           },
           [s(GAME_STATES.TRAINER_APPROACH)]: {
@@ -623,10 +640,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
   const currentParams = computed(() => fsm.params.value);
 
   const dismiss = () => {
-    if (!session.notification) return;
     if (fsm.matches(GAME_STATES.DIALOG)) {
       fsm.send(GAME_EVENTS.CONFIRM);
-    } else {
+    } else if (session.notification) {
       session.clearNotification();
     }
   };

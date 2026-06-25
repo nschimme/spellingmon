@@ -92,16 +92,26 @@ export const useMapStore = defineStore('map', () => {
       } as any;
     }
 
-    const newPos = validatePosition(newX, newY, result);
-    session.updatePlayerPosition(newPos);
+    let validatedPos = validatePosition(newX, newY, result);
+    if (!validatedPos) {
+       console.warn("Player stuck! Emergency respawn initiated.");
+       if (session.player.lastSpellCenter) {
+          session.player.currentInterior = session.player.lastSpellCenter.interior;
+          validatedPos = { x: session.player.lastSpellCenter.x, y: session.player.lastSpellCenter.y };
+       } else {
+          session.player.currentInterior = INTERIORS.HOME_2F;
+          validatedPos = { x: 1, y: 1 };
+       }
+    }
+    session.updatePlayerPosition(validatedPos);
 
-    updateDiscovery(newPos.x, newPos.y);
+    updateDiscovery(validatedPos.x, validatedPos.y);
 
     isLoading.value = false;
     return result;
   };
 
-  const validatePosition = (x: number, y: number, mapData: MapResult): { x: number; y: number } => {
+  const validatePosition = (x: number, y: number, mapData: MapResult): { x: number; y: number } | null => {
     const interiorId = session.player.currentInterior;
     let map: number[][];
     let width: number;
@@ -189,7 +199,7 @@ export const useMapStore = defineStore('map', () => {
       step++;
     }
 
-    return { x: nx, y: ny }; // Fallback to original (even if wall) if nothing found
+    return null; // Search failed
   };
 
   const updateDiscovery = (x: number, y: number) => {
