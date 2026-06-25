@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS, SPAWN_POINTS } from '../utils/constants';
 import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
@@ -526,8 +526,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        ctx.session.player.currentInterior = ctx.session.player.lastSpellCenter.interior;
                     } else {
                        // Fallback to Home Bed
-                       ctx.session.updatePlayerPosition({ x: 1, y: 1 });
-                       ctx.session.player.currentInterior = INTERIORS.HOME_2F;
+                       ctx.session.updatePlayerPosition({ x: SPAWN_POINTS.HOME.x, y: SPAWN_POINTS.HOME.y });
+                       ctx.session.player.currentInterior = SPAWN_POINTS.HOME.interior;
                     }
                     return GAME_STATES.WORLD;
                   }

@@ -36,6 +36,7 @@
 import { computed } from 'vue';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
+import { GAME_EVENTS } from '../utils/constants';
 
 const session = useSessionStore();
 const fsm = useGameFSM();
@@ -49,7 +50,7 @@ const isLastLine = computed(() => {
 });
 
 const handleConfirm = () => {
-  fsm.send('CONFIRM');
+  fsm.send(GAME_EVENTS.CONFIRM);
 };
 </script>
 

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { MapGenerator, type MapResult, TILE_TYPES } from '../utils/mapGenerator';
 import { useSessionStore } from './sessionStore';
-import { INTERIORS, GAME_CONSTANTS } from '../utils/constants';
+import { INTERIORS, GAME_CONSTANTS, SPAWN_POINTS } from '../utils/constants';
 import { getRivalStarter } from '../utils/gameData';
 
 export const useMapStore = defineStore('map', () => {
@@ -99,8 +99,8 @@ export const useMapStore = defineStore('map', () => {
           session.player.currentInterior = session.player.lastSpellCenter.interior;
           validatedPos = { x: session.player.lastSpellCenter.x, y: session.player.lastSpellCenter.y };
        } else {
-          session.player.currentInterior = INTERIORS.HOME_2F;
-          validatedPos = { x: 1, y: 1 };
+          session.player.currentInterior = SPAWN_POINTS.HOME.interior;
+          validatedPos = { x: SPAWN_POINTS.HOME.x, y: SPAWN_POINTS.HOME.y };
        }
     }
     session.updatePlayerPosition(validatedPos);
