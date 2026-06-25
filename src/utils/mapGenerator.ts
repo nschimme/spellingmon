@@ -268,7 +268,7 @@ export class MapGenerator {
 
     const trainers = this.placeTrainers(rooms, map, areaNum, transitions, spellCenter, levelMap, occupied);
 
-    // Place Rival Robin
+    // Place Rival Robin (Area 1 only)
     if (areaNum === 1 && homePos && rivalStarter) {
       const rx = homePos.x;
       const ry = homePos.y + 3; // Positioned to intercept house exit

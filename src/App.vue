@@ -25,7 +25,13 @@ const inputStore = useInputStore();
 
 const isBattleTransitioning = computed(() => fsm.matches(GAME_STATES.BATTLE_INTRO));
 
+const handleGlobalInteraction = () => {
+  fsm.dismiss();
+};
+
 const handleGlobalInput = (e: KeyboardEvent) => {
+  handleGlobalInteraction();
+
   if (e.key === 'Escape') {
     if (fsm.matches(GAME_STATES.MENU)) {
       fsm.send(GAME_EVENTS.CLOSE);
@@ -37,11 +43,9 @@ const handleGlobalInput = (e: KeyboardEvent) => {
     }
   }
 
-  if (e.key === ' ' || e.key === 'Enter') {
-    if (fsm.matches(GAME_STATES.DIALOG)) {
-      fsm.send(GAME_EVENTS.CONFIRM);
-      return true;
-    }
+  if (fsm.matches(GAME_STATES.DIALOG)) {
+    fsm.send(GAME_EVENTS.CONFIRM);
+    return true;
   }
   return false;
 };
@@ -52,11 +56,15 @@ onMounted(async () => {
   });
   inputStore.init();
   inputStore.addListener('global', handleGlobalInput);
+  window.addEventListener('click', handleGlobalInteraction);
+  window.addEventListener('touchstart', handleGlobalInteraction);
 });
 
 onUnmounted(() => {
   speech.onError(() => {});
   inputStore.removeListener('global');
+  window.removeEventListener('click', handleGlobalInteraction);
+  window.removeEventListener('touchstart', handleGlobalInteraction);
   inputStore.cleanup();
 });
 </script>
@@ -98,7 +106,7 @@ onUnmounted(() => {
 
       <template v-else-if="fsm.matches(GAME_STATES.PLAY)">
         <WorldMap
-          v-if="fsm.matches(GAME_STATES.PLAY)"
+          v-show="!fsm.matches(GAME_STATES.BATTLE) || fsm.matches(GAME_STATES.BATTLE_INTRO)"
           :is-menu-open="fsm.matches(GAME_STATES.MENU)"
           @toggle-menu="fsm.send(fsm.matches(GAME_STATES.MENU) ? GAME_EVENTS.CLOSE : GAME_EVENTS.OPEN_MENU)"
         />

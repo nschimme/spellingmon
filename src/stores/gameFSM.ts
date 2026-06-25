@@ -8,7 +8,7 @@ import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
 import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS } from '../utils/constants';
-import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, SPECIES } from '../utils/gameData';
+import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
 
@@ -203,7 +203,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 if (params?.targetState === GAME_STATES.WORLD) {
                    return { target: GAME_STATES.LOADING, params };
                 }
-                if (params?.moving) {
+                if (params?.moving === true) {
                   return { target: GAME_STATES.MOVING, params };
                 }
                 if (params?.dialog) {
@@ -231,11 +231,20 @@ export const useGameFSM = defineStore('gameFSM', () => {
           },
           [s(GAME_STATES.MOVING)]: {
             onEnter: (ctx, params) => {
+              ctx.session.clearNotification();
+              const duration = params?.duration ?? 150;
               setTimeout(() => {
                 ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
-              }, 200); // Match WorldMap animation duration
+              }, duration);
             },
             on: {
+              [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                 if (params?.moving === true) {
+                    // Chained movement: restart MOVING state
+                    return { target: GAME_STATES.MOVING, params };
+                 }
+                 return null;
+              },
               [GAME_EVENTS.COMPLETE]: (ctx, params) => {
                 if (params?.onComplete) params.onComplete();
                 if (!ctx.fsm.matches(GAME_STATES.MOVING)) return null;
@@ -248,10 +257,17 @@ export const useGameFSM = defineStore('gameFSM', () => {
             }
           },
           [s(GAME_STATES.DIALOG)]: {
+            onEnter: (ctx, params) => {
+              if (params?.onEnter) params.onEnter();
+            },
             on: {
               [GAME_EVENTS.CONFIRM]: (ctx) => {
-                ctx.session.notification = null;
+                ctx.session.clearNotification();
                 return GAME_STATES.WORLD;
+              },
+              [GAME_EVENTS.ENCOUNTER]: (ctx, params) => {
+                if (params.type === BATTLE_TYPES.TRAINER) return GAME_STATES.TRAINER_APPROACH;
+                return GAME_STATES.BATTLE_INTRO;
               },
               [GAME_EVENTS.CLOSE]: GAME_STATES.WORLD
             }
@@ -270,10 +286,33 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [s(GAME_STATES.BATTLE_INTRO)]: {
                 onEnter: async (ctx, params) => {
                   if (params.enemy) {
-                    ctx.session.battle.enemyMon = params.enemy;
+                    let enemy = params.enemy;
+                    let trainerParty = params.trainerParty || [];
+
+                    // Rival Scaling Logic
+                    if (params.trainerId === 'rival_1' && ctx.session.player.party.length > 0) {
+                      const lead = ctx.session.player.party[0];
+
+                      // Scale entire party based on player's lead level
+                      trainerParty = (params.trainerParty || []).map((p: any) => ({
+                         ...p,
+                         level: lead.level
+                      }));
+
+                      // Select elemental opposite for the Rival's first mon
+                      if (trainerParty.length > 0) {
+                         trainerParty[0].species = getRivalStarter(lead.species);
+                      } else {
+                         trainerParty = [{ species: getRivalStarter(lead.species), level: lead.level }];
+                      }
+
+                      enemy = createMon(trainerParty[0].species, trainerParty[0].level);
+                    }
+
+                    ctx.session.battle.enemyMon = enemy;
                     ctx.session.battle.type = params.type || BATTLE_TYPES.WILD;
                     ctx.session.battle.trainerId = params.trainerId;
-                    ctx.session.battle.trainerParty = params.trainerParty || [];
+                    ctx.session.battle.trainerParty = trainerParty;
                     ctx.session.battle.trainerDefeatDialog = params.trainerDefeatDialog || null;
                     ctx.session.battle.isStorm = !!params.isStorm;
                     ctx.session.battle.isRival = !!params.isRival;
@@ -289,7 +328,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       }
                       ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
-                      ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + params.enemy.species) })];
+                      ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + enemy.species) })];
                     }
 
                     ctx.session.battle.participatingMonIds = [ctx.session.battle.playerMonId];
@@ -343,7 +382,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                      wordObj = { word: ctx.session.battle.debugWord, difficulty: 1, definition: 'Debug word', sentence_context: 'Debug.' };
                      ctx.session.battle.debugWord = null;
                   } else {
-                     wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale);
+                     wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale, ctx.session);
                   }
                   ctx.session.battle.currentWord = wordObj;
                   const time = calculateTimerDuration(wordObj, ctx.session.battle.isCapturing);
@@ -583,11 +622,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
   const currentParams = computed(() => fsm.params.value);
 
+  const dismiss = () => {
+    if (!session.notification) return;
+    if (fsm.matches(GAME_STATES.DIALOG)) {
+      fsm.send(GAME_EVENTS.CONFIRM);
+    } else {
+      session.clearNotification();
+    }
+  };
+
   return {
     state: fsm.state,
     params: currentParams,
     send: fsm.send,
     transition: fsm.transition,
-    matches: fsm.matches
+    matches: fsm.matches,
+    dismiss
   };
 });

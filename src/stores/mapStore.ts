@@ -15,12 +15,18 @@ export const useMapStore = defineStore('map', () => {
 
   let lastSeed: string | null = null;
   let lastArea: number | null = null;
+  let lastIsStarterSelected: boolean | null = null;
 
   const generateMap = async (isTransition = false, direction: 'next' | 'prev' | null = null) => {
     if (!session.player?.mapSeed) return;
 
-    // Idempotency check: don't regenerate if same seed and area
-    if (currentMapData.value && lastSeed === session.player.mapSeed && lastArea === session.player.currentArea) {
+    // Idempotency check: don't regenerate if same seed, area AND starter selection status
+    if (
+      currentMapData.value &&
+      lastSeed === session.player.mapSeed &&
+      lastArea === session.player.currentArea &&
+      lastIsStarterSelected === session.player.isStarterSelected
+    ) {
       return currentMapData.value;
     }
 
@@ -33,15 +39,22 @@ export const useMapStore = defineStore('map', () => {
 
     let rivalStarter = null;
     let rivalLevel = 5;
-    if (session.player.currentArea === 1 && session.player.party.length > 0) {
-      rivalStarter = getRivalStarter(session.player.party[0].species);
-      rivalLevel = session.player.party[0].level;
+    if (session.player.currentArea === 1) {
+      if (session.player.isStarterSelected && session.player.party.length > 0) {
+        rivalStarter = getRivalStarter(session.player.party[0].species);
+        rivalLevel = session.player.party[0].level;
+      } else {
+        // Placeholder for generation until starter is picked
+        rivalStarter = 'Grammander';
+        rivalLevel = 5;
+      }
     }
 
     const result = gen.generate(session.player.currentArea, rivalStarter, rivalLevel);
     currentMapData.value = result;
     lastSeed = session.player.mapSeed;
     lastArea = session.player.currentArea;
+    lastIsStarterSelected = session.player.isStarterSelected;
 
     // Handle Player Positioning
     let newX = session.player.position?.x ?? 0;

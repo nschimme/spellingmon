@@ -159,7 +159,7 @@
   },
   "gym": {
     "name": "Spelling Gym",
-    "notReady": "You aren't ready for me yet! Defeat all trainers and master every word in this area first!"
+    "notReady": "You aren't ready for me yet! Master every word in this area first!"
   },
   "npc": {
     "mom": {
@@ -305,7 +305,7 @@
     "unlockedAreas": "Unlocked Areas",
     "wasdToMove": "WASD to Move | ESC for Menu",
     "healed": "Your Spellingmon have been fully healed!",
-    "defeatTrainerFirst": "You must defeat the area's trainer before moving on!",
+    "defeatTrainerFirst": "You must defeat the area's Gym Boss before moving on!",
     "biomes": {
       "wilderness": "Wilderness",
       "cave": "Cave",
