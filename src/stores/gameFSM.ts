@@ -269,9 +269,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    if (ctx.fsm.params.value?.encounterParams) {
                       return {
-                        target: ctx.fsm.params.value.encounterParams.type === BATTLE_TYPES.TRAINER
-                          ? GAME_STATES.TRAINER_APPROACH
-                          : GAME_STATES.BATTLE_INTRO,
+                        target: GAME_STATES.BATTLE_INTRO,
                         params: ctx.fsm.params.value.encounterParams
                       };
                    }
@@ -290,7 +288,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
             }
           },
           [s(GAME_STATES.TRAINER_APPROACH)]: {
-             on: { [GAME_EVENTS.CONFIRM]: GAME_STATES.BATTLE_INTRO }
+             on: {
+               [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                 if (params?.dialog) return { target: GAME_STATES.DIALOG, params };
+                 return GAME_STATES.BATTLE_INTRO;
+               }
+             }
           },
           [s(GAME_STATES.BATTLE)]: {
             initial: s(GAME_STATES.BATTLE_INTRO),

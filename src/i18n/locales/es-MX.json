@@ -95,7 +95,10 @@
   "npc": {
     "mom": {
       "name": "Mamá",
-      "dialog": "¡Ten cuidado ahí fuera, cielo! Recuerda visitar el Centro de Ortografía si tus Spellingmon están cansados."
+      "dialog": [
+        "¡Ten cuidado ahí fuera, cielo!",
+        "Recuerda visitar el Centro de Ortografía si tus Spellingmon están cansados."
+      ]
     },
     "healer": {
       "name": "Enfermera Lexi",

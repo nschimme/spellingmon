@@ -95,7 +95,10 @@
   "npc": {
     "mom": {
       "name": "Mama",
-      "dialog": "Pass auf dich auf, Liebes! Denk daran, das Rechtschreibzentrum zu besuchen, wenn deine Spellingmon müde sind."
+      "dialog": [
+        "Pass da draußen auf dich auf, mein Kind!",
+        "Denk daran, das Spelling-Center zu besuchen, wenn deine Spellingmon müde sind."
+      ]
     },
     "healer": {
       "name": "Schwester Lexi",
