@@ -18,6 +18,7 @@ export interface Monster {
   moves: string[];
   status: string;
   statusTurns?: number;
+  confusionTurns?: number;
   stages: Record<string, number>;
 }
 
@@ -42,68 +43,70 @@ export interface Move {
   category: string;
   power: number;
   accuracy: number;
-  effect?: string;
+  effectType?: string;
+  effectStat?: string;
+  effectAmount?: number;
   effectChance?: number;
 }
 
 export const MOVES: Record<string, Move> = {
-  [MOVE_IDS.Absorb]: { id: MOVE_IDS.Absorb, name: "LexiconLeech", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 20, accuracy: 100 },
-  [MOVE_IDS.Acid]: { id: MOVE_IDS.Acid, name: "InkSpray", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.AcidArmor]: { id: MOVE_IDS.AcidArmor, name: "InkShield", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Agility]: { id: MOVE_IDS.Agility, name: "QuickQuote", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Amnesia]: { id: MOVE_IDS.Amnesia, name: "WriterBlock", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.AuroraBeam]: { id: MOVE_IDS.AuroraBeam, name: "PrismProse", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100 },
+  [MOVE_IDS.Absorb]: { id: MOVE_IDS.Absorb, name: "LexiconLeech", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 20, accuracy: 100, effectType: "DRAIN" },
+  [MOVE_IDS.Acid]: { id: MOVE_IDS.Acid, name: "InkSpray", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100, effectType: "STAT_DOWN", effectStat: "def", effectAmount: 1 },
+  [MOVE_IDS.AcidArmor]: { id: MOVE_IDS.AcidArmor, name: "InkShield", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 2 },
+  [MOVE_IDS.Agility]: { id: MOVE_IDS.Agility, name: "QuickQuote", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "spe", effectAmount: 2 },
+  [MOVE_IDS.Amnesia]: { id: MOVE_IDS.Amnesia, name: "WriterBlock", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 2 },
+  [MOVE_IDS.AuroraBeam]: { id: MOVE_IDS.AuroraBeam, name: "PrismProse", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100, effectType: "STAT_DOWN", effectStat: "atk", effectAmount: 1 },
   [MOVE_IDS.Barrage]: { id: MOVE_IDS.Barrage, name: "VolleyVerb", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 85 },
-  [MOVE_IDS.Barrier]: { id: MOVE_IDS.Barrier, name: "Blockade", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Barrier]: { id: MOVE_IDS.Barrier, name: "Blockade", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 2 },
   [MOVE_IDS.Bide]: { id: MOVE_IDS.Bide, name: "WaitAndWrite", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 100 },
   [MOVE_IDS.Bind]: { id: MOVE_IDS.Bind, name: "SentenceStay", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 85 },
   [MOVE_IDS.Bite]: { id: MOVE_IDS.Bite, name: "WordSnap", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 60, accuracy: 100 },
-  [MOVE_IDS.Blizzard]: { id: MOVE_IDS.Blizzard, name: "ArcticAuthor", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 70 },
-  [MOVE_IDS.BodySlam]: { id: MOVE_IDS.BodySlam, name: "TomeTopple", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 85, accuracy: 100 },
+  [MOVE_IDS.Blizzard]: { id: MOVE_IDS.Blizzard, name: "ArcticAuthor", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 70, effectType: "STATUS", effectStat: "FREEZE" },
+  [MOVE_IDS.BodySlam]: { id: MOVE_IDS.BodySlam, name: "TomeTopple", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 85, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
   [MOVE_IDS.BoneClub]: { id: MOVE_IDS.BoneClub, name: "ManuscriptMace", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.PHYSICAL, power: 65, accuracy: 85 },
   [MOVE_IDS.Bonemerang]: { id: MOVE_IDS.Bonemerang, name: "TomeThrow", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.PHYSICAL, power: 50, accuracy: 90 },
-  [MOVE_IDS.Bubble]: { id: MOVE_IDS.Bubble, name: "InkPop", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.BubbleBeam]: { id: MOVE_IDS.BubbleBeam, name: "InkStream", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100 },
+  [MOVE_IDS.Bubble]: { id: MOVE_IDS.Bubble, name: "InkPop", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100, effectType: "STAT_DOWN", effectStat: "spe", effectAmount: 1 },
+  [MOVE_IDS.BubbleBeam]: { id: MOVE_IDS.BubbleBeam, name: "InkStream", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100, effectType: "STAT_DOWN", effectStat: "spe", effectAmount: 1 },
   [MOVE_IDS.Clamp]: { id: MOVE_IDS.Clamp, name: "FolderForce", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.PHYSICAL, power: 35, accuracy: 85 },
   [MOVE_IDS.CometPunch]: { id: MOVE_IDS.CometPunch, name: "PunctuationPunch", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 18, accuracy: 85 },
-  [MOVE_IDS.ConfuseRay]: { id: MOVE_IDS.ConfuseRay, name: "DizzyDictation", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Confusion]: { id: MOVE_IDS.Confusion, name: "MuddledMsg", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 50, accuracy: 100 },
-  [MOVE_IDS.Constrict]: { id: MOVE_IDS.Constrict, name: "TightType", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 10, accuracy: 100 },
+  [MOVE_IDS.ConfuseRay]: { id: MOVE_IDS.ConfuseRay, name: "DizzyDictation", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
+  [MOVE_IDS.Confusion]: { id: MOVE_IDS.Confusion, name: "MuddledMsg", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 50, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
+  [MOVE_IDS.Constrict]: { id: MOVE_IDS.Constrict, name: "TightType", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 10, accuracy: 100, effectType: "STAT_DOWN", effectStat: "spe", effectAmount: 1 },
   [MOVE_IDS.Conversion]: { id: MOVE_IDS.Conversion, name: "FormatFlip", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.Counter]: { id: MOVE_IDS.Counter, name: "Rebuttal", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 100 },
   [MOVE_IDS.Crabhammer]: { id: MOVE_IDS.Crabhammer, name: "ClawClause", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.PHYSICAL, power: 100, accuracy: 90 },
   [MOVE_IDS.Cut]: { id: MOVE_IDS.Cut, name: "EditEdge", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 50, accuracy: 95 },
-  [MOVE_IDS.DefenseCurl]: { id: MOVE_IDS.DefenseCurl, name: "BookRoll", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.DefenseCurl]: { id: MOVE_IDS.DefenseCurl, name: "BookRoll", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 1 },
   [MOVE_IDS.Dig]: { id: MOVE_IDS.Dig, name: "FootnoteFollow", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100 },
   [MOVE_IDS.Disable]: { id: MOVE_IDS.Disable, name: "MuteMove", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.DizzyPunch]: { id: MOVE_IDS.DizzyPunch, name: "DazedDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 70, accuracy: 100 },
+  [MOVE_IDS.DizzyPunch]: { id: MOVE_IDS.DizzyPunch, name: "DazedDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 70, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
   [MOVE_IDS.DoubleKick]: { id: MOVE_IDS.DoubleKick, name: "DualDactyl", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 30, accuracy: 100 },
   [MOVE_IDS.DoubleSlap]: { id: MOVE_IDS.DoubleSlap, name: "PairOfParagraphs", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 85 },
-  [MOVE_IDS.DoubleTeam]: { id: MOVE_IDS.DoubleTeam, name: "CloneCopy", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.DoubleEdge]: { id: MOVE_IDS.DoubleEdge, name: "HardHaiku", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 120, accuracy: 100 },
-  [MOVE_IDS.DragonRage]: { id: MOVE_IDS.DragonRage, name: "LoreLash", type: MONSTER_TYPES.DRAGON, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100 },
-  [MOVE_IDS.DreamEater]: { id: MOVE_IDS.DreamEater, name: "FableFeed", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 100, accuracy: 100 },
+  [MOVE_IDS.DoubleTeam]: { id: MOVE_IDS.DoubleTeam, name: "CloneCopy", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "eva", effectAmount: 1 },
+  [MOVE_IDS.DoubleEdge]: { id: MOVE_IDS.DoubleEdge, name: "HardHaiku", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 120, accuracy: 100, effectType: "RECOIL" },
+  [MOVE_IDS.DragonRage]: { id: MOVE_IDS.DragonRage, name: "LoreLash", type: MONSTER_TYPES.DRAGON, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100, effectType: "FIXED" },
+  [MOVE_IDS.DreamEater]: { id: MOVE_IDS.DreamEater, name: "FableFeed", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 100, accuracy: 100, effectType: "DRAIN", effectStat: "SLEEP" },
   [MOVE_IDS.DrillPeck]: { id: MOVE_IDS.DrillPeck, name: "SpiralScript", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100 },
   [MOVE_IDS.Earthquake]: { id: MOVE_IDS.Earthquake, name: "PageQuake", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.PHYSICAL, power: 100, accuracy: 100 },
   [MOVE_IDS.EggBomb]: { id: MOVE_IDS.EggBomb, name: "ShellScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 100, accuracy: 75 },
-  [MOVE_IDS.Ember]: { id: MOVE_IDS.Ember, name: "InkBurn", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
+  [MOVE_IDS.Ember]: { id: MOVE_IDS.Ember, name: "InkBurn", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100, effectType: "STATUS", effectStat: "BURN" },
   [MOVE_IDS.Explosion]: { id: MOVE_IDS.Explosion, name: "FinalDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 250, accuracy: 100 },
-  [MOVE_IDS.FireBlast]: { id: MOVE_IDS.FireBlast, name: "BlazingBallad", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 85 },
-  [MOVE_IDS.FirePunch]: { id: MOVE_IDS.FirePunch, name: "FyreFist", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100 },
+  [MOVE_IDS.FireBlast]: { id: MOVE_IDS.FireBlast, name: "BlazingBallad", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 85, effectType: "STATUS", effectStat: "BURN" },
+  [MOVE_IDS.FirePunch]: { id: MOVE_IDS.FirePunch, name: "FyreFist", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100, effectType: "STATUS", effectStat: "BURN" },
   [MOVE_IDS.FireSpin]: { id: MOVE_IDS.FireSpin, name: "WhirlingVerse", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 35, accuracy: 85 },
   [MOVE_IDS.Fissure]: { id: MOVE_IDS.Fissure, name: "GrandGap", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 30 },
-  [MOVE_IDS.Flamethrower]: { id: MOVE_IDS.Flamethrower, name: "InkTorch", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100 },
-  [MOVE_IDS.Flash]: { id: MOVE_IDS.Flash, name: "BrightBeam", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Flamethrower]: { id: MOVE_IDS.Flamethrower, name: "InkTorch", type: MONSTER_TYPES.FIRE, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100, effectType: "STATUS", effectStat: "BURN" },
+  [MOVE_IDS.Flash]: { id: MOVE_IDS.Flash, name: "BrightBeam", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "acc", effectAmount: 1 },
   [MOVE_IDS.Fly]: { id: MOVE_IDS.Fly, name: "AeroAlpha", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.PHYSICAL, power: 90, accuracy: 95 },
   [MOVE_IDS.FocusEnergy]: { id: MOVE_IDS.FocusEnergy, name: "DeepDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.FuryAttack]: { id: MOVE_IDS.FuryAttack, name: "RapidRhyme", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 85 },
   [MOVE_IDS.FurySwipes]: { id: MOVE_IDS.FurySwipes, name: "SwiftScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 18, accuracy: 80 },
-  [MOVE_IDS.Glare]: { id: MOVE_IDS.Glare, name: "StaringSyllable", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Growl]: { id: MOVE_IDS.Growl, name: "GrammarGrowl", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Growth]: { id: MOVE_IDS.Growth, name: "ScaleStory", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Glare]: { id: MOVE_IDS.Glare, name: "StaringSyllable", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.Growl]: { id: MOVE_IDS.Growl, name: "GrammarGrowl", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "atk", effectAmount: 1 },
+  [MOVE_IDS.Growth]: { id: MOVE_IDS.Growth, name: "ScaleStory", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 1 },
   [MOVE_IDS.Guillotine]: { id: MOVE_IDS.Guillotine, name: "CutConclusion", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 30 },
   [MOVE_IDS.Gust]: { id: MOVE_IDS.Gust, name: "BreezeBook", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.Harden]: { id: MOVE_IDS.Harden, name: "BoundCover", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Harden]: { id: MOVE_IDS.Harden, name: "BoundCover", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 1 },
   [MOVE_IDS.Haze]: { id: MOVE_IDS.Haze, name: "VagueVerse", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.Headbutt]: { id: MOVE_IDS.Headbutt, name: "HeavyHeader", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 70, accuracy: 100 },
   [MOVE_IDS.HighJumpKick]: { id: MOVE_IDS.HighJumpKick, name: "LeapingLetter", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 130, accuracy: 90 },
@@ -112,107 +115,108 @@ export const MOVES: Record<string, Move> = {
   [MOVE_IDS.HydroPump]: { id: MOVE_IDS.HydroPump, name: "VolumeVortex", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 80 },
   [MOVE_IDS.HyperBeam]: { id: MOVE_IDS.HyperBeam, name: "LaserLexicon", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 150, accuracy: 90 },
   [MOVE_IDS.HyperFang]: { id: MOVE_IDS.HyperFang, name: "GreatGrammar", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 90 },
-  [MOVE_IDS.Hypnosis]: { id: MOVE_IDS.Hypnosis, name: "LullabyLyric", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 60 },
-  [MOVE_IDS.IceBeam]: { id: MOVE_IDS.IceBeam, name: "FrostyFont", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100 },
-  [MOVE_IDS.IcePunch]: { id: MOVE_IDS.IcePunch, name: "ChilledChapter", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100 },
+  [MOVE_IDS.Hypnosis]: { id: MOVE_IDS.Hypnosis, name: "LullabyLyric", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 60, effectType: "STATUS", effectStat: "SLEEP" },
+  [MOVE_IDS.IceBeam]: { id: MOVE_IDS.IceBeam, name: "FrostyFont", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100, effectType: "STATUS", effectStat: "FREEZE" },
+  [MOVE_IDS.IcePunch]: { id: MOVE_IDS.IcePunch, name: "ChilledChapter", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100, effectType: "STATUS", effectStat: "FREEZE" },
   [MOVE_IDS.JumpKick]: { id: MOVE_IDS.JumpKick, name: "KickKoda", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 100, accuracy: 95 },
   [MOVE_IDS.KarateChop]: { id: MOVE_IDS.KarateChop, name: "CutterClash", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 50, accuracy: 100 },
-  [MOVE_IDS.Kinesis]: { id: MOVE_IDS.Kinesis, name: "PsychicPen", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 80 },
-  [MOVE_IDS.LeechLife]: { id: MOVE_IDS.LeechLife, name: "LifeLine", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100 },
+  [MOVE_IDS.Kinesis]: { id: MOVE_IDS.Kinesis, name: "PsychicPen", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 80, effectType: "STAT_DOWN", effectStat: "acc", effectAmount: 1 },
+  [MOVE_IDS.LeechLife]: { id: MOVE_IDS.LeechLife, name: "LifeLine", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100, effectType: "DRAIN" },
   [MOVE_IDS.LeechSeed]: { id: MOVE_IDS.LeechSeed, name: "SeedScript", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90 },
-  [MOVE_IDS.Leer]: { id: MOVE_IDS.Leer, name: "LookLeaf", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Lick]: { id: MOVE_IDS.Lick, name: "TongueType", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.PHYSICAL, power: 30, accuracy: 100 },
+  [MOVE_IDS.Leer]: { id: MOVE_IDS.Leer, name: "LookLeaf", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "def", effectAmount: 1 },
+  [MOVE_IDS.Lick]: { id: MOVE_IDS.Lick, name: "TongueType", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.PHYSICAL, power: 30, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
   [MOVE_IDS.LightScreen]: { id: MOVE_IDS.LightScreen, name: "BrightBorder", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.LovelyKiss]: { id: MOVE_IDS.LovelyKiss, name: "SweetSonnet", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75 },
+  [MOVE_IDS.LovelyKiss]: { id: MOVE_IDS.LovelyKiss, name: "SweetSonnet", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75, effectType: "STATUS", effectStat: "SLEEP" },
   [MOVE_IDS.LowKick]: { id: MOVE_IDS.LowKick, name: "BaseBounce", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 100 },
-  [MOVE_IDS.Meditate]: { id: MOVE_IDS.Meditate, name: "ZenZine", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.MegaDrain]: { id: MOVE_IDS.MegaDrain, name: "GreatGulp", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
+  [MOVE_IDS.Meditate]: { id: MOVE_IDS.Meditate, name: "ZenZine", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 1 },
+  [MOVE_IDS.MegaDrain]: { id: MOVE_IDS.MegaDrain, name: "GreatGulp", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100, effectType: "DRAIN" },
   [MOVE_IDS.MegaKick]: { id: MOVE_IDS.MegaKick, name: "GrandGesture", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 120, accuracy: 75 },
   [MOVE_IDS.MegaPunch]: { id: MOVE_IDS.MegaPunch, name: "MajorManuscript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 85 },
   [MOVE_IDS.Metronome]: { id: MOVE_IDS.Metronome, name: "RandomRhyme", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.Mimic]: { id: MOVE_IDS.Mimic, name: "EchoEdit", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Minimize]: { id: MOVE_IDS.Minimize, name: "SmallScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Minimize]: { id: MOVE_IDS.Minimize, name: "SmallScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "eva", effectAmount: 2 },
   [MOVE_IDS.MirrorMove]: { id: MOVE_IDS.MirrorMove, name: "CopyCat", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.Mist]: { id: MOVE_IDS.Mist, name: "HazyHistory", type: MONSTER_TYPES.ICE, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.NightShade]: { id: MOVE_IDS.NightShade, name: "DarkDraft", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100 },
+  [MOVE_IDS.NightShade]: { id: MOVE_IDS.NightShade, name: "DarkDraft", type: MONSTER_TYPES.GHOST, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100, effectType: "FIXED" },
   [MOVE_IDS.PayDay]: { id: MOVE_IDS.PayDay, name: "CoinCollection", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 },
   [MOVE_IDS.Peck]: { id: MOVE_IDS.Peck, name: "BeakBit", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.PHYSICAL, power: 35, accuracy: 100 },
-  [MOVE_IDS.PetalDance]: { id: MOVE_IDS.PetalDance, name: "FloralFlow", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 120, accuracy: 100 },
+  [MOVE_IDS.PetalDance]: { id: MOVE_IDS.PetalDance, name: "FloralFlow", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 120, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
   [MOVE_IDS.PinMissile]: { id: MOVE_IDS.PinMissile, name: "NeedleNote", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.PHYSICAL, power: 25, accuracy: 95 },
-  [MOVE_IDS.PoisonGas]: { id: MOVE_IDS.PoisonGas, name: "ToxicTale", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90 },
-  [MOVE_IDS.PoisonPowder]: { id: MOVE_IDS.PoisonPowder, name: "VenomVerse", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75 },
-  [MOVE_IDS.PoisonSting]: { id: MOVE_IDS.PoisonSting, name: "StingerStory", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 100 },
+  [MOVE_IDS.PoisonGas]: { id: MOVE_IDS.PoisonGas, name: "ToxicTale", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90, effectType: "STATUS", effectStat: "POISON" },
+  [MOVE_IDS.PoisonPowder]: { id: MOVE_IDS.PoisonPowder, name: "VenomVerse", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75, effectType: "STATUS", effectStat: "POISON" },
+  [MOVE_IDS.PoisonSting]: { id: MOVE_IDS.PoisonSting, name: "StingerStory", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 100, effectType: "STATUS", effectStat: "POISON" },
   [MOVE_IDS.Pound]: { id: MOVE_IDS.Pound, name: "ThumpType", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.Psybeam]: { id: MOVE_IDS.Psybeam, name: "MindManuscript", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100 },
-  [MOVE_IDS.Psychic]: { id: MOVE_IDS.Psychic, name: "MentalMsg", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100 },
-  [MOVE_IDS.Psywave]: { id: MOVE_IDS.Psywave, name: "ThoughtWave", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100 },
+  [MOVE_IDS.Psybeam]: { id: MOVE_IDS.Psybeam, name: "MindManuscript", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
+  [MOVE_IDS.Psychic]: { id: MOVE_IDS.Psychic, name: "MentalMsg", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100, effectType: "STAT_DOWN", effectStat: "def", effectAmount: 1 },
+  [MOVE_IDS.Psywave]: { id: MOVE_IDS.Psywave, name: "ThoughtWave", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 100, effectChance: 150 },
   [MOVE_IDS.QuickAttack]: { id: MOVE_IDS.QuickAttack, name: "AgileAlphabet", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.Rage]: { id: MOVE_IDS.Rage, name: "AngryAuthor", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 20, accuracy: 100 },
+  [MOVE_IDS.Rage]: { id: MOVE_IDS.Rage, name: "AngryAuthor", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 20, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 1 },
   [MOVE_IDS.RazorLeaf]: { id: MOVE_IDS.RazorLeaf, name: "SharpSheet", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.PHYSICAL, power: 55, accuracy: 95 },
   [MOVE_IDS.RazorWind]: { id: MOVE_IDS.RazorWind, name: "AiryAria", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 80, accuracy: 100 },
-  [MOVE_IDS.Recover]: { id: MOVE_IDS.Recover, name: "ReviseHP", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Recover]: { id: MOVE_IDS.Recover, name: "ReviseHP", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "HEAL" },
   [MOVE_IDS.Reflect]: { id: MOVE_IDS.Reflect, name: "MirrorManuscript", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Rest]: { id: MOVE_IDS.Rest, name: "PowerNap", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Rest]: { id: MOVE_IDS.Rest, name: "PowerNap", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STATUS", effectStat: "SLEEP" },
   [MOVE_IDS.Roar]: { id: MOVE_IDS.Roar, name: "LoudLegend", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.RockSlide]: { id: MOVE_IDS.RockSlide, name: "StonyStory", type: MONSTER_TYPES.ROCK, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 90 },
   [MOVE_IDS.RockThrow]: { id: MOVE_IDS.RockThrow, name: "PebblePoem", type: MONSTER_TYPES.ROCK, category: MOVE_CATEGORIES.PHYSICAL, power: 50, accuracy: 90 },
   [MOVE_IDS.RollingKick]: { id: MOVE_IDS.RollingKick, name: "SpinningScript", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 60, accuracy: 85 },
-  [MOVE_IDS.SandAttack]: { id: MOVE_IDS.SandAttack, name: "GritGrammar", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.SandAttack]: { id: MOVE_IDS.SandAttack, name: "GritGrammar", type: MONSTER_TYPES.GROUND, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "acc", effectAmount: 1 },
   [MOVE_IDS.Scratch]: { id: MOVE_IDS.Scratch, name: "TypoTackle", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.Screech]: { id: MOVE_IDS.Screech, name: "PiercingProse", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 85 },
-  [MOVE_IDS.SeismicToss]: { id: MOVE_IDS.SeismicToss, name: "WorldWeight", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 100 },
+  [MOVE_IDS.Screech]: { id: MOVE_IDS.Screech, name: "PiercingProse", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 85, effectType: "STAT_DOWN", effectStat: "def", effectAmount: 2 },
+  [MOVE_IDS.SeismicToss]: { id: MOVE_IDS.SeismicToss, name: "WorldWeight", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 100, effectType: "FIXED" },
   [MOVE_IDS.SelfDestruct]: { id: MOVE_IDS.SelfDestruct, name: "DraftDash", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 200, accuracy: 100 },
-  [MOVE_IDS.Sharpen]: { id: MOVE_IDS.Sharpen, name: "EdgeEdit", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Sing]: { id: MOVE_IDS.Sing, name: "SongSyllable", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 55 },
-  [MOVE_IDS.SkullBash]: { id: MOVE_IDS.SkullBash, name: "HeadHeader", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 130, accuracy: 100 },
+  [MOVE_IDS.Sharpen]: { id: MOVE_IDS.Sharpen, name: "EdgeEdit", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 1 },
+  [MOVE_IDS.Sing]: { id: MOVE_IDS.Sing, name: "SongSyllable", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 55, effectType: "STATUS", effectStat: "SLEEP" },
+  [MOVE_IDS.SkullBash]: { id: MOVE_IDS.SkullBash, name: "HeadHeader", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 130, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 1 },
   [MOVE_IDS.SkyAttack]: { id: MOVE_IDS.SkyAttack, name: "HighHistory", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.PHYSICAL, power: 140, accuracy: 90 },
   [MOVE_IDS.Slam]: { id: MOVE_IDS.Slam, name: "HardHeader", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 75 },
   [MOVE_IDS.Slash]: { id: MOVE_IDS.Slash, name: "SlicingSyllable", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 70, accuracy: 100 },
-  [MOVE_IDS.SleepPowder]: { id: MOVE_IDS.SleepPowder, name: "NoddingNote", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75 },
-  [MOVE_IDS.Sludge]: { id: MOVE_IDS.Sludge, name: "InkMuck", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100 },
-  [MOVE_IDS.Smog]: { id: MOVE_IDS.Smog, name: "SmokeStory", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 30, accuracy: 70 },
-  [MOVE_IDS.Smokescreen]: { id: MOVE_IDS.Smokescreen, name: "MistMsg", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.SoftBoiled]: { id: MOVE_IDS.SoftBoiled, name: "GoodGrade", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.SleepPowder]: { id: MOVE_IDS.SleepPowder, name: "NoddingNote", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75, effectType: "STATUS", effectStat: "SLEEP" },
+  [MOVE_IDS.Sludge]: { id: MOVE_IDS.Sludge, name: "InkMuck", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 65, accuracy: 100, effectType: "STATUS", effectStat: "POISON" },
+  [MOVE_IDS.Smog]: { id: MOVE_IDS.Smog, name: "SmokeStory", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.SPECIAL, power: 30, accuracy: 70, effectType: "STATUS", effectStat: "POISON" },
+  [MOVE_IDS.Smokescreen]: { id: MOVE_IDS.Smokescreen, name: "MistMsg", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "acc", effectAmount: 1 },
+  [MOVE_IDS.SoftBoiled]: { id: MOVE_IDS.SoftBoiled, name: "GoodGrade", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "HEAL" },
   [MOVE_IDS.SolarBeam]: { id: MOVE_IDS.SolarBeam, name: "SunStory", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.SPECIAL, power: 120, accuracy: 100 },
-  [MOVE_IDS.SonicBoom]: { id: MOVE_IDS.SonicBoom, name: "SoundScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 90 },
+  [MOVE_IDS.SonicBoom]: { id: MOVE_IDS.SonicBoom, name: "SoundScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 0, accuracy: 90, effectType: "FIXED" },
   [MOVE_IDS.SpikeCannon]: { id: MOVE_IDS.SpikeCannon, name: "NeedleNarrative", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 20, accuracy: 100 },
   [MOVE_IDS.Splash]: { id: MOVE_IDS.Splash, name: "WordWater", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Spore]: { id: MOVE_IDS.Spore, name: "FungalFont", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Spore]: { id: MOVE_IDS.Spore, name: "FungalFont", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STATUS", effectStat: "SLEEP" },
   [MOVE_IDS.Stomp]: { id: MOVE_IDS.Stomp, name: "HeavyHistory", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 65, accuracy: 100 },
   [MOVE_IDS.Strength]: { id: MOVE_IDS.Strength, name: "MightyManuscript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100 },
-  [MOVE_IDS.StringShot]: { id: MOVE_IDS.StringShot, name: "WebWord", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 95 },
+  [MOVE_IDS.StringShot]: { id: MOVE_IDS.StringShot, name: "WebWord", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 95, effectType: "STAT_DOWN", effectStat: "spe", effectAmount: 2 },
   [MOVE_IDS.Struggle]: { id: MOVE_IDS.Struggle, name: "EmptyEssay", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 50, accuracy: 100 },
-  [MOVE_IDS.StunSpore]: { id: MOVE_IDS.StunSpore, name: "StaticStory", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75 },
-  [MOVE_IDS.Submission]: { id: MOVE_IDS.Submission, name: "YieldYield", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 80 },
+  [MOVE_IDS.StunSpore]: { id: MOVE_IDS.StunSpore, name: "StaticStory", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 75, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.Submission]: { id: MOVE_IDS.Submission, name: "YieldYield", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 80, effectType: "RECOIL" },
   [MOVE_IDS.Substitute]: { id: MOVE_IDS.Substitute, name: "StuntScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.SuperFang]: { id: MOVE_IDS.SuperFang, name: "GreatGrowl", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 0, accuracy: 90 },
-  [MOVE_IDS.Supersonic]: { id: MOVE_IDS.Supersonic, name: "HighHymn", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 55 },
+  [MOVE_IDS.Supersonic]: { id: MOVE_IDS.Supersonic, name: "HighHymn", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 55, effectType: "STATUS", effectStat: "CONFUSION" },
   [MOVE_IDS.Surf]: { id: MOVE_IDS.Surf, name: "WaveWriter", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100 },
   [MOVE_IDS.Swift]: { id: MOVE_IDS.Swift, name: "StarScript", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 60, accuracy: 100 },
-  [MOVE_IDS.SwordsDance]: { id: MOVE_IDS.SwordsDance, name: "BladeBallad", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.SwordsDance]: { id: MOVE_IDS.SwordsDance, name: "BladeBallad", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "atk", effectAmount: 2 },
   [MOVE_IDS.Tackle]: { id: MOVE_IDS.Tackle, name: "TypoTackle", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.TailWhip]: { id: MOVE_IDS.TailWhip, name: "TaleTwist", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.TakeDown]: { id: MOVE_IDS.TakeDown, name: "RoughDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 90, accuracy: 85 },
+  [MOVE_IDS.TailWhip]: { id: MOVE_IDS.TailWhip, name: "TaleTwist", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_DOWN", effectStat: "def", effectAmount: 1 },
+  [MOVE_IDS.TakeDown]: { id: MOVE_IDS.TakeDown, name: "RoughDraft", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 90, accuracy: 85, effectType: "RECOIL" },
   [MOVE_IDS.Teleport]: { id: MOVE_IDS.Teleport, name: "JumpJournal", type: MONSTER_TYPES.PSYCHIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.Thrash]: { id: MOVE_IDS.Thrash, name: "WildWord", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 120, accuracy: 100 },
-  [MOVE_IDS.Thunder]: { id: MOVE_IDS.Thunder, name: "DataStorm", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 70 },
-  [MOVE_IDS.ThunderPunch]: { id: MOVE_IDS.ThunderPunch, name: "VoltVerse", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100 },
-  [MOVE_IDS.ThunderShock]: { id: MOVE_IDS.ThunderShock, name: "DataDolt", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
-  [MOVE_IDS.ThunderWave]: { id: MOVE_IDS.ThunderWave, name: "SignalScript", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90 },
-  [MOVE_IDS.Thunderbolt]: { id: MOVE_IDS.Thunderbolt, name: "DataBolt", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100 },
-  [MOVE_IDS.Toxic]: { id: MOVE_IDS.Toxic, name: "LethalLiterature", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90 },
+  [MOVE_IDS.Thrash]: { id: MOVE_IDS.Thrash, name: "WildWord", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 120, accuracy: 100, effectType: "STATUS", effectStat: "CONFUSION" },
+  [MOVE_IDS.Thunder]: { id: MOVE_IDS.Thunder, name: "DataStorm", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 110, accuracy: 70, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.ThunderPunch]: { id: MOVE_IDS.ThunderPunch, name: "VoltVerse", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.PHYSICAL, power: 75, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.ThunderShock]: { id: MOVE_IDS.ThunderShock, name: "DataDolt", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.ThunderWave]: { id: MOVE_IDS.ThunderWave, name: "SignalScript", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.Thunderbolt]: { id: MOVE_IDS.Thunderbolt, name: "DataBolt", type: MONSTER_TYPES.ELECTRIC, category: MOVE_CATEGORIES.SPECIAL, power: 90, accuracy: 100, effectType: "STATUS", effectStat: "PARALYSIS" },
+  [MOVE_IDS.Toxic]: { id: MOVE_IDS.Toxic, name: "LethalLiterature", type: MONSTER_TYPES.POISON, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 90, effectType: "STATUS", effectStat: "POISON" },
   [MOVE_IDS.Transform]: { id: MOVE_IDS.Transform, name: "MorphMsg", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
-  [MOVE_IDS.TriAttack]: { id: MOVE_IDS.TriAttack, name: "TripleType", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 80, accuracy: 100 },
-  [MOVE_IDS.Twineedle]: { id: MOVE_IDS.Twineedle, name: "DualDraft", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.PHYSICAL, power: 25, accuracy: 100 },
+  [MOVE_IDS.TriAttack]: { id: MOVE_IDS.TriAttack, name: "TripleType", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.SPECIAL, power: 80, accuracy: 100, effectType: "STATUS", effectStat: "FREEZE" },
+  [MOVE_IDS.Twineedle]: { id: MOVE_IDS.Twineedle, name: "DualDraft", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.PHYSICAL, power: 25, accuracy: 100, effectType: "STATUS", effectStat: "POISON" },
   [MOVE_IDS.VineWhip]: { id: MOVE_IDS.VineWhip, name: "VineVerb", type: MONSTER_TYPES.GRASS, category: MOVE_CATEGORIES.PHYSICAL, power: 45, accuracy: 100 },
   [MOVE_IDS.ViseGrip]: { id: MOVE_IDS.ViseGrip, name: "ClampChapter", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 55, accuracy: 100 },
   [MOVE_IDS.WaterGun]: { id: MOVE_IDS.WaterGun, name: "InkStream", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.SPECIAL, power: 40, accuracy: 100 },
   [MOVE_IDS.Waterfall]: { id: MOVE_IDS.Waterfall, name: "RiverRun", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.PHYSICAL, power: 80, accuracy: 100 },
   [MOVE_IDS.Whirlwind]: { id: MOVE_IDS.Whirlwind, name: "CycloneCopy", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
   [MOVE_IDS.WingAttack]: { id: MOVE_IDS.WingAttack, name: "FeatherFont", type: MONSTER_TYPES.FLYING, category: MOVE_CATEGORIES.PHYSICAL, power: 60, accuracy: 100 },
-  [MOVE_IDS.Withdraw]: { id: MOVE_IDS.Withdraw, name: "ShellScript", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100 },
+  [MOVE_IDS.Withdraw]: { id: MOVE_IDS.Withdraw, name: "ShellScript", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: "STAT_UP", effectStat: "def", effectAmount: 1 },
   [MOVE_IDS.Wrap]: { id: MOVE_IDS.Wrap, name: "BindBook", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 90 },
 };
+
 
 
 export interface AreaConfig {
@@ -516,7 +520,7 @@ export function calculateStat(base: number, level: number, isHp: boolean = false
   return Math.floor(((2 * base + iv) * level) / 100) + 5;
 }
 
-export function getStatWithStage(statValue: number, stage: number, status: string = 'None', statName: string = ''): number {
+export function getStatWithStage(statValue: number, stage: number, status: string = STATUS_CONDITIONS.NONE, statName: string = ''): number {
   const multipliers: Record<number, number> = {
     '-6': 2 / 8, '-5': 2 / 7, '-4': 2 / 6, '-3': 2 / 5, '-2': 2 / 4, '-1': 2 / 3,
     '0': 1,
@@ -538,7 +542,18 @@ export function calculateDamage(
 ) {
   if (!spellingPerformance.isCorrect) return { damage: 0, typeMod: 1, isMiss: true };
 
-  const isSpecial = move.category === 'Special';
+  // Fixed damage moves
+  if (move.effectType === 'FIXED') {
+     let dmg = attacker.level;
+     if (move.id === MOVE_IDS.DragonRage) dmg = 40;
+     if (move.id === MOVE_IDS.SonicBoom) dmg = 20;
+     if (move.id === MOVE_IDS.Psywave) dmg = Math.floor(attacker.level * (0.5 + Math.random()));
+     if (move.id === MOVE_IDS.SuperFang) dmg = Math.floor(defender.hp / 2);
+
+     return { damage: Math.max(1, dmg), typeMod: 1, isMiss: false };
+  }
+
+  const isSpecial = move.category === MOVE_CATEGORIES.SPECIAL;
   const atkStat = isSpecial ? attacker.spa : attacker.atk;
   const defStat = isSpecial ? defender.spd : defender.def;
 
@@ -548,16 +563,14 @@ export function calculateDamage(
   const effectiveAtk = getStatWithStage(atkStat, atkStage || 0, attacker.status, isSpecial ? 'spa' : 'atk');
   const effectiveDef = getStatWithStage(defStat, defStage || 0, defender.status, isSpecial ? 'spd' : 'def');
 
-  // Spelling power impacts whether the move hits or misses
-  // If it's a "Power" spelling (fast), it gets a boost and ignore accuracy?
-  // User said: "Spelling power impacts whether the move hits or misses. I don't think it should ALWAYS hit because Growl and other conditions should still be valid."
-
   let hitChance = move.accuracy / 100;
-  if (spellingPerformance.isPower) hitChance += 0.2; // Fast spelling increases hit chance
+  if (spellingPerformance.isPower) hitChance += 0.2;
   if (spellingPerformance.isPerfect) hitChance += 0.1;
 
   const isMiss = Math.random() > hitChance;
   if (isMiss) return { damage: 0, typeMod: 1, isMiss: true };
+
+  if (move.category === MOVE_CATEGORIES.STATUS) return { damage: 0, typeMod: 1, isMiss: false };
 
   const difficultyMultiplier = spellingPerformance.isPerfect ? 1.5 : (spellingPerformance.isPower ? 1.2 : 1.0);
 
@@ -635,7 +648,7 @@ export function createMon(species: string, level: number = 5): Monster {
     expToNext: calculateExpToNext(level),
     id: Math.random().toString(36).slice(2, 11),
     moves,
-    status: 'None',
+    status: STATUS_CONDITIONS.NONE,
     stages: { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 }
   };
 }

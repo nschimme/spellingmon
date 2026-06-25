@@ -30,10 +30,10 @@ export const TYPE_COLORS: Record<string, string> = {
 };
 
 export const STATUS_COLORS: Record<string, string> = {
-  Poison: 'bg-purple-600',
-  Paralysis: 'bg-yellow-400',
-  Sleep: 'bg-gray-500',
-  Burn: 'bg-red-600',
-  Freeze: 'bg-cyan-400',
-  Confusion: 'bg-pink-400',
+  POISON: 'bg-purple-600',
+  PARALYSIS: 'bg-yellow-400',
+  SLEEP: 'bg-gray-500',
+  BURN: 'bg-red-600',
+  FREEZE: 'bg-cyan-400',
+  CONFUSION: 'bg-pink-400',
 };

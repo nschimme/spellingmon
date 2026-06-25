@@ -289,7 +289,15 @@
       "weak": "Weak",
       "none": "No Eff"
     },
-    "replaceMove": "Replace {move}?"
+    "replaceMove": "Replace {move}?",
+    "healed": "{name} recovered HP!",
+    "drained": "{name} drained energy!",
+    "recoil": "{name} was hit with recoil!",
+    "statUp": "{mon}'s {stat} rose!",
+    "statUp2": "{mon}'s {stat} rose sharply!",
+    "isConfused": "{name} is confused!",
+    "hurtSelf": "It hurt itself in its confusion!",
+    "outOfConfusion": "{name} snapped out of its confusion!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

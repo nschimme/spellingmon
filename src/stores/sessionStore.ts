@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -328,7 +328,7 @@ export const useSessionStore = defineStore('session', {
     applyOverworldDamage() {
        let partyDied = false;
        this.player.party.forEach(mon => {
-          if (mon.hp > 0 && mon.status === 'Poison') {
+          if (mon.hp > 0 && mon.status === STATUS_CONDITIONS.POISON) {
              mon.hp = Math.max(0, mon.hp - 1);
              if (mon.hp === 0) {
                 // Potential notification or sound
@@ -424,7 +424,7 @@ export const useSessionStore = defineStore('session', {
             if (!mon.moves.includes(moveId)) {
               if (mon.moves.length < 4) {
                 mon.moves.push(moveId);
-                this.notify(this.t('battle.learnedMove', { name: this.t('monsters.' + mon.species), move: moveId }));
+                this.notify(this.t('battle.learnedMove', { name: this.t('monsters.' + mon.species), move: this.t('moves.' + moveId) }));
               } else {
                 this.moveLearningPending = { monId: mon.id, moveId };
               }
