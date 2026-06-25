@@ -40,8 +40,12 @@
                 <h3 class="text-xl font-black uppercase text-gray-800 truncate">
                   {{ $t('monsters.' + mon.species) }}
                 </h3>
-                <div v-if="mon.status !== 'None'" :class="STATUS_COLORS[mon.status]" class="w-fit px-2 rounded text-[8px] text-white font-black uppercase">
-                   {{ mon.status }}
+                <div
+                  v-if="mon.status !== STATUS_CONDITIONS.NONE"
+                  :class="STATUS_COLORS[mon.status]"
+                  class="w-fit px-2 rounded text-[8px] text-white font-black uppercase"
+                >
+                  {{ mon.status }}
                 </div>
               </div>
               <span class="text-sm font-black text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md border-2 border-blue-200">LV{{ mon.level }}</span>
@@ -143,8 +147,8 @@
 import { computed, ref, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
-import { INPUT_PRIORITIES } from '../../utils/constants';
-import { TYPE_EMOJIS, MONS, MOVES } from '../../utils/gameData';
+import { INPUT_PRIORITIES, STATUS_CONDITIONS } from '../../utils/constants';
+import { TYPE_EMOJIS, MOVES } from '../../utils/gameData';
 import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../../utils/visuals';
 
 const session = useSessionStore();

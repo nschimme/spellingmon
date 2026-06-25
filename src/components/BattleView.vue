@@ -17,16 +17,25 @@
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md relative">
           <div class="flex flex-col font-bold leading-tight">
             <div class="flex items-center justify-between">
-               <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.battle.enemyMon.species) }}</span>
-               <div class="flex gap-0.5">
-                  <div v-for="t in session.battle.enemyMon.types" :key="t" :class="TYPE_COLORS[t]" class="w-2 h-2 rounded-full border border-black/20" />
-               </div>
+              <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.battle.enemyMon.species) }}</span>
+              <div class="flex gap-0.5">
+                <div
+                  v-for="t in session.battle.enemyMon.types"
+                  :key="t"
+                  class="w-2 h-2 rounded-full border border-black/20"
+                  :class="TYPE_COLORS[t]"
+                />
+              </div>
             </div>
             <div class="flex items-center gap-2">
-               <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.battle.enemyMon.level }}</span>
-               <div v-if="session.battle.enemyMon.status !== 'None'" :class="STATUS_COLORS[session.battle.enemyMon.status]" class="px-1 rounded text-[6px] text-white font-black uppercase">
-                  {{ session.battle.enemyMon.status }}
-               </div>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.battle.enemyMon.level }}</span>
+              <div
+                v-if="session.battle.enemyMon.status !== STATUS_CONDITIONS.NONE"
+                class="px-1 rounded text-[6px] text-white font-black uppercase"
+                :class="STATUS_COLORS[session.battle.enemyMon.status]"
+              >
+                {{ session.battle.enemyMon.status }}
+              </div>
             </div>
           </div>
           <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400">
@@ -53,16 +62,25 @@
         <div class="bg-white border-2 border-gray-800 p-1 sm:p-2 rounded-lg w-36 sm:w-48 shadow-md relative">
           <div class="flex flex-col font-bold leading-tight">
             <div class="flex items-center justify-between">
-               <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.activePlayerMon.species) }}</span>
-               <div class="flex gap-0.5">
-                  <div v-for="t in session.activePlayerMon.types" :key="t" :class="TYPE_COLORS[t]" class="w-2 h-2 rounded-full border border-black/20" />
-               </div>
+              <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.activePlayerMon.species) }}</span>
+              <div class="flex gap-0.5">
+                <div
+                  v-for="t in session.activePlayerMon.types"
+                  :key="t"
+                  class="w-2 h-2 rounded-full border border-black/20"
+                  :class="TYPE_COLORS[t]"
+                />
+              </div>
             </div>
             <div class="flex items-center gap-2">
-               <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.activePlayerMon.level }}</span>
-               <div v-if="session.activePlayerMon.status !== 'None'" :class="STATUS_COLORS[session.activePlayerMon.status]" class="px-1 rounded text-[6px] text-white font-black uppercase">
-                  {{ session.activePlayerMon.status }}
-               </div>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.activePlayerMon.level }}</span>
+              <div
+                v-if="session.activePlayerMon.status !== STATUS_CONDITIONS.NONE"
+                class="px-1 rounded text-[6px] text-white font-black uppercase"
+                :class="STATUS_COLORS[session.activePlayerMon.status]"
+              >
+                {{ session.activePlayerMon.status }}
+              </div>
             </div>
           </div>
           <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400">
@@ -381,7 +399,7 @@ import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../utils/visuals';
-import { GAME_STATES, GAME_EVENTS } from '../utils/constants';
+import { GAME_STATES, GAME_EVENTS, STATUS_CONDITIONS } from '../utils/constants';
 import { MOVES, TYPE_CHART } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';

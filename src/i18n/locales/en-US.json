@@ -358,7 +358,7 @@
     "muted": "Muted",
     "unusable": "Unusable (No TTS)",
     "testSFX": "Test SFX",
-    "noVoices": "No voices loaded \u2014 try Test Voice or return to Audio Check."
+    "noVoices": "No voices loaded — try Test Voice or return to Audio Check."
   },
   "moves": {
     "TypoTackle": "Typo Tackle",
