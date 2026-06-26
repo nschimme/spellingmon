@@ -199,6 +199,7 @@
   "battle": {
     "experience": "Expérience",
     "expGainedShort": "EXP Gagné : +{n}",
+    "levelShort": "Nv. {n}",
     "levelUpNotification": "Niveau supérieur !",
     "capture": "Capturer",
     "spellForPower": "Épelez pour la puissance !",

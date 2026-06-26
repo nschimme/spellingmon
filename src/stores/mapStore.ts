@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { MapGenerator, type MapResult, TILE_TYPES } from '../utils/mapGenerator';
 import { useSessionStore } from './sessionStore';
-import { INTERIORS, GAME_CONSTANTS, SPAWN_POINTS } from '../utils/constants';
+import { GAME_CONSTANTS, SPAWN_POINTS } from '../utils/constants';
 import { getRivalStarter } from '../utils/gameData';
 
 export const useMapStore = defineStore('map', () => {
@@ -80,16 +80,6 @@ export const useMapStore = defineStore('map', () => {
           session.player.currentInterior = null;
         }
       }
-    }
-
-    // Update last spell center for respawning
-    if (result.spellCenter) {
-      session.player.lastSpellCenter = {
-        x: 4, // Default center inside SC
-        y: 4,
-        interior: INTERIORS.SPELLING_CENTER,
-        floor: null
-      } as any;
     }
 
     let validatedPos = validatePosition(newX, newY, result);

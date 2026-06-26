@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
-import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
+import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
 export interface PlayerState {
@@ -120,6 +120,37 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
   if (player.party && player.party.length > 0) {
     player.isStarterSelected = true;
     player.characterCreationComplete = true;
+
+    // Fix monsters with missing skills (old save data)
+    player.party.forEach(mon => {
+      if (!mon.moves || mon.moves.length === 0) {
+        const base = MONS[mon.species];
+        if (base && base.learnset) {
+          const moves: string[] = [];
+          const sortedLevels = Object.keys(base.learnset)
+            .map(k => Number(k))
+            .filter(l => Number.isFinite(l))
+            .sort((a, b) => b - a);
+
+          for (const l of sortedLevels) {
+            if (l <= mon.level) {
+              for (const mId of base.learnset[l]) {
+                if (!moves.includes(mId)) {
+                  moves.push(mId);
+                  if (moves.length >= 4) break;
+                }
+              }
+            }
+            if (moves.length >= 4) break;
+          }
+          mon.moves = moves;
+        }
+      }
+      // Ensure stages exist
+      if (!mon.stages) {
+        mon.stages = getDefaultStages();
+      }
+    });
   }
 
   return cloned;
@@ -349,7 +380,11 @@ export const useSessionStore = defineStore('session', {
     },
 
     healParty() {
-      this.player.party.forEach(mon => { mon.hp = mon.maxHp; });
+      this.player.party.forEach(mon => {
+        mon.hp = mon.maxHp;
+        mon.status = STATUS_CONDITIONS.NONE;
+        mon.stages = getDefaultStages();
+      });
     },
 
     awardBadge(badge: string) {

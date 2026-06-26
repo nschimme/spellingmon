@@ -325,7 +325,9 @@ watch(() => session.player.mapSeed, (newSeed) => {
 
 
 watch(() => session.player.defeatedTrainers, (newList, oldList) => {
-  if (!fsm.matches(GAME_STATES.WORLD)) return;
+  const isPlayState = fsm.matches(GAME_STATES.PLAY);
+  if (!isPlayState) return;
+
   const newlyDefeated = newList.filter(id => !oldList.includes(id));
   newlyDefeated.forEach(id => {
     const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
@@ -435,6 +437,7 @@ const checkTriggers = (x: number, y: number) => {
   }
 
   if (type === TILE_TYPES.SPELL_CENTER && !session.player.currentInterior) {
+    // Check if the tile below is actually clear or if we are exactly on the entry point
     handleTransition({ target: INTERIORS.SPELLING_CENTER, targetPos: { x: 4, y: 4 } });
     return;
   }
@@ -535,8 +538,12 @@ const handleNPCInteract = (npc: any) => {
     dialog: true,
     onEnter: () => {
       const lines = npc.dialog.flatMap((d: string) => {
-        const translation = settingsStore.t(d);
-        return Array.isArray(translation) ? translation : [translation];
+        // Use tm to fetch the message, which could be a string or array
+        const msg = settingsStore.tm(d);
+        if (Array.isArray(msg)) return msg;
+        if (typeof msg === 'string') return [msg];
+        // Fallback to t if msg is an object or unexpected type
+        return [settingsStore.t(d)];
       });
       session.showDialog(lines, settingsStore.t(npc.name));
     }

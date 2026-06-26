@@ -660,6 +660,10 @@ export function calculateExpGain(enemyMon: { level: number }, isTrainer: boolean
   return Math.floor((baseExp * enemyMon.level / 7) * trainerBonus);
 }
 
+export function getDefaultStages() {
+  return { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+}
+
 /**
  * Linear algorithm for battle timer duration.
  * Harder and longer words receive more time.
