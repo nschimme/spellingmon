@@ -197,9 +197,7 @@
       "status": "Status"
     },
     "dontLearn": "Don't learn",
-    "release": "Release",
-    "levelShort": "Lv {n}",
-    "hpShort": "HP: {n}"
+    "release": "Release"
   },
   "home": {
     "name": "Home"

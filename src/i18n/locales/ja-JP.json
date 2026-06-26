@@ -198,9 +198,7 @@
       "status": "へんか"
     },
     "dontLearn": "おぼえない",
-    "release": "にがす",
-    "levelShort": "Lv.{n}",
-    "hpShort": "HP: {n}"
+    "release": "にがす"
   },
   "home": {
     "name": "わがや"

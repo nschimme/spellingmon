@@ -190,9 +190,7 @@
       "status": "Status"
     },
     "dontLearn": "Não aprender",
-    "release": "Soltar",
-    "levelShort": "Nv. {n}",
-    "hpShort": "PS: {n}"
+    "release": "Soltar"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

@@ -190,9 +190,7 @@
       "status": "Статус"
     },
     "dontLearn": "Не учить",
-    "release": "Отпустить",
-    "levelShort": "Ур. {n}",
-    "hpShort": "ОЗ: {n}"
+    "release": "Отпустить"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

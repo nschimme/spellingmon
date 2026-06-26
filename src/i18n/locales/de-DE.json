@@ -304,9 +304,7 @@
       "status": "Status"
     },
     "dontLearn": "Nicht lernen",
-    "release": "Freilassen",
-    "levelShort": "Lv. {n}",
-    "hpShort": "KP: {n}"
+    "release": "Freilassen"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

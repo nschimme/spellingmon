@@ -190,9 +190,7 @@
       "status": "变化"
     },
     "dontLearn": "不学习",
-    "release": "放生",
-    "levelShort": "等级 {n}",
-    "hpShort": "HP: {n}"
+    "release": "放生"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

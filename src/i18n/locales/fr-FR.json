@@ -304,9 +304,7 @@
       "status": "Statut"
     },
     "dontLearn": "Ne pas apprendre",
-    "release": "Relâcher",
-    "levelShort": "Nv {n}",
-    "hpShort": "PV : {n}"
+    "release": "Relâcher"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",
