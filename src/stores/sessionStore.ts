@@ -120,6 +120,33 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
   if (player.party && player.party.length > 0) {
     player.isStarterSelected = true;
     player.characterCreationComplete = true;
+
+    // Fix monsters with missing skills (old save data)
+    player.party.forEach(mon => {
+      if (!mon.moves || mon.moves.length === 0) {
+        const base = MONS[mon.species];
+        if (base && base.learnset) {
+          const moves: string[] = [];
+          const sortedLevels = Object.keys(base.learnset).map(Number).sort((a, b) => b - a);
+          for (const l of sortedLevels) {
+            if (l <= mon.level) {
+              for (const mId of base.learnset[l]) {
+                if (!moves.includes(mId)) {
+                  moves.push(mId);
+                  if (moves.length >= 4) break;
+                }
+              }
+            }
+            if (moves.length >= 4) break;
+          }
+          mon.moves = moves;
+        }
+      }
+      // Ensure stages exist
+      if (!mon.stages) {
+        mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+      }
+    });
   }
 
   return cloned;
@@ -349,7 +376,11 @@ export const useSessionStore = defineStore('session', {
     },
 
     healParty() {
-      this.player.party.forEach(mon => { mon.hp = mon.maxHp; });
+      this.player.party.forEach(mon => {
+        mon.hp = mon.maxHp;
+        mon.status = STATUS_CONDITIONS.NONE;
+        mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+      });
     },
 
     awardBadge(badge: string) {

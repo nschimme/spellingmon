@@ -93,6 +93,7 @@
   "battle": {
     "experience": "Experience",
     "expGainedShort": "EXP Gained: +{n}",
+    "levelShort": "Lv. {n}",
     "levelUpNotification": "Level Up!",
     "wildAppeared": "A wild {name} appeared!",
     "trainerWantsToBattle": "Trainer {name} wants to battle!",

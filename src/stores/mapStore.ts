@@ -82,16 +82,6 @@ export const useMapStore = defineStore('map', () => {
       }
     }
 
-    // Update last spell center for respawning
-    if (result.spellCenter) {
-      session.player.lastSpellCenter = {
-        x: 4, // Default center inside SC
-        y: 4,
-        interior: INTERIORS.SPELLING_CENTER,
-        floor: null
-      } as any;
-    }
-
     let validatedPos = validatePosition(newX, newY, result);
     if (!validatedPos) {
        console.warn("Player stuck! Emergency respawn initiated.");

@@ -106,8 +106,10 @@ export const useSettingsStore = defineStore('settings', {
       this.setMuted(!this.isMuted);
     },
     t(key: string, params?: any): any {
-      const translation = i18n.global.t(key, params);
-      return translation;
+      return i18n.global.t(key, params);
+    },
+    tm(key: string): any {
+      return i18n.global.tm(key);
     },
     confirmTtsVerified() {
       this.ttsVerified = true;
