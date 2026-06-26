@@ -93,6 +93,7 @@
   "battle": {
     "experience": "経験値",
     "expGainedShort": "獲得経験値: +{n}",
+    "levelShort": "Lv. {n}",
     "levelUpNotification": "レベルアップ！",
     "wildAppeared": "野生の {name} があらわれた！",
     "trainerWantsToBattle": "トレーナーの {name} が勝負をしかけてきた！",

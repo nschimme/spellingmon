@@ -85,6 +85,7 @@
   "battle": {
     "experience": "Experiência",
     "expGainedShort": "EXP Ganho: +{n}",
+    "levelShort": "Nv. {n}",
     "levelUpNotification": "Subiu de nível!",
     "capture": "Capturar",
     "spellForPower": "Soletre para ganhar poder!",

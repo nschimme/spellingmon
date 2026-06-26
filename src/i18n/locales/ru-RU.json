@@ -85,6 +85,7 @@
   "battle": {
     "experience": "Опыт",
     "expGainedShort": "Опыт: +{n}",
+    "levelShort": "Ур. {n}",
     "levelUpNotification": "Новый уровень!",
     "capture": "Поймать",
     "spellForPower": "Пиши правильно для силы!",

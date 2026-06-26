@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { MapGenerator, type MapResult, TILE_TYPES } from '../utils/mapGenerator';
 import { useSessionStore } from './sessionStore';
-import { INTERIORS, GAME_CONSTANTS, SPAWN_POINTS } from '../utils/constants';
+import { GAME_CONSTANTS, SPAWN_POINTS } from '../utils/constants';
 import { getRivalStarter } from '../utils/gameData';
 
 export const useMapStore = defineStore('map', () => {

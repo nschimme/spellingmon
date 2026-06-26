@@ -85,6 +85,7 @@
   "battle": {
     "experience": "经验",
     "expGainedShort": "获得经验: +{n}",
+    "levelShort": "Lv. {n}",
     "levelUpNotification": "等级提升！",
     "capture": "捕捉",
     "spellForPower": "正确拼写获得力量！",
