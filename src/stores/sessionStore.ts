@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
-import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
+import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
 export interface PlayerState {
@@ -127,7 +127,11 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
         const base = MONS[mon.species];
         if (base && base.learnset) {
           const moves: string[] = [];
-          const sortedLevels = Object.keys(base.learnset).map(Number).sort((a, b) => b - a);
+          const sortedLevels = Object.keys(base.learnset)
+            .map(k => Number(k))
+            .filter(l => Number.isFinite(l))
+            .sort((a, b) => b - a);
+
           for (const l of sortedLevels) {
             if (l <= mon.level) {
               for (const mId of base.learnset[l]) {
@@ -144,7 +148,7 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
       }
       // Ensure stages exist
       if (!mon.stages) {
-        mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+        mon.stages = getDefaultStages();
       }
     });
   }
@@ -379,7 +383,7 @@ export const useSessionStore = defineStore('session', {
       this.player.party.forEach(mon => {
         mon.hp = mon.maxHp;
         mon.status = STATUS_CONDITIONS.NONE;
-        mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+        mon.stages = getDefaultStages();
       });
     },
 

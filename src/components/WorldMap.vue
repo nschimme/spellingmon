@@ -538,9 +538,12 @@ const handleNPCInteract = (npc: any) => {
     dialog: true,
     onEnter: () => {
       const lines = npc.dialog.flatMap((d: string) => {
-        // Correctly handle translation keys that point to arrays
-        const translation = settingsStore.tm(d);
-        return Array.isArray(translation) ? translation : [settingsStore.t(d)];
+        // Use tm to fetch the message, which could be a string or array
+        const msg = settingsStore.tm(d);
+        if (Array.isArray(msg)) return msg;
+        if (typeof msg === 'string') return [msg];
+        // Fallback to t if msg is an object or unexpected type
+        return [settingsStore.t(d)];
       });
       session.showDialog(lines, settingsStore.t(npc.name));
     }
