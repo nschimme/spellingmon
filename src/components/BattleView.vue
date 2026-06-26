@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.battle.enemyMon.level }}</span>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">{{ $t("battle.levelShort", { n: session.battle.enemyMon.level }) }}</span>
               <div
                 v-if="session.battle.enemyMon.status !== STATUS_CONDITIONS.NONE"
                 class="px-1 rounded text-[6px] text-white font-black uppercase"
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.activePlayerMon.level }}</span>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">{{ $t("battle.levelShort", { n: session.activePlayerMon.level }) }}</span>
               <div
                 v-if="session.activePlayerMon.status !== STATUS_CONDITIONS.NONE"
                 class="px-1 rounded text-[6px] text-white font-black uppercase"
@@ -242,11 +242,11 @@
               <span>{{ $t('moves.' + moveId) }}</span>
               <div class="mt-1 flex items-center gap-1">
                 <span
-                  v-if="MOVES[moveId]?.category === 'Physical'"
+                  v-if="MOVES[moveId]?.category === MOVE_CATEGORIES.PHYSICAL"
                   :title="$t('battle.category.physical')"
                 >💥</span>
                 <span
-                  v-else-if="MOVES[moveId]?.category === 'Special'"
+                  v-else-if="MOVES[moveId]?.category === MOVE_CATEGORIES.SPECIAL"
                   :title="$t('battle.category.special')"
                 >✨</span>
                 <span
@@ -285,7 +285,7 @@
               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': partyIndex === index }"
               @click="fsm.send(GAME_EVENTS.CONFIRM, { monId: mon.id })"
             >
-              {{ $t('monsters.' + mon.species) }} (HP: {{ mon.hp }})
+              {{ $t('monsters.' + mon.species) }} ({{ $t("battle.hpShort", { n: mon.hp }) }})
             </button>
             <button
               v-if="session.activePlayerMon && session.activePlayerMon.hp > 0"
@@ -390,7 +390,7 @@
                 :class="{ 'ring-8 ring-yellow-400 border-yellow-400': replaceIndex === index }"
                 @click="fsm.send(GAME_EVENTS.REPLACE, { replaceMonId: mon.id })"
               >
-                {{ $t('monsters.' + mon.species) }} (Lv {{ mon.level }})
+                {{ $t('monsters.' + mon.species) }} ({{ $t("battle.levelShort", { n: mon.level }) }})
               </button>
               <button
                 :ref="el => setReplaceRef(el, session.player.party.length)"
@@ -414,7 +414,7 @@ import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../utils/visuals';
-import { GAME_STATES, GAME_EVENTS, STATUS_CONDITIONS } from '../utils/constants';
+import { GAME_STATES, GAME_EVENTS, STATUS_CONDITIONS, MOVE_CATEGORIES } from '../utils/constants';
 import { MOVES, TYPE_CHART } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
@@ -516,7 +516,7 @@ const { selectedIndex: moveIndex } = useKeyboardNavigation({
 const getEffectiveness = (moveId: string) => {
   if (!session.battle.enemyMon) return null;
   const move = MOVES[moveId];
-  if (!move || move.category === 'Status') return null;
+  if (!move || move.category === MOVE_CATEGORIES.STATUS) return null;
 
   let mod = 1;
   session.battle.enemyMon.types.forEach(t => {

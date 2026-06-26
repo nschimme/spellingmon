@@ -290,7 +290,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
               ctx.session.clearNotification();
               const duration = params?.duration ?? 150;
               setTimeout(() => {
-                if (ctx.session.player.party.every((m: any) => m.hp <= 0)) {
+                if (ctx.session.player.party.every((m: Monster) => m.hp <= 0)) {
                    ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
                 } else {
                    ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
