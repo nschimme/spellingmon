@@ -183,7 +183,16 @@
     "statUp2": "O {stat} de {mon} aumentou muito!",
     "isConfused": "{name} está confuso!",
     "hurtSelf": "Ele feriu a si mesmo na confusão!",
-    "outOfConfusion": "{name} saiu da confusão!"
+    "outOfConfusion": "{name} saiu da confusão!",
+    "category": {
+      "physical": "Físico",
+      "special": "Especial",
+      "status": "Status"
+    },
+    "dontLearn": "Não aprender",
+    "release": "Soltar",
+    "levelShort": "Nv. {n}",
+    "hpShort": "PS: {n}"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

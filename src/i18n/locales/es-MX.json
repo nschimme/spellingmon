@@ -297,7 +297,16 @@
     "statUp2": "¡El {stat} de {mon} subió mucho!",
     "isConfused": "¡{name} está confundido!",
     "hurtSelf": "¡Tan confundido está que se hirió a sí mismo!",
-    "outOfConfusion": "¡{name} ya no está confundido!"
+    "outOfConfusion": "¡{name} ya no está confundido!",
+    "category": {
+      "physical": "Físico",
+      "special": "Especial",
+      "status": "Estado"
+    },
+    "dontLearn": "No aprender",
+    "release": "Soltar",
+    "levelShort": "Nv. {n}",
+    "hpShort": "PS: {n}"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

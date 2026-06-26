@@ -297,7 +297,16 @@
     "statUp2": "L'stat de {mon} augmente beaucoup !",
     "isConfused": "{name} est confus !",
     "hurtSelf": "Il se blesse dans sa confusion !",
-    "outOfConfusion": "{name} n'est plus confus !"
+    "outOfConfusion": "{name} n'est plus confus !",
+    "category": {
+      "physical": "Physique",
+      "special": "Spécial",
+      "status": "Statut"
+    },
+    "dontLearn": "Ne pas apprendre",
+    "release": "Relâcher",
+    "levelShort": "Nv {n}",
+    "hpShort": "PV : {n}"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

@@ -190,7 +190,16 @@
       "weak": "Weak",
       "none": "No Eff"
     },
-    "replaceMove": "Replace {move}?"
+    "replaceMove": "Replace {move}?",
+    "category": {
+      "physical": "Physical",
+      "special": "Special",
+      "status": "Status"
+    },
+    "dontLearn": "Don't learn",
+    "release": "Release",
+    "levelShort": "Lv {n}",
+    "hpShort": "HP: {n}"
   },
   "home": {
     "name": "Home"

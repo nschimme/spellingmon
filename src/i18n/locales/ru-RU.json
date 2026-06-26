@@ -183,7 +183,16 @@
     "statUp2": "{stat} {mon} резко повысился!",
     "isConfused": "{name} в замешательстве!",
     "hurtSelf": "Он ударил себя в замешательстве!",
-    "outOfConfusion": "{name} вышел из замешательства!"
+    "outOfConfusion": "{name} вышел из замешательства!",
+    "category": {
+      "physical": "Физическая",
+      "special": "Специальная",
+      "status": "Статус"
+    },
+    "dontLearn": "Не учить",
+    "release": "Отпустить",
+    "levelShort": "Ур. {n}",
+    "hpShort": "ОЗ: {n}"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

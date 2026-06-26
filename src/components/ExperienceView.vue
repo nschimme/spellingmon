@@ -37,7 +37,7 @@
                 <h3 class="font-black text-lg sm:text-xl text-gray-800 uppercase truncate">
                   {{ $t('monsters.' + mon.species) }}
                 </h3>
-                <span class="font-bold text-blue-600 shrink-0">Lv {{ mon.displayLevel }}</span>
+                <span class="font-bold text-blue-600 shrink-0">{{ $t('battle.levelShort', { n: mon.displayLevel }) }}</span>
               </div>
               <div class="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">
                 {{ $t('battle.expGainedShort', { n: mon.expGained }) }}

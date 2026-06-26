@@ -297,7 +297,16 @@
     "statUp2": "{mon}s {stat} steigt stark!",
     "isConfused": "{name} ist verwirrt!",
     "hurtSelf": "Es hat sich vor Verwirrung selbst verletzt!",
-    "outOfConfusion": "{name} ist nicht mehr verwirrt!"
+    "outOfConfusion": "{name} ist nicht mehr verwirrt!",
+    "category": {
+      "physical": "Physisch",
+      "special": "Spezial",
+      "status": "Status"
+    },
+    "dontLearn": "Nicht lernen",
+    "release": "Freilassen",
+    "levelShort": "Lv. {n}",
+    "hpShort": "KP: {n}"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

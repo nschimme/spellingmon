@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.battle.enemyMon.level }}</span>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">{{ $t('battle.levelShort', { n: session.battle.enemyMon.level }) }}</span>
               <div
                 v-if="session.battle.enemyMon.status !== STATUS_CONDITIONS.NONE"
                 class="px-1 rounded text-[6px] text-white font-black uppercase"
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">Lv {{ session.activePlayerMon.level }}</span>
+              <span class="text-[7px] sm:text-[9px] text-gray-500 uppercase">{{ $t('battle.levelShort', { n: session.activePlayerMon.level }) }}</span>
               <div
                 v-if="session.activePlayerMon.status !== STATUS_CONDITIONS.NONE"
                 class="px-1 rounded text-[6px] text-white font-black uppercase"
@@ -243,15 +243,15 @@
               <div class="mt-1 flex items-center gap-1">
                 <span
                   v-if="MOVES[moveId]?.category === 'Physical'"
-                  title="Physical"
+                  :title="$t('battle.category.physical')"
                 >💥</span>
                 <span
                   v-else-if="MOVES[moveId]?.category === 'Special'"
-                  title="Special"
+                  :title="$t('battle.category.special')"
                 >✨</span>
                 <span
                   v-else
-                  title="Status"
+                  :title="$t('battle.category.status')"
                 >🛡️</span>
                 <span
                   v-if="getEffectiveness(moveId)"
@@ -285,7 +285,7 @@
               :class="{ 'ring-8 ring-yellow-400 border-yellow-400': partyIndex === index }"
               @click="fsm.send(GAME_EVENTS.CONFIRM, { monId: mon.id })"
             >
-              {{ $t('monsters.' + mon.species) }} (HP: {{ mon.hp }})
+              {{ $t('monsters.' + mon.species) }} ({{ $t('battle.hpShort', { n: mon.hp }) }})
             </button>
             <button
               v-if="session.activePlayerMon && session.activePlayerMon.hp > 0"
@@ -362,7 +362,7 @@
               class="mt-1 text-[10px] font-bold text-red-500"
               @click="session.cancelMoveLearning()"
             >
-              Don't learn
+              {{ $t('battle.dontLearn') }}
             </button>
           </div>
         </template>
@@ -390,7 +390,7 @@
                 :class="{ 'ring-8 ring-yellow-400 border-yellow-400': replaceIndex === index }"
                 @click="fsm.send(GAME_EVENTS.REPLACE, { replaceMonId: mon.id })"
               >
-                {{ $t('monsters.' + mon.species) }} (Lv {{ mon.level }})
+              {{ $t('monsters.' + mon.species) }} ({{ $t('battle.levelShort', { n: mon.level }) }})
               </button>
               <button
                 :ref="el => setReplaceRef(el, session.player.party.length)"

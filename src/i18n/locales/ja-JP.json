@@ -191,7 +191,16 @@
     "statUp2": "{mon}の{stat}がぐーんと上がった！",
     "isConfused": "{name}は混乱している！",
     "hurtSelf": "わけもわからず自分を攻撃した！",
-    "outOfConfusion": "{name}の混乱が解けた！"
+    "outOfConfusion": "{name}の混乱が解けた！",
+    "category": {
+      "physical": "ぶつり",
+      "special": "とくしゅ",
+      "status": "へんか"
+    },
+    "dontLearn": "おぼえない",
+    "release": "にがす",
+    "levelShort": "Lv.{n}",
+    "hpShort": "HP: {n}"
   },
   "home": {
     "name": "わがや"
