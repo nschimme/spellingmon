@@ -7,10 +7,66 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, INTERIORS, SPAWN_POINTS } from '../utils/constants';
-import { type Monster, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
+import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
+import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { validateSpelling } from '../utils/spelling';
 import i18n from '../i18n';
+
+function applyMoveEffect(ctx: any, attacker: Monster, defender: Monster, move: Move, damage: number) {
+  const t = ctx.t;
+  const log = ctx.session.battle.log;
+  const chance = move.effectChance || 100;
+  const roll = Math.random() * 100;
+
+  if (roll > chance) return;
+
+  const type = move.effectType;
+  const stat = move.effectStat;
+  const amount = move.effectAmount || 1;
+
+  if (type === MOVE_EFFECT_TYPES.STAT_DOWN) {
+     const target = defender;
+     target.stages[stat!] = Math.max(-6, (target.stages[stat!] || 0) - amount);
+     log.push(t(amount > 1 ? 'battle.statDown2' : 'battle.statDown', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
+  } else if (type === MOVE_EFFECT_TYPES.STAT_UP) {
+     const target = attacker;
+     target.stages[stat!] = Math.min(6, (target.stages[stat!] || 0) + amount);
+     log.push(t(amount > 1 ? 'battle.statUp2' : 'battle.statUp', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
+  } else if (type === MOVE_EFFECT_TYPES.STATUS) {
+     if (stat === 'CONFUSION') {
+        if (!defender.confusionTurns) {
+           defender.confusionTurns = 2 + Math.floor(Math.random() * 4);
+           log.push(t('battle.isConfused', { name: t('monsters.' + defender.species) }));
+        }
+        return;
+     }
+
+     if (defender.status === STATUS_CONDITIONS.NONE) {
+        // Type immunities
+        if (stat === 'BURN' && defender.types.includes('Fire')) return;
+        if (stat === 'POISON' && (defender.types.includes('Poison') || defender.types.includes('Steel'))) return;
+        if (stat === 'PARALYSIS' && defender.types.includes('Electric')) return;
+
+        defender.status = STATUS_CONDITIONS[stat as keyof typeof STATUS_CONDITIONS];
+        if (defender.status === STATUS_CONDITIONS.SLEEP) {
+           defender.statusTurns = 1 + Math.floor(Math.random() * 3);
+        }
+        log.push(t('battle.statusApplied', { mon: t('monsters.' + defender.species), status: t('battle.status.' + stat!.toLowerCase()) }));
+     }
+  } else if (type === MOVE_EFFECT_TYPES.HEAL) {
+     const heal = Math.floor(attacker.maxHp / 2);
+     attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
+     log.push(t('battle.healed', { name: t('monsters.' + attacker.species) }));
+  } else if (type === MOVE_EFFECT_TYPES.DRAIN) {
+     const heal = Math.floor(damage / 2);
+     attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
+     log.push(t('battle.drained', { name: t('monsters.' + attacker.species) }));
+  } else if (type === MOVE_EFFECT_TYPES.RECOIL) {
+     const recoil = Math.floor(damage / 4);
+     attacker.hp = Math.max(0, attacker.hp - recoil);
+     log.push(t('battle.recoil', { name: t('monsters.' + attacker.species) }));
+  }
+}
 
 export const useGameFSM = defineStore('gameFSM', () => {
   const session = useSessionStore();
@@ -234,7 +290,11 @@ export const useGameFSM = defineStore('gameFSM', () => {
               ctx.session.clearNotification();
               const duration = params?.duration ?? 150;
               setTimeout(() => {
-                ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
+                if (ctx.session.player.party.every((m: Monster) => m.hp <= 0)) {
+                   ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
+                } else {
+                   ctx.fsm.send(GAME_EVENTS.COMPLETE, params);
+                }
               }, duration);
             },
             on: {
@@ -358,10 +418,29 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_ACTION_SELECT)]: {
+                onEnter: (ctx) => {
+                  const mon = ctx.session.activePlayerMon!;
+                  if (mon.status === STATUS_CONDITIONS.SLEEP) {
+                    mon.statusTurns = (mon.statusTurns || 0) - 1;
+                    if (mon.statusTurns <= 0) {
+                      mon.status = STATUS_CONDITIONS.NONE;
+                      ctx.session.battle.log.push(ctx.t('battle.wokeUp', { name: ctx.t('monsters.' + mon.species) }));
+                    } else {
+                      ctx.session.battle.log.push(ctx.t('battle.isAsleep', { name: ctx.t('monsters.' + mon.species) }));
+                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN), 1000);
+                      return;
+                    }
+                  }
+                  if (mon.status === STATUS_CONDITIONS.FREEZE) {
+                    ctx.session.battle.log.push(ctx.t('battle.isFrozen', { name: ctx.t('monsters.' + mon.species) }));
+                    setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN), 1000);
+                    return;
+                  }
+                },
                 on: {
                   [GAME_EVENTS.ATTACK]: (ctx) => {
                     ctx.session.battle.isCapturing = false;
-                    return GAME_STATES.BATTLE_SPELLING;
+                    return GAME_STATES.BATTLE_MOVE_SELECT;
                   },
                   [GAME_EVENTS.CAPTURE]: (ctx) => {
                     ctx.session.battle.isCapturing = true;
@@ -382,6 +461,15 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   }
                 }
               },
+              [s(GAME_STATES.BATTLE_MOVE_SELECT)]: {
+                on: {
+                  [GAME_EVENTS.CONFIRM]: (ctx, params) => {
+                    ctx.session.battle.selectedMoveId = params.moveId;
+                    return GAME_STATES.BATTLE_SPELLING;
+                  },
+                  [GAME_EVENTS.BACK]: GAME_STATES.BATTLE_ACTION_SELECT
+                }
+              },
               [s(GAME_STATES.BATTLE_SWITCHING)]: {
                 on: {
                   [GAME_EVENTS.CONFIRM]: (ctx, params) => {
@@ -389,7 +477,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     if (!ctx.session.battle.participatingMonIds.includes(params.monId)) {
                       ctx.session.battle.participatingMonIds.push(params.monId);
                     }
-                    ctx.session.battle.log.push(ctx.t('battle.go', { name: ctx.t('monsters.' + ctx.session.activePlayerMon.species) }));
+                    ctx.session.battle.log.push(ctx.t('battle.go', { name: ctx.t('monsters.' + ctx.session.activePlayerMon!.species) }));
                     return GAME_STATES.BATTLE_ENEMY_TURN;
                   },
                   [GAME_EVENTS.CANCEL]: GAME_STATES.BATTLE_ACTION_SELECT
@@ -418,26 +506,21 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 },
                 on: {
                   [GAME_EVENTS.SUBMIT]: (ctx, params) => {
-                    const elapsed = (Date.now() - ctx.session.battle.startTime) / 1000;
+                    const elapsed = (Date.now() - (ctx.session.battle.startTime || 0)) / 1000;
                     const timeLeft = Math.max(0, ctx.session.battle.totalTime - elapsed);
-                    const { isCorrect, isPerfect } = validateSpelling(params.input, ctx.session.battle.currentWord.word);
+                    const { isCorrect, isPerfect } = validateSpelling(params.input, ctx.session.battle.currentWord!.word);
 
                     if (isCorrect) {
                       const status = isPerfect ? 'mastered' : 'correct';
-                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord.word, status);
+                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord!.word, status);
                       const isPower = timeLeft > (ctx.session.battle.totalTime / 2);
-
-                      let basePower = 30;
-                      if (isPerfect && isPower) basePower = 75;
-                      else if (isPerfect) basePower = 60;
-                      else if (isPower) basePower = 45;
 
                       return {
                         target: GAME_STATES.BATTLE_PLAYER_ATTACK,
-                        params: { power: basePower, isPerfect, isPower, isCorrect: true }
+                        params: { isPerfect, isPower, isCorrect: true }
                       };
                     } else {
-                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord.word, 'seen');
+                      ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord!.word, 'seen');
                       return {
                         target: GAME_STATES.BATTLE_ENEMY_TURN,
                         params: { isCorrect: false }
@@ -448,15 +531,54 @@ export const useGameFSM = defineStore('gameFSM', () => {
               },
               [s(GAME_STATES.BATTLE_PLAYER_ATTACK)]: {
                 onEnter: async (ctx, params) => {
+                   const attacker = ctx.session.activePlayerMon!;
+
+                   if (attacker.confusionTurns) {
+                      attacker.confusionTurns--;
+                      if (attacker.confusionTurns <= 0) {
+                         ctx.session.battle.log.push(ctx.t('battle.outOfConfusion', { name: ctx.t('monsters.' + attacker.species) }));
+                      } else {
+                         ctx.session.battle.log.push(ctx.t('battle.isConfused', { name: ctx.t('monsters.' + attacker.species) }));
+                         if (Math.random() < 0.5) {
+                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: 'Normal', category: 'Physical', power: 40, accuracy: 100 };
+                            const { damage } = calculateDamage(attacker, attacker, confusionMove, { isCorrect: true, isPerfect: false, isPower: false });
+                            attacker.hp = Math.max(0, attacker.hp - damage);
+                            ctx.session.battle.log.push(ctx.t('battle.hurtSelf'));
+                            audio.playSound(SOUND_EFFECTS.HIT);
+                            setTimeout(() => {
+                               if (attacker.hp <= 0) {
+                                 ctx.session.battle.log.push(ctx.t('battle.lose', { name: ctx.t('monsters.' + attacker.species) }));
+                                 if (ctx.session.player.party.some((m: Monster) => m.hp > 0)) {
+                                   ctx.fsm.transition(GAME_STATES.BATTLE_SWITCHING);
+                                 } else {
+                                   ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
+                                 }
+                               } else {
+                                 ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN);
+                               }
+                            }, 1000);
+                            return;
+                         }
+                      }
+                   }
+
+                   if (attacker.status === STATUS_CONDITIONS.PARALYSIS && Math.random() < 0.25) {
+                      ctx.session.battle.log.push(ctx.t('battle.isParalyzed', { name: ctx.t('monsters.' + attacker.species) }));
+                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN), 1000);
+                      return;
+                   }
+
+                   const defender = ctx.session.battle.enemyMon!;
+
                    if (ctx.session.battle.isCapturing) {
-                      const hpRatio = ctx.session.battle.enemyMon.hp / ctx.session.battle.enemyMon.maxHp;
+                      const hpRatio = defender.hp / defender.maxHp;
                       const speedBonus = params.isPower ? 0.2 : 0;
                       const successChance = (0.7 - (hpRatio * 0.5)) + speedBonus;
 
                       if (Math.random() < successChance) {
                         audio.playSound(SOUND_EFFECTS.CAPTURE_SUCCESS);
-                        ctx.session.battle.log.push(ctx.t('battle.catchSuccess', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
-                        const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon});
+                        ctx.session.battle.log.push(ctx.t('battle.catchSuccess', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon!.species) }));
+                        const added = ctx.session.addMonToParty({...ctx.session.battle.enemyMon!});
                         if (added) {
                           setTimeout(() => {
                             ctx.fsm.transition(GAME_STATES.WORLD);
@@ -466,33 +588,136 @@ export const useGameFSM = defineStore('gameFSM', () => {
                         }
                       } else {
                         audio.playSound(SOUND_EFFECTS.CAPTURE_FAIL);
-                        ctx.session.battle.log.push(ctx.t('battle.catchFail', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
+                        ctx.session.battle.log.push(ctx.t('battle.catchFail', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon!.species) }));
                         setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN), 1000);
                       }
                       return;
                    }
 
-                   const { damage, typeMod } = calculateDamage(ctx.session.activePlayerMon, ctx.session.battle.enemyMon, params.power || 30);
-                   ctx.session.damageEnemy(damage);
-                   ctx.session.battle.log.push(ctx.t('battle.dealtDamage', { amount: damage }));
-                   if (typeMod > 1) ctx.session.battle.log.push(ctx.t('battle.superEffective'));
-                   audio.playSound(SOUND_EFFECTS.HIT);
+                   const moveId = ctx.session.battle.selectedMoveId || MOVE_IDS.Tackle;
+                   const move = MOVES[moveId];
+                   const { damage, typeMod, isMiss } = calculateDamage(attacker, defender, move, params);
+
+                   ctx.session.battle.log.push(ctx.t('battle.usedMove', { mon: ctx.t('monsters.' + attacker.species), move: ctx.t('moves.' + move.id) }));
+
+                   if (isMiss) {
+                      ctx.session.battle.log.push(ctx.t('battle.missed'));
+                   } else {
+                      if (damage > 0) {
+                         ctx.session.damageEnemy(damage);
+                         ctx.session.battle.log.push(ctx.t('battle.dealtDamage', { amount: damage }));
+                         if (typeMod > 1) ctx.session.battle.log.push(ctx.t('battle.superEffective'));
+                         if (typeMod < 1 && typeMod > 0) ctx.session.battle.log.push(ctx.t('battle.notVeryEffective'));
+                         if (typeMod === 0) ctx.session.battle.log.push(ctx.t('battle.noEffect'));
+                         audio.playSound(SOUND_EFFECTS.HIT);
+                      }
+                      applyMoveEffect(ctx, attacker, defender, move, damage);
+                   }
 
                    setTimeout(() => {
-                     if (ctx.session.battle.enemyMon.hp <= 0) ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY);
+                     if (defender.hp <= 0) ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY);
                      else ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN);
                    }, 1000);
                 }
               },
               [s(GAME_STATES.BATTLE_ENEMY_TURN)]: {
                 onEnter: async (ctx) => {
-                   const { damage } = calculateDamage(ctx.session.battle.enemyMon, ctx.session.activePlayerMon, 30);
-                   ctx.session.damagePlayerMon(damage);
-                   ctx.session.battle.log.push(ctx.t('battle.enemyAttacked', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species), amount: damage }));
-                   audio.playSound(SOUND_EFFECTS.HIT);
+                   const enemyMon = ctx.session.battle.enemyMon!;
+                   const playerMon = ctx.session.activePlayerMon!;
+
+                   if (enemyMon.confusionTurns) {
+                      enemyMon.confusionTurns--;
+                      if (enemyMon.confusionTurns <= 0) {
+                         ctx.session.battle.log.push(ctx.t('battle.outOfConfusion', { name: ctx.t('monsters.' + enemyMon.species) }));
+                      } else {
+                         ctx.session.battle.log.push(ctx.t('battle.isConfused', { name: ctx.t('monsters.' + enemyMon.species) }));
+                         if (Math.random() < 0.5) {
+                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: 'Normal', category: 'Physical', power: 40, accuracy: 100 };
+                            const { damage } = calculateDamage(enemyMon, enemyMon, confusionMove, { isCorrect: true, isPerfect: false, isPower: false });
+                            enemyMon.hp = Math.max(0, enemyMon.hp - damage);
+                            ctx.session.battle.log.push(ctx.t('battle.hurtSelf'));
+                            audio.playSound(SOUND_EFFECTS.HIT);
+                            setTimeout(() => {
+                               if (enemyMon.hp <= 0) ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY);
+                               else ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT);
+                            }, 1000);
+                            return;
+                         }
+                      }
+                   }
+
+                   // End of turn damage
+                   for (const m of [playerMon, enemyMon]) {
+                      if (m.hp > 0 && (m.status === STATUS_CONDITIONS.POISON || m.status === STATUS_CONDITIONS.BURN)) {
+                         const dmg = Math.max(1, Math.floor(m.maxHp / 8));
+                         m.hp = Math.max(0, m.hp - dmg);
+                         ctx.session.battle.log.push(ctx.t('battle.statusDamage', { name: ctx.t('monsters.' + m.species), status: ctx.t('battle.status.' + m.status.toLowerCase()) }));
+                      }
+                   }
+
+                   if (enemyMon.hp <= 0) {
+                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY), 500);
+                      return;
+                   }
+                   if (playerMon.hp <= 0) {
+                      setTimeout(() => {
+                         ctx.session.battle.log.push(ctx.t('battle.lose', { name: ctx.t('monsters.' + playerMon.species) }));
+                         if (ctx.session.player.party.some((m: Monster) => m.hp > 0)) {
+                           ctx.fsm.transition(GAME_STATES.BATTLE_SWITCHING);
+                         } else {
+                           ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
+                         }
+                      }, 1000);
+                      return;
+                   }
+
+                   if (enemyMon.status === STATUS_CONDITIONS.SLEEP) {
+                      enemyMon.statusTurns = (enemyMon.statusTurns || 0) - 1;
+                      if (enemyMon.statusTurns <= 0) {
+                         enemyMon.status = STATUS_CONDITIONS.NONE;
+                         ctx.session.battle.log.push(ctx.t('battle.wokeUp', { name: ctx.t('monsters.' + enemyMon.species) }));
+                      } else {
+                         ctx.session.battle.log.push(ctx.t('battle.isAsleep', { name: ctx.t('monsters.' + enemyMon.species) }));
+                         setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT), 1000);
+                         return;
+                      }
+                   }
+                   if (enemyMon.status === STATUS_CONDITIONS.FREEZE) {
+                      ctx.session.battle.log.push(ctx.t('battle.isFrozen', { name: ctx.t('monsters.' + enemyMon.species) }));
+                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT), 1000);
+                      return;
+                   }
+                   if (enemyMon.status === STATUS_CONDITIONS.PARALYSIS && Math.random() < 0.25) {
+                      ctx.session.battle.log.push(ctx.t('battle.isParalyzed', { name: ctx.t('monsters.' + enemyMon.species) }));
+                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT), 1000);
+                      return;
+                   }
+
+                   // AI: Pick a random move
+                   const moveId = enemyMon.moves[Math.floor(Math.random() * enemyMon.moves.length)] || MOVE_IDS.Tackle;
+                   const move = MOVES[moveId];
+
+                   ctx.session.battle.log.push(ctx.t('battle.usedMove', { mon: ctx.t('monsters.' + enemyMon.species), move: ctx.t('moves.' + move.id) }));
+
+                   const { damage, typeMod, isMiss } = calculateDamage(enemyMon, playerMon, move, { isCorrect: true, isPerfect: false, isPower: false });
+
+                   if (isMiss) {
+                      ctx.session.battle.log.push(ctx.t('battle.missed'));
+                   } else {
+                      if (damage > 0) {
+                         ctx.session.damagePlayerMon(damage);
+                         ctx.session.battle.log.push(ctx.t('battle.dealtDamage', { amount: damage }));
+                         if (typeMod > 1) ctx.session.battle.log.push(ctx.t('battle.superEffective'));
+                         if (typeMod < 1 && typeMod > 0) ctx.session.battle.log.push(ctx.t('battle.notVeryEffective'));
+                         if (typeMod === 0) ctx.session.battle.log.push(ctx.t('battle.noEffect'));
+                         audio.playSound(SOUND_EFFECTS.HIT);
+                      }
+                      applyMoveEffect(ctx, enemyMon, playerMon, move, damage);
+                   }
+
                    setTimeout(() => {
-                     if (ctx.session.activePlayerMon.hp <= 0) {
-                        ctx.session.battle.log.push(ctx.t('battle.lose', { name: ctx.t('monsters.' + ctx.session.activePlayerMon.species) }));
+                     if (playerMon.hp <= 0) {
+                        ctx.session.battle.log.push(ctx.t('battle.lose', { name: ctx.t('monsters.' + playerMon.species) }));
                         if (ctx.session.player.party.some((m: Monster) => m.hp > 0)) {
                           ctx.fsm.transition(GAME_STATES.BATTLE_SWITCHING);
                         } else {

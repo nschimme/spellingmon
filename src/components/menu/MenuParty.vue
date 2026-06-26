@@ -23,20 +23,36 @@
         </div>
 
         <div class="flex items-center gap-5 relative z-10">
-          <div class="bg-white p-3 rounded-2xl border-4 border-gray-800 shadow-inner group">
+          <div class="bg-white p-3 rounded-2xl border-4 border-gray-800 shadow-inner group relative">
             <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
               {{ mon.emoji }}
             </div>
-            <div class="absolute -top-2 -right-2 bg-white border-2 border-gray-800 rounded-lg p-1 text-sm shadow-sm">
-              {{ TYPE_EMOJIS[MONS[mon.species]?.type] }}
+            <div class="absolute -top-2 -right-2 flex flex-col gap-0.5">
+              <div
+                v-for="t in mon.types"
+                :key="t"
+                :class="TYPE_COLORS[t]"
+                class="flex items-center justify-center rounded-lg border-2 border-gray-800 p-1 text-[8px] shadow-sm"
+              >
+                {{ TYPE_EMOJIS[t] }}
+              </div>
             </div>
           </div>
 
           <div class="flex-1 min-w-0">
             <div class="flex justify-between items-end mb-1">
-              <h3 class="text-xl font-black uppercase text-gray-800 truncate">
-                {{ $t('monsters.' + mon.species) }}
-              </h3>
+              <div class="flex flex-col">
+                <h3 class="text-xl font-black uppercase text-gray-800 truncate">
+                  {{ $t('monsters.' + mon.species) }}
+                </h3>
+                <div
+                  v-if="mon.status !== STATUS_CONDITIONS.NONE"
+                  :class="STATUS_COLORS[mon.status]"
+                  class="w-fit px-2 rounded text-[8px] text-white font-black uppercase"
+                >
+                  {{ mon.status }}
+                </div>
+              </div>
               <span class="text-sm font-black text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md border-2 border-blue-200">LV{{ mon.level }}</span>
             </div>
 
@@ -71,19 +87,40 @@
           </div>
         </div>
 
+        <div class="relative z-10 mt-2 flex flex-col gap-2">
+          <div class="grid grid-cols-4 gap-1">
+            <div
+              v-for="mId in mon.moves"
+              :key="mId"
+              :class="TYPE_COLORS[MOVES[mId]?.type]"
+              class="rounded border-b-2 border-black/20 p-1 text-center text-[7px] font-black uppercase text-white truncate"
+            >
+              {{ $t('moves.' + mId) }}
+            </div>
+          </div>
+        </div>
+
         <div class="flex justify-between items-center mt-2 relative z-10">
-          <div class="flex gap-4">
-            <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.atk') }}</span>
-              <span class="text-sm font-black text-gray-700">{{ mon.atk }}</span>
+          <div class="flex gap-2">
+            <div class="flex flex-col items-center">
+              <span class="text-[6px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.atk') }}</span>
+              <span class="text-xs font-black text-gray-700">{{ mon.atk }}</span>
             </div>
-            <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.def') }}</span>
-              <span class="text-sm font-black text-gray-700">{{ mon.def }}</span>
+            <div class="flex flex-col items-center">
+              <span class="text-[6px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.def') }}</span>
+              <span class="text-xs font-black text-gray-700">{{ mon.def }}</span>
             </div>
-            <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.spd') }}</span>
-              <span class="text-sm font-black text-gray-700">{{ mon.spd }}</span>
+            <div class="flex flex-col items-center">
+              <span class="text-[6px] font-bold text-gray-400 uppercase leading-none">Spa</span>
+              <span class="text-xs font-black text-gray-700">{{ mon.spa }}</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="text-[6px] font-bold text-gray-400 uppercase leading-none">{{ $t('menu.spd') }}</span>
+              <span class="text-xs font-black text-gray-700">{{ mon.spd }}</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="text-[6px] font-bold text-gray-400 uppercase leading-none">Spe</span>
+              <span class="text-xs font-black text-gray-700">{{ mon.spe }}</span>
             </div>
           </div>
 
@@ -120,9 +157,9 @@
 import { computed, ref, watch } from 'vue';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useKeyboardNavigation } from '../../composables/useKeyboardNavigation';
-import { INPUT_PRIORITIES } from '../../utils/constants';
-import { TYPE_EMOJIS, MONS } from '../../utils/gameData';
-import { getHPColorClass } from '../../utils/visuals';
+import { INPUT_PRIORITIES, STATUS_CONDITIONS } from '../../utils/constants';
+import { TYPE_EMOJIS, MOVES } from '../../utils/gameData';
+import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../../utils/visuals';
 
 const session = useSessionStore();
 

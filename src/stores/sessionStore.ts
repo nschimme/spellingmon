@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -20,6 +20,7 @@ export interface PlayerState {
   mapSeed: string | null;
   characterCreationComplete: boolean;
   isStarterSelected: boolean;
+  steps: number;
 }
 
 export interface BattleState {
@@ -36,11 +37,22 @@ export interface BattleState {
   isRival: boolean;
   participatingMonIds: string[];
   currentWord: Word | null;
+  selectedMoveId: string | null;
   totalTime: number;
   isCapturing: boolean;
   results?: Monster[];
   startTime?: number;
   debugWord?: string | null;
+  turnResult?: {
+    playerMove?: string;
+    enemyMove?: string;
+    playerDamage?: number;
+    enemyDamage?: number;
+    playerMiss?: boolean;
+    enemyMiss?: boolean;
+    playerEffect?: string;
+    enemyEffect?: string;
+  };
 }
 
 export type WordStatus = 'seen' | 'correct' | 'mastered';
@@ -64,6 +76,7 @@ export interface SessionStoreState {
   notification: string | null;
   dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
+  moveLearningPending: { monId: string; moveId: string } | null;
   _saveTimeout?: ReturnType<typeof setTimeout>;
 }
 
@@ -177,6 +190,7 @@ export const useSessionStore = defineStore('session', {
       mapSeed: null,
       characterCreationComplete: false,
       isStarterSelected: false,
+      steps: 0,
     },
 
     battle: {
@@ -193,6 +207,7 @@ export const useSessionStore = defineStore('session', {
       isRival: false,
       participatingMonIds: [],
       currentWord: null,
+      selectedMoveId: null,
       totalTime: 0,
       isCapturing: false,
     },
@@ -205,6 +220,7 @@ export const useSessionStore = defineStore('session', {
     notification: null,
     dialog: null,
     evolutionPending: null,
+    moveLearningPending: null,
   }),
 
   getters: {
@@ -263,9 +279,14 @@ export const useSessionStore = defineStore('session', {
         isRival: false,
         participatingMonIds: [],
         currentWord: null,
+        selectedMoveId: null,
         totalTime: 0,
         isCapturing: false,
       };
+      // Reset stages for all party members
+      this.player.party.forEach(mon => {
+        mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+      });
     },
 
     resetSession() {
@@ -285,6 +306,7 @@ export const useSessionStore = defineStore('session', {
         mapSeed: Math.random().toString(36).slice(2, 11),
         characterCreationComplete: false,
         isStarterSelected: false,
+        steps: 0,
       };
       this.resetBattle();
       this.dex = {
@@ -294,7 +316,36 @@ export const useSessionStore = defineStore('session', {
     },
 
     updatePlayerPosition(pos: { x: number; y: number } | null) {
+      if (this.player.position && pos && (this.player.position.x !== pos.x || this.player.position.y !== pos.y)) {
+         this.player.steps++;
+         if (this.player.steps % 4 === 0) {
+            this.applyOverworldDamage();
+         }
+      }
       this.player.position = pos;
+    },
+
+    applyOverworldDamage() {
+       let partyDied = false;
+       this.player.party.forEach(mon => {
+          if (mon.hp > 0 && mon.status === STATUS_CONDITIONS.POISON) {
+             mon.hp = Math.max(0, mon.hp - 1);
+             if (mon.hp === 0) {
+                // Potential notification or sound
+             }
+          }
+       });
+
+       if (this.player.party.every(m => m.hp <= 0)) {
+          partyDied = true;
+       }
+
+       if (partyDied) {
+          // Trigger whiteout - but we need to handle FSM transition.
+          // Store a flag or emit an event?
+          // Since we are in an action, we can't easily access useGameFSM without circular dependency if not careful.
+          // But gameFSM is usually the one calling updatePlayerPosition via transition.
+       }
     },
 
     healParty() {
@@ -363,11 +414,47 @@ export const useSessionStore = defineStore('session', {
         mon.hp = mon.maxHp;
         mon.atk = calculateStat(base.baseAtk, mon.level);
         mon.def = calculateStat(base.baseDef, mon.level);
-        mon.spd = calculateStat(base.baseSpd, mon.level);
+        mon.spa = calculateStat(base.baseSpa || base.baseAtk, mon.level);
+        mon.spd = calculateStat(base.baseSpd || base.baseDef, mon.level);
+        mon.spe = calculateStat(base.baseSpe || 50, mon.level);
+
+        // Check for new moves
+        if (base.learnset && base.learnset[mon.level]) {
+          for (const moveId of base.learnset[mon.level]) {
+            if (!mon.moves.includes(moveId)) {
+              if (mon.moves.length < 4) {
+                mon.moves.push(moveId);
+                this.notify(this.t('battle.learnedMove', { name: this.t('monsters.' + mon.species), move: this.t('moves.' + moveId) }));
+              } else {
+                this.moveLearningPending = { monId: mon.id, moveId };
+              }
+            }
+          }
+        }
+
         if (base.evolvesAt && mon.level >= base.evolvesAt) {
           this.evolutionPending = { monId: mon.id, newSpecies: base.evolvesInto || '', oldSpecies: mon.species };
         }
       }
+    },
+
+    learnMove(monId: string, newMoveId: string, replaceMoveId?: string) {
+      const mon = this.player.party.find(m => m.id === monId);
+      if (!mon) return;
+
+      if (replaceMoveId) {
+        const index = mon.moves.indexOf(replaceMoveId);
+        if (index !== -1) {
+          mon.moves[index] = newMoveId;
+        }
+      } else if (mon.moves.length < 4) {
+        mon.moves.push(newMoveId);
+      }
+      this.moveLearningPending = null;
+    },
+
+    cancelMoveLearning() {
+      this.moveLearningPending = null;
     },
 
     completeEvolution() {

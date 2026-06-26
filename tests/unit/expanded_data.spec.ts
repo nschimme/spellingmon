@@ -14,7 +14,9 @@ describe('Expanded Game Data', () => {
   it('has valid types for all MONS', () => {
     const validTypes = Object.keys(TYPE_CHART);
     for (const mon of Object.values(MONS)) {
-      expect(validTypes).toContain(mon.type);
+      for (const t of mon.types) {
+        expect(validTypes).toContain(t);
+      }
     }
   });
 
