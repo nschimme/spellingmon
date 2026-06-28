@@ -80,6 +80,21 @@ describe('Rival Rematch Logic', () => {
     // Win battle
     await fsm.transition(GAME_STATES.BATTLE_VICTORY);
 
+    // Move to results
+    await fsm.transition(GAME_STATES.BATTLE_RESULTS);
+
+    // Setup defeat dialog
+    session.battle.trainerDefeatDialog = 'trainer.dialogs.defeat_1';
+
+    // Continue from results to dialog
+    await fsm.send(GAME_EVENTS.CONTINUE);
+
+    // In Pinia store, refs are unwrapped
+    expect(fsm.state).toBe(GAME_STATES.DIALOG);
+
+    // Confirm dialog to trigger onComplete
+    await fsm.send(GAME_EVENTS.CONFIRM);
+
     expect(session.player.defeatedTrainers).toContain('trainer_1');
   });
 });

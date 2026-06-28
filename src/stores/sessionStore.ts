@@ -74,6 +74,7 @@ export interface SessionStoreState {
   battle: BattleState;
   dex: DexState;
   notification: string | null;
+  overworldPoisonDamage: boolean;
   dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
   moveLearningPending: { monId: string; moveId: string } | null;
@@ -249,6 +250,7 @@ export const useSessionStore = defineStore('session', {
     },
 
     notification: null,
+    overworldPoisonDamage: false,
     dialog: null,
     evolutionPending: null,
     moveLearningPending: null,
@@ -358,24 +360,25 @@ export const useSessionStore = defineStore('session', {
 
     applyOverworldDamage() {
        let partyDied = false;
+       let damageTaken = false;
        this.player.party.forEach(mon => {
           if (mon.hp > 0 && mon.status === STATUS_CONDITIONS.POISON) {
              mon.hp = Math.max(0, mon.hp - 1);
-             if (mon.hp === 0) {
-                // Potential notification or sound
-             }
+             damageTaken = true;
           }
        });
+
+       if (damageTaken) {
+         this.overworldPoisonDamage = true;
+         setTimeout(() => { this.overworldPoisonDamage = false; }, 300);
+       }
 
        if (this.player.party.every(m => m.hp <= 0)) {
           partyDied = true;
        }
 
        if (partyDied) {
-          // Trigger whiteout - but we need to handle FSM transition.
-          // Store a flag or emit an event?
-          // Since we are in an action, we can't easily access useGameFSM without circular dependency if not careful.
-          // But gameFSM is usually the one calling updatePlayerPosition via transition.
+          // Trigger whiteout - handled in gameFSM 'onEnter' of MOVING
        }
     },
 

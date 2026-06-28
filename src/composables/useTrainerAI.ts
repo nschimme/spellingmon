@@ -96,7 +96,7 @@ export function useTrainerAI(
           currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
         }
 
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
       }
 
       alertingTrainer.value = null;
@@ -180,7 +180,7 @@ export function useTrainerAI(
         fleeingTrainer.x = step.x;
         fleeingTrainer.y = step.y;
         fleeingTrainer.direction = step.dir;
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
       }
       fleeingTrainer.opacity = 0;
     }

@@ -288,7 +288,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
           [s(GAME_STATES.MOVING)]: {
             onEnter: (ctx, params) => {
               ctx.session.clearNotification();
-              const duration = params?.duration ?? 150;
+              const duration = params?.duration ?? GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS;
               setTimeout(() => {
                 if (ctx.session.player.party.every((m: Monster) => m.hp <= 0)) {
                    ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
@@ -457,6 +457,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        return GAME_STATES.WORLD;
                     }
                     ctx.session.battle.log.push(ctx.t('battle.cannotEscape'));
+                      if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) return GAME_STATES.BATTLE_ENEMY_SPELLING;
                     return GAME_STATES.BATTLE_ENEMY_TURN;
                   }
                 }
@@ -478,6 +479,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       ctx.session.battle.participatingMonIds.push(params.monId);
                     }
                     ctx.session.battle.log.push(ctx.t('battle.go', { name: ctx.t('monsters.' + ctx.session.activePlayerMon!.species) }));
+                    if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) return GAME_STATES.BATTLE_ENEMY_SPELLING;
                     return GAME_STATES.BATTLE_ENEMY_TURN;
                   },
                   [GAME_EVENTS.CANCEL]: GAME_STATES.BATTLE_ACTION_SELECT
@@ -616,8 +618,37 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    setTimeout(() => {
                      if (defender.hp <= 0) ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY);
+                     else if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_SPELLING);
                      else ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN);
                    }, 1000);
+                }
+              },
+              [s(GAME_STATES.BATTLE_ENEMY_SPELLING)]: {
+                onEnter: (ctx) => {
+                  const wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale, ctx.session);
+                  ctx.session.battle.currentWord = wordObj;
+
+                  // AI always spells correctly, random performance
+                  const performance = {
+                    isCorrect: true,
+                    isPerfect: Math.random() < 0.3,
+                    isPower: Math.random() < 0.4
+                  };
+
+                  // 1s for the animation to play
+                  setTimeout(() => {
+                    ctx.fsm.send(GAME_EVENTS.AI_SUBMIT, performance);
+                  }, 1000);
+                },
+                on: {
+                  [GAME_EVENTS.AI_SUBMIT]: (ctx, params) => {
+                    // AI word is 'seen'
+                    ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord!.word, 'seen');
+                    return {
+                      target: GAME_STATES.BATTLE_ENEMY_TURN,
+                      params
+                    };
+                  }
                 }
               },
               [s(GAME_STATES.BATTLE_ENEMY_TURN)]: {
@@ -699,7 +730,8 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    ctx.session.battle.log.push(ctx.t('battle.usedMove', { mon: ctx.t('monsters.' + enemyMon.species), move: ctx.t('moves.' + move.id) }));
 
-                   const { damage, typeMod, isMiss } = calculateDamage(enemyMon, playerMon, move, { isCorrect: true, isPerfect: false, isPower: false });
+                   const performance = params.isCorrect !== undefined ? params : { isCorrect: true, isPerfect: false, isPower: false };
+                   const { damage, typeMod, isMiss } = calculateDamage(enemyMon, playerMon, move, performance);
 
                    if (isMiss) {
                       ctx.session.battle.log.push(ctx.t('battle.missed'));
@@ -763,10 +795,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   ctx.session.battle.log.push(ctx.t('battle.win', { name: ctx.t('monsters.' + ctx.session.battle.enemyMon.species) }));
                   audio.playSound(SOUND_EFFECTS.VICTORY);
 
-                  if (ctx.session.battle.type === BATTLE_TYPES.TRAINER && ctx.session.battle.trainerId) {
-                    // Mark trainer as defeated when player wins
-                    ctx.session.recordTrainerDefeat(ctx.session.battle.trainerId);
-                  }
+                  // WE REMOVED recordTrainerDefeat HERE so it happens after dialog
 
                   const exp = calculateExpGain(ctx.session.battle.enemyMon, ctx.session.battle.type === BATTLE_TYPES.TRAINER);
                   ctx.session.battle.results = ctx.session.awardExp(exp);
@@ -787,19 +816,45 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 on: {
                   [GAME_EVENTS.CONTINUE]: (ctx) => {
                     if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) {
+                      const trainerId = ctx.session.battle.trainerId;
                       let defeatMsg = '';
+                      let trainerName = trainerId || 'Trainer';
                       if (ctx.session.battle.isRival) {
                         defeatMsg = ctx.t('npc.rival.defeat');
+                        trainerName = ctx.t('npc.rival.name');
                       } else if (ctx.session.battle.trainerDefeatDialog) {
                         defeatMsg = ctx.t(ctx.session.battle.trainerDefeatDialog);
+                        // Try to find a better name if possible
+                        const trainer = ctx.map.currentMapData?.trainers.find(t => t.id === ctx.session.battle.trainerId);
+                        if (trainer) {
+                           trainerName = trainer.name;
+                           if (trainerName.includes('::')) {
+                             const [key, raw] = trainerName.split('::');
+                             trainerName = `${ctx.t(key)} ${raw}`;
+                           } else if (trainerName.startsWith('npc.') || trainerName.startsWith('trainer.')) {
+                             trainerName = ctx.t(trainerName);
+                           }
+                        }
                       }
 
                       if (defeatMsg) {
+                        const lines = [defeatMsg];
                         if (ctx.session.battle.isStorm) {
-                          ctx.session.notify(`${defeatMsg} "${ctx.t('trainer.dialogs.storm_catchphrase')}"`);
-                        } else {
-                          ctx.session.notify(defeatMsg);
+                          lines.push(`"${ctx.t('trainer.dialogs.storm_catchphrase')}"`);
                         }
+
+                        return {
+                           target: GAME_STATES.DIALOG,
+                           params: {
+                             onEnter: () => {
+                               ctx.session.showDialog(lines, trainerName);
+                             },
+                             onComplete: () => {
+                               // Signal for fleeing to happen AFTER dialog
+                               if (trainerId) ctx.session.recordTrainerDefeat(trainerId);
+                             }
+                           }
+                        };
                       }
                     }
                     return GAME_STATES.WORLD;
