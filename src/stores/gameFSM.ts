@@ -9,7 +9,7 @@ import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
 import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
 import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
-import { validateSpelling } from '../utils/spelling';
+import { validateSpelling, getAISpellingPerformance } from '../utils/spelling';
 import i18n from '../i18n';
 
 function applyMoveEffect(ctx: any, attacker: Monster, defender: Monster, move: Move, damage: number) {
@@ -628,17 +628,12 @@ export const useGameFSM = defineStore('gameFSM', () => {
                   const wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale, ctx.session);
                   ctx.session.battle.currentWord = wordObj;
 
-                  // AI always spells correctly, random performance
-                  const performance = {
-                    isCorrect: true,
-                    isPerfect: Math.random() < 0.3,
-                    isPower: Math.random() < 0.4
-                  };
+                  const performance = getAISpellingPerformance();
 
-                  // 1s for the animation to play
+                  // Delay for the animation to play
                   setTimeout(() => {
                     ctx.fsm.send(GAME_EVENTS.AI_SUBMIT, performance);
-                  }, 1000);
+                  }, ANIMATION_DURATIONS.AI_SPELLING_DURATION_MS);
                 },
                 on: {
                   [GAME_EVENTS.AI_SUBMIT]: (ctx, params) => {
@@ -856,6 +851,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                            }
                         };
                       }
+
+                      // Fallback: Always record defeat for trainer battles even if no dialog
+                      if (trainerId) ctx.session.recordTrainerDefeat(trainerId);
                     }
                     return GAME_STATES.WORLD;
                   }

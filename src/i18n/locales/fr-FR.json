@@ -270,7 +270,9 @@
       "def": "Défense",
       "spa": "Att. Spé.",
       "spd": "Déf. Spé.",
-      "spe": "Vitesse"
+      "spe": "Vitesse",
+      "acc": "Précision",
+      "eva": "Esquive"
     },
     "status": {
       "burn": "brûlé",
@@ -305,7 +307,8 @@
       "status": "Statut"
     },
     "dontLearn": "Ne pas apprendre",
-    "release": "Relâcher"
+    "release": "Relâcher",
+    "hpShort": "{n} PV"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

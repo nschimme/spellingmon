@@ -417,7 +417,7 @@ import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../utils/visuals';
-import { GAME_STATES, GAME_EVENTS, STATUS_CONDITIONS, MOVE_CATEGORIES } from '../utils/constants';
+import { GAME_STATES, GAME_EVENTS, ANIMATION_DURATIONS, STATUS_CONDITIONS, MOVE_CATEGORIES } from '../utils/constants';
 import { MOVES, TYPE_CHART } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
@@ -668,7 +668,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
     isAIThrowing.value = true;
     setTimeout(() => {
       isAIThrowing.value = false;
-    }, 1500);
+    }, ANIMATION_DURATIONS.AI_THROWN_WORD_DURATION_MS);
   }
 
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK) {

@@ -198,7 +198,8 @@
   },
   "battle": {
     "experience": "Erfahrung",
-    "expGainedShort": "EXP erhalten: +{n}",
+    "expGainedShort": "EP erhalten: +{n}",
+    "hpShort": "{n} KP",
     "levelShort": "Lv. {n}",
     "levelUpNotification": "Level Up!",
     "capture": "Fangen",
@@ -270,7 +271,9 @@
       "def": "Verteidigung",
       "spa": "Spez.-Angr.",
       "spd": "Spez.-Vert.",
-      "spe": "Initiative"
+      "spe": "Initiative",
+      "acc": "Genauigkeit",
+      "eva": "Fluchtwert"
     },
     "status": {
       "burn": "verbrannt",
@@ -305,7 +308,8 @@
       "status": "Status"
     },
     "dontLearn": "Nicht lernen",
-    "release": "Freilassen"
+    "release": "Freilassen",
+    "hpShort": "{n} HP"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

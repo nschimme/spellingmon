@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, ANIMATION_DURATIONS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -370,7 +370,7 @@ export const useSessionStore = defineStore('session', {
 
        if (damageTaken) {
          this.overworldPoisonDamage = true;
-         setTimeout(() => { this.overworldPoisonDamage = false; }, 300);
+         setTimeout(() => { this.overworldPoisonDamage = false; }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
        }
 
        if (this.player.party.every(m => m.hp <= 0)) {

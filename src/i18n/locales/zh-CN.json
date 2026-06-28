@@ -156,7 +156,9 @@
       "def": "防御",
       "spa": "特攻",
       "spd": "特防",
-      "spe": "速度"
+      "spe": "速度",
+      "acc": "命中",
+      "eva": "闪避"
     },
     "status": {
       "burn": "灼伤",
@@ -191,7 +193,8 @@
       "status": "变化"
     },
     "dontLearn": "不学习",
-    "release": "放生"
+    "release": "放生",
+    "hpShort": "{n} HP"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

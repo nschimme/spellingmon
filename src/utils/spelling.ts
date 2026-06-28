@@ -20,6 +20,20 @@ export const hasSpellingChallenge = (word: string) => {
 };
 
 /**
+ * Generates a consistent AI spelling performance tier.
+ */
+export const getAISpellingPerformance = () => {
+  const roll = Math.random();
+  if (roll < 0.2) {
+    return { isCorrect: true, isPerfect: true, isPower: true };
+  } else if (roll < 0.5) {
+    return { isCorrect: true, isPerfect: false, isPower: true };
+  } else {
+    return { isCorrect: true, isPerfect: false, isPower: false };
+  }
+};
+
+/**
  * Validates a spelling attempt.
  * Returns { isCorrect, isPerfect }.
  */
