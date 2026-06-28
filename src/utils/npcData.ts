@@ -72,6 +72,17 @@ export const getGymBossConfig = (area: number): NPCConfig => {
   };
 };
 
+export function getTrainerDisplayName(rawName: string, t: (key: string) => string): string {
+  if (rawName.includes('::')) {
+    const [key, raw] = rawName.split('::');
+    return `${t(key)} ${raw}`;
+  }
+  if (rawName.startsWith('npc.') || rawName.startsWith('trainer.')) {
+    return t(rawName);
+  }
+  return rawName;
+}
+
 export const TRAINER_DATA = {
   titles: [
     'trainer.titles.spelling_bee',

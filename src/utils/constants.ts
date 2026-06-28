@@ -23,6 +23,7 @@ export const SOUND_EFFECTS = {
   LEVEL_UP: 'level-up',
   EVOLUTION: 'evolution',
   DISCOVERY: 'discovery',
+  POISON_DAMAGE: 'poison-damage',
 };
 
 /**

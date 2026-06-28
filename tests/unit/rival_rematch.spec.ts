@@ -118,6 +118,10 @@ describe('Rival Rematch Logic', () => {
     await fsm.transition(GAME_STATES.BATTLE_VICTORY);
     await fsm.transition(GAME_STATES.BATTLE_RESULTS);
 
+    // Regression check: defeat should NOT be recorded yet at BATTLE_RESULTS
+    expect(fsm.state).toBe(GAME_STATES.BATTLE_RESULTS);
+    expect(session.player.defeatedTrainers).not.toContain('rival_1');
+
     // Continue from results to dialog via defeat flow
     await fsm.send(GAME_EVENTS.CONTINUE);
 
@@ -152,6 +156,10 @@ describe('Rival Rematch Logic', () => {
     // Win battle
     await fsm.transition(GAME_STATES.BATTLE_VICTORY);
     await fsm.transition(GAME_STATES.BATTLE_RESULTS);
+
+    // Regression check: defeat should NOT be recorded yet at BATTLE_RESULTS
+    expect(fsm.state).toBe(GAME_STATES.BATTLE_RESULTS);
+    expect(session.player.defeatedTrainers).not.toContain('storm_1');
 
     // Continue from results to dialog via defeat flow
     await fsm.send(GAME_EVENTS.CONTINUE);

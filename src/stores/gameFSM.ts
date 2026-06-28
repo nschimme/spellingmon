@@ -7,8 +7,9 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
 import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
+import { getTrainerDisplayName } from '../utils/npcData';
 import { validateSpelling, getAISpellingPerformance } from '../utils/spelling';
 import i18n from '../i18n';
 
@@ -81,7 +82,10 @@ export const useGameFSM = defineStore('gameFSM', () => {
     get vocab() { return vocab; },
     get map() { return mapStore; },
     get fsm() { return fsm; },
-    get t() { return t; }
+    get t() { return t; },
+    getEnemyTurnState: () => {
+      return session.battle.type === BATTLE_TYPES.TRAINER ? GAME_STATES.BATTLE_ENEMY_SPELLING : GAME_STATES.BATTLE_ENEMY_TURN;
+    }
   };
 
   if (typeof window !== 'undefined') (window as any).__GAME_CONTEXT__ = context;
@@ -399,13 +403,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     ctx.session.battle.playerMonId = ctx.session.player.party.find((m: Monster) => m.hp > 0)?.id;
 
                     if (params.type === BATTLE_TYPES.TRAINER) {
-                      let displayName = params.trainerName || 'Trainer';
-                      if (displayName.includes('::')) {
-                        const [key, raw] = displayName.split('::');
-                        displayName = `${ctx.t(key)} ${raw}`;
-                      } else if (displayName.startsWith('npc.') || displayName.startsWith('trainer.')) {
-                        displayName = ctx.t(displayName);
-                      }
+                      const displayName = getTrainerDisplayName(params.trainerName || 'Trainer', ctx.t);
                       ctx.session.battle.log = [ctx.t('battle.trainerWantsToBattle', { name: displayName })];
                     } else {
                       ctx.session.battle.log = [ctx.t('battle.wildAppeared', { name: ctx.t('monsters.' + enemy.species) })];
@@ -457,8 +455,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                        return GAME_STATES.WORLD;
                     }
                     ctx.session.battle.log.push(ctx.t('battle.cannotEscape'));
-                      if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) return GAME_STATES.BATTLE_ENEMY_SPELLING;
-                    return GAME_STATES.BATTLE_ENEMY_TURN;
+                    return ctx.getEnemyTurnState();
                   }
                 }
               },
@@ -479,8 +476,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       ctx.session.battle.participatingMonIds.push(params.monId);
                     }
                     ctx.session.battle.log.push(ctx.t('battle.go', { name: ctx.t('monsters.' + ctx.session.activePlayerMon!.species) }));
-                    if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) return GAME_STATES.BATTLE_ENEMY_SPELLING;
-                    return GAME_STATES.BATTLE_ENEMY_TURN;
+                    return ctx.getEnemyTurnState();
                   },
                   [GAME_EVENTS.CANCEL]: GAME_STATES.BATTLE_ACTION_SELECT
                 }
@@ -524,7 +520,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                     } else {
                       ctx.session.recordWord(ctx.session.player.currentArea, ctx.session.battle.currentWord!.word, 'seen');
                       return {
-                        target: GAME_STATES.BATTLE_ENEMY_TURN,
+                        target: ctx.getEnemyTurnState(),
                         params: { isCorrect: false }
                       };
                     }
@@ -556,7 +552,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                                    ctx.fsm.transition(GAME_STATES.BATTLE_WHITED_OUT);
                                  }
                                } else {
-                                 ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN);
+                                 ctx.fsm.transition(ctx.getEnemyTurnState());
                                }
                             }, 1000);
                             return;
@@ -566,7 +562,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    if (attacker.status === STATUS_CONDITIONS.PARALYSIS && Math.random() < 0.25) {
                       ctx.session.battle.log.push(ctx.t('battle.isParalyzed', { name: ctx.t('monsters.' + attacker.species) }));
-                      setTimeout(() => ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN), 1000);
+                      setTimeout(() => ctx.fsm.transition(ctx.getEnemyTurnState()), 1000);
                       return;
                    }
 
@@ -618,8 +614,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    setTimeout(() => {
                      if (defender.hp <= 0) ctx.fsm.transition(GAME_STATES.BATTLE_VICTORY);
-                     else if (ctx.session.battle.type === BATTLE_TYPES.TRAINER) ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_SPELLING);
-                     else ctx.fsm.transition(GAME_STATES.BATTLE_ENEMY_TURN);
+                     else ctx.fsm.transition(ctx.getEnemyTurnState());
                    }, 1000);
                 }
               },
@@ -647,7 +642,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                 }
               },
               [s(GAME_STATES.BATTLE_ENEMY_TURN)]: {
-                onEnter: async (ctx) => {
+                onEnter: async (ctx, params) => {
                    const enemyMon = ctx.session.battle.enemyMon!;
                    const playerMon = ctx.session.activePlayerMon!;
 
@@ -725,7 +720,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
                    ctx.session.battle.log.push(ctx.t('battle.usedMove', { mon: ctx.t('monsters.' + enemyMon.species), move: ctx.t('moves.' + move.id) }));
 
-                   const performance = params.isCorrect !== undefined ? params : { isCorrect: true, isPerfect: false, isPower: false };
+                   const performance = params && params.isCorrect !== undefined ? params : { isCorrect: true, isPerfect: false, isPower: false };
                    const { damage, typeMod, isMiss } = calculateDamage(enemyMon, playerMon, move, performance);
 
                    if (isMiss) {
@@ -820,15 +815,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       } else if (ctx.session.battle.trainerDefeatDialog) {
                         defeatMsg = ctx.t(ctx.session.battle.trainerDefeatDialog);
                         // Try to find a better name if possible
-                        const trainer = ctx.map.currentMapData?.trainers.find(t => t.id === ctx.session.battle.trainerId);
+                        const trainer = ctx.map.currentMapData?.trainers.find((t: any) => t.id === ctx.session.battle.trainerId);
                         if (trainer) {
-                           trainerName = trainer.name;
-                           if (trainerName.includes('::')) {
-                             const [key, raw] = trainerName.split('::');
-                             trainerName = `${ctx.t(key)} ${raw}`;
-                           } else if (trainerName.startsWith('npc.') || trainerName.startsWith('trainer.')) {
-                             trainerName = ctx.t(trainerName);
-                           }
+                           trainerName = getTrainerDisplayName(trainer.name, ctx.t);
                         }
                       }
 
