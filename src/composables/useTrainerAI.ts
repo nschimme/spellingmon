@@ -1,8 +1,9 @@
 import { ref, type Ref } from 'vue';
 import i18n from '../i18n';
 import { audio } from '../utils/audio';
-import { SOUND_EFFECTS, BATTLE_TYPES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
+import { SOUND_EFFECTS, GAME_CONSTANTS, BATTLE_TYPES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
 import { TILE_TYPES, type MapResult, type Trainer } from '../utils/mapGenerator';
+import { getTrainerDisplayName } from '../utils/npcData';
 
 export function useTrainerAI(
   session: any,
@@ -69,13 +70,7 @@ export function useTrainerAI(
     fsm.send(GAME_EVENTS.ENCOUNTER, { type: BATTLE_TYPES.TRAINER });
 
     // Initial speech notification using i18n
-    let displayName = trainer.name;
-    if (displayName.includes('::')) {
-      const [key, raw] = displayName.split('::');
-      displayName = `${i18n.global.t(key)} ${raw}`;
-    } else {
-      displayName = i18n.global.t(displayName);
-    }
+    const displayName = getTrainerDisplayName(trainer.name, i18n.global.t);
     const dialog = i18n.global.t(trainer.dialog);
 
     setTimeout(async () => {
@@ -96,7 +91,7 @@ export function useTrainerAI(
           currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
         }
 
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
       }
 
       alertingTrainer.value = null;
@@ -180,7 +175,7 @@ export function useTrainerAI(
         fleeingTrainer.x = step.x;
         fleeingTrainer.y = step.y;
         fleeingTrainer.direction = step.dir;
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
       }
       fleeingTrainer.opacity = 0;
     }

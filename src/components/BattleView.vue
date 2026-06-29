@@ -158,9 +158,12 @@
 
       <!-- Thrown Word / Ball -->
       <div
-        v-if="thrownWord"
+        v-if="thrownWord || (isAIThrowing && session.battle.currentWord)"
         class="fixed z-50 pointer-events-none"
-        :class="session.battle.isCapturing ? 'text-6xl animate-throw-ball' : 'font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl animate-throw'"
+        :class="[
+          session.battle.isCapturing ? 'text-6xl animate-throw-ball' : 'font-black text-xl bg-white border-4 border-gray-800 px-4 py-2 rounded-lg shadow-xl',
+          isAIThrowing ? 'animate-throw-ai' : 'animate-throw'
+        ]"
         style="left: 0; top: 0;"
       >
         <template v-if="session.battle.isCapturing">
@@ -169,7 +172,7 @@
           </div>
         </template>
         <template v-else>
-          {{ thrownWord }}
+          {{ thrownWord || session.battle.currentWord?.word }}
         </template>
       </div>
     </div>
@@ -414,7 +417,7 @@ import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
 import { getHPColorClass, TYPE_COLORS, STATUS_COLORS } from '../utils/visuals';
-import { GAME_STATES, GAME_EVENTS, STATUS_CONDITIONS, MOVE_CATEGORIES } from '../utils/constants';
+import { GAME_STATES, GAME_EVENTS, ANIMATION_DURATIONS, STATUS_CONDITIONS, MOVE_CATEGORIES } from '../utils/constants';
 import { MOVES, TYPE_CHART } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
@@ -432,6 +435,7 @@ const showFast = ref(false);
 const isSubmitting = ref(false);
 const isEnemyShaking = ref(false);
 const isPlayerShaking = ref(false);
+const isAIThrowing = ref(false);
 const isEnemyCaptured = ref(false);
 const isBallWobbling = ref(false);
 const thrownWord = ref('');
@@ -660,20 +664,41 @@ watch(() => fsm.state as any, (newState, oldState) => {
     clearFocusTimer();
   }
 
+  if (newState === GAME_STATES.BATTLE_ENEMY_SPELLING) {
+    isAIThrowing.value = true;
+    setTimeout(() => {
+      isAIThrowing.value = false;
+    }, ANIMATION_DURATIONS.AI_THROWN_WORD_DURATION_MS);
+  }
+
   if (newState === GAME_STATES.BATTLE_PLAYER_ATTACK) {
     isEnemyShaking.value = true;
     setTimeout(() => isEnemyShaking.value = false, 500);
   }
 
   if (newState === GAME_STATES.BATTLE_ENEMY_TURN) {
-    if (oldState !== GAME_STATES.BATTLE_SPELLING) { // Don't shake if it was just a miss
+    if (oldState === GAME_STATES.BATTLE_ENEMY_SPELLING) {
+      if (fsm.params.isPower) {
+        showFast.value = true;
+        setTimeout(() => showFast.value = false, 1500);
+      }
+      if (fsm.params.isPerfect) {
+        showPerfect.value = true;
+        setTimeout(() => showPerfect.value = false, 1500);
+      } else {
+        showCorrect.value = true;
+        setTimeout(() => showCorrect.value = false, 1500);
+      }
+    }
+
+    if (oldState !== GAME_STATES.BATTLE_SPELLING) { // Don't shake if it was just a player miss
         isPlayerShaking.value = true;
         setTimeout(() => isPlayerShaking.value = false, 500);
     }
   }
 
   if (newState === GAME_STATES.BATTLE_ENEMY_TURN && oldState === GAME_STATES.BATTLE_SPELLING) {
-    // If we transition to enemy turn from spelling, it means mistake
+    // If we transition to enemy turn from spelling, it means player mistake
     if (!fsm.params.isCorrect) {
        showMistake.value = true;
        setTimeout(() => showMistake.value = false, 2000);
@@ -733,6 +758,15 @@ onUnmounted(() => {
 }
 .animate-throw {
   animation: throw-word 1.5s ease-in-out forwards;
+}
+
+@keyframes throw-ai {
+  0% { transform: translate(80vw, 20vh) scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: translate(50vw, 40vh) scale(1.1) rotate(10deg); opacity: 1; }
+  100% { transform: translate(20vw, 70vh) scale(0.6) rotate(-20deg); opacity: 0; }
+}
+.animate-throw-ai {
+  animation: throw-ai 1.5s ease-in-out forwards;
 }
 
 @keyframes throw-ball {

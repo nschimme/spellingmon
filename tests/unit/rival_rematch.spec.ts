@@ -80,6 +80,104 @@ describe('Rival Rematch Logic', () => {
     // Win battle
     await fsm.transition(GAME_STATES.BATTLE_VICTORY);
 
+    // Move to results
+    await fsm.transition(GAME_STATES.BATTLE_RESULTS);
+
+    // Setup defeat dialog
+    session.battle.trainerDefeatDialog = 'trainer.dialogs.defeat_1';
+
+    // Continue from results to dialog
+    await fsm.send(GAME_EVENTS.CONTINUE);
+
+    // In Pinia store, refs are unwrapped
+    expect(fsm.state).toBe(GAME_STATES.DIALOG);
+
+    // Confirm dialog to trigger onComplete
+    await fsm.send(GAME_EVENTS.CONFIRM);
+
     expect(session.player.defeatedTrainers).toContain('trainer_1');
+  });
+
+  it('shows rival defeat dialog and records defeat after victory', async () => {
+    const fsm = useGameFSM();
+    const session = useSessionStore();
+
+    session.player.isStarterSelected = true;
+    session.player.characterCreationComplete = true;
+    session.player.defeatedTrainers = [];
+
+    await new Promise(resolve => setTimeout(resolve, 50));
+    await fsm.transition(GAME_STATES.WORLD);
+
+    session.battle.enemyMon = { species: 'Grammander', level: 5, hp: 10, maxHp: 10, id: 'enemy_1' } as any;
+    session.battle.type = BATTLE_TYPES.TRAINER;
+    session.battle.trainerId = 'rival_1';
+    session.battle.isRival = true;
+
+    // Win battle
+    await fsm.transition(GAME_STATES.BATTLE_VICTORY);
+    await fsm.transition(GAME_STATES.BATTLE_RESULTS);
+
+    // Regression check: defeat should NOT be recorded yet at BATTLE_RESULTS
+    expect(fsm.state).toBe(GAME_STATES.BATTLE_RESULTS);
+    expect(session.player.defeatedTrainers).not.toContain('rival_1');
+
+    // Continue from results to dialog via defeat flow
+    await fsm.send(GAME_EVENTS.CONTINUE);
+
+    // FSM should go to dialog state
+    expect(fsm.state).toBe(GAME_STATES.DIALOG);
+
+    // Confirm dialog (only 1 line for Rival)
+    await fsm.send(GAME_EVENTS.CONFIRM);
+
+    // Trainer defeat recorded after dialog
+    expect(session.player.defeatedTrainers).toContain('rival_1');
+    expect(fsm.state).toBe(GAME_STATES.WORLD);
+  });
+
+  it('shows storm trainer defeat catchphrase and records defeat after victory', async () => {
+    const fsm = useGameFSM();
+    const session = useSessionStore();
+
+    session.player.isStarterSelected = true;
+    session.player.characterCreationComplete = true;
+    session.player.defeatedTrainers = [];
+
+    await new Promise(resolve => setTimeout(resolve, 50));
+    await fsm.transition(GAME_STATES.WORLD);
+
+    session.battle.enemyMon = { species: 'Grammander', level: 5, hp: 10, maxHp: 10, id: 'enemy_1' } as any;
+    session.battle.type = BATTLE_TYPES.TRAINER;
+    session.battle.trainerId = 'storm_1';
+    session.battle.isStorm = true;
+    session.battle.trainerDefeatDialog = 'trainer.dialogs.storm_defeat_1';
+
+    // Win battle
+    await fsm.transition(GAME_STATES.BATTLE_VICTORY);
+    await fsm.transition(GAME_STATES.BATTLE_RESULTS);
+
+    // Regression check: defeat should NOT be recorded yet at BATTLE_RESULTS
+    expect(fsm.state).toBe(GAME_STATES.BATTLE_RESULTS);
+    expect(session.player.defeatedTrainers).not.toContain('storm_1');
+
+    // Continue from results to dialog via defeat flow
+    await fsm.send(GAME_EVENTS.CONTINUE);
+
+    // FSM should go to dialog state
+    expect(fsm.state).toBe(GAME_STATES.DIALOG);
+
+    // Confirm first line (defeat dialog)
+    await fsm.send(GAME_EVENTS.CONFIRM);
+
+    // Still in DIALOG for catchphrase
+    expect(fsm.state).toBe(GAME_STATES.DIALOG);
+
+    // Confirm second line (catchphrase)
+    await fsm.send(GAME_EVENTS.CONFIRM);
+
+    // Trainer defeat recorded after full dialog
+    expect(session.player.defeatedTrainers).toContain('storm_1');
+    expect(fsm.state).toBe(GAME_STATES.WORLD);
   });
 });

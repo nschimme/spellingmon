@@ -156,7 +156,9 @@
       "def": "Defesa",
       "spa": "At. Esp.",
       "spd": "Def. Esp.",
-      "spe": "Velocidade"
+      "spe": "Velocidade",
+      "acc": "Precisão",
+      "eva": "Evasão"
     },
     "status": {
       "burn": "queimado",
@@ -191,7 +193,8 @@
       "status": "Status"
     },
     "dontLearn": "Não aprender",
-    "release": "Soltar"
+    "release": "Soltar",
+    "hpShort": "{n} PS"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

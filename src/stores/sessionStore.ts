@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, ANIMATION_DURATIONS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -74,6 +74,9 @@ export interface SessionStoreState {
   battle: BattleState;
   dex: DexState;
   notification: string | null;
+  overworldPoisonDamage: boolean;
+  overworldPoisonDamageAt: number;
+  overworldPoisonTimeoutId: any | null;
   dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
   moveLearningPending: { monId: string; moveId: string } | null;
@@ -200,7 +203,7 @@ export const useSessionStore = defineStore('session', {
     slotDependent: true,
     migrate: migrateSessionData,
     sanitize: sanitizeSessionData,
-    exclude: ['battle', 'activeSlot', 'notification', 'dialog', 'evolutionPending', '_saveTimeout']
+    exclude: ['battle', 'activeSlot', 'notification', 'overworldPoisonDamage', 'overworldPoisonDamageAt', 'overworldPoisonTimeoutId', 'dialog', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
     activeSlot: null,
@@ -249,6 +252,9 @@ export const useSessionStore = defineStore('session', {
     },
 
     notification: null,
+    overworldPoisonDamage: false,
+    overworldPoisonDamageAt: 0,
+    overworldPoisonTimeoutId: null,
     dialog: null,
     evolutionPending: null,
     moveLearningPending: null,
@@ -358,24 +364,34 @@ export const useSessionStore = defineStore('session', {
 
     applyOverworldDamage() {
        let partyDied = false;
+       let damageTaken = false;
        this.player.party.forEach(mon => {
           if (mon.hp > 0 && mon.status === STATUS_CONDITIONS.POISON) {
              mon.hp = Math.max(0, mon.hp - 1);
-             if (mon.hp === 0) {
-                // Potential notification or sound
-             }
+             damageTaken = true;
           }
        });
+
+       if (damageTaken) {
+         this.overworldPoisonDamage = true;
+         this.overworldPoisonDamageAt = Date.now();
+
+         if (this.overworldPoisonTimeoutId) {
+           clearTimeout(this.overworldPoisonTimeoutId);
+         }
+
+         this.overworldPoisonTimeoutId = setTimeout(() => {
+           this.overworldPoisonDamage = false;
+           this.overworldPoisonTimeoutId = null;
+         }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
+       }
 
        if (this.player.party.every(m => m.hp <= 0)) {
           partyDied = true;
        }
 
        if (partyDied) {
-          // Trigger whiteout - but we need to handle FSM transition.
-          // Store a flag or emit an event?
-          // Since we are in an action, we can't easily access useGameFSM without circular dependency if not careful.
-          // But gameFSM is usually the one calling updatePlayerPosition via transition.
+          // Trigger whiteout - handled in gameFSM 'onEnter' of MOVING
        }
     },
 

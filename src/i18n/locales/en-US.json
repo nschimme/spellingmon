@@ -93,6 +93,7 @@
   "battle": {
     "experience": "Experience",
     "expGainedShort": "EXP Gained: +{n}",
+    "hpShort": "{n} HP",
     "levelShort": "Lv. {n}",
     "levelUpNotification": "Level Up!",
     "wildAppeared": "A wild {name} appeared!",
@@ -163,7 +164,9 @@
       "def": "Defense",
       "spa": "Sp. Atk",
       "spd": "Sp. Def",
-      "spe": "Speed"
+      "spe": "Speed",
+      "acc": "Accuracy",
+      "eva": "Evasion"
     },
     "status": {
       "burn": "burned",

@@ -100,6 +100,9 @@ class AudioService {
       case SOUND_EFFECTS.DISCOVERY:
         this.playArpeggio([440, 659.25, 880, 1318.51], 0.08);
         break;
+      case SOUND_EFFECTS.POISON_DAMAGE:
+        this.playPoison();
+        break;
       default:
         console.warn(`Unknown sound type requested: ${type}`);
         break;
@@ -214,6 +217,27 @@ class AudioService {
 
     gain.gain.setValueAtTime(0, now);
     gain.gain.linearRampToValueAtTime(0.1, now + 0.5);
+    gain.gain.linearRampToValueAtTime(0, now + duration);
+
+    osc.connect(gain);
+    gain.connect(this.masterGain!);
+
+    osc.start(now);
+    osc.stop(now + duration);
+  }
+
+  playPoison() {
+    if (!this.ctx || !this.masterGain) return;
+    const now = this.ctx.currentTime;
+    const duration = 0.2;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(100, now);
+    osc.frequency.exponentialRampToValueAtTime(50, now + duration);
+
+    gain.gain.setValueAtTime(0.1, now);
     gain.gain.linearRampToValueAtTime(0, now + duration);
 
     osc.connect(gain);

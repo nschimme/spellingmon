@@ -94,6 +94,12 @@
       @stop="stopMovement"
       @toggle-menu="$emit('toggle-menu')"
     />
+
+    <!-- Overworld Poison Flash -->
+    <div
+      v-if="session.overworldPoisonDamage"
+      class="absolute inset-0 bg-purple-600/40 pointer-events-none z-50 animate-pulse"
+    />
   </div>
 </template>
 
@@ -350,6 +356,12 @@ watch(() => fsm.state as any, (newState, oldState) => {
          startTrainerFleeing(trainer, id, fleeingTrainers);
        }
     });
+  }
+});
+
+watch(() => session.overworldPoisonDamageAt, (timestamp) => {
+  if (timestamp > 0) {
+    audio.playSound(SOUND_EFFECTS.POISON_DAMAGE);
   }
 });
 
