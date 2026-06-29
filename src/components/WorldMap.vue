@@ -359,8 +359,8 @@ watch(() => fsm.state as any, (newState, oldState) => {
   }
 });
 
-watch(() => session.overworldPoisonDamage, (isDamaged) => {
-  if (isDamaged) {
+watch(() => session.overworldPoisonDamageAt, (timestamp) => {
+  if (timestamp > 0) {
     audio.playSound(SOUND_EFFECTS.POISON_DAMAGE);
   }
 });

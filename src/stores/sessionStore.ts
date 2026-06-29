@@ -75,6 +75,8 @@ export interface SessionStoreState {
   dex: DexState;
   notification: string | null;
   overworldPoisonDamage: boolean;
+  overworldPoisonDamageAt: number;
+  overworldPoisonTimeoutId: any | null;
   dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
   moveLearningPending: { monId: string; moveId: string } | null;
@@ -201,7 +203,7 @@ export const useSessionStore = defineStore('session', {
     slotDependent: true,
     migrate: migrateSessionData,
     sanitize: sanitizeSessionData,
-    exclude: ['battle', 'activeSlot', 'notification', 'dialog', 'evolutionPending', '_saveTimeout']
+    exclude: ['battle', 'activeSlot', 'notification', 'overworldPoisonDamage', 'overworldPoisonDamageAt', 'overworldPoisonTimeoutId', 'dialog', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
     activeSlot: null,
@@ -251,6 +253,8 @@ export const useSessionStore = defineStore('session', {
 
     notification: null,
     overworldPoisonDamage: false,
+    overworldPoisonDamageAt: 0,
+    overworldPoisonTimeoutId: null,
     dialog: null,
     evolutionPending: null,
     moveLearningPending: null,
@@ -370,7 +374,16 @@ export const useSessionStore = defineStore('session', {
 
        if (damageTaken) {
          this.overworldPoisonDamage = true;
-         setTimeout(() => { this.overworldPoisonDamage = false; }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
+         this.overworldPoisonDamageAt = Date.now();
+
+         if (this.overworldPoisonTimeoutId) {
+           clearTimeout(this.overworldPoisonTimeoutId);
+         }
+
+         this.overworldPoisonTimeoutId = setTimeout(() => {
+           this.overworldPoisonDamage = false;
+           this.overworldPoisonTimeoutId = null;
+         }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
        }
 
        if (this.player.party.every(m => m.hp <= 0)) {

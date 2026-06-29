@@ -417,7 +417,9 @@ export const useGameFSM = defineStore('gameFSM', () => {
               },
               [s(GAME_STATES.BATTLE_ACTION_SELECT)]: {
                 onEnter: (ctx) => {
-                  const mon = ctx.session.activePlayerMon!;
+                  const mon = ctx.session.activePlayerMon;
+                  if (!mon) return;
+
                   if (mon.status === STATUS_CONDITIONS.SLEEP) {
                     mon.statusTurns = (mon.statusTurns || 0) - 1;
                     if (mon.statusTurns <= 0) {
@@ -529,7 +531,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
               },
               [s(GAME_STATES.BATTLE_PLAYER_ATTACK)]: {
                 onEnter: async (ctx, params) => {
-                   const attacker = ctx.session.activePlayerMon!;
+                   const attacker = ctx.session.activePlayerMon;
+                   const defender = ctx.session.battle.enemyMon;
+
+                   if (!attacker || !defender) {
+                     ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT);
+                     return;
+                   }
 
                    if (attacker.confusionTurns) {
                       attacker.confusionTurns--;
@@ -565,8 +573,6 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       setTimeout(() => ctx.fsm.transition(ctx.getEnemyTurnState()), 1000);
                       return;
                    }
-
-                   const defender = ctx.session.battle.enemyMon!;
 
                    if (ctx.session.battle.isCapturing) {
                       const hpRatio = defender.hp / defender.maxHp;
@@ -621,7 +627,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
               [s(GAME_STATES.BATTLE_ENEMY_SPELLING)]: {
                 onEnter: (ctx) => {
                   const wordObj = ctx.vocab.getRandomWord(ctx.session.player.currentArea, ctx.settings.locale, ctx.session);
-                  ctx.session.battle.currentWord = wordObj;
+
+                  if (!wordObj) {
+                     // Safeguard for missing vocabulary: use a simple fallback
+                     ctx.session.battle.currentWord = { word: 'Word', definition: 'A unit of language.', sentence: 'Words are power.' } as any;
+                  } else {
+                     ctx.session.battle.currentWord = wordObj;
+                  }
 
                   const performance = getAISpellingPerformance();
 
@@ -643,8 +655,13 @@ export const useGameFSM = defineStore('gameFSM', () => {
               },
               [s(GAME_STATES.BATTLE_ENEMY_TURN)]: {
                 onEnter: async (ctx, params) => {
-                   const enemyMon = ctx.session.battle.enemyMon!;
-                   const playerMon = ctx.session.activePlayerMon!;
+                   const enemyMon = ctx.session.battle.enemyMon;
+                   const playerMon = ctx.session.activePlayerMon;
+
+                   if (!enemyMon || !playerMon) {
+                     ctx.fsm.transition(GAME_STATES.BATTLE_ACTION_SELECT);
+                     return;
+                   }
 
                    if (enemyMon.confusionTurns) {
                       enemyMon.confusionTurns--;

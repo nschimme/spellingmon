@@ -20,7 +20,7 @@ export const hasSpellingChallenge = (word: string) => {
 };
 
 /**
- * Generates a consistent AI spelling performance tier.
+ * Generates a consistent AI spelling performance tier. isPower is ALWAYS TRUE for AI.
  */
 export const getAISpellingPerformance = () => {
   const roll = Math.random();
