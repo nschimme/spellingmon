@@ -7,67 +7,12 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MOVE_EFFECT_TYPES } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS } from '../utils/constants';
 import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { getTrainerDisplayName } from '../utils/npcData';
 import { validateSpelling, getAISpellingPerformance } from '../utils/spelling';
+import { applyMoveEffect } from '../utils/battleMechanics';
 import i18n from '../i18n';
-
-function applyMoveEffect(ctx: any, attacker: Monster, defender: Monster, move: Move, damage: number) {
-  const t = ctx.t;
-  const log = ctx.session.battle.log;
-  const chance = move.effectChance || 100;
-  const roll = Math.random() * 100;
-
-  if (roll > chance) return;
-
-  const type = move.effectType;
-  const stat = move.effectStat;
-  const amount = move.effectAmount || 1;
-
-  if (type === MOVE_EFFECT_TYPES.STAT_DOWN) {
-     const target = defender;
-     target.stages[stat!] = Math.max(-6, (target.stages[stat!] || 0) - amount);
-     log.push(t(amount > 1 ? 'battle.statDown2' : 'battle.statDown', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
-  } else if (type === MOVE_EFFECT_TYPES.STAT_UP) {
-     const target = attacker;
-     target.stages[stat!] = Math.min(6, (target.stages[stat!] || 0) + amount);
-     log.push(t(amount > 1 ? 'battle.statUp2' : 'battle.statUp', { mon: t('monsters.' + target.species), stat: t('battle.stats.' + stat) }));
-  } else if (type === MOVE_EFFECT_TYPES.STATUS) {
-     if (stat === 'CONFUSION') {
-        if (!defender.confusionTurns) {
-           defender.confusionTurns = 2 + Math.floor(Math.random() * 4);
-           log.push(t('battle.isConfused', { name: t('monsters.' + defender.species) }));
-        }
-        return;
-     }
-
-     if (defender.status === STATUS_CONDITIONS.NONE) {
-        // Type immunities
-        if (stat === 'BURN' && defender.types.includes('Fire')) return;
-        if (stat === 'POISON' && (defender.types.includes('Poison') || defender.types.includes('Steel'))) return;
-        if (stat === 'PARALYSIS' && defender.types.includes('Electric')) return;
-
-        defender.status = STATUS_CONDITIONS[stat as keyof typeof STATUS_CONDITIONS];
-        if (defender.status === STATUS_CONDITIONS.SLEEP) {
-           defender.statusTurns = 1 + Math.floor(Math.random() * 3);
-        }
-        log.push(t('battle.statusApplied', { mon: t('monsters.' + defender.species), status: t('battle.status.' + stat!.toLowerCase()) }));
-     }
-  } else if (type === MOVE_EFFECT_TYPES.HEAL) {
-     const heal = Math.floor(attacker.maxHp / 2);
-     attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
-     log.push(t('battle.healed', { name: t('monsters.' + attacker.species) }));
-  } else if (type === MOVE_EFFECT_TYPES.DRAIN) {
-     const heal = Math.floor(damage / 2);
-     attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
-     log.push(t('battle.drained', { name: t('monsters.' + attacker.species) }));
-  } else if (type === MOVE_EFFECT_TYPES.RECOIL) {
-     const recoil = Math.floor(damage / 4);
-     attacker.hp = Math.max(0, attacker.hp - recoil);
-     log.push(t('battle.recoil', { name: t('monsters.' + attacker.species) }));
-  }
-}
 
 export const useGameFSM = defineStore('gameFSM', () => {
   const session = useSessionStore();
