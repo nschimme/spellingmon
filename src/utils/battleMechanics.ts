@@ -39,7 +39,7 @@ export function applyMoveEffect(
      if (defender.status === STATUS_CONDITIONS.NONE) {
         // Type immunities
         if (stat === STATUS_CONDITIONS.BURN && defender.types.includes(MONSTER_TYPES.FIRE)) return;
-        if (stat === STATUS_CONDITIONS.POISON && (defender.types.includes(MONSTER_TYPES.POISON) || defender.types.includes('Steel'))) return;
+        if (stat === STATUS_CONDITIONS.POISON && (defender.types.includes(MONSTER_TYPES.POISON) || defender.types.includes(MONSTER_TYPES.STEEL))) return;
         if (stat === STATUS_CONDITIONS.PARALYSIS && defender.types.includes(MONSTER_TYPES.ELECTRIC)) return;
 
         defender.status = STATUS_CONDITIONS[stat as keyof typeof STATUS_CONDITIONS];

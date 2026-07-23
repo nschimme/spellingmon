@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { applyMoveEffect } from '../../src/utils/battleMechanics';
-import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES } from '../../src/utils/constants';
+import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES, MOVE_CATEGORIES } from '../../src/utils/constants';
 import type { Monster, Move } from '../../src/utils/gameData';
 
 describe('Battle Mechanics - applyMoveEffect', () => {
@@ -72,7 +72,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STAT_DOWN,
@@ -96,7 +96,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STAT_DOWN,
@@ -120,7 +120,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STAT_UP,
@@ -144,7 +144,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STATUS,
@@ -162,7 +162,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STATUS,
@@ -182,7 +182,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'burn_move',
       name: 'Burn',
       type: MONSTER_TYPES.FIRE,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STATUS,
@@ -197,7 +197,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'poison_move',
       name: 'Poison',
       type: MONSTER_TYPES.POISON,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STATUS,
@@ -212,7 +212,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'para_move',
       name: 'Paralyze',
       type: MONSTER_TYPES.ELECTRIC,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.STATUS,
@@ -228,7 +228,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.HEAL
@@ -246,7 +246,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.DRAIN
@@ -264,7 +264,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       id: 'test_move',
       name: 'Test Move',
       type: MONSTER_TYPES.NORMAL,
-      category: 'Physical',
+      category: MOVE_CATEGORIES.PHYSICAL,
       power: 40,
       accuracy: 100,
       effectType: MOVE_EFFECT_TYPES.RECOIL
