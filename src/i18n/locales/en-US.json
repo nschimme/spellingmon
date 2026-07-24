@@ -189,6 +189,9 @@
     "isConfused": "{name} is confused!",
     "hurtSelf": "It hurt itself in its confusion!",
     "outOfConfusion": "{name} snapped out of its confusion!",
+    "transformed": "{attacker} transformed into {defender}!",
+    "seeded": "{name} was seeded!",
+    "seededDamage": "Leech Seed drained {name}!",
     "effectiveness": {
       "super": "Super!",
       "weak": "Weak",

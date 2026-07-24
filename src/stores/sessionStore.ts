@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, ANIMATION_DURATIONS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -76,7 +76,6 @@ export interface SessionStoreState {
   notification: string | null;
   overworldPoisonDamage: boolean;
   overworldPoisonDamageAt: number;
-  overworldPoisonTimeoutId: any | null;
   dialog: DialogState | null;
   evolutionPending: { monId: string; newSpecies: string; oldSpecies?: string } | null;
   moveLearningPending: { monId: string; moveId: string } | null;
@@ -203,7 +202,7 @@ export const useSessionStore = defineStore('session', {
     slotDependent: true,
     migrate: migrateSessionData,
     sanitize: sanitizeSessionData,
-    exclude: ['battle', 'activeSlot', 'notification', 'overworldPoisonDamage', 'overworldPoisonDamageAt', 'overworldPoisonTimeoutId', 'dialog', 'evolutionPending', '_saveTimeout']
+    exclude: ['battle', 'activeSlot', 'notification', 'overworldPoisonDamage', 'overworldPoisonDamageAt', 'dialog', 'evolutionPending', '_saveTimeout']
   },
   state: (): SessionStoreState => ({
     activeSlot: null,
@@ -254,7 +253,6 @@ export const useSessionStore = defineStore('session', {
     notification: null,
     overworldPoisonDamage: false,
     overworldPoisonDamageAt: 0,
-    overworldPoisonTimeoutId: null,
     dialog: null,
     evolutionPending: null,
     moveLearningPending: null,
@@ -320,8 +318,30 @@ export const useSessionStore = defineStore('session', {
         totalTime: 0,
         isCapturing: false,
       };
-      // Reset stages for all party members
+      // Reset stages and revert transformed/seeded party members
       this.player.party.forEach(mon => {
+        if (mon.originalSpecies) {
+          mon.species = mon.originalSpecies;
+          mon.emoji = mon.originalEmoji || '';
+          mon.types = [...(mon.originalTypes || [])];
+          mon.moves = [...(mon.originalMoves || [])];
+          mon.atk = mon.originalAtk || mon.atk;
+          mon.def = mon.originalDef || mon.def;
+          mon.spa = mon.originalSpa || mon.spa;
+          mon.spd = mon.originalSpd || mon.spd;
+          mon.spe = mon.originalSpe || mon.spe;
+
+          delete mon.originalSpecies;
+          delete mon.originalEmoji;
+          delete mon.originalTypes;
+          delete mon.originalMoves;
+          delete mon.originalAtk;
+          delete mon.originalDef;
+          delete mon.originalSpa;
+          delete mon.originalSpd;
+          delete mon.originalSpe;
+        }
+        mon.isSeeded = false;
         mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
       });
     },
@@ -375,15 +395,6 @@ export const useSessionStore = defineStore('session', {
        if (damageTaken) {
          this.overworldPoisonDamage = true;
          this.overworldPoisonDamageAt = Date.now();
-
-         if (this.overworldPoisonTimeoutId) {
-           clearTimeout(this.overworldPoisonTimeoutId);
-         }
-
-         this.overworldPoisonTimeoutId = setTimeout(() => {
-           this.overworldPoisonDamage = false;
-           this.overworldPoisonTimeoutId = null;
-         }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
        }
 
        if (this.player.party.every(m => m.hp <= 0)) {
@@ -393,6 +404,10 @@ export const useSessionStore = defineStore('session', {
        if (partyDied) {
           // Trigger whiteout - handled in gameFSM 'onEnter' of MOVING
        }
+    },
+
+    clearOverworldPoisonDamage() {
+       this.overworldPoisonDamage = false;
     },
 
     healParty() {

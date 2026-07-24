@@ -194,7 +194,10 @@
     },
     "dontLearn": "Não aprender",
     "release": "Soltar",
-    "hpShort": "{n} PS"
+    "hpShort": "{n} PS",
+    "transformed": "{attacker} se transformou em {defender}!",
+    "seeded": "{name} foi semeado!",
+    "seededDamage": "Semente Sanguessuga drenou {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

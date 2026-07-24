@@ -194,7 +194,10 @@
     },
     "dontLearn": "不学习",
     "release": "放生",
-    "hpShort": "{n} HP"
+    "hpShort": "{n} HP",
+    "transformed": "{attacker} 变身成了 {defender}！",
+    "seeded": "{name} 被寄生了！",
+    "seededDamage": "寄生种子吸取了 {name} 的体力！"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

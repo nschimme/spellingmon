@@ -194,7 +194,10 @@
     },
     "dontLearn": "Не учить",
     "release": "Отпустить",
-    "hpShort": "{n} HP"
+    "hpShort": "{n} HP",
+    "transformed": "{attacker} превратился в {defender}!",
+    "seeded": "{name} был заражен семенами!",
+    "seededDamage": "Семена-присоски истощили {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

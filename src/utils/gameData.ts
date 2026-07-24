@@ -19,6 +19,16 @@ export interface Monster {
   status: string;
   statusTurns?: number;
   confusionTurns?: number;
+  isSeeded?: boolean;
+  originalSpecies?: string;
+  originalEmoji?: string;
+  originalTypes?: string[];
+  originalMoves?: string[];
+  originalAtk?: number;
+  originalDef?: number;
+  originalSpa?: number;
+  originalSpd?: number;
+  originalSpe?: number;
   stages: Record<string, number>;
 }
 

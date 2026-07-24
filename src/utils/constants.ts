@@ -124,6 +124,7 @@ export const MONSTER_TYPES = {
   ROCK: 'Rock',
   GHOST: 'Ghost',
   DRAGON: 'Dragon',
+  STEEL: 'Steel',
 };
 
 export const MOVE_CATEGORIES = {

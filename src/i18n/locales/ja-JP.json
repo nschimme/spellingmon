@@ -202,7 +202,10 @@
     },
     "dontLearn": "おぼえない",
     "release": "にがす",
-    "hpShort": "{n} HP"
+    "hpShort": "{n} HP",
+    "transformed": "{attacker}は {defender} にへんしんした！",
+    "seeded": "{name}に やどりぎのタネが うえつけられた！",
+    "seededDamage": "やどりぎのタネが {name} から すいとった！"
   },
   "home": {
     "name": "わがや"
