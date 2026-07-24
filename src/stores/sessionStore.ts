@@ -318,8 +318,30 @@ export const useSessionStore = defineStore('session', {
         totalTime: 0,
         isCapturing: false,
       };
-      // Reset stages for all party members
+      // Reset stages and revert transformed/seeded party members
       this.player.party.forEach(mon => {
+        if (mon.originalSpecies) {
+          mon.species = mon.originalSpecies;
+          mon.emoji = mon.originalEmoji || '';
+          mon.types = [...(mon.originalTypes || [])];
+          mon.moves = [...(mon.originalMoves || [])];
+          mon.atk = mon.originalAtk || mon.atk;
+          mon.def = mon.originalDef || mon.def;
+          mon.spa = mon.originalSpa || mon.spa;
+          mon.spd = mon.originalSpd || mon.spd;
+          mon.spe = mon.originalSpe || mon.spe;
+
+          delete mon.originalSpecies;
+          delete mon.originalEmoji;
+          delete mon.originalTypes;
+          delete mon.originalMoves;
+          delete mon.originalAtk;
+          delete mon.originalDef;
+          delete mon.originalSpa;
+          delete mon.originalSpd;
+          delete mon.originalSpe;
+        }
+        mon.isSeeded = false;
         mon.stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
       });
     },

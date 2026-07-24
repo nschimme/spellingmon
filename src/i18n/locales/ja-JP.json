@@ -203,9 +203,9 @@
     "dontLearn": "おぼえない",
     "release": "にがす",
     "hpShort": "{n} HP",
-    "transformed": "{attacker} transformed into {defender}!",
-    "seeded": "{name} was seeded!",
-    "seededDamage": "Leech Seed drained {name}!"
+    "transformed": "{attacker}は {defender} にへんしんした！",
+    "seeded": "{name}に やどりぎのタネが うえつけられた！",
+    "seededDamage": "やどりぎのタネが {name} から すいとった！"
   },
   "home": {
     "name": "わがや"

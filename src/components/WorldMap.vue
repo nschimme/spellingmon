@@ -112,7 +112,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
-import { GAME_CONSTANTS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS } from '../utils/constants';
+import { GAME_CONSTANTS, ANIMATION_DURATIONS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS } from '../utils/constants';
 import { TILE_TYPES } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';

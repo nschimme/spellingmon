@@ -309,9 +309,9 @@
     "dontLearn": "Ne pas apprendre",
     "release": "Relâcher",
     "hpShort": "{n} PV",
-    "transformed": "{attacker} transformed into {defender}!",
-    "seeded": "{name} was seeded!",
-    "seededDamage": "Leech Seed drained {name}!"
+    "transformed": "{attacker} s'est transformé en {defender}!",
+    "seeded": "{name} a été ensemencé!",
+    "seededDamage": "Vampigraine a drainé {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

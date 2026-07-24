@@ -309,9 +309,9 @@
     },
     "dontLearn": "Nicht lernen",
     "release": "Freilassen",
-    "transformed": "{attacker} transformed into {defender}!",
-    "seeded": "{name} was seeded!",
-    "seededDamage": "Leech Seed drained {name}!"
+    "transformed": "{attacker} hat sich in {defender} verwandelt!",
+    "seeded": "{name} wurde bepflanzt!",
+    "seededDamage": "Egelsamen entzog {name} Lebenspunkte!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

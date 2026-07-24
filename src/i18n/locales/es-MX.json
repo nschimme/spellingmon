@@ -309,9 +309,9 @@
     "dontLearn": "No aprender",
     "release": "Soltar",
     "hpShort": "{n} PS",
-    "transformed": "{attacker} transformed into {defender}!",
-    "seeded": "{name} was seeded!",
-    "seededDamage": "Leech Seed drained {name}!"
+    "transformed": "{attacker} se transformó en {defender}!",
+    "seeded": "¡{name} fue drenado!",
+    "seededDamage": "¡Drenadoras extrajo salud de {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

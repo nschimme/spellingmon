@@ -15,4 +15,53 @@ describe('SessionStore Battle Logic', () => {
 
     expect(session.battle.enemyMon.hp).toBe(80);
   });
+
+  it('reverts transformed monsters back to their original species and moves when resetBattle is called', () => {
+    const session = useSessionStore();
+    const ditto = {
+      id: 'ditto_1',
+      species: 'Drafto',
+      emoji: '👥',
+      types: ['Normal'],
+      level: 5,
+      hp: 30,
+      maxHp: 30,
+      atk: 10,
+      def: 10,
+      spa: 10,
+      spd: 10,
+      spe: 10,
+      moves: ['Transform'],
+      status: 'NONE',
+      stages: { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
+      originalSpecies: 'Drafto',
+      originalEmoji: '👥',
+      originalTypes: ['Normal'],
+      originalMoves: ['Transform'],
+      originalAtk: 10,
+      originalDef: 10,
+      originalSpa: 10,
+      originalSpd: 10,
+      originalSpe: 10
+    };
+
+    // Simulate transformed state during battle
+    ditto.species = 'Grammander';
+    ditto.emoji = '🦎';
+    ditto.types = ['Fire'];
+    ditto.moves = ['Scratch', 'Ember'];
+    ditto.atk = 15;
+
+    session.player.party = [ditto as any];
+
+    session.resetBattle();
+
+    const reverted = session.player.party[0];
+    expect(reverted.species).toBe('Drafto');
+    expect(reverted.emoji).toBe('👥');
+    expect(reverted.types).toContain('Normal');
+    expect(reverted.moves).toContain('Transform');
+    expect(reverted.atk).toBe(10);
+    expect(reverted.originalSpecies).toBeUndefined();
+  });
 });

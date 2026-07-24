@@ -195,9 +195,9 @@
     "dontLearn": "Не учить",
     "release": "Отпустить",
     "hpShort": "{n} HP",
-    "transformed": "{attacker} transformed into {defender}!",
-    "seeded": "{name} was seeded!",
-    "seededDamage": "Leech Seed drained {name}!"
+    "transformed": "{attacker} превратился в {defender}!",
+    "seeded": "{name} был заражен семенами!",
+    "seededDamage": "Семена-присоски истощили {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",
