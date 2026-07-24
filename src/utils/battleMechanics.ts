@@ -1,4 +1,4 @@
-import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES } from './constants';
+import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES, MOVE_IDS } from './constants';
 import { type Monster, type Move } from './gameData';
 
 export function applyMoveEffect(
@@ -10,6 +10,29 @@ export function applyMoveEffect(
 ): void {
   const t = ctx.t;
   const log = ctx.session.battle.log;
+
+  if (move.id === MOVE_IDS.Transform) {
+     attacker.species = defender.species;
+     attacker.emoji = defender.emoji;
+     attacker.types = [...defender.types];
+     attacker.atk = defender.atk;
+     attacker.def = defender.def;
+     attacker.spa = defender.spa;
+     attacker.spd = defender.spd;
+     attacker.spe = defender.spe;
+     attacker.moves = [...defender.moves];
+     log.push(t('battle.transformed', { attacker: t('monsters.' + attacker.species), defender: t('monsters.' + defender.species) }));
+     return;
+  }
+
+  if (move.id === MOVE_IDS.LeechSeed) {
+     if (!defender.isSeeded) {
+        defender.isSeeded = true;
+        log.push(t('battle.seeded', { name: t('monsters.' + defender.species) }));
+     }
+     return;
+  }
+
   const chance = move.effectChance || 100;
   const roll = Math.random() * 100;
 

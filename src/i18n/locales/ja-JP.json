@@ -202,7 +202,10 @@
     },
     "dontLearn": "おぼえない",
     "release": "にがす",
-    "hpShort": "{n} HP"
+    "hpShort": "{n} HP",
+    "transformed": "{attacker} transformed into {defender}!",
+    "seeded": "{name} was seeded!",
+    "seededDamage": "Leech Seed drained {name}!"
   },
   "home": {
     "name": "わがや"

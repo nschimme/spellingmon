@@ -199,7 +199,7 @@
   "battle": {
     "experience": "Erfahrung",
     "expGainedShort": "EP erhalten: +{n}",
-    "hpShort": "{n} KP",
+    "hpShort": "{n} HP",
     "levelShort": "Lv. {n}",
     "levelUpNotification": "Level Up!",
     "capture": "Fangen",
@@ -309,7 +309,9 @@
     },
     "dontLearn": "Nicht lernen",
     "release": "Freilassen",
-    "hpShort": "{n} HP"
+    "transformed": "{attacker} transformed into {defender}!",
+    "seeded": "{name} was seeded!",
+    "seededDamage": "Leech Seed drained {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

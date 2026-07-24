@@ -362,6 +362,9 @@ watch(() => fsm.state as any, (newState, oldState) => {
 watch(() => session.overworldPoisonDamageAt, (timestamp) => {
   if (timestamp > 0) {
     audio.playSound(SOUND_EFFECTS.POISON_DAMAGE);
+    setTimeout(() => {
+      session.clearOverworldPoisonDamage();
+    }, ANIMATION_DURATIONS.POISON_FLASH_DURATION_MS);
   }
 });
 

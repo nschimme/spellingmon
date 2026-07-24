@@ -194,7 +194,10 @@
     },
     "dontLearn": "Não aprender",
     "release": "Soltar",
-    "hpShort": "{n} PS"
+    "hpShort": "{n} PS",
+    "transformed": "{attacker} transformed into {defender}!",
+    "seeded": "{name} was seeded!",
+    "seededDamage": "Leech Seed drained {name}!"
   },
   "menu": {
     "monCount": "{n} / 6 MONS",

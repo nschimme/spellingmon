@@ -630,11 +630,17 @@ export const useGameFSM = defineStore('gameFSM', () => {
                    }
 
                    // End of turn damage
-                   for (const m of [playerMon, enemyMon]) {
+                   for (const [m, other] of [[playerMon, enemyMon], [enemyMon, playerMon]]) {
                       if (m.hp > 0 && (m.status === STATUS_CONDITIONS.POISON || m.status === STATUS_CONDITIONS.BURN)) {
                          const dmg = Math.max(1, Math.floor(m.maxHp / 8));
                          m.hp = Math.max(0, m.hp - dmg);
                          ctx.session.battle.log.push(ctx.t('battle.statusDamage', { name: ctx.t('monsters.' + m.species), status: ctx.t('battle.status.' + m.status.toLowerCase()) }));
+                      }
+                      if (m.hp > 0 && (m as any).isSeeded && other.hp > 0) {
+                         const dmg = Math.max(1, Math.floor(m.maxHp / 16));
+                         m.hp = Math.max(0, m.hp - dmg);
+                         other.hp = Math.min(other.maxHp, other.hp + dmg);
+                         ctx.session.battle.log.push(ctx.t('battle.seededDamage', { name: ctx.t('monsters.' + m.species) }));
                       }
                    }
 

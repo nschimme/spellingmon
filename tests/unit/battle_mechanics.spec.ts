@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { applyMoveEffect } from '../../src/utils/battleMechanics';
-import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES, MOVE_CATEGORIES } from '../../src/utils/constants';
+import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES, MOVE_CATEGORIES, MOVE_IDS } from '../../src/utils/constants';
 import type { Monster, Move } from '../../src/utils/gameData';
 
 describe('Battle Mechanics - applyMoveEffect', () => {
@@ -275,5 +275,45 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     // recoil is 40 / 4 = 10 hp
     expect(attacker.hp).toBe(30);
     expect(ctx.session.battle.log).toContain('battle.recoil');
+  });
+
+  it('applies Transform effect by copying species, types, moves, and stats', () => {
+    const move: Move = {
+      id: MOVE_IDS.Transform,
+      name: 'Transform',
+      type: MONSTER_TYPES.NORMAL,
+      category: MOVE_CATEGORIES.STATUS,
+      power: 0,
+      accuracy: 100
+    };
+
+    defender.species = 'Squirtspell';
+    defender.types = [MONSTER_TYPES.WATER];
+    defender.atk = 22;
+    defender.moves = ['Bubble'];
+
+    applyMoveEffect(ctx, attacker, defender, move, 0);
+
+    expect(attacker.species).toBe('Squirtspell');
+    expect(attacker.types).toContain(MONSTER_TYPES.WATER);
+    expect(attacker.atk).toBe(22);
+    expect(attacker.moves).toContain('Bubble');
+    expect(ctx.session.battle.log).toContain('battle.transformed');
+  });
+
+  it('applies LeechSeed effect by seeding the defender', () => {
+    const move: Move = {
+      id: MOVE_IDS.LeechSeed,
+      name: 'Leech Seed',
+      type: MONSTER_TYPES.GRASS,
+      category: MOVE_CATEGORIES.STATUS,
+      power: 0,
+      accuracy: 100
+    };
+
+    applyMoveEffect(ctx, attacker, defender, move, 0);
+
+    expect((defender as any).isSeeded).toBe(true);
+    expect(ctx.session.battle.log).toContain('battle.seeded');
   });
 });
