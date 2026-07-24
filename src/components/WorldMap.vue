@@ -133,7 +133,11 @@ const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
 const fleeingTrainers = ref<any[]>([]);
 
-const VIEWPORT_SIZE = 27;
+// VIEWPORT_SIZE is set to 33 to provide a sufficient off-screen tile rendering buffer
+// horizontally and vertically. On desktop screens up to 1024px wide, a smaller viewport (like 27)
+// results in visible tile fade-in during horizontal movement. Pre-rendering 33 tiles
+// (33 * 40px = 1320px width) ensures tiles are fully loaded and rendered off-screen before sliding in.
+const VIEWPORT_SIZE = 33;
 
 const props = defineProps({
   isMenuOpen: Boolean
@@ -334,7 +338,9 @@ watch(() => session.player.defeatedTrainers, (newList, oldList) => {
   const isPlayState = fsm.matches(GAME_STATES.PLAY);
   if (!isPlayState) return;
 
-  const newlyDefeated = newList.filter(id => !oldList.includes(id));
+  const safeNewList = newList || [];
+  const safeOldList = oldList || [];
+  const newlyDefeated = safeNewList.filter(id => !safeOldList.includes(id));
   newlyDefeated.forEach(id => {
     const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
     if (trainer) {
@@ -345,7 +351,7 @@ watch(() => session.player.defeatedTrainers, (newList, oldList) => {
 
 watch(() => fsm.state as any, (newState, oldState) => {
   if (newState === GAME_STATES.WORLD && oldState === GAME_STATES.BATTLE) {
-    const trainersToAnimate = session.player.defeatedTrainers.filter(id => {
+    const trainersToAnimate = (session.player.defeatedTrainers || []).filter(id => {
        const t = currentMapData.value?.trainers.find(tr => getTrainerId(tr) === id);
        return t && !fleeingTrainers.value.some(ft => ft.trainerId === id);
     });
@@ -424,7 +430,7 @@ const viewportTrainers = computed(() => {
       const trainerId = getTrainerId(t);
       return { ...t, trainerId };
     })
-    .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !session.player.defeatedTrainers.includes(t.trainerId));
+    .filter(t => t.x >= startX && t.x < endX && t.y >= startY && t.y < endY && !(session.player.defeatedTrainers || []).includes(t.trainerId));
 });
 
 const checkTriggers = (x: number, y: number) => {
@@ -484,7 +490,7 @@ const checkTriggers = (x: number, y: number) => {
     const transition = currentMapData.value.transitions.find(t => t.x === x && t.y === y);
     if (!transition) return;
     if (transition.type === TRANSITION_TYPES.NEXT) {
-      const hasBadge = session.player.badges.includes(`badge_${session.player.currentArea}`);
+      const hasBadge = (session.player.badges || []).includes(`badge_${session.player.currentArea}`);
       if (!hasBadge) {
         session.notify(settingsStore.t('menu.defeatTrainerFirst'));
         return;

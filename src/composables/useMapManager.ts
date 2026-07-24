@@ -29,7 +29,7 @@ export function useMapManager(session: any) {
     const trainer = currentMapData.value.trainers.find(t => t.x === x && t.y === y);
     if (!trainer) return null;
     const trainerId = getTrainerId(trainer);
-    if (session.player.defeatedTrainers.includes(trainerId)) return null;
+    if ((session.player.defeatedTrainers || []).includes(trainerId)) return null;
     return { trainer, trainerId };
   };
 

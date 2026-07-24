@@ -15,8 +15,8 @@ export function applyMoveEffect(
      if (!attacker.originalSpecies) {
         attacker.originalSpecies = attacker.species;
         attacker.originalEmoji = attacker.emoji;
-        attacker.originalTypes = [...attacker.types];
-        attacker.originalMoves = [...attacker.moves];
+        attacker.originalTypes = [...(attacker.types || [])];
+        attacker.originalMoves = [...(attacker.moves || [])];
         attacker.originalAtk = attacker.atk;
         attacker.originalDef = attacker.def;
         attacker.originalSpa = attacker.spa;
@@ -26,7 +26,7 @@ export function applyMoveEffect(
 
      attacker.species = defender.species;
      attacker.emoji = defender.emoji;
-     attacker.types = [...defender.types];
+     attacker.types = [...(defender.types || [])];
      attacker.atk = defender.atk;
      attacker.def = defender.def;
      attacker.spa = defender.spa;
@@ -73,9 +73,10 @@ export function applyMoveEffect(
 
      if (defender.status === STATUS_CONDITIONS.NONE) {
         // Type immunities
-        if (stat === STATUS_CONDITIONS.BURN && defender.types.includes(MONSTER_TYPES.FIRE)) return;
-        if (stat === STATUS_CONDITIONS.POISON && (defender.types.includes(MONSTER_TYPES.POISON) || defender.types.includes(MONSTER_TYPES.STEEL))) return;
-        if (stat === STATUS_CONDITIONS.PARALYSIS && defender.types.includes(MONSTER_TYPES.ELECTRIC)) return;
+        const defenderTypes = defender.types || [];
+        if (stat === STATUS_CONDITIONS.BURN && defenderTypes.includes(MONSTER_TYPES.FIRE)) return;
+        if (stat === STATUS_CONDITIONS.POISON && (defenderTypes.includes(MONSTER_TYPES.POISON) || defenderTypes.includes(MONSTER_TYPES.STEEL))) return;
+        if (stat === STATUS_CONDITIONS.PARALYSIS && defenderTypes.includes(MONSTER_TYPES.ELECTRIC)) return;
 
         defender.status = STATUS_CONDITIONS[stat as keyof typeof STATUS_CONDITIONS];
         if (defender.status === STATUS_CONDITIONS.SLEEP) {

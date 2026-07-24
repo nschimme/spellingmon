@@ -62,6 +62,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
 
              const name = urlParams.get('name') || 'Tester';
              ctx.session.player.name = name;
+             ctx.session.player.mapSeed = urlParams.get('seed') || ctx.session.player.mapSeed || 'debugseed';
 
              const starter = urlParams.get('starter') || 'Grammander';
              const speciesName = Object.values(SPECIES).find(v => v.toLowerCase() === starter.toLowerCase()) || SPECIES.Grammander;

@@ -26,7 +26,7 @@ export function useTrainerAI(
     for (let i = 0; i < trainers.length; i++) {
       const t = trainers[i];
       const trainerId = getTrainerId(t);
-      if (session.player.defeatedTrainers.includes(trainerId)) continue;
+      if ((session.player.defeatedTrainers || []).includes(trainerId)) continue;
       if (engagedTrainers.has(trainerId)) continue;
 
       let inLOS = false;

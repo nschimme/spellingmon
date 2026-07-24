@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS, MONSTER_TYPES } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -109,6 +109,11 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
     point.y < 0 ||
     point.y >= MAP_HEIGHT;
 
+  // Ensure player lists are valid arrays
+  if (!player.badges) player.badges = [];
+  if (!player.unlockedAreas) player.unlockedAreas = [1];
+  if (!player.defeatedTrainers) player.defeatedTrainers = [];
+
   // Ensure position is valid or reset to lastSpellCenter/default
   if (isOutOfBounds(player.position)) {
     if (player.lastSpellCenter && !isOutOfBounds(player.lastSpellCenter)) {
@@ -123,31 +128,64 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
     player.isStarterSelected = true;
     player.characterCreationComplete = true;
 
-    // Fix monsters with missing skills (old save data)
+    // Fix monsters with missing skills and ensure all standard properties exist (old save data)
     player.party.forEach(mon => {
-      if (!mon.moves || mon.moves.length === 0) {
-        const base = MONS[mon.species];
-        if (base && base.learnset) {
-          const moves: string[] = [];
-          const sortedLevels = Object.keys(base.learnset)
-            .map(k => Number(k))
-            .filter(l => Number.isFinite(l))
-            .sort((a, b) => b - a);
+      const base = MONS[mon.species];
+      if (base) {
+        if (!mon.moves || mon.moves.length === 0) {
+          if (base.learnset) {
+            const moves: string[] = [];
+            const sortedLevels = Object.keys(base.learnset)
+              .map(k => Number(k))
+              .filter(l => Number.isFinite(l))
+              .sort((a, b) => b - a);
 
-          for (const l of sortedLevels) {
-            if (l <= mon.level) {
-              for (const mId of base.learnset[l]) {
-                if (!moves.includes(mId)) {
-                  moves.push(mId);
-                  if (moves.length >= 4) break;
+            for (const l of sortedLevels) {
+              if (l <= mon.level) {
+                for (const mId of base.learnset[l]) {
+                  if (!moves.includes(mId)) {
+                    moves.push(mId);
+                    if (moves.length >= 4) break;
+                  }
                 }
               }
+              if (moves.length >= 4) break;
             }
-            if (moves.length >= 4) break;
+            mon.moves = moves;
           }
-          mon.moves = moves;
         }
+
+        // Reconstruct or guard any other missing standard properties
+        if (!mon.types) {
+          mon.types = base.types || [MONSTER_TYPES.NORMAL];
+        }
+        if (!mon.id) {
+          mon.id = Math.random().toString(36).slice(2, 11);
+        }
+        // Always derive maxHp from base stats/level, and treat any persisted hp
+        // only as current HP clamped to the new maxHp to avoid impossible HP values
+        const derivedMaxHp = calculateStat(base.baseHp, mon.level, true);
+
+        if (mon.maxHp === undefined) {
+          mon.maxHp = derivedMaxHp;
+        }
+
+        if (mon.hp === undefined) {
+          mon.hp = mon.maxHp;
+        } else {
+          // Clamp persisted HP into [0, mon.maxHp] in case save data is corrupted/out of range
+          mon.hp = Math.max(0, Math.min(mon.hp, mon.maxHp));
+        }
+        if (mon.atk === undefined) mon.atk = calculateStat(base.baseAtk, mon.level);
+        if (mon.def === undefined) mon.def = calculateStat(base.baseDef, mon.level);
+        if (mon.spa === undefined) mon.spa = calculateStat(base.baseSpa || base.baseAtk, mon.level);
+        if (mon.spd === undefined) mon.spd = calculateStat(base.baseSpd || base.baseDef, mon.level);
+        if (mon.spe === undefined) mon.spe = calculateStat(base.baseSpe || 50, mon.level);
+        if (mon.exp === undefined) mon.exp = 0;
+        if (mon.expToNext === undefined) mon.expToNext = calculateExpToNext(mon.level);
+        if (mon.status === undefined) mon.status = STATUS_CONDITIONS.NONE;
       }
+
       // Ensure stages exist
       if (!mon.stages) {
         mon.stages = getDefaultStages();
