@@ -294,6 +294,44 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     expect(logArray).toContain('battle.transformed');
   });
 
+  it('does not overwrite original snapshot on repeated Transform usage', () => {
+    const move: Move = {
+      id: MOVE_IDS.Transform,
+      name: 'Transform',
+      type: MONSTER_TYPES.NORMAL,
+      category: MOVE_CATEGORIES.STATUS,
+      power: 0,
+      accuracy: 100
+    };
+
+    // First Transform: transform into Squirtspell
+    defender.species = 'Squirtspell';
+    defender.types = [MONSTER_TYPES.WATER];
+    defender.atk = 22;
+    defender.moves = ['Bubble'];
+
+    applyMoveEffect(attacker, defender, move, 0, t, log);
+
+    expect(attacker.originalSpecies).toBe('Grammander'); // pre-transform state
+    const originalAtk = attacker.originalAtk;
+
+    // Second Transform: transform into Verminverb
+    defender.species = 'Verminverb';
+    defender.types = [MONSTER_TYPES.NORMAL];
+    defender.atk = 18;
+    defender.moves = ['Tackle'];
+
+    applyMoveEffect(attacker, defender, move, 0, t, log);
+
+    // Verify attacker now matches the new defender's stats and moves
+    expect(attacker.species).toBe('Verminverb');
+    expect(attacker.atk).toBe(18);
+
+    // Verify original snapshot was NOT overwritten
+    expect(attacker.originalSpecies).toBe('Grammander');
+    expect(attacker.originalAtk).toBe(originalAtk);
+  });
+
   it('applies LeechSeed effect by seeding the defender', () => {
     const move: Move = {
       id: MOVE_IDS.LeechSeed,

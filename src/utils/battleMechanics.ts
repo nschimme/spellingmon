@@ -10,6 +10,8 @@ export function applyMoveEffect(
   log: (msg: string) => void
 ): void {
   if (move.id === MOVE_IDS.Transform) {
+     const origSpecies = attacker.species;
+
      if (!attacker.originalSpecies) {
         attacker.originalSpecies = attacker.species;
         attacker.originalEmoji = attacker.emoji;
@@ -31,7 +33,7 @@ export function applyMoveEffect(
      attacker.spd = defender.spd;
      attacker.spe = defender.spe;
      attacker.moves = [...defender.moves];
-     log(t('battle.transformed', { attacker: t('monsters.' + attacker.species), defender: t('monsters.' + defender.species) }));
+     log(t('battle.transformed', { attacker: t('monsters.' + origSpecies), defender: t('monsters.' + defender.species) }));
      return;
   }
 

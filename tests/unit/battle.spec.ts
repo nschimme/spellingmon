@@ -64,4 +64,49 @@ describe('SessionStore Battle Logic', () => {
     expect(reverted.atk).toBe(10);
     expect(reverted.originalSpecies).toBeUndefined();
   });
+
+  it('clears seeded flag and resets stat stages for non-transformed party members when resetBattle is called', () => {
+    const session = useSessionStore();
+
+    const partyMon = {
+      id: 'mon_1',
+      species: 'Grammander',
+      emoji: '🦎',
+      types: ['Fire'],
+      level: 5,
+      hp: 30,
+      maxHp: 30,
+      atk: 10,
+      def: 10,
+      spa: 10,
+      spd: 10,
+      spe: 10,
+      moves: ['Ember'],
+      status: 'NONE',
+      isSeeded: true,
+      stages: {
+        atk: 2,
+        def: -1,
+        spa: 3,
+        spd: -2,
+        spe: 1
+      }
+    };
+
+    session.player.party = [partyMon as any];
+
+    // Sanity-check preconditions
+    expect(session.player.party[0].isSeeded).toBe(true);
+    expect(session.player.party[0].stages.atk).toBe(2);
+
+    // When we reset the battle, seeded status and stat stages should be cleared
+    session.resetBattle();
+
+    expect(session.player.party[0].isSeeded).toBe(false);
+    expect(session.player.party[0].stages.atk).toBe(0);
+    expect(session.player.party[0].stages.def).toBe(0);
+    expect(session.player.party[0].stages.spa).toBe(0);
+    expect(session.player.party[0].stages.spd).toBe(0);
+    expect(session.player.party[0].stages.spe).toBe(0);
+  });
 });
