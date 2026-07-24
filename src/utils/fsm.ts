@@ -65,6 +65,9 @@ export function createFSM(config: FSMConfig, context: any): FSMMachine {
       while (commonIndex < oldPath.length && commonIndex < newPath.length && oldPath[commonIndex] === newPath[commonIndex]) {
         commonIndex++;
       }
+      if (target === currentState.value && commonIndex > 0) {
+        commonIndex--;
+      }
 
       // Exit old states (bottom-up to common)
       for (let i = oldPath.length - 1; i >= commonIndex; i--) {

@@ -335,8 +335,8 @@ watch(() => session.player.mapSeed, (newSeed) => {
 
 
 watch(() => session.player.defeatedTrainers, (newList, oldList) => {
-  const isPlayState = fsm.matches(GAME_STATES.PLAY);
-  if (!isPlayState) return;
+  const isWorldState = fsm.matches(GAME_STATES.WORLD);
+  if (!isWorldState) return;
 
   const safeNewList = newList || [];
   const safeOldList = oldList || [];
@@ -350,7 +350,8 @@ watch(() => session.player.defeatedTrainers, (newList, oldList) => {
 }, { deep: true });
 
 watch(() => fsm.state as any, (newState, oldState) => {
-  if (newState === GAME_STATES.WORLD && oldState === GAME_STATES.BATTLE) {
+  const isComingFromBattleOrSpeech = oldState && (oldState.startsWith('PLAY.BATTLE') || oldState === GAME_STATES.DIALOG);
+  if (newState === GAME_STATES.WORLD && isComingFromBattleOrSpeech) {
     const trainersToAnimate = (session.player.defeatedTrainers || []).filter(id => {
        const t = currentMapData.value?.trainers.find(tr => getTrainerId(tr) === id);
        return t && !fleeingTrainers.value.some(ft => ft.trainerId === id);
