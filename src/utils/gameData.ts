@@ -585,11 +585,13 @@ export function calculateDamage(
   const difficultyMultiplier = spellingPerformance.isPerfect ? 1.5 : (spellingPerformance.isPower ? 1.2 : 1.0);
 
   let typeMod = 1;
-  defender.types.forEach(defType => {
+  const defTypes = defender.types || [];
+  defTypes.forEach(defType => {
     typeMod *= TYPE_CHART[move.type]?.[defType] || 1;
   });
 
-  const stab = attacker.types.includes(move.type) ? 1.5 : 1;
+  const attTypes = attacker.types || [];
+  const stab = attTypes.includes(move.type) ? 1.5 : 1;
 
   const levelPart = (2 * attacker.level) / 5 + 2;
   const baseDamage = (((levelPart * move.power * (effectiveAtk / effectiveDef)) / 50) + 2) * typeMod * stab;

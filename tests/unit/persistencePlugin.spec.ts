@@ -78,3 +78,45 @@ describe('persistencePlugin Unit', () => {
     expect(mockStore.$patch).toHaveBeenCalledWith({ val: 1, sanitized: true });
   });
 });
+
+import { sanitizeSessionData } from '../../src/stores/sessionStore';
+
+describe('sanitizeSessionData Unit', () => {
+  it('reconstructs missing player and monster fields for older saves', () => {
+    const rawData = {
+      player: {
+        name: 'OldSavePlayer',
+        party: [
+          {
+            species: 'Grammander',
+            level: 5,
+            // missing types, id, stats, maxHp, hp, status, stages, etc.
+          }
+        ]
+      }
+    };
+
+    const sanitized = sanitizeSessionData(rawData as any);
+
+    // Verify player list properties are initialized
+    expect(sanitized.player.badges).toEqual([]);
+    expect(sanitized.player.unlockedAreas).toEqual([1]);
+    expect(sanitized.player.defeatedTrainers).toEqual([]);
+
+    // Verify monster properties are fully reconstructed
+    const mon = sanitized.player.party[0];
+    expect(mon.types).toContain('Fire');
+    expect(mon.id).toBeDefined();
+    expect(mon.maxHp).toBeGreaterThan(0);
+    expect(mon.hp).toEqual(mon.maxHp);
+    expect(mon.atk).toBeGreaterThan(0);
+    expect(mon.def).toBeGreaterThan(0);
+    expect(mon.spa).toBeGreaterThan(0);
+    expect(mon.spd).toBeGreaterThan(0);
+    expect(mon.spe).toBeGreaterThan(0);
+    expect(mon.exp).toEqual(0);
+    expect(mon.expToNext).toBeGreaterThan(0);
+    expect(mon.status).toEqual('NONE');
+    expect(mon.stages).toEqual({ atk: 0, def: 0, spa: 0, spd: 0, spe: 0 });
+  });
+});
