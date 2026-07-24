@@ -4,27 +4,15 @@ import { STATUS_CONDITIONS, MOVE_EFFECT_TYPES, MONSTER_TYPES, MOVE_CATEGORIES, M
 import type { Monster, Move } from '../../src/utils/gameData';
 
 describe('Battle Mechanics - applyMoveEffect', () => {
-  let ctx: {
-    t: (key: string, params?: any) => string;
-    session: {
-      battle: {
-        log: string[];
-      };
-    };
-  };
+  let logArray: string[];
+  const t = (key: string) => key;
+  const log = (msg: string) => { logArray.push(msg); };
 
   let attacker: Monster;
   let defender: Monster;
 
   beforeEach(() => {
-    ctx = {
-      t: (key: string) => key,
-      session: {
-        battle: {
-          log: []
-        }
-      }
-    };
+    logArray = [];
 
     attacker = {
       id: 'attacker_1',
@@ -83,10 +71,10 @@ describe('Battle Mechanics - applyMoveEffect', () => {
 
     vi.spyOn(Math, 'random').mockReturnValue(0.4); // 40% (rolls higher than 30)
 
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
 
     expect(defender.stages.def).toBe(0);
-    expect(ctx.session.battle.log).toHaveLength(0);
+    expect(logArray).toHaveLength(0);
 
     vi.restoreAllMocks();
   });
@@ -105,13 +93,13 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     };
 
     // First application
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(defender.stages.def).toBe(-2);
-    expect(ctx.session.battle.log).toContain('battle.statDown2');
+    expect(logArray).toContain('battle.statDown2');
 
     // Clamping checks
     defender.stages.def = -5;
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(defender.stages.def).toBe(-6);
   });
 
@@ -129,13 +117,13 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     };
 
     // First application
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(attacker.stages.atk).toBe(2);
-    expect(ctx.session.battle.log).toContain('battle.statUp2');
+    expect(logArray).toContain('battle.statUp2');
 
     // Clamping checks
     attacker.stages.atk = 5;
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(attacker.stages.atk).toBe(6);
   });
 
@@ -151,10 +139,10 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       effectStat: STATUS_CONDITIONS.CONFUSION
     };
 
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(defender.confusionTurns).toBeGreaterThanOrEqual(2);
     expect(defender.confusionTurns).toBeLessThanOrEqual(5);
-    expect(ctx.session.battle.log).toContain('battle.isConfused');
+    expect(logArray).toContain('battle.isConfused');
   });
 
   it('applies standard STATUS conditions like SLEEP', () => {
@@ -169,11 +157,11 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       effectStat: STATUS_CONDITIONS.SLEEP
     };
 
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     expect(defender.status).toBe(STATUS_CONDITIONS.SLEEP);
     expect(defender.statusTurns).toBeGreaterThanOrEqual(1);
     expect(defender.statusTurns).toBeLessThanOrEqual(3);
-    expect(ctx.session.battle.log).toContain('battle.statusApplied');
+    expect(logArray).toContain('battle.statusApplied');
   });
 
   it('respects Type Immunities', () => {
@@ -189,7 +177,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       effectStat: STATUS_CONDITIONS.BURN
     };
     defender.types = [MONSTER_TYPES.FIRE];
-    applyMoveEffect(ctx, attacker, defender, burnMove, 10);
+    applyMoveEffect(attacker, defender, burnMove, 10, t, log);
     expect(defender.status).toBe(STATUS_CONDITIONS.NONE);
 
     // 2. Poison-types immune to POISON
@@ -204,7 +192,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       effectStat: STATUS_CONDITIONS.POISON
     };
     defender.types = [MONSTER_TYPES.POISON];
-    applyMoveEffect(ctx, attacker, defender, poisonMove, 10);
+    applyMoveEffect(attacker, defender, poisonMove, 10, t, log);
     expect(defender.status).toBe(STATUS_CONDITIONS.NONE);
 
     // 3. Electric-types immune to PARALYSIS
@@ -219,7 +207,7 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       effectStat: STATUS_CONDITIONS.PARALYSIS
     };
     defender.types = [MONSTER_TYPES.ELECTRIC];
-    applyMoveEffect(ctx, attacker, defender, paraMove, 10);
+    applyMoveEffect(attacker, defender, paraMove, 10, t, log);
     expect(defender.status).toBe(STATUS_CONDITIONS.NONE);
   });
 
@@ -235,10 +223,10 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     };
 
     attacker.hp = 10;
-    applyMoveEffect(ctx, attacker, defender, move, 10);
+    applyMoveEffect(attacker, defender, move, 10, t, log);
     // heals 50 / 2 = 25 hp
     expect(attacker.hp).toBe(35);
-    expect(ctx.session.battle.log).toContain('battle.healed');
+    expect(logArray).toContain('battle.healed');
   });
 
   it('applies DRAIN effect to self based on damage dealt', () => {
@@ -253,10 +241,10 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     };
 
     attacker.hp = 10;
-    applyMoveEffect(ctx, attacker, defender, move, 20);
+    applyMoveEffect(attacker, defender, move, 20, t, log);
     // drains 20 / 2 = 10 hp
     expect(attacker.hp).toBe(20);
-    expect(ctx.session.battle.log).toContain('battle.drained');
+    expect(logArray).toContain('battle.drained');
   });
 
   it('applies RECOIL effect to self based on damage dealt', () => {
@@ -271,10 +259,10 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     };
 
     attacker.hp = 40;
-    applyMoveEffect(ctx, attacker, defender, move, 40);
+    applyMoveEffect(attacker, defender, move, 40, t, log);
     // recoil is 40 / 4 = 10 hp
     expect(attacker.hp).toBe(30);
-    expect(ctx.session.battle.log).toContain('battle.recoil');
+    expect(logArray).toContain('battle.recoil');
   });
 
   it('applies Transform effect by copying species, types, moves, and stats', () => {
@@ -292,13 +280,18 @@ describe('Battle Mechanics - applyMoveEffect', () => {
     defender.atk = 22;
     defender.moves = ['Bubble'];
 
-    applyMoveEffect(ctx, attacker, defender, move, 0);
+    applyMoveEffect(attacker, defender, move, 0, t, log);
+
+    // Verifies original snapshot state was set on the attacker
+    expect(attacker.originalSpecies).toBe('Grammander');
+    expect(attacker.originalEmoji).toBe('🦎');
+    expect(attacker.originalTypes).toContain(MONSTER_TYPES.FIRE);
 
     expect(attacker.species).toBe('Squirtspell');
     expect(attacker.types).toContain(MONSTER_TYPES.WATER);
     expect(attacker.atk).toBe(22);
     expect(attacker.moves).toContain('Bubble');
-    expect(ctx.session.battle.log).toContain('battle.transformed');
+    expect(logArray).toContain('battle.transformed');
   });
 
   it('applies LeechSeed effect by seeding the defender', () => {
@@ -311,9 +304,9 @@ describe('Battle Mechanics - applyMoveEffect', () => {
       accuracy: 100
     };
 
-    applyMoveEffect(ctx, attacker, defender, move, 0);
+    applyMoveEffect(attacker, defender, move, 0, t, log);
 
-    expect((defender as any).isSeeded).toBe(true);
-    expect(ctx.session.battle.log).toContain('battle.seeded');
+    expect(defender.isSeeded).toBe(true);
+    expect(logArray).toContain('battle.seeded');
   });
 });

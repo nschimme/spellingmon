@@ -560,7 +560,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                          if (typeMod === 0) ctx.session.battle.log.push(ctx.t('battle.noEffect'));
                          audio.playSound(SOUND_EFFECTS.HIT);
                       }
-                      applyMoveEffect(ctx, attacker, defender, move, damage);
+                      applyMoveEffect(attacker, defender, move, damage, ctx.t, (msg) => ctx.session.battle.log.push(msg));
                    }
 
                    setTimeout(() => {
@@ -636,7 +636,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                          m.hp = Math.max(0, m.hp - dmg);
                          ctx.session.battle.log.push(ctx.t('battle.statusDamage', { name: ctx.t('monsters.' + m.species), status: ctx.t('battle.status.' + m.status.toLowerCase()) }));
                       }
-                      if (m.hp > 0 && (m as any).isSeeded && other.hp > 0) {
+                      if (m.hp > 0 && m.isSeeded && other.hp > 0) {
                          const dmg = Math.max(1, Math.floor(m.maxHp / 16));
                          m.hp = Math.max(0, m.hp - dmg);
                          other.hp = Math.min(other.maxHp, other.hp + dmg);
@@ -702,7 +702,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                          if (typeMod === 0) ctx.session.battle.log.push(ctx.t('battle.noEffect'));
                          audio.playSound(SOUND_EFFECTS.HIT);
                       }
-                      applyMoveEffect(ctx, enemyMon, playerMon, move, damage);
+                      applyMoveEffect(enemyMon, playerMon, move, damage, ctx.t, (msg) => ctx.session.battle.log.push(msg));
                    }
 
                    setTimeout(() => {
