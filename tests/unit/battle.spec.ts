@@ -18,8 +18,8 @@ describe('SessionStore Battle Logic', () => {
 
   it('reverts transformed monsters back to their original species and moves when resetBattle is called', () => {
     const session = useSessionStore();
-    const ditto = {
-      id: 'ditto_1',
+    const drafto = {
+      id: 'drafto_1',
       species: 'Drafto',
       emoji: '👥',
       types: ['Normal'],
@@ -46,13 +46,13 @@ describe('SessionStore Battle Logic', () => {
     };
 
     // Simulate transformed state during battle
-    ditto.species = 'Grammander';
-    ditto.emoji = '🦎';
-    ditto.types = ['Fire'];
-    ditto.moves = ['Scratch', 'Ember'];
-    ditto.atk = 15;
+    drafto.species = 'Grammander';
+    drafto.emoji = '🦎';
+    drafto.types = ['Fire'];
+    drafto.moves = ['Scratch', 'Ember'];
+    drafto.atk = 15;
 
-    session.player.party = [ditto as any];
+    session.player.party = [drafto as any];
 
     session.resetBattle();
 
