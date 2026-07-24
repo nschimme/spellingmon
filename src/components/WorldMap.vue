@@ -133,6 +133,10 @@ const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
 const fleeingTrainers = ref<any[]>([]);
 
+// VIEWPORT_SIZE is set to 33 to provide a sufficient off-screen tile rendering buffer
+// horizontally and vertically. On desktop screens up to 1024px wide, a smaller viewport (like 27)
+// results in visible tile fade-in during horizontal movement. Pre-rendering 33 tiles
+// (33 * 40px = 1320px width) ensures tiles are fully loaded and rendered off-screen before sliding in.
 const VIEWPORT_SIZE = 33;
 
 const props = defineProps({

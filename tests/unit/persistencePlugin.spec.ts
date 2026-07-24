@@ -118,5 +118,12 @@ describe('sanitizeSessionData Unit', () => {
     expect(mon.expToNext).toBeGreaterThan(0);
     expect(mon.status).toEqual('NONE');
     expect(mon.stages).toEqual({ atk: 0, def: 0, spa: 0, spd: 0, spe: 0 });
+
+    // Verify move reconstruction behavior
+    expect(mon.moves).toBeDefined();
+    expect(Array.isArray(mon.moves)).toBe(true);
+    expect(mon.moves.length).toBe(2);
+    expect(mon.moves).toContain('Growl');
+    expect(mon.moves).toContain('Tackle');
   });
 });

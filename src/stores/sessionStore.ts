@@ -162,11 +162,19 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
         if (!mon.id) {
           mon.id = Math.random().toString(36).slice(2, 11);
         }
+        // Always derive maxHp from base stats/level, and treat any persisted hp
+        // only as current HP clamped to the new maxHp to avoid impossible HP values
+        const derivedMaxHp = calculateStat(base.baseHp, mon.level, true);
+
         if (mon.maxHp === undefined) {
-          mon.maxHp = mon.hp || calculateStat(base.baseHp, mon.level, true);
+          mon.maxHp = derivedMaxHp;
         }
+
         if (mon.hp === undefined) {
           mon.hp = mon.maxHp;
+        } else {
+          // Clamp persisted HP into [0, mon.maxHp] in case save data is corrupted/out of range
+          mon.hp = Math.max(0, Math.min(mon.hp, mon.maxHp));
         }
         if (mon.atk === undefined) mon.atk = calculateStat(base.baseAtk, mon.level);
         if (mon.def === undefined) mon.def = calculateStat(base.baseDef, mon.level);
