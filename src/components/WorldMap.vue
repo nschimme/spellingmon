@@ -350,7 +350,7 @@ watch(() => session.player.defeatedTrainers, (newList, oldList) => {
 }, { deep: true });
 
 watch(() => fsm.state as any, (newState, oldState) => {
-  const isComingFromBattleOrSpeech = oldState && (oldState.startsWith(GAME_STATES.BATTLE) || oldState === GAME_STATES.DIALOG);
+  const isComingFromBattleOrSpeech = typeof oldState === 'string' && (oldState.startsWith(GAME_STATES.BATTLE) || oldState === GAME_STATES.DIALOG);
   if (newState === GAME_STATES.WORLD && isComingFromBattleOrSpeech) {
     const trainersToAnimate = (session.player.defeatedTrainers || []).filter(id => {
        const t = currentMapData.value?.trainers.find(tr => getTrainerId(tr) === id);
