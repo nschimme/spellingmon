@@ -225,6 +225,8 @@
     },
     "wordsDiscovered": "已见单词",
     "wordsMastered": "已掌握单词",
+    "prevArea": "上一个区域",
+    "nextArea": "下一个区域",
     "title": "菜单",
     "pressEsc": "按 ESC 或返回键回到主菜单",
     "globalProgress": "全局进度",

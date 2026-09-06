@@ -339,6 +339,8 @@
     },
     "wordsDiscovered": "Mots vus",
     "wordsMastered": "Mots appris",
+    "prevArea": "Zone précédente",
+    "nextArea": "Zone suivante",
     "title": "Menu",
     "pressEsc": "ESC ou retour menu principal",
     "globalProgress": "Progrès global",

@@ -338,6 +338,7 @@
             >
             <button
               class="absolute right-1 w-10 h-10 bg-blue-600 text-white rounded-md flex items-center justify-center text-xl active:bg-blue-800 transition-colors shadow-sm"
+              :aria-label="$t('common.confirm')"
               @click="submitSpelling"
             >
               ➜

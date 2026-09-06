@@ -344,6 +344,8 @@
     },
     "wordsDiscovered": "発見した言葉",
     "wordsMastered": "マスターした言葉",
+    "prevArea": "前のエリア",
+    "nextArea": "次のエリア",
     "title": "メニュー",
     "pressEsc": "ESCキーまたは戻るボタンでメインメニューに戻る",
     "globalProgress": "全体の進捗",
