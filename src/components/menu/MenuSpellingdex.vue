@@ -7,6 +7,7 @@
       <button
         class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
         :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -1 }"
+        :aria-label="$t('common.back')"
         @click="prevArea"
       >
         ⬅️
@@ -22,6 +23,7 @@
       <button
         class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
         :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -2 }"
+        :aria-label="$t('common.continue')"
         @click="nextArea"
       >
         ➡️
