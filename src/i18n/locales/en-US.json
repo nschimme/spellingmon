@@ -343,6 +343,8 @@
     },
     "wordsDiscovered": "Words Discovered",
     "wordsMastered": "Words Mastered",
+    "prevArea": "Previous Area",
+    "nextArea": "Next Area",
     "title": "Menu",
     "pressEsc": "Press ESC or Back Button to return to Main Menu",
     "globalProgress": "Global Progress",

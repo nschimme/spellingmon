@@ -225,6 +225,8 @@
     },
     "wordsDiscovered": "Слов встречено",
     "wordsMastered": "Слов выучено",
+    "prevArea": "Предыдущая область",
+    "nextArea": "Следующая область",
     "title": "Меню",
     "pressEsc": "ESC или Главное меню",
     "globalProgress": "Весь прогресс",

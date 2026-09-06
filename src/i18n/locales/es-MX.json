@@ -339,6 +339,8 @@
     },
     "wordsDiscovered": "Palabras vistas",
     "wordsMastered": "Palabras dominadas",
+    "prevArea": "Área anterior",
+    "nextArea": "Siguiente área",
     "title": "Menú",
     "pressEsc": "ESC o Volver al Menú Principal",
     "globalProgress": "Progreso Global",

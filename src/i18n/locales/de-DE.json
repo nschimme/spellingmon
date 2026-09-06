@@ -339,6 +339,8 @@
     },
     "wordsDiscovered": "Wörter entdeckt",
     "wordsMastered": "Wörter gemeistert",
+    "prevArea": "Vorheriges Gebiet",
+    "nextArea": "Nächstes Gebiet",
     "title": "Menü",
     "pressEsc": "ESC oder Zurück zum Hauptmenü",
     "globalProgress": "Gesamtfortschritt",
