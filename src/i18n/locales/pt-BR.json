@@ -51,7 +51,14 @@
     "newTrainer": "Novo Treinador",
     "whatsYourName": "Qual o seu nome?",
     "boyGirl": "Você é um menino ou uma menina?",
-    "skinToneLabel": "Tom de pele"
+    "skinToneLabel": "Tom de pele",
+    "skinTones": {
+      "pale": "Pálido",
+      "fair": "Claro",
+      "neutral": "Neutro",
+      "tan": "Moreno",
+      "dark": "Escuro"
+    }
   },
   "starter": {
     "title": "Escolha seu parceiro",

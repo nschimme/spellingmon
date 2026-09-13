@@ -51,7 +51,14 @@
     "newTrainer": "Новый тренер",
     "whatsYourName": "Как тебя зовут?",
     "boyGirl": "Ты мальчик или девочка?",
-    "skinToneLabel": "Цвет кожи"
+    "skinToneLabel": "Тон кожи",
+    "skinTones": {
+      "pale": "Бледный",
+      "fair": "Светлый",
+      "neutral": "Нейтральный",
+      "tan": "Загорелый",
+      "dark": "Темный"
+    }
   },
   "starter": {
     "title": "Выбери напарника",

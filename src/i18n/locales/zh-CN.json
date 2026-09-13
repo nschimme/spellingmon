@@ -51,7 +51,14 @@
     "newTrainer": "新训练家",
     "whatsYourName": "你叫什么名字？",
     "boyGirl": "你是男孩还是女孩？",
-    "skinToneLabel": "肤色"
+    "skinToneLabel": "肤色",
+    "skinTones": {
+      "pale": "苍白",
+      "fair": "浅色",
+      "neutral": "自然",
+      "tan": "古铜",
+      "dark": "深色"
+    }
   },
   "starter": {
     "title": "选择伙伴",

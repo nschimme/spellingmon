@@ -59,7 +59,14 @@
     "newTrainer": "New Trainer",
     "whatsYourName": "What's your name?",
     "boyGirl": "Are you a boy or a girl?",
-    "skinToneLabel": "Skin Tone"
+    "skinToneLabel": "Skin Tone",
+    "skinTones": {
+      "pale": "Pale",
+      "fair": "Fair",
+      "neutral": "Neutral",
+      "tan": "Tan",
+      "dark": "Dark"
+    }
   },
   "starter": {
     "title": "Choose your partner",
