@@ -51,7 +51,14 @@
     "newTrainer": "Nouveau Dresseur",
     "whatsYourName": "Quel est ton nom ?",
     "boyGirl": "Es-tu un garçon ou une fille ?",
-    "skinToneLabel": "Teint"
+    "skinToneLabel": "Teint de peau",
+    "skinTones": {
+      "pale": "Pâle",
+      "fair": "Clair",
+      "neutral": "Neutre",
+      "tan": "Hâlé",
+      "dark": "Foncé"
+    }
   },
   "starter": {
     "title": "Choisis ton partenaire",

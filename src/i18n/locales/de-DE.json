@@ -51,7 +51,14 @@
     "newTrainer": "Neuer Trainer",
     "whatsYourName": "Wie heißt du?",
     "boyGirl": "Bist du ein Junge oder ein Mädchen?",
-    "skinToneLabel": "Hautton"
+    "skinToneLabel": "Hautton",
+    "skinTones": {
+      "pale": "Blass",
+      "fair": "Hell",
+      "neutral": "Neutral",
+      "tan": "Bräunlich",
+      "dark": "Dunkel"
+    }
   },
   "starter": {
     "title": "Wähle deinen Partner",

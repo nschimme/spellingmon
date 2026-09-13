@@ -86,7 +86,7 @@
               :key="tone.id"
               :ref="el => setItemRef(el, 3 + i)"
               :style="{ backgroundColor: tone.color }"
-              :aria-label="`${$t('character.skinToneLabel')} ${i + 1}`"
+              :aria-label="`${$t('character.skinToneLabel')}: ${$t(`character.skinTones.${tone.nameKey}`)}`"
               :aria-pressed="skinTone === tone.id"
               :class="[
                 skinTone === tone.id ? 'border-blue-500 scale-110' : 'border-gray-800',
@@ -137,11 +137,11 @@ const setItemRef = (el: Element | ComponentPublicInstance | null, index: number)
 };
 
 const skinTones = [
-  { id: SKIN_TONES.PALE, color: '#f9ebde' },
-  { id: SKIN_TONES.FAIR, color: '#f3d9c1' },
-  { id: SKIN_TONES.NEUTRAL, color: '#e4b590' },
-  { id: SKIN_TONES.TAN, color: '#a6734c' },
-  { id: SKIN_TONES.DARK, color: '#6b4226' },
+  { id: SKIN_TONES.PALE, nameKey: 'pale', color: '#f9ebde' },
+  { id: SKIN_TONES.FAIR, nameKey: 'fair', color: '#f3d9c1' },
+  { id: SKIN_TONES.NEUTRAL, nameKey: 'neutral', color: '#e4b590' },
+  { id: SKIN_TONES.TAN, nameKey: 'tan', color: '#a6734c' },
+  { id: SKIN_TONES.DARK, nameKey: 'dark', color: '#6b4226' },
 ];
 
 const handleConfirm = () => {

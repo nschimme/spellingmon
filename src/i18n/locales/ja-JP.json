@@ -59,7 +59,14 @@
     "newTrainer": "新しいトレーナー",
     "whatsYourName": "君の名前は？",
     "boyGirl": "男の子？それとも女の子？",
-    "skinToneLabel": "肌のトーン"
+    "skinToneLabel": "肌のトーン",
+    "skinTones": {
+      "pale": "色白",
+      "fair": "普通",
+      "neutral": "ナチュラル",
+      "tan": "小麦色",
+      "dark": "褐色"
+    }
   },
   "starter": {
     "title": "パートナーを選ぶ",
