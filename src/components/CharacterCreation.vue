@@ -7,8 +7,14 @@
 
       <div class="space-y-6">
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.whatsYourName') }}</label>
+          <label
+            for="player-name"
+            class="block text-[10px] font-bold mb-2 uppercase"
+          >
+            {{ $t('character.whatsYourName') }}
+          </label>
           <input
+            id="player-name"
             :ref="el => setItemRef(el, 0)"
             v-model="name"
             type="text"
@@ -25,10 +31,20 @@
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.boyGirl') }}</label>
-          <div class="flex gap-4">
+          <label
+            id="gender-label"
+            class="block text-[10px] font-bold mb-2 uppercase"
+          >
+            {{ $t('character.boyGirl') }}
+          </label>
+          <div
+            class="flex gap-4"
+            role="group"
+            aria-labelledby="gender-label"
+          >
             <button
               :ref="el => setItemRef(el, 1)"
+              :aria-pressed="gender === GENDERS.BOY"
               :class="[
                 gender === GENDERS.BOY ? 'bg-blue-500 text-white border-blue-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 1 ? 'ring-8 ring-yellow-400' : ''
@@ -40,6 +56,7 @@
             </button>
             <button
               :ref="el => setItemRef(el, 2)"
+              :aria-pressed="gender === GENDERS.GIRL"
               :class="[
                 gender === GENDERS.GIRL ? 'bg-pink-500 text-white border-pink-700' : 'bg-gray-100 text-gray-400 border-gray-300',
                 selectedIndex === 2 ? 'ring-8 ring-yellow-400' : ''
@@ -53,13 +70,24 @@
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold mb-2 uppercase">{{ $t('character.skinToneLabel') }}</label>
-          <div class="flex justify-between gap-2">
+          <label
+            id="skintone-label"
+            class="block text-[10px] font-bold mb-2 uppercase"
+          >
+            {{ $t('character.skinToneLabel') }}
+          </label>
+          <div
+            class="flex justify-between gap-2"
+            role="group"
+            aria-labelledby="skintone-label"
+          >
             <button
               v-for="(tone, i) in skinTones"
               :key="tone.id"
               :ref="el => setItemRef(el, 3 + i)"
               :style="{ backgroundColor: tone.color }"
+              :aria-label="`${$t('character.skinToneLabel')} ${i + 1}`"
+              :aria-pressed="skinTone === tone.id"
               :class="[
                 skinTone === tone.id ? 'border-blue-500 scale-110' : 'border-gray-800',
                 selectedIndex === (3 + i) ? 'ring-8 ring-yellow-400 border-yellow-400' : ''
@@ -73,6 +101,7 @@
         <button
           :ref="el => setItemRef(el, 8)"
           :disabled="!name"
+          :aria-disabled="!name"
           :class="[
             selectedIndex === 8 ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105' : '',
             !name ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600'
