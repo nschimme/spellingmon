@@ -5,9 +5,10 @@
       class="flex items-center gap-4 bg-white border-4 border-gray-800 p-4 rounded-2xl shadow-md sticky top-0 z-10"
     >
       <button
-        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
         :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -1 }"
         :aria-label="$t('menu.prevArea')"
+        :disabled="currentArea <= 1"
         @click="prevArea"
       >
         ⬅️
@@ -21,9 +22,10 @@
         </h3>
       </div>
       <button
-        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl"
+        class="text-2xl hover:scale-110 transition-transform p-2 bg-gray-100 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
         :class="{ 'ring-4 ring-yellow-400 bg-yellow-100': selectedIndex === -2 }"
         :aria-label="$t('menu.nextArea')"
+        :disabled="currentArea >= 9"
         @click="nextArea"
       >
         ➡️

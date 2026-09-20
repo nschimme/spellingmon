@@ -21,7 +21,7 @@
       <button
         id="dialog-next-button"
         class="absolute bottom-2 right-4 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 border-2 border-gray-800 rounded-full transition-transform active:scale-95"
-        aria-label="Next"
+        :aria-label="isLastLine ? $t('common.confirm') : $t('common.continue')"
         @click.stop="handleConfirm"
       >
         <span class="text-gray-800 text-lg font-black animate-pulse">
