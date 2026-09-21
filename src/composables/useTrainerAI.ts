@@ -106,15 +106,8 @@ export function useTrainerAI(
       const dist = Math.max(Math.abs(dx), Math.abs(dy)) - 1;
 
       for (let s = 0; s < dist; s++) {
-        const oldX = trainer.x;
-        const oldY = trainer.y;
         trainer.x += stepX;
         trainer.y += stepY;
-
-        if (currentMapData.value) {
-          currentMapData.value.map[oldY][oldX] = TILE_TYPES.PATH;
-          currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.TRAINER;
-        }
 
         await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
       }
@@ -179,12 +172,7 @@ export function useTrainerAI(
   const startTrainerFleeing = (trainer: any, trainerId: string, fleeingList?: Ref<any[]>) => {
     const targetList = fleeingList || fleeingTrainers;
 
-    // 1. Remove from map tile occupancy so player can walk there immediately
-    if (currentMapData.value) {
-       currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.PATH;
-    }
-
-    // 2. Add to fleeing list for pulse-driven rendering
+    // 1. Add to fleeing list for pulse-driven rendering (defeated status in session already frees tile occupancy)
     const path = findFleePath(trainer.x, trainer.y);
     const fleeingTrainer = {
       ...trainer,

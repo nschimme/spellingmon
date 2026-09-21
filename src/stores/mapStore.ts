@@ -210,11 +210,22 @@ export const useMapStore = defineStore('map', () => {
     if (!currentMapData.value) return 2; // WALL
     const interiorId = session.player.currentInterior;
     if (interiorId && currentMapData.value.interiors?.[interiorId]) {
-      const intMap = currentMapData.value.interiors[interiorId].map;
+      const interior = currentMapData.value.interiors[interiorId];
+      const intMap = interior.map;
       if (y < 0 || y >= intMap.length || x < 0 || x >= intMap[0].length) return 2;
+      const npcAt = interior.npcs?.find(n => n.x === x && n.y === y);
+      if (npcAt) return TILE_TYPES.NPC;
       return intMap[y][x];
     }
     if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) return 2;
+    const trainerAt = currentMapData.value.trainers?.find(t => t.x === x && t.y === y);
+    if (trainerAt) {
+      const index = currentMapData.value.trainers.indexOf(trainerAt);
+      const trainerId = trainerAt.trainerId || `area${session.player.currentArea}_${index}`;
+      if (!(session.player.defeatedTrainers || []).includes(trainerId)) {
+        return TILE_TYPES.TRAINER;
+      }
+    }
     return currentMapData.value.map[y][x];
   };
 

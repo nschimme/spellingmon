@@ -13,8 +13,10 @@ describe('Rival Placement', () => {
     expect(rival.party[0].species).toBe(SPECIES.Bulbaword);
     expect(rival.party[0].level).toBe(5);
 
-    // Verify trainer tile is on map
-    expect(result.map[rival.y][rival.x]).toBe(TILE_TYPES.TRAINER);
+    // Verify trainer position is set on trainers list and underlying path is preserved
+    expect(rival.x).toBeGreaterThan(0);
+    expect(rival.y).toBeGreaterThan(0);
+    expect([TILE_TYPES.PATH, TILE_TYPES.EMPTY]).toContain(result.map[rival.y][rival.x]);
   });
 
   it('does not place Rival in other areas', () => {
