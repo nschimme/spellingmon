@@ -627,16 +627,67 @@ const triggerGymBossBattle = async (npc: any) => {
   });
 };
 
+const isPathToExitsOpen = (npcId: string, testX: number, testY: number) => {
+  const interior = currentInteriorData.value;
+  if (!interior || !interior.exits || interior.exits.length === 0) return true;
+
+  const intMap = interior.map;
+  const h = intMap.length;
+  const w = intMap[0].length;
+  const walkableTypes = [
+    TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.CARPET, TILE_TYPES.SPELL_CENTER,
+    TILE_TYPES.DOOR, TILE_TYPES.STAIRS_UP, TILE_TYPES.STAIRS_DOWN, TILE_TYPES.BED
+  ];
+
+  const isBlocked = (x: number, y: number) => {
+    if (x < 0 || x >= w || y < 0 || y >= h) return true;
+    if (!walkableTypes.includes(intMap[y][x])) return true;
+    if (x === testX && y === testY) return true;
+    return interior.npcs.some(other => other.id !== npcId && other.x === x && other.y === y);
+  };
+
+  for (const exit of interior.exits) {
+    if (playerX.value === exit.x && playerY.value === exit.y) continue;
+    const queue: [number, number][] = [[playerX.value, playerY.value]];
+    const visited = new Set([`${playerX.value},${playerY.value}`]);
+    let reached = false;
+
+    while (queue.length > 0) {
+      const [cx, cy] = queue.shift()!;
+      if (cx === exit.x && cy === exit.y) {
+        reached = true;
+        break;
+      }
+      const neighbors = [[cx + 1, cy], [cx - 1, cy], [cx, cy + 1], [cx, cy - 1]];
+      for (const [nx, ny] of neighbors) {
+        const key = `${nx},${ny}`;
+        if (!visited.has(key)) {
+          visited.add(key);
+          if ((nx === exit.x && ny === exit.y) || !isBlocked(nx, ny)) {
+            queue.push([nx, ny]);
+          }
+        }
+      }
+    }
+
+    if (!reached) return false;
+  }
+
+  return true;
+};
+
 const handleWanderingNPCs = () => {
   const interior = currentInteriorData.value;
   if (!interior?.npcs) return;
 
+  const stationaryTypes = [NPC_TYPES.HEALER, NPC_TYPES.GYM_BOSS, NPC_TYPES.TEAM_STORM];
   const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.CARPET];
   const intMap = interior.map;
   const h = intMap.length;
   const w = intMap[0].length;
 
   interior.npcs.forEach((npc: any) => {
+    if (stationaryTypes.includes(npc.type)) return;
     if (Math.random() > 0.25) return;
 
     const directions = [
@@ -650,10 +701,16 @@ const handleWanderingNPCs = () => {
     if (!walkable.includes(intMap[targetY][targetX])) return;
     if (playerX.value === targetX && playerY.value === targetY) return;
 
+    // Do not wander onto exit tiles
+    if (interior.exits?.some((e: any) => e.x === targetX && e.y === targetY)) return;
+
     const occupiedByNPC = interior.npcs.some(
       (other: any) => other.id !== npc.id && other.x === targetX && other.y === targetY
     );
     if (occupiedByNPC) return;
+
+    // Softlock check: verify player can still reach all exits if NPC moves to targetX, targetY
+    if (!isPathToExitsOpen(npc.id, targetX, targetY)) return;
 
     npc.x = targetX;
     npc.y = targetY;

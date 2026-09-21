@@ -292,13 +292,12 @@ export class MapGenerator {
           trainerId: 'rival_1',
           isRival: true
         } as any);
-        map[ry][rx] = TILE_TYPES.TRAINER;
         occupied.push({ x: rx, y: ry });
       }
     }
 
     // 4. Features
-    this.addFeatures(map, biome);
+    this.addFeatures(map, biome, trainers);
 
     // 4.5 Ensure key elements are preserved and accessible
     if (spellCenter) {
@@ -415,15 +414,6 @@ export class MapGenerator {
         { x: 5, y: 7, target: INTERIORS.WORLD, targetPos: { x: 0, y: 0 } }
       ]
     };
-
-    // Ensure NPC tiles are marked as NPC on the interior maps
-    Object.values(interiors).forEach(interior => {
-      interior.npcs.forEach(npc => {
-        if (interior.map[npc.y] && interior.map[npc.y][npc.x] !== undefined) {
-           interior.map[npc.y][npc.x] = TILE_TYPES.NPC;
-        }
-      });
-    });
 
     return interiors;
   }
@@ -554,7 +544,6 @@ export class MapGenerator {
 
       const isOccupied = occupied.some(o => Math.abs(o!.x - x) < 3 && Math.abs(o!.y - y) < 3) || map[y][x] !== TILE_TYPES.PATH;
       if (!isOccupied) {
-        map[y][x] = TILE_TYPES.TRAINER;
         occupied.push({ x, y });
 
         const titleKey = TRAINER_DATA.titles[this.randomRange(0, TRAINER_DATA.titles.length - 1)];
@@ -599,7 +588,7 @@ export class MapGenerator {
     return trainers;
   }
 
-  addFeatures(map: number[][], biome: string): void {
+  addFeatures(map: number[][], biome: string, trainers: Trainer[] = []): void {
     const grassChance = biome === BIOMES.FOREST ? 0.2 : (biome === BIOMES.CAVE ? 0.025 : 0.07);
     const waterChance = biome === BIOMES.WILDERNESS ? 0.02 : 0.005;
 
@@ -608,6 +597,7 @@ export class MapGenerator {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (protectedTiles.includes(map[y][x])) continue;
+        if (trainers.some(t => t.x === x && t.y === y)) continue;
 
         if (map[y][x] === TILE_TYPES.WALL) {
           if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3, [TILE_TYPES.WALL]);

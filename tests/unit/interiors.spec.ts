@@ -16,12 +16,13 @@ describe('Interior and NPC System', () => {
     expect(interiors).toHaveProperty('gym');
   });
 
-  it('marks NPC tiles correctly on interior maps', () => {
+  it('defines NPCs correctly on interior maps', () => {
     const interiors = gen.generateInteriors(1);
     const home1f = interiors['home_1f'];
     const mom = home1f.npcs.find(n => n.id === 'mom');
     expect(mom).toBeDefined();
-    expect(home1f.map[mom!.y][mom!.x]).toBe(TILE_TYPES.NPC);
+    expect(mom!.x).toBeGreaterThan(0);
+    expect(mom!.y).toBeGreaterThan(0);
   });
 
   it('includes interiors in the full map result', () => {
