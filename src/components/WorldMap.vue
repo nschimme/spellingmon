@@ -543,6 +543,7 @@ const handleTransition = (exit: any) => {
         session.player.currentInterior = exit.target;
       }
       session.updatePlayerPosition(exit.targetPos);
+      session.advancePulse(ACTION_COSTS.TRANSITION);
     }
   });
 };
@@ -670,8 +671,10 @@ onMounted(async () => {
     updateDiscovery(playerX.value, playerY.value);
   }
 
-  unsubscribePulse = session.subscribePulse(() => {
-    handleWanderingNPCs();
+  unsubscribePulse = session.subscribePulse((_pulse: number, cost: number) => {
+    for (let c = 0; c < cost; c++) {
+      handleWanderingNPCs();
+    }
   });
 
   inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput);

@@ -20,7 +20,6 @@ export interface PlayerState {
   mapSeed: string | null;
   characterCreationComplete: boolean;
   isStarterSelected: boolean;
-  steps: number;
   pulse: number;
 }
 
@@ -110,12 +109,12 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
     point.y < 0 ||
     point.y >= MAP_HEIGHT;
 
-  // Ensure player lists and counters are valid
+  // Ensure player lists and pulse counter are valid
   if (!player.badges) player.badges = [];
   if (!player.unlockedAreas) player.unlockedAreas = [1];
   if (!player.defeatedTrainers) player.defeatedTrainers = [];
-  if (player.steps === undefined) player.steps = 0;
-  if (player.pulse === undefined) player.pulse = player.steps || 0;
+  if (player.pulse === undefined) player.pulse = (player as any).steps || 0;
+  delete (player as any).steps;
 
   // Ensure position is valid or reset to lastSpellCenter/default
   if (isOutOfBounds(player.position)) {
@@ -266,7 +265,6 @@ export const useSessionStore = defineStore('session', {
       mapSeed: null,
       characterCreationComplete: false,
       isStarterSelected: false,
-      steps: 0,
       pulse: 0,
     },
 
@@ -407,7 +405,6 @@ export const useSessionStore = defineStore('session', {
         mapSeed: Math.random().toString(36).slice(2, 11),
         characterCreationComplete: false,
         isStarterSelected: false,
-        steps: 0,
         pulse: 0,
       };
       this.resetBattle();
@@ -440,9 +437,6 @@ export const useSessionStore = defineStore('session', {
     },
 
     updatePlayerPosition(pos: { x: number; y: number } | null) {
-      if (this.player.position && pos && (this.player.position.x !== pos.x || this.player.position.y !== pos.y)) {
-         this.player.steps++;
-      }
       this.player.position = pos;
     },
 
