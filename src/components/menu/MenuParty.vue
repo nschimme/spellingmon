@@ -31,10 +31,10 @@
               <div
                 v-for="t in mon.types"
                 :key="t"
-                :class="TYPE_COLORS[t]"
+                :class="TYPE_COLORS[t as keyof typeof TYPE_COLORS]"
                 class="flex items-center justify-center rounded-lg border-2 border-gray-800 p-1 text-[8px] shadow-sm"
               >
-                {{ TYPE_EMOJIS[t] }}
+                {{ TYPE_EMOJIS[t as keyof typeof TYPE_EMOJIS] }}
               </div>
             </div>
           </div>

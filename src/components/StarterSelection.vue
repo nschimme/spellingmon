@@ -63,15 +63,15 @@
 import { useSessionStore } from '../stores/sessionStore';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import { createMon, SPECIES } from '../utils/gameData';
-import { INPUT_PRIORITIES } from '../utils/constants';
+import { INPUT_PRIORITIES, MONSTER_TYPES } from '../utils/constants';
 
 const session = useSessionStore();
 const emit = defineEmits(['complete']);
 
 const starters = [
-  { species: SPECIES.Grammander, type: 'Fire', icon: '🔥', hp: 20 },
-  { species: SPECIES.Squirtspell, type: 'Water', icon: '💧', hp: 21 },
-  { species: SPECIES.Bulbaword, type: 'Grass', icon: '🌿', hp: 21 }
+  { species: SPECIES.Grammander, type: MONSTER_TYPES.FIRE, icon: '🔥', hp: 20 },
+  { species: SPECIES.Squirtspell, type: MONSTER_TYPES.WATER, icon: '💧', hp: 21 },
+  { species: SPECIES.Bulbaword, type: MONSTER_TYPES.GRASS, icon: '🌿', hp: 21 }
 ];
 
 const selectStarter = (mon: any) => {
@@ -90,18 +90,18 @@ const { selectedIndex } = useKeyboardNavigation({
 
 const typeColor = (type: string) => {
   switch (type) {
-    case 'Fire': return 'bg-red-500';
-    case 'Water': return 'bg-blue-500';
-    case 'Grass': return 'bg-green-500';
+    case MONSTER_TYPES.FIRE: return 'bg-red-500';
+    case MONSTER_TYPES.WATER: return 'bg-blue-500';
+    case MONSTER_TYPES.GRASS: return 'bg-green-500';
     default: return 'bg-gray-500';
   }
 };
 
 const typeBgColor = (type: string) => {
   switch (type) {
-    case 'Fire': return 'bg-red-500';
-    case 'Water': return 'bg-blue-500';
-    case 'Grass': return 'bg-green-500';
+    case MONSTER_TYPES.FIRE: return 'bg-red-500';
+    case MONSTER_TYPES.WATER: return 'bg-blue-500';
+    case MONSTER_TYPES.GRASS: return 'bg-green-500';
     default: return 'bg-gray-500';
   }
 };

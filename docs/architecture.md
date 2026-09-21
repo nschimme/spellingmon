@@ -4,14 +4,14 @@ This project uses a **Separation of Concerns** architecture driven by a **Hierar
 
 ## Core Pillars
 
-### 1. The Brain: HFSM (`src/stores/gameFSM.js`)
+### 1. The Brain: HFSM (`src/stores/gameFSM.ts`)
 - All business logic, flow control, and side effects (audio, timers, vocab loading) live here.
-- The FSM is reactive and uses the lightweight engine in `src/utils/fsm.js`.
+- The FSM is reactive and uses the lightweight engine in `src/utils/fsm.ts`.
 - **States** define what mode the game is in (e.g., `PLAY.WORLD`, `PLAY.BATTLE.SPELLING`).
 - **Transitions** are the only way to change states, ensuring side effects are handled predictably.
 - **Events** are sent to the machine via `fsm.send(GAME_EVENTS.XYZ)`.
 
-### 2. The Body: Session Store (`src/stores/sessionStore.js`)
+### 2. The Body: Session Store (`src/stores/sessionStore.ts`)
 - Pure data storage for the current game session (Player stats, Party, Map discovery, Battle status).
 - Handles disk persistence (`localStorage`) into a unified JSON object per slot.
 - Does NOT contain business logic or flow control. It only provides mutation methods (e.g., `damageEnemy`, `updatePosition`).
@@ -54,9 +54,9 @@ ROOT
 
 ## Best Practices
 
-### Use Constants
-Always use `GAME_STATES` and `GAME_EVENTS` from `src/utils/constants.js`.
-```javascript
+### Use Enums
+Always use TypeScript string `enum`s (such as `GAME_STATES`, `GAME_EVENTS`, `STATUS_CONDITIONS`, `MONSTER_TYPES`, `MOVE_CATEGORIES`, `BATTLE_TYPES`) from `src/utils/constants.ts`.
+```typescript
 // Good
 fsm.send(GAME_EVENTS.ATTACK);
 if (fsm.matches(GAME_STATES.BATTLE_SPELLING)) { ... }
