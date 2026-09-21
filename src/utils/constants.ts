@@ -11,6 +11,14 @@ export const GAME_CONSTANTS = {
   MOBILE_MOVEMENT_REPEAT_MS: 150,
 };
 
+export const ACTION_COSTS = {
+  FREE: 0,
+  STANDARD: 1,
+  ROUGH_TERRAIN: 2,
+  INTERACTION: 1,
+  TRANSITION: 1,
+};
+
 export enum SOUND_EFFECTS {
   CLICK = 'click',
   HIT = 'hit',

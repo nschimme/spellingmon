@@ -20,7 +20,7 @@ export interface PlayerState {
   mapSeed: string | null;
   characterCreationComplete: boolean;
   isStarterSelected: boolean;
-  steps: number;
+  pulse: number;
 }
 
 export interface BattleState {
@@ -109,10 +109,12 @@ export function sanitizeSessionData(data: Partial<SessionStoreState>): Partial<S
     point.y < 0 ||
     point.y >= MAP_HEIGHT;
 
-  // Ensure player lists are valid arrays
+  // Ensure player lists and pulse counter are valid
   if (!player.badges) player.badges = [];
   if (!player.unlockedAreas) player.unlockedAreas = [1];
   if (!player.defeatedTrainers) player.defeatedTrainers = [];
+  if (player.pulse === undefined) player.pulse = (player as any).steps || 0;
+  delete (player as any).steps;
 
   // Ensure position is valid or reset to lastSpellCenter/default
   if (isOutOfBounds(player.position)) {
@@ -229,6 +231,8 @@ export function getSessionSnapshot(saved: any) {
   return processedData;
 }
 
+const pulseSubscribers = new Set<(pulse: number, cost: number) => void>();
+
 /**
  * Unified Session Store
  * Handles ALL persistent game data for the current active slot.
@@ -261,7 +265,7 @@ export const useSessionStore = defineStore('session', {
       mapSeed: null,
       characterCreationComplete: false,
       isStarterSelected: false,
-      steps: 0,
+      pulse: 0,
     },
 
     battle: {
@@ -401,7 +405,7 @@ export const useSessionStore = defineStore('session', {
         mapSeed: Math.random().toString(36).slice(2, 11),
         characterCreationComplete: false,
         isStarterSelected: false,
-        steps: 0,
+        pulse: 0,
       };
       this.resetBattle();
       this.dex = {
@@ -410,13 +414,29 @@ export const useSessionStore = defineStore('session', {
       };
     },
 
-    updatePlayerPosition(pos: { x: number; y: number } | null) {
-      if (this.player.position && pos && (this.player.position.x !== pos.x || this.player.position.y !== pos.y)) {
-         this.player.steps++;
-         if (this.player.steps % 4 === 0) {
-            this.applyOverworldDamage();
-         }
+    subscribePulse(callback: (pulse: number, cost: number) => void) {
+      pulseSubscribers.add(callback);
+      return () => {
+        pulseSubscribers.delete(callback);
+      };
+    },
+
+    advancePulse(cost: number) {
+      if (cost <= 0) return;
+
+      const oldPulse = this.player.pulse;
+      this.player.pulse += cost;
+
+      // Check overworld poison damage (every 4 pulses)
+      if (Math.floor(this.player.pulse / 4) > Math.floor(oldPulse / 4)) {
+        this.applyOverworldDamage();
       }
+
+      // Notify active pulse subscribers
+      pulseSubscribers.forEach(cb => cb(this.player.pulse, cost));
+    },
+
+    updatePlayerPosition(pos: { x: number; y: number } | null) {
       this.player.position = pos;
     },
 
