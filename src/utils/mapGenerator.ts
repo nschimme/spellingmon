@@ -600,28 +600,29 @@ export class MapGenerator {
         if (trainers.some(t => t.x === x && t.y === y)) continue;
 
         if (map[y][x] === TILE_TYPES.WALL) {
-          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3, [TILE_TYPES.WALL]);
+          if (this.random() < waterChance) this.floodFill(map, x, y, TILE_TYPES.WATER, 3, [TILE_TYPES.WALL], trainers);
         } else if (map[y][x] === TILE_TYPES.PATH || map[y][x] === TILE_TYPES.EMPTY) {
           if (this.random() < grassChance) {
              // Grass can only overwrite Path or Empty, never Water, Transitions or SpellCenters
-             this.floodFill(map, x, y, TILE_TYPES.GRASS, this.randomRange(2, 5), [TILE_TYPES.PATH, TILE_TYPES.EMPTY]);
+             this.floodFill(map, x, y, TILE_TYPES.GRASS, this.randomRange(2, 5), [TILE_TYPES.PATH, TILE_TYPES.EMPTY], trainers);
           }
         }
       }
     }
   }
 
-  floodFill(map: number[][], x: number, y: number, type: number, size: number, allowedOverwrites: number[] | null = null): void {
+  floodFill(map: number[][], x: number, y: number, type: number, size: number, allowedOverwrites: number[] | null = null, protectedCoords: Point[] = []): void {
     if (size <= 0 || x < 0 || y < 0 || x >= this.width || y >= this.height) return;
 
     if (allowedOverwrites && !allowedOverwrites.includes(map[y][x])) return;
+    if (protectedCoords.some(p => p.x === x && p.y === y)) return;
 
     map[y][x] = type;
     const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
     // Branch out in random directions to create more natural patches
     for (const [dx, dy] of dirs) {
       if (this.random() > 0.5) {
-        this.floodFill(map, x + dx, y + dy, type, size - 1, allowedOverwrites);
+        this.floodFill(map, x + dx, y + dy, type, size - 1, allowedOverwrites, protectedCoords);
       }
     }
   }

@@ -680,6 +680,8 @@ const handleWanderingNPCs = () => {
   const interior = currentInteriorData.value;
   if (!interior?.npcs) return;
 
+  // Exclude fixed service/story NPCs (Healers, Gym Bosses, Team Storm) from wandering.
+  // Note: Non-service interior NPCs like Mom (NPC_TYPES.MOM) are intentionally allowed to wander around.
   const stationaryTypes = [NPC_TYPES.HEALER, NPC_TYPES.GYM_BOSS, NPC_TYPES.TEAM_STORM];
   const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.CARPET];
   const intMap = interior.map;
