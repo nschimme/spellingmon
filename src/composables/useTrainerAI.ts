@@ -15,6 +15,28 @@ export function useTrainerAI(
   getTrainerId: (trainer: any) => string
 ) {
   const alertingTrainer = ref<string | null>(null);
+  const fleeingTrainers = ref<any[]>([]);
+
+  // Turn-based pulse subscriber for fleeing trainers
+  if (session.subscribePulse) {
+    session.subscribePulse((_pulse: number, cost: number) => {
+      if (fleeingTrainers.value.length === 0) return;
+
+      for (let c = 0; c < cost; c++) {
+        fleeingTrainers.value.forEach((ft) => {
+          if (ft.path && ft.path.length > 0) {
+            const step = ft.path.shift();
+            ft.x = step.x;
+            ft.y = step.y;
+            ft.direction = step.dir;
+          } else {
+            ft.opacity = 0;
+          }
+        });
+      }
+      fleeingTrainers.value = fleeingTrainers.value.filter(ft => ft.opacity > 0);
+    });
+  }
 
   const checkTrainerLOS = (engagedTrainers: Set<string>): { trainer: Trainer; trainerId: string } | null => {
     const isWorld = fsm.matches(GAME_STATES.WORLD) || fsm.matches(GAME_STATES.MOVING);
@@ -151,44 +173,33 @@ export function useTrainerAI(
     return [];
   };
 
-  const startTrainerFleeing = async (trainer: any, trainerId: string, fleeingList: Ref<any[]>) => {
+  const startTrainerFleeing = (trainer: any, trainerId: string, fleeingList?: Ref<any[]>) => {
+    const targetList = fleeingList || fleeingTrainers;
+
     // 1. Remove from map tile occupancy so player can walk there immediately
     if (currentMapData.value) {
        currentMapData.value.map[trainer.y][trainer.x] = TILE_TYPES.PATH;
     }
 
-    // 2. Add to fleeing list for independent rendering
+    // 2. Add to fleeing list for pulse-driven rendering
+    const path = findFleePath(trainer.x, trainer.y);
     const fleeingTrainer = {
       ...trainer,
       trainerId,
+      path: [...path],
       opacity: 1
     };
-    fleeingList.value.push(fleeingTrainer);
 
-    // 3. Follow path
-    const path = findFleePath(trainer.x, trainer.y);
     if (path.length === 0) {
-      // Fallback: just fade out
       fleeingTrainer.opacity = 0;
     } else {
-      for (const step of path) {
-        fleeingTrainer.x = step.x;
-        fleeingTrainer.y = step.y;
-        fleeingTrainer.direction = step.dir;
-        await new Promise(r => setTimeout(r, GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS));
-      }
-      fleeingTrainer.opacity = 0;
+      targetList.value.push(fleeingTrainer);
     }
-
-    // 4. Cleanup
-    setTimeout(() => {
-      const idx = fleeingList.value.indexOf(fleeingTrainer);
-      if (idx !== -1) fleeingList.value.splice(idx, 1);
-    }, 1000);
   };
 
   return {
     alertingTrainer,
+    fleeingTrainers,
     checkTrainerLOS,
     initiateTrainerApproach,
     startTrainerFleeing

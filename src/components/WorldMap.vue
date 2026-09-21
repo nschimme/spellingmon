@@ -112,7 +112,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useInputStore } from '../stores/inputStore';
 import { audio } from '../utils/audio';
 import { createMon } from '../utils/gameData';
-import { GAME_CONSTANTS, ANIMATION_DURATIONS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS } from '../utils/constants';
+import { GAME_CONSTANTS, ANIMATION_DURATIONS, SOUND_EFFECTS, BATTLE_TYPES, GENDERS, SKIN_TONES, INPUT_CONTEXTS, TRANSITION_TYPES, GAME_EVENTS, GAME_STATES, NPC_TYPES, INTERIORS, ACTION_COSTS } from '../utils/constants';
 import { TILE_TYPES } from '../utils/mapGenerator';
 
 import { useMapManager } from '../composables/useMapManager';
@@ -131,7 +131,6 @@ const vocabStore = useVocabStore();
 const settingsStore = useSettingsStore();
 const inputStore = useInputStore();
 const engagedTrainers = new Set<string>();
-const fleeingTrainers = ref<any[]>([]);
 
 // VIEWPORT_SIZE is set to 33 to provide a sufficient off-screen tile rendering buffer
 // horizontally and vertically. On desktop screens up to 1024px wide, a smaller viewport (like 27)
@@ -179,7 +178,7 @@ const currentInteriorData = computed(() => {
   return currentMapData.value.interiors[session.player.currentInterior];
 });
 
-const { alertingTrainer, checkTrainerLOS, initiateTrainerApproach, startTrainerFleeing } = useTrainerAI(
+const { alertingTrainer, fleeingTrainers, checkTrainerLOS, initiateTrainerApproach, startTrainerFleeing } = useTrainerAI(
   session, fsm, currentMapData, playerX, playerY, getTileType, getTrainerId
 );
 
@@ -235,15 +234,21 @@ const handleInput = (e: any) => {
 
   if (!walkable.includes(targetTile)) return false;
 
+  const actionCost = targetTile === TILE_TYPES.GRASS ? ACTION_COSTS.ROUGH_TERRAIN : ACTION_COSTS.STANDARD;
+
   fsm.send(GAME_EVENTS.CONFIRM, {
     moving: true,
     duration: GAME_CONSTANTS.MOBILE_MOVEMENT_REPEAT_MS,
     onComplete: () => {
+      // 1. Player position resolves first
       playerX.value = newX;
       playerY.value = newY;
       session.updatePlayerPosition({ x: newX, y: newY });
 
-      // 1. Check for Trainers FIRST
+      // 2. Advance pulse counter & notify pulse subscribers
+      session.advancePulse(actionCost);
+
+      // 3. Check for Trainers FIRST
       const triggeredTrainer = checkTrainerLOS(engagedTrainers);
       if (triggeredTrainer) {
         const { trainer, trainerId } = triggeredTrainer;
@@ -262,7 +267,7 @@ const handleInput = (e: any) => {
           isRival: trainer.isRival
         });
       } else {
-        // 2. Wild battle triggers
+        // 4. Wild battle triggers
         checkTriggers(newX, newY);
       }
 
@@ -344,7 +349,7 @@ watch(() => session.player.defeatedTrainers, (newList, oldList) => {
   newlyDefeated.forEach(id => {
     const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
     if (trainer) {
-      startTrainerFleeing(trainer, id, fleeingTrainers);
+      startTrainerFleeing(trainer, id);
     }
   });
 }, { deep: true });
@@ -360,7 +365,7 @@ watch(() => fsm.state as any, (newState, oldState) => {
     trainersToAnimate.forEach(id => {
        const trainer = currentMapData.value?.trainers.find(t => getTrainerId(t) === id);
        if (trainer) {
-         startTrainerFleeing(trainer, id, fleeingTrainers);
+         startTrainerFleeing(trainer, id);
        }
     });
   }
@@ -547,6 +552,8 @@ const handleNPCInteract = (npc: any) => {
   const dist = Math.abs(playerX.value - npc.x) + Math.abs(playerY.value - npc.y);
   if (dist > 1) return;
 
+  session.advancePulse(ACTION_COSTS.INTERACTION);
+
   if (npc.type === NPC_TYPES.HEALER || npc.type === NPC_TYPES.MOM) {
     session.healParty();
     audio.playSound(SOUND_EFFECTS.HEAL);
@@ -619,6 +626,40 @@ const triggerGymBossBattle = async (npc: any) => {
   });
 };
 
+const handleWanderingNPCs = () => {
+  if (!currentInteriorData.value?.npcs) return;
+
+  const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.CARPET];
+  const intMap = currentInteriorData.value.map;
+  const h = intMap.length;
+  const w = intMap[0].length;
+
+  currentInteriorData.value.npcs.forEach((npc: any) => {
+    if (Math.random() > 0.25) return;
+
+    const directions = [
+      [0, -1], [0, 1], [-1, 0], [1, 0]
+    ];
+    const [dx, dy] = directions[Math.floor(Math.random() * directions.length)];
+    const targetX = npc.x + dx;
+    const targetY = npc.y + dy;
+
+    if (targetX < 0 || targetX >= w || targetY < 0 || targetY >= h) return;
+    if (!walkable.includes(intMap[targetY][targetX])) return;
+    if (playerX.value === targetX && playerY.value === targetY) return;
+
+    const occupiedByNPC = currentInteriorData.value.npcs.some(
+      (other: any) => other.id !== npc.id && other.x === targetX && other.y === targetY
+    );
+    if (occupiedByNPC) return;
+
+    npc.x = targetX;
+    npc.y = targetY;
+  });
+};
+
+let unsubscribePulse: (() => void) | null = null;
+
 onMounted(async () => {
   if (session.player?.mapSeed) {
     if (!currentMapData.value) {
@@ -628,10 +669,15 @@ onMounted(async () => {
     updateDiscovery(playerX.value, playerY.value);
   }
 
+  unsubscribePulse = session.subscribePulse(() => {
+    handleWanderingNPCs();
+  });
+
   inputStore.addListener(INPUT_CONTEXTS.WORLD, handleInput);
 });
 
 onUnmounted(() => {
+  if (unsubscribePulse) unsubscribePulse();
   inputStore.removeListener(INPUT_CONTEXTS.WORLD);
 });
 </script>
