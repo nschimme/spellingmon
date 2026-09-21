@@ -224,8 +224,7 @@ export const MOVES: Record<string, Move> = {
   [MOVE_IDS.Wrap]: { id: MOVE_IDS.Wrap, name: "Wrap", type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 15, accuracy: 90 },
 
   [MOVE_IDS.TripleKick]: { id: MOVE_IDS.TripleKick, name: "TripleKick", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 10, accuracy: 90 },
-  [MOVE_IDS.Withdraw]: { id: MOVE_IDS.Withdraw, name: "Withdraw", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: MOVE_EFFECT_TYPES.STAT_UP, effectStat: "def", effectAmount: 1 },
-  [MOVE_IDS.StringShot]: { id: MOVE_IDS.StringShot, name: "StringShot", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 95, effectType: MOVE_EFFECT_TYPES.STAT_DOWN, effectStat: "spe", effectAmount: 2 }
+  [MOVE_IDS.Withdraw]: { id: MOVE_IDS.Withdraw, name: "Withdraw", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: MOVE_EFFECT_TYPES.STAT_UP, effectStat: "def", effectAmount: 1 }
 };
 
 
