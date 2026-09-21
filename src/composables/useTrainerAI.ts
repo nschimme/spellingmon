@@ -1,4 +1,4 @@
-import { ref, type Ref } from 'vue';
+import { ref, onScopeDispose, type Ref } from 'vue';
 import i18n from '../i18n';
 import { audio } from '../utils/audio';
 import { SOUND_EFFECTS, GAME_CONSTANTS, BATTLE_TYPES, GAME_STATES, GAME_EVENTS } from '../utils/constants';
@@ -19,7 +19,7 @@ export function useTrainerAI(
 
   // Turn-based pulse subscriber for fleeing trainers
   if (session.subscribePulse) {
-    session.subscribePulse((_pulse: number, cost: number) => {
+    const unsubscribe = session.subscribePulse((_pulse: number, cost: number) => {
       if (fleeingTrainers.value.length === 0) return;
 
       for (let c = 0; c < cost; c++) {
@@ -35,6 +35,9 @@ export function useTrainerAI(
         });
       }
       fleeingTrainers.value = fleeingTrainers.value.filter(ft => ft.opacity > 0);
+    });
+    onScopeDispose(() => {
+      unsubscribe();
     });
   }
 

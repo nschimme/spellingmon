@@ -627,14 +627,15 @@ const triggerGymBossBattle = async (npc: any) => {
 };
 
 const handleWanderingNPCs = () => {
-  if (!currentInteriorData.value?.npcs) return;
+  const interior = currentInteriorData.value;
+  if (!interior?.npcs) return;
 
   const walkable = [TILE_TYPES.PATH, TILE_TYPES.EMPTY, TILE_TYPES.CARPET];
-  const intMap = currentInteriorData.value.map;
+  const intMap = interior.map;
   const h = intMap.length;
   const w = intMap[0].length;
 
-  currentInteriorData.value.npcs.forEach((npc: any) => {
+  interior.npcs.forEach((npc: any) => {
     if (Math.random() > 0.25) return;
 
     const directions = [
@@ -648,7 +649,7 @@ const handleWanderingNPCs = () => {
     if (!walkable.includes(intMap[targetY][targetX])) return;
     if (playerX.value === targetX && playerY.value === targetY) return;
 
-    const occupiedByNPC = currentInteriorData.value.npcs.some(
+    const occupiedByNPC = interior.npcs.some(
       (other: any) => other.id !== npc.id && other.x === targetX && other.y === targetY
     );
     if (occupiedByNPC) return;
