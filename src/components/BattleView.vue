@@ -525,7 +525,7 @@ const getEffectiveness = (moveId: string) => {
 
   let mod = 1;
   session.battle.enemyMon.types.forEach(t => {
-    mod *= TYPE_CHART[move.type]?.[t] || 1;
+    mod *= (TYPE_CHART[move.type as keyof typeof TYPE_CHART] as Record<string, number>)?.[t] || 1;
   });
 
   if (mod > 1) return session.t('battle.effectiveness.super');

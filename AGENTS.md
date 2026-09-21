@@ -4,16 +4,16 @@ You are working on a game engine built with Vue 3, Pinia, and a custom HFSM. To 
 
 ## 1. Do Not Bypass the FSM
 - Never use local `ref` booleans for major state transitions (e.g., `isBattleOpen = true`).
-- Always define a state in `src/stores/gameFSM.js` and use `fsm.transition()` or `fsm.send()`.
+- Always define a state in `src/stores/gameFSM.ts` and use `fsm.transition()` or `fsm.send()`.
 - Use `fsm.matches(GAME_STATES.XYZ)` in components to determine visibility.
-- **Never use magic strings** for events or states; always use the `GAME_EVENTS` and `GAME_STATES` constants from `src/utils/constants.js`.
+- **Never use magic strings** for events, states, types, statuses, or categories; always use TypeScript `enum`s from `src/utils/constants.ts` (e.g. `GAME_EVENTS`, `GAME_STATES`, `STATUS_CONDITIONS`, `MONSTER_TYPES`, `MOVE_CATEGORIES`, `BATTLE_TYPES`).
 
 ## 2. Keep Stores "Dumb"
-- Stores (like `sessionStore.js`) should only contain data and simple mutation functions.
+- Stores (like `sessionStore.ts`) should only contain data and simple mutation functions.
 - If a mutation has a side effect (like playing a sound or moving to a new screen), that logic belongs in the **FSM**, not the store.
 
 ## 3. Persistent State vs. Transient State
-- If a value needs to survive a browser refresh (HP, Gold, Position), put it in `sessionStore.js`.
+- If a value needs to survive a browser refresh (HP, Gold, Position), put it in `sessionStore.ts`.
 - If a value is only for the current animation or UI interaction (timer remaining, current input string), keep it in the component.
 
 ## 4. Hierarchical States

@@ -225,7 +225,8 @@ export const MOVES: Record<string, Move> = {
 
   [MOVE_IDS.TripleKick]: { id: MOVE_IDS.TripleKick, name: "TripleKick", type: MONSTER_TYPES.FIGHTING, category: MOVE_CATEGORIES.PHYSICAL, power: 10, accuracy: 90 },
   [MOVE_IDS.Withdraw]: { id: MOVE_IDS.Withdraw, name: "Withdraw", type: MONSTER_TYPES.WATER, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 100, effectType: MOVE_EFFECT_TYPES.STAT_UP, effectStat: "def", effectAmount: 1 },
-  [MOVE_IDS.StringShot]: { id: MOVE_IDS.StringShot, name: "StringShot", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 95, effectType: MOVE_EFFECT_TYPES.STAT_DOWN, effectStat: "spe", effectAmount: 2 },};
+  [MOVE_IDS.StringShot]: { id: MOVE_IDS.StringShot, name: "StringShot", type: MONSTER_TYPES.BUG, category: MOVE_CATEGORIES.STATUS, power: 0, accuracy: 95, effectType: MOVE_EFFECT_TYPES.STAT_DOWN, effectStat: "spe", effectAmount: 2 }
+};
 
 
 
@@ -587,7 +588,7 @@ export function calculateDamage(
   let typeMod = 1;
   const defTypes = defender.types || [];
   defTypes.forEach(defType => {
-    typeMod *= TYPE_CHART[move.type]?.[defType] || 1;
+    typeMod *= (TYPE_CHART[move.type as keyof typeof TYPE_CHART] as Record<string, number>)?.[defType] || 1;
   });
 
   const attTypes = attacker.types || [];

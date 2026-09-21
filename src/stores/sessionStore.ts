@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { storage } from '../utils/storage';
-import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS, MONSTER_TYPES } from '../utils/constants';
+import { STORAGE_KEYS, GAME_CONSTANTS, INTERIORS, SPAWN_POINTS, STATUS_CONDITIONS, MONSTER_TYPES, BATTLE_TYPES, GENDERS, SKIN_TONES } from '../utils/constants';
 import { calculateExpToNext, calculateStat, MONS, createMon, getDefaultStages, type Monster, type Word } from '../utils/gameData';
 import i18n from '../i18n';
 
@@ -247,8 +247,8 @@ export const useSessionStore = defineStore('session', {
 
     player: {
       name: 'Player',
-      gender: 'Boy',
-      skinTone: 'neutral',
+      gender: GENDERS.BOY,
+      skinTone: SKIN_TONES.NEUTRAL,
       party: [],
       position: null,
       currentArea: 1,
@@ -266,7 +266,7 @@ export const useSessionStore = defineStore('session', {
 
     battle: {
       active: false,
-      type: 'wild',
+      type: BATTLE_TYPES.WILD,
       enemyMon: null,
       playerMonId: null,
       log: [],
@@ -340,7 +340,7 @@ export const useSessionStore = defineStore('session', {
     resetBattle() {
       this.battle = {
         active: false,
-        type: 'wild',
+        type: BATTLE_TYPES.WILD,
         enemyMon: null,
         playerMonId: null,
         log: [],
@@ -387,8 +387,8 @@ export const useSessionStore = defineStore('session', {
     resetSession() {
       this.player = {
         name: 'Player',
-        gender: 'Boy',
-        skinTone: 'neutral',
+        gender: GENDERS.BOY,
+        skinTone: SKIN_TONES.NEUTRAL,
         party: [],
         position: { x: 1, y: 1 },
         currentArea: 1,

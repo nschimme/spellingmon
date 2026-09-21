@@ -7,7 +7,7 @@ import { useVocabStore } from './vocabStore';
 import { useMapStore } from './mapStore';
 import { audio } from '../utils/audio';
 import { speech } from '../utils/speech';
-import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS } from '../utils/constants';
+import { SOUND_EFFECTS, BATTLE_TYPES, GAME_CONSTANTS, ANIMATION_DURATIONS, GAME_STATES, GAME_EVENTS, SPAWN_POINTS, MOVE_IDS, STATUS_CONDITIONS, MONSTER_TYPES, MOVE_CATEGORIES } from '../utils/constants';
 import { type Monster, type Move, MOVES, calculateExpGain, calculateDamage, calculateTimerDuration, createMon, getRivalStarter, SPECIES } from '../utils/gameData';
 import { getTrainerDisplayName } from '../utils/npcData';
 import { validateSpelling, getAISpellingPerformance } from '../utils/spelling';
@@ -72,7 +72,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
              ctx.session.player.characterCreationComplete = true;
 
              const jumpState = urlParams.get('state');
-             if (jumpState && Object.values(GAME_STATES).includes(jumpState)) {
+             if (jumpState && Object.values(GAME_STATES).includes(jumpState as GAME_STATES)) {
                 // Robust Debug Jump via Smart LOADING gateway
                 const jumpParams: any = { target: jumpState };
                 urlParams.forEach((value, key) => {
@@ -492,7 +492,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       } else {
                          ctx.session.battle.log.push(ctx.t('battle.isConfused', { name: ctx.t('monsters.' + attacker.species) }));
                          if (Math.random() < 0.5) {
-                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: 'Normal', category: 'Physical', power: 40, accuracy: 100 };
+                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 };
                             const { damage } = calculateDamage(attacker, attacker, confusionMove, { isCorrect: true, isPerfect: false, isPower: false });
                             attacker.hp = Math.max(0, attacker.hp - damage);
                             ctx.session.battle.log.push(ctx.t('battle.hurtSelf'));
@@ -616,7 +616,7 @@ export const useGameFSM = defineStore('gameFSM', () => {
                       } else {
                          ctx.session.battle.log.push(ctx.t('battle.isConfused', { name: ctx.t('monsters.' + enemyMon.species) }));
                          if (Math.random() < 0.5) {
-                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: 'Normal', category: 'Physical', power: 40, accuracy: 100 };
+                            const confusionMove: Move = { id: 'confusion_self', name: 'Confusion', type: MONSTER_TYPES.NORMAL, category: MOVE_CATEGORIES.PHYSICAL, power: 40, accuracy: 100 };
                             const { damage } = calculateDamage(enemyMon, enemyMon, confusionMove, { isCorrect: true, isPerfect: false, isPower: false });
                             enemyMon.hp = Math.max(0, enemyMon.hp - damage);
                             ctx.session.battle.log.push(ctx.t('battle.hurtSelf'));
