@@ -143,6 +143,16 @@ export enum MOVE_EFFECT_TYPES {
   FIXED = 'FIXED',
 }
 
+export enum STAT_KEYS {
+  ATK = 'atk',
+  DEF = 'def',
+  SPA = 'spa',
+  SPD = 'spd',
+  SPE = 'spe',
+  ACC = 'acc',
+  EVA = 'eva',
+}
+
 export enum STATUS_CONDITIONS {
   NONE = 'NONE',
   POISON = 'POISON',
