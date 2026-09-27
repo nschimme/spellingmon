@@ -8,13 +8,22 @@
         {{ $t('starter.description') }}
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+        role="radiogroup"
+        :aria-label="$t('starter.title')"
+      >
         <div
           v-for="(mon, i) in starters"
           :key="mon.species"
+          role="radio"
+          :aria-checked="selectedIndex === i"
+          :aria-label="`${$t('monsters.' + mon.species)}, ${$t('types.' + mon.type)}, HP: ${mon.hp}`"
+          tabindex="0"
           :class="{ 'ring-8 ring-yellow-400 border-blue-500 shadow-2xl bg-blue-50': selectedIndex === i }"
-          class="group cursor-pointer bg-gray-50 border-8 border-gray-800 p-8 rounded-[2rem] transition-all duration-300 flex flex-col items-center relative overflow-hidden"
+          class="group cursor-pointer bg-gray-50 border-8 border-gray-800 p-8 rounded-[2rem] transition-all duration-300 flex flex-col items-center relative overflow-hidden outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
           @click="selectStarter(mon)"
+          @keydown.enter.space.prevent="selectStarter(mon)"
         >
           <!-- Background Glow -->
           <div
