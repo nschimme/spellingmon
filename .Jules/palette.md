@@ -5,3 +5,7 @@
 ## 2025-09-20 - Contextual ARIA Labels for Multi-Step Dialogs and Boundary Navigation Buttons
 **Learning:** Interactive control icons (like ⬅️/➡️ navigation arrows or ▼/✕ modal actions) often have static ARIA labels or lack native `:disabled` attributes at valid boundaries, leading screen readers to announce incorrect actions or allow invalid triggers.
 **Action:** Always compute dynamic `:aria-label` strings based on step state (e.g., intermediate vs final line) and bind native `:disabled` attributes alongside disabled visual utility classes for boundary controls.
+
+## 2025-09-22 - Accessible Custom Radio Selection Cards
+**Learning:** Custom selection cards (such as starter choice screens) implemented as clickable `div`s lack native radio semantics and focus indicators, preventing screen reader and keyboard users from selecting options.
+**Action:** Wrap card containers in `role="radiogroup"` with `aria-label`, assign `role="radio"`, `:aria-checked`, `tabindex="0"`, dynamic `:aria-label`, keydown handlers (`@keydown.enter.space.prevent`), and `focus-visible` ring classes to selection cards.
