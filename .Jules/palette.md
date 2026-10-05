@@ -9,3 +9,7 @@
 ## 2025-09-22 - Accessible Custom Radio Selection Cards
 **Learning:** Custom selection cards (such as starter choice screens) implemented as clickable `div`s lack native radio semantics and focus indicators, preventing screen reader and keyboard users from selecting options.
 **Action:** Wrap card containers in `role="radiogroup"` with `aria-label`, assign `role="radio"`, `:aria-checked`, `tabindex="0"`, dynamic `:aria-label`, keydown handlers (`@keydown.enter.space.prevent`), and `focus-visible` ring classes to selection cards.
+
+## 2025-09-24 - Accessible Dialogue Boxes and Live Text Regions
+**Learning:** Dialogue boxes that update text content dynamically across steps need `aria-live="polite"` on the text element and `role="dialog"` with dynamic `:aria-label` on the container card. Without `aria-hidden="true"` on text-advance indicator glyphs (`▼`/`✕`), screen readers read decorative characters instead of seamlessly announcing new lines.
+**Action:** Add `role="dialog"`, `:aria-label`, and `aria-live="polite"` to dialogue containers and text blocks, while ensuring decorative advance arrow glyphs are marked with `aria-hidden="true"`.

@@ -3,7 +3,11 @@
     class="absolute top-28 left-1/2 -translate-x-1/2 w-[90%] max-w-2xl z-50"
     @click.stop="handleConfirm"
   >
-    <div class="relative bg-white border-4 border-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 min-h-[100px] flex flex-col justify-center">
+    <div
+      class="relative bg-white border-4 border-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 min-h-[100px] flex flex-col justify-center"
+      role="dialog"
+      :aria-label="speakerName || $t('common.dialog')"
+    >
       <!-- Speaker Name -->
       <div
         v-if="speakerName"
@@ -13,18 +17,25 @@
       </div>
 
       <!-- Dialog Text -->
-      <p class="text-xs sm:text-sm font-bold text-gray-800 leading-relaxed">
+      <p
+        class="text-xs sm:text-sm font-bold text-gray-800 leading-relaxed"
+        aria-live="polite"
+      >
         {{ currentLine }}
       </p>
 
       <!-- Next Indicator / Button -->
       <button
         id="dialog-next-button"
-        class="absolute bottom-2 right-4 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 border-2 border-gray-800 rounded-full transition-transform active:scale-95"
+        type="button"
+        class="absolute bottom-2 right-4 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 border-2 border-gray-800 rounded-full transition-transform active:scale-95 focus-visible:ring-4 focus-visible:ring-yellow-400 focus:outline-none"
         :aria-label="isLastLine ? $t('common.confirm') : $t('common.continue')"
         @click.stop="handleConfirm"
       >
-        <span class="text-gray-800 text-lg font-black animate-pulse">
+        <span
+          class="text-gray-800 text-lg font-black animate-pulse"
+          aria-hidden="true"
+        >
           {{ isLastLine ? '✕' : '▼' }}
         </span>
       </button>
