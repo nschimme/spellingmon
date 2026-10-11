@@ -62,7 +62,15 @@
                 <span>{{ $t('menu.hp') }}</span>
                 <span>{{ mon.hp }} / {{ mon.maxHp }}</span>
               </div>
-              <div class="w-full bg-gray-200 h-4 border-2 border-gray-800 rounded-full overflow-hidden shadow-inner">
+              <div
+                class="w-full bg-gray-200 h-4 border-2 border-gray-800 rounded-full overflow-hidden shadow-inner"
+                role="progressbar"
+                :aria-valuenow="mon.hp"
+                aria-valuemin="0"
+                :aria-valuemax="mon.maxHp"
+                :aria-label="`${$t('monsters.' + mon.species)} ${$t('menu.hp')}`"
+                :aria-valuetext="`${mon.hp} / ${mon.maxHp}`"
+              >
                 <div
                   :class="getHPColorClass(mon.hp, mon.maxHp)"
                   class="h-full transition-all duration-500 ease-out border-r-2 border-black/10"
@@ -77,7 +85,15 @@
                 <span>{{ $t('menu.exp') }}</span>
                 <span>{{ mon.exp }} / {{ mon.expToNext }}</span>
               </div>
-              <div class="w-full bg-blue-50 h-1.5 border border-blue-200 rounded-full overflow-hidden">
+              <div
+                class="w-full bg-blue-50 h-1.5 border border-blue-200 rounded-full overflow-hidden"
+                role="progressbar"
+                :aria-valuenow="mon.exp"
+                aria-valuemin="0"
+                :aria-valuemax="mon.expToNext"
+                :aria-label="`${$t('monsters.' + mon.species)} ${$t('menu.exp')}`"
+                :aria-valuetext="`${mon.exp} / ${mon.expToNext}`"
+              >
                 <div
                   class="bg-blue-400 h-full transition-all duration-700"
                   :style="{ width: `${(mon.exp / mon.expToNext) * 100}%` }"
@@ -134,6 +150,7 @@
             >{{ $t('menu.pressEnterToSwap') }}</span>
             <button
               class="bg-blue-500 hover:bg-blue-600 text-white text-[10px] px-4 py-2 rounded-xl font-black uppercase border-b-4 border-blue-700 active:translate-y-1 transition-all"
+              :aria-label="`${$t('menu.setLeader')}: ${$t('monsters.' + mon.species)}`"
               @click="session.moveMonToFront(i)"
             >
               {{ $t('menu.setLeader') }}
