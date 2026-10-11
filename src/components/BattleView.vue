@@ -20,10 +20,10 @@
               <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.battle.enemyMon.species) }}</span>
               <div class="flex gap-0.5">
                 <div
-                  v-for="t in session.battle.enemyMon.types"
-                  :key="t"
+                  v-for="monType in session.battle.enemyMon.types"
+                  :key="monType"
                   class="w-2 h-2 rounded-full border border-black/20"
-                  :class="TYPE_COLORS[t]"
+                  :class="TYPE_COLORS[monType]"
                 />
               </div>
             </div>
@@ -38,7 +38,15 @@
               </div>
             </div>
           </div>
-          <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400">
+          <div
+            class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400"
+            role="progressbar"
+            :aria-valuenow="session.battle.enemyMon.hp"
+            aria-valuemin="0"
+            :aria-valuemax="session.battle.enemyMon.maxHp"
+            :aria-label="`${$t('monsters.' + session.battle.enemyMon.species)} ${$t('menu.hp')}`"
+            :aria-valuetext="`${session.battle.enemyMon.hp} / ${session.battle.enemyMon.maxHp}`"
+          >
             <div
               class="h-full transition-all duration-500"
               :class="getHPColorClass(session.battle.enemyMon.hp, session.battle.enemyMon.maxHp)"
@@ -65,10 +73,10 @@
               <span class="text-[10px] sm:text-sm tracking-tighter">{{ $t('monsters.' + session.activePlayerMon.species) }}</span>
               <div class="flex gap-0.5">
                 <div
-                  v-for="t in session.activePlayerMon.types"
-                  :key="t"
+                  v-for="monType in session.activePlayerMon.types"
+                  :key="monType"
                   class="w-2 h-2 rounded-full border border-black/20"
-                  :class="TYPE_COLORS[t]"
+                  :class="TYPE_COLORS[monType]"
                 />
               </div>
             </div>
@@ -83,7 +91,15 @@
               </div>
             </div>
           </div>
-          <div class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400">
+          <div
+            class="w-full bg-gray-200 h-1 sm:h-2 rounded mt-0.5 overflow-hidden border border-gray-400"
+            role="progressbar"
+            :aria-valuenow="session.activePlayerMon.hp"
+            aria-valuemin="0"
+            :aria-valuemax="session.activePlayerMon.maxHp"
+            :aria-label="`${$t('monsters.' + session.activePlayerMon.species)} ${$t('menu.hp')}`"
+            :aria-valuetext="`${session.activePlayerMon.hp} / ${session.activePlayerMon.maxHp}`"
+          >
             <div
               class="h-full transition-all duration-500"
               :class="getHPColorClass(session.activePlayerMon.hp, session.activePlayerMon.maxHp)"
@@ -240,10 +256,14 @@
               :ref="el => setMoveRef(el, idx)"
               class="relative flex h-12 flex-col items-center justify-center overflow-hidden rounded-lg border-b-4 border-black/20 p-2 text-[10px] font-black uppercase tracking-tighter text-white outline-none transition-all"
               :class="[TYPE_COLORS[MOVES[moveId]?.type], { 'ring-4 ring-yellow-400 scale-105 z-10': moveIndex === idx }]"
+              :aria-label="getMoveAriaLabel(moveId)"
               @click="fsm.send(GAME_EVENTS.CONFIRM, { moveId })"
             >
               <span>{{ $t('moves.' + moveId) }}</span>
-              <div class="mt-1 flex items-center gap-1">
+              <div
+                class="mt-1 flex items-center gap-1"
+                aria-hidden="true"
+              >
                 <span
                   v-if="MOVES[moveId]?.category === MOVE_CATEGORIES.PHYSICAL"
                   :title="$t('battle.category.physical')"
@@ -414,6 +434,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, computed, type ComponentPublicInstance, nextTick } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSessionStore } from '../stores/sessionStore';
 import { useGameFSM } from '../stores/gameFSM';
 import { speech } from '../utils/speech';
@@ -423,6 +444,7 @@ import { MOVES, TYPE_CHART } from '../utils/gameData';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 import ExperienceView from './ExperienceView.vue';
 
+const { t } = useI18n();
 const session = useSessionStore();
 const fsm = useGameFSM();
 
@@ -524,14 +546,23 @@ const getEffectiveness = (moveId: string) => {
   if (!move || move.category === MOVE_CATEGORIES.STATUS) return null;
 
   let mod = 1;
-  session.battle.enemyMon.types.forEach(t => {
-    mod *= (TYPE_CHART[move.type as keyof typeof TYPE_CHART] as Record<string, number>)?.[t] || 1;
+  session.battle.enemyMon.types.forEach(typeKey => {
+    mod *= (TYPE_CHART[move.type as keyof typeof TYPE_CHART] as Record<string, number>)?.[typeKey] || 1;
   });
 
-  if (mod > 1) return session.t('battle.effectiveness.super');
-  if (mod > 0 && mod < 1) return session.t('battle.effectiveness.weak');
-  if (mod === 0) return session.t('battle.effectiveness.none');
+  if (mod > 1) return t('battle.effectiveness.super');
+  if (mod > 0 && mod < 1) return t('battle.effectiveness.weak');
+  if (mod === 0) return t('battle.effectiveness.none');
   return null;
+};
+
+const getMoveAriaLabel = (moveId: string) => {
+  const move = MOVES[moveId];
+  if (!move) return '';
+  const moveName = t('moves.' + moveId);
+  const moveType = t('types.' + move.type);
+  const eff = getEffectiveness(moveId);
+  return eff ? `${moveName}, ${moveType}, ${eff}` : `${moveName}, ${moveType}`;
 };
 
 const { selectedIndex: partyIndex } = useKeyboardNavigation({
