@@ -13,3 +13,7 @@
 ## 2025-09-24 - Accessible Dialogue Boxes and Live Text Regions
 **Learning:** Dialogue boxes that update text content dynamically across steps need `aria-live="polite"` on the text element and `role="dialog"` with dynamic `:aria-label` on the container card. Without `aria-hidden="true"` on text-advance indicator glyphs (`▼`/`✕`), screen readers read decorative characters instead of seamlessly announcing new lines.
 **Action:** Add `role="dialog"`, `:aria-label`, and `aria-live="polite"` to dialogue containers and text blocks, while ensuring decorative advance arrow glyphs are marked with `aria-hidden="true"`.
+
+## 2025-09-28 - Progress Bar Semantics and Helper ARIA Labels for Battle Actions
+**Learning:** Progress meter bars (like HP and EXP bars) in game UI components require `role="progressbar"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-label`, and `aria-valuetext` to announce numeric progress to assistive technologies. Dynamic action buttons (like battle move buttons) require dedicated `useI18n()` helper functions to format name, type, and effectiveness context into `:aria-label` while marking decorative icon glyphs with `aria-hidden="true"`.
+**Action:** Add progressbar ARIA attributes to visual status bars and compute comprehensive `:aria-label` strings via component `useI18n()` helpers for dynamic action controls.
