@@ -23,15 +23,21 @@
               selectedIndex === i ? 'bg-blue-600 text-white translate-x-2 ring-8 ring-yellow-400' : 'bg-white text-gray-700 hover:bg-gray-100 border-4 border-gray-800',
               item.class || ''
             ]"
+            :aria-label="`${item.label}${selectedIndex === i ? ' - Selected' : ''}`"
+            :aria-current="selectedIndex === i ? 'true' : undefined"
             @click="handleMenuClick(item)"
           >
             <div class="flex items-center gap-4">
-              <span class="text-2xl group-hover:scale-125 transition-transform">{{ item.icon }}</span>
+              <span
+                class="text-2xl group-hover:scale-125 transition-transform"
+                aria-hidden="true"
+              >{{ item.icon }}</span>
               <span>{{ item.label }}</span>
             </div>
             <span
               v-if="selectedIndex === i"
               class="text-xl"
+              aria-hidden="true"
             >▶</span>
           </button>
         </nav>
