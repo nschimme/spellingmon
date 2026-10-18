@@ -17,3 +17,7 @@
 ## 2025-09-28 - Progress Bar Semantics and Helper ARIA Labels for Battle Actions
 **Learning:** Progress meter bars (like HP and EXP bars) in game UI components require `role="progressbar"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-label`, and `aria-valuetext` to announce numeric progress to assistive technologies. Dynamic action buttons (like battle move buttons) require dedicated `useI18n()` helper functions to format name, type, and effectiveness context into `:aria-label` while marking decorative icon glyphs with `aria-hidden="true"`.
 **Action:** Add progressbar ARIA attributes to visual status bars and compute comprehensive `:aria-label` strings via component `useI18n()` helpers for dynamic action controls.
+
+## 2025-10-02 - Explicit ARIA Labels and Selection States on Overlay Menu Buttons
+**Learning:** Custom menu navigation items with icons and selection indicators (like `▶`) often rely on visual focus rings or dynamic arrow rendering without providing explicit screen reader state hints, resulting in ambiguous button announcements when navigating with keyboard/screen readers.
+**Action:** Ensure custom menu navigation buttons set explicit dynamic `:aria-label` strings (e.g. including selected state context), `:aria-current="selectedIndex === i ? 'true' : undefined"`, and mark decorative emojis/indicator arrows with `aria-hidden="true"`.
