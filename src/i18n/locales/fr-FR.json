@@ -21,7 +21,9 @@
     "startSlot": "Démarrer",
     "backToTitle": "Retour au Titre",
     "deleteSaveConfirm": "Supprimer la sauvegarde ?",
-    "deleteSaveWarning": "Cela effacera définitivement toute votre progression dans l'Emplacement {n}."
+    "deleteSaveWarning": "Cela effacera définitivement toute votre progression dans l'emplacement {n}.",
+    "saveSlotLabel": "Emplacement {n} : {name}, {area}, Équipe {count}/6",
+    "emptySaveSlotLabel": "Emplacement {n} : Nouvelle partie"
   },
   "tts": {
     "title": "Vérification audio",

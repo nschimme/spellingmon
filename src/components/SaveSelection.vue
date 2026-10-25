@@ -10,7 +10,10 @@
       />
     </div>
 
-    <div class="z-10 bg-white border-8 border-gray-800 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full text-gray-800 overflow-y-auto max-h-full">
+    <div
+      :inert="activeSlotIndex !== null || isDeleting"
+      class="z-10 bg-white border-8 border-gray-800 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full text-gray-800 overflow-y-auto max-h-full"
+    >
       <h1 class="text-3xl md:text-4xl font-black text-center mb-2 uppercase tracking-tighter text-blue-600 drop-shadow-sm">
         {{ $t('landing.title') }}
       </h1>
@@ -18,18 +21,27 @@
         {{ $t('landing.selectAdventure') }}
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        role="radiogroup"
+        :aria-label="$t('landing.selectAdventure')"
+      >
         <div
           v-for="(slot, index) in slots"
           :key="index"
           :ref="el => setSlotRef(el, index)"
-          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer"
+          role="radio"
+          :aria-checked="selectedSlotIndex === index"
+          :aria-label="getSlotAriaLabel(slot, index)"
+          tabindex="0"
+          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer focus-visible:ring-8 focus-visible:ring-yellow-400"
           :class="{
             'ring-8 ring-yellow-400 border-blue-500 shadow-2xl': selectedIndex === index,
             'bg-gray-50 border-gray-200': !slot,
             'bg-white border-gray-800': slot
           }"
           @click="openSlotActions(index)"
+          @keydown.enter.space.prevent="openSlotActions(index)"
         >
           <div
             v-if="slot && slot.player"
@@ -85,17 +97,20 @@
         <button
           ref="backButton"
           :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
-          class="text-xs font-bold text-gray-400 uppercase hover:text-gray-600 transition-colors outline-none"
+          class="text-xs font-bold text-gray-400 uppercase hover:text-gray-600 transition-colors outline-none focus-visible:ring-4 focus-visible:ring-yellow-400"
           @click="$emit('back')"
         >
-          &larr; {{ $t('landing.backToTitle') }}
+          <span aria-hidden="true">&larr; </span>{{ $t('landing.backToTitle') }}
         </button>
       </div>
     </div>
 
     <!-- Slot Action Dialog -->
     <div
-      v-if="activeSlotIndex !== null"
+      v-if="activeSlotIndex !== null && !isDeleting"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="(activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? slots[activeSlotIndex]!.player.name : $t('landing.newGameSlot')"
       class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
@@ -110,7 +125,7 @@
           <button
             :ref="el => setActionRef(el, 0)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === 0 }"
-            class="w-full bg-blue-500 text-white py-4 rounded-xl font-black uppercase border-b-8 border-blue-800 active:translate-y-1 outline-none"
+            class="w-full bg-blue-500 text-white py-4 rounded-xl font-black uppercase border-b-8 border-blue-800 active:translate-y-1 outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
             @click="confirmAction"
           >
             {{ (activeSlotIndex !== null && slots[activeSlotIndex]) ? $t('landing.continueSlot') : $t('landing.startSlot') }}
@@ -120,7 +135,7 @@
             v-if="activeSlotIndex !== null && slots[activeSlotIndex]?.player"
             :ref="el => setActionRef(el, 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === 1 }"
-            class="w-full bg-red-100 text-red-500 py-3 rounded-xl font-black uppercase border-b-4 border-red-200 hover:bg-red-200 transition-colors outline-none"
+            class="w-full bg-red-100 text-red-500 py-3 rounded-xl font-black uppercase border-b-4 border-red-200 hover:bg-red-200 transition-colors outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
             @click="confirmDelete"
           >
             {{ $t('landing.deleteSlot') }}
@@ -129,7 +144,7 @@
           <button
             :ref="el => setActionRef(el, (activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? 2 : 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': actionSelectedIndex === ((activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? 2 : 1) }"
-            class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none"
+            class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
             @click="activeSlotIndex = null"
           >
             {{ $t('common.back') }}
@@ -141,6 +156,9 @@
     <!-- Delete Confirmation Dialog -->
     <div
       v-if="isDeleting"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="$t('landing.deleteSaveConfirm')"
       class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
@@ -157,7 +175,7 @@
           <button
             :ref="el => setDeleteRef(el, 0)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': deleteSelectedIndex === 0 }"
-            class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none"
+            class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-black uppercase border-b-4 border-gray-400 active:translate-y-1 outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
             @click="isDeleting = false"
           >
             {{ $t('common.cancel') }}
@@ -165,7 +183,7 @@
           <button
             :ref="el => setDeleteRef(el, 1)"
             :class="{ 'ring-8 ring-yellow-400 border-yellow-400': deleteSelectedIndex === 1 }"
-            class="flex-1 bg-red-600 text-white py-3 rounded-xl font-black uppercase border-b-4 border-red-800 active:translate-y-1 outline-none"
+            class="flex-1 bg-red-600 text-white py-3 rounded-xl font-black uppercase border-b-4 border-red-800 active:translate-y-1 outline-none focus-visible:ring-8 focus-visible:ring-yellow-400"
             @click="doDelete"
           >
             {{ $t('landing.deleteSlot') }}
@@ -177,16 +195,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, type ComponentPublicInstance } from 'vue';
+import { ref, onMounted, watch, computed, type ComponentPublicInstance } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSessionStore, getSessionSnapshot } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { audio } from '../utils/audio';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
+const { t } = useI18n();
 const emit = defineEmits(['back', 'selected']);
 const session = useSessionStore();
 const slots = ref<(any | null)[]>([null, null, null]);
+const selectedSlotIndex = ref(0);
 const activeSlotIndex = ref<number | null>(null);
 const isDeleting = ref(false);
 
@@ -214,8 +235,21 @@ const loadSlots = () => {
   }
 };
 
+const getSlotAriaLabel = (slot: any, index: number) => {
+  const slotNum = index + 1;
+  if (slot && slot.player) {
+    const name = slot.player.name;
+    const area = t('menu.area', { n: slot.player.currentArea });
+    const count = slot.player.party?.length || 0;
+    return t('landing.saveSlotLabel', { n: slotNum, name, area, count });
+  }
+  return t('landing.emptySaveSlotLabel', { n: slotNum });
+};
+
 const openSlotActions = (index: number) => {
   audio.playSound(SOUND_EFFECTS.CLICK);
+  selectedSlotIndex.value = index;
+  reset(index);
   if (!slots.value[index] || !slots.value[index].player) {
     // If slot is empty or malformed, start immediately
     activeSlotIndex.value = index;
@@ -246,9 +280,9 @@ const doDelete = () => {
   activeSlotIndex.value = null;
 };
 
-const { selectedIndex } = useKeyboardNavigation({
+const { selectedIndex, reset } = useKeyboardNavigation({
   id: 'save-selection',
-  isActive: computed(() => activeSlotIndex.value === null),
+  isActive: computed(() => activeSlotIndex.value === null && !isDeleting.value),
   maxIndex: 4,
   gridColumns: 3,
   itemRefs: computed(() => [...slotRefs.value, backButton.value]),
@@ -257,6 +291,12 @@ const { selectedIndex } = useKeyboardNavigation({
     else emit('back');
   },
   onCancel: () => emit('back')
+});
+
+watch(selectedIndex, (newIdx) => {
+  if (newIdx < 3) {
+    selectedSlotIndex.value = newIdx;
+  }
 });
 
 const { selectedIndex: actionSelectedIndex } = useKeyboardNavigation({

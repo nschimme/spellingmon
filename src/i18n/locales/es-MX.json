@@ -21,7 +21,9 @@
     "startSlot": "Empezar",
     "backToTitle": "Volver al Título",
     "deleteSaveConfirm": "¿Borrar Partida?",
-    "deleteSaveWarning": "Esto borrará permanentemente todo tu progreso en la Ranura {n}."
+    "deleteSaveWarning": "Esto borrará permanentemente todo tu progreso en la Ranura {n}.",
+    "saveSlotLabel": "Ranura {n}: {name}, {area}, Equipo {count}/6",
+    "emptySaveSlotLabel": "Ranura {n}: Juego Nuevo"
   },
   "tts": {
     "title": "Verificación de audio",

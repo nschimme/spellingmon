@@ -21,7 +21,9 @@
     "startSlot": "开始",
     "backToTitle": "返回标题",
     "deleteSaveConfirm": "删除存档？",
-    "deleteSaveWarning": "这将永久删除存档 {n} 中的所有进度。"
+    "deleteSaveWarning": "这将永久删除槽位 {n} 中的所有进度。",
+    "saveSlotLabel": "存档 {n}: {name}，{area}，队伍 {count}/6",
+    "emptySaveSlotLabel": "存档 {n}: 新游戏"
   },
   "tts": {
     "title": "音频检查",

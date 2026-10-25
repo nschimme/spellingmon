@@ -29,7 +29,9 @@
     "startSlot": "スタート",
     "backToTitle": "タイトルに戻る",
     "deleteSaveConfirm": "セーブデータを削除しますか？",
-    "deleteSaveWarning": "スロット {n} のすべての進行状況が永久に消去されます。"
+    "deleteSaveWarning": "スロット{n}のすべての進行状況が永久に消去されます。",
+    "saveSlotLabel": "スロット {n}: {name}、{area}、手持ち {count}/6",
+    "emptySaveSlotLabel": "スロット {n}: さいしょから"
   },
   "tts": {
     "title": "オーディオチェック",
