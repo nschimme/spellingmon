@@ -18,18 +18,27 @@
         {{ $t('landing.selectAdventure') }}
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        role="radiogroup"
+        :aria-label="$t('landing.selectAdventure')"
+      >
         <div
           v-for="(slot, index) in slots"
           :key="index"
           :ref="el => setSlotRef(el, index)"
-          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer"
+          role="radio"
+          :aria-checked="selectedIndex === index"
+          :aria-label="getSlotAriaLabel(slot, index)"
+          tabindex="0"
+          class="relative border-4 p-6 rounded-3xl transition-all duration-300 flex flex-col items-center min-h-[300px] outline-none cursor-pointer focus-visible:ring-8 focus-visible:ring-yellow-400"
           :class="{
             'ring-8 ring-yellow-400 border-blue-500 shadow-2xl': selectedIndex === index,
             'bg-gray-50 border-gray-200': !slot,
             'bg-white border-gray-800': slot
           }"
           @click="openSlotActions(index)"
+          @keydown.enter.space.prevent="openSlotActions(index)"
         >
           <div
             v-if="slot && slot.player"
@@ -85,10 +94,10 @@
         <button
           ref="backButton"
           :class="{ 'ring-8 ring-yellow-400': selectedIndex === 3 }"
-          class="text-xs font-bold text-gray-400 uppercase hover:text-gray-600 transition-colors outline-none"
+          class="text-xs font-bold text-gray-400 uppercase hover:text-gray-600 transition-colors outline-none focus-visible:ring-4 focus-visible:ring-yellow-400"
           @click="$emit('back')"
         >
-          &larr; {{ $t('landing.backToTitle') }}
+          <span aria-hidden="true">&larr; </span>{{ $t('landing.backToTitle') }}
         </button>
       </div>
     </div>
@@ -96,6 +105,9 @@
     <!-- Slot Action Dialog -->
     <div
       v-if="activeSlotIndex !== null"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="(activeSlotIndex !== null && slots[activeSlotIndex]?.player) ? slots[activeSlotIndex]!.player.name : $t('landing.newGameSlot')"
       class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
@@ -141,6 +153,9 @@
     <!-- Delete Confirmation Dialog -->
     <div
       v-if="isDeleting"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="$t('landing.deleteSaveConfirm')"
       class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
     >
       <div class="bg-white border-8 border-gray-800 p-8 rounded-[2rem] max-w-sm w-full shadow-2xl text-center">
@@ -178,12 +193,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, type ComponentPublicInstance } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSessionStore, getSessionSnapshot } from '../stores/sessionStore';
 import { storage } from '../utils/storage';
 import { STORAGE_KEYS, SOUND_EFFECTS } from '../utils/constants';
 import { audio } from '../utils/audio';
 import { useKeyboardNavigation } from '../composables/useKeyboardNavigation';
 
+const { t } = useI18n();
 const emit = defineEmits(['back', 'selected']);
 const session = useSessionStore();
 const slots = ref<(any | null)[]>([null, null, null]);
@@ -212,6 +229,18 @@ const loadSlots = () => {
     const saved = storage.load(STORAGE_KEYS.SESSION, i);
     slots.value[i] = getSessionSnapshot(saved);
   }
+};
+
+const getSlotAriaLabel = (slot: any, index: number) => {
+  const slotNum = index + 1;
+  if (slot && slot.player) {
+    const name = slot.player.name;
+    const area = t('menu.area', { n: slot.player.currentArea });
+    const partyCount = slot.player.party?.length || 0;
+    const partyLabel = t('menu.party');
+    return `${t('landing.selectAdventure')} ${slotNum}: ${name}, ${area}, ${partyLabel} ${partyCount} / 6`;
+  }
+  return `${t('landing.selectAdventure')} ${slotNum}: ${t('landing.newGameSlot')}`;
 };
 
 const openSlotActions = (index: number) => {
