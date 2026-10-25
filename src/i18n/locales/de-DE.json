@@ -21,7 +21,9 @@
     "startSlot": "Start",
     "backToTitle": "Zurück zum Titel",
     "deleteSaveConfirm": "Spielstand löschen?",
-    "deleteSaveWarning": "Dies wird all deinen Fortschritt auf Speicherplatz {n} dauerhaft löschen."
+    "deleteSaveWarning": "Dies wird all deinen Fortschritt auf Speicherplatz {n} dauerhaft löschen.",
+    "saveSlotLabel": "Platz {n}: {name}, {area}, Team {count}/6",
+    "emptySaveSlotLabel": "Platz {n}: Neues Spiel"
   },
   "tts": {
     "title": "Audio-Check",

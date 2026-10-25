@@ -21,7 +21,9 @@
     "startSlot": "Iniciar",
     "backToTitle": "Voltar ao Título",
     "deleteSaveConfirm": "Apagar Save?",
-    "deleteSaveWarning": "Isso apagará permanentemente todo o seu progresso no Slot {n}."
+    "deleteSaveWarning": "Isso apagará permanentemente todo o seu progresso no Espaço {n}.",
+    "saveSlotLabel": "Espaço {n}: {name}, {area}, Equipe {count}/6",
+    "emptySaveSlotLabel": "Espaço {n}: Novo Jogo"
   },
   "tts": {
     "title": "Verificação de Áudio",

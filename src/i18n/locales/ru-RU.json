@@ -21,7 +21,9 @@
     "startSlot": "Начать",
     "backToTitle": "Назад в меню",
     "deleteSaveConfirm": "Удалить сохранение?",
-    "deleteSaveWarning": "Это навсегда удалит ваш прогресс в слоте {n}."
+    "deleteSaveWarning": "Это навсегда удалит весь ваш прогресс в слоте {n}.",
+    "saveSlotLabel": "Слот {n}: {name}, {area}, Команда {count}/6",
+    "emptySaveSlotLabel": "Слот {n}: Новая игра"
   },
   "tts": {
     "title": "Проверка звука",
