@@ -21,7 +21,21 @@ describe('MenuSettings.vue Accessibility & Mute Toggle', () => {
   const mountMenuSettings = () => {
     return mount(MenuSettings, {
       global: {
-        plugins: [i18n]
+        plugins: [i18n],
+        mocks: {
+          $t: (key: string) => {
+            const keys = key.split('.');
+            let current: any = enUS;
+            for (const k of keys) {
+              if (current && typeof current === 'object' && k in current) {
+                current = current[k];
+              } else {
+                return key;
+              }
+            }
+            return typeof current === 'string' ? current : key;
+          }
+        }
       }
     });
   };
@@ -37,15 +51,15 @@ describe('MenuSettings.vue Accessibility & Mute Toggle', () => {
 
     // Initial unmuted state
     expect(muteBtn.attributes('aria-pressed')).toBe('false');
-    expect(muteBtn.attributes('aria-label')).toBe('muted');
-    expect(muteBtn.attributes('title')).toBe('muted');
+    expect(muteBtn.attributes('aria-label')).toBe('Muted');
+    expect(muteBtn.attributes('title')).toBe('Muted');
 
     // Click to mute
     await muteBtn.trigger('click');
     expect(settingsStore.isMuted).toBe(true);
     expect(muteBtn.attributes('aria-pressed')).toBe('true');
-    expect(muteBtn.attributes('aria-label')).toBe('unmuted');
-    expect(muteBtn.attributes('title')).toBe('unmuted');
+    expect(muteBtn.attributes('aria-label')).toBe('Unmuted');
+    expect(muteBtn.attributes('title')).toBe('Unmuted');
   });
 
   it('verifies that unmuted and muted are defined across all 8 supported locale files', () => {
