@@ -384,7 +384,8 @@
     "voice": "Stimme",
     "volume": "Lautstärke",
     "muted": "Stumm",
-    "unusable": "Nicht unterstützt"
+    "unusable": "Nicht unterstützt",
+    "unmuted": "Nicht stumm"
   },
   "monsters": {
     "Grammander": "Gramanda",

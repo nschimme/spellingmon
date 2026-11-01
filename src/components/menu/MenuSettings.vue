@@ -46,6 +46,7 @@
           :class="{ 'ring-8 ring-yellow-400 rounded-full': selectedIndex === 2 }"
           class="text-3xl hover:scale-110 transition-transform outline-none"
           :aria-label="settingsStore.isMuted ? $t('settings.unmuted') : $t('settings.muted')"
+          :title="settingsStore.isMuted ? $t('settings.unmuted') : $t('settings.muted')"
           :aria-pressed="settingsStore.isMuted"
           @click="toggleMute"
         >

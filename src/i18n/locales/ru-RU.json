@@ -270,7 +270,8 @@
     "voice": "Голос",
     "volume": "Громкость",
     "muted": "Тихо",
-    "unusable": "Недоступно"
+    "unusable": "Недоступно",
+    "unmuted": "Со звуком"
   },
   "monsters": {
     "Grammander": "Граммандер",

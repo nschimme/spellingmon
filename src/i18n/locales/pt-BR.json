@@ -270,7 +270,8 @@
     "voice": "Voz TTS",
     "volume": "Volume",
     "muted": "Mudo",
-    "unusable": "Indisponível"
+    "unusable": "Indisponível",
+    "unmuted": "Com som"
   },
   "monsters": {
     "Grammander": "Grammandre",
