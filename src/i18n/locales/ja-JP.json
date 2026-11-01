@@ -392,7 +392,8 @@
     "muted": "ミュート",
     "unusable": "使用不可 (TTSなし)",
     "testSFX": "効果音テスト",
-    "noVoices": "音声が読み込まれていません。テスト音声かオーディオチェックに戻ってください。"
+    "noVoices": "音声が読み込まれていません。テスト音声かオーディオチェックに戻ってください。",
+    "unmuted": "ミュート解除"
   },
   "monsters": {
     "Grammander": "Grammander",

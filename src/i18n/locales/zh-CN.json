@@ -270,7 +270,8 @@
     "voice": "语音",
     "volume": "音量",
     "muted": "静音",
-    "unusable": "不可用（无语音）"
+    "unusable": "不可用（无语音）",
+    "unmuted": "已启用声音"
   },
   "monsters": {
     "Grammander": "语小龙",
