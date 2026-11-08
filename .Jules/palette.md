@@ -21,3 +21,7 @@
 ## 2025-10-02 - Explicit ARIA Labels and Selection States on Overlay Menu Buttons
 **Learning:** Custom menu navigation items with icons and selection indicators (like `▶`) often rely on visual focus rings or dynamic arrow rendering without providing explicit screen reader state hints, resulting in ambiguous button announcements when navigating with keyboard/screen readers.
 **Action:** Ensure custom menu navigation buttons set explicit dynamic `:aria-label` strings (e.g. including selected state context), `:aria-current="selectedIndex === i ? 'true' : undefined"`, and mark decorative emojis/indicator arrows with `aria-hidden="true"`.
+
+## 2025-10-15 - Accessible Dictionary and Pokedex-Style Grid Cards
+**Learning:** Dense dictionary or collection grid items (like Spellingdex cards) styled as custom clickable `div`s lack interactive button semantics, keyboard activation handlers (`Enter`/`Space`), and descriptive accessibility names. Screen reader and keyboard users cannot easily determine which items are discovered versus locked, or what definitions and statuses apply to them.
+**Action:** Assign `role="button"`, `tabindex="0"`, `:aria-pressed`, dynamic `:aria-label` (announcing term, mastery/seen status, and definition, or locked status), `@keydown.enter.space.prevent`, and `focus-visible` ring styles to grid item cards while hiding decorative emojis with `aria-hidden="true"`.
