@@ -75,15 +75,23 @@
         v-for="(word, index) in areaWords"
         :key="word.word"
         :ref="el => { if (el) itemRefs[index] = el as HTMLElement }"
-        class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px] cursor-pointer"
+        role="button"
+        tabindex="0"
+        :aria-label="getWordAriaLabel(word)"
+        :aria-pressed="selectedIndex === index"
+        class="group relative overflow-hidden bg-white border-4 p-2 rounded-xl transition-all flex flex-col items-center justify-center min-h-[80px] cursor-pointer outline-none focus-visible:ring-8 focus-visible:ring-yellow-400 focus-visible:border-yellow-400"
         :class="[
           isMastered(word.word) ? 'border-green-500 bg-green-50 shadow-md' : (isCorrect(word.word) ? 'border-blue-400 bg-blue-50' : (isSeen(word.word) ? 'border-gray-400 bg-gray-100' : 'border-gray-200 opacity-40')),
           selectedIndex === index ? 'ring-8 ring-yellow-400 border-yellow-400 scale-105 z-10' : ''
         ]"
         @click="reset(index)"
+        @keydown.enter.space.prevent="reset(index)"
       >
         <div class="text-center">
-          <div class="text-2xl mb-1">
+          <div
+            class="text-2xl mb-1"
+            aria-hidden="true"
+          >
             {{ isAnySeen(word.word) ? (word.emoji || '📖') : '❓' }}
           </div>
           <div class="font-black text-[10px] uppercase tracking-tighter truncate max-w-full">
@@ -145,6 +153,7 @@ import { useSettingsStore } from '../../stores/settingsStore';
 
 const session = useSessionStore();
 const settings = useSettingsStore();
+const t = (key: string, params?: any) => settings.t(key, params);
 const currentArea = ref(session.player.currentArea);
 const areaWords = ref<any[]>([]);
 const loading = ref(false);
@@ -163,6 +172,21 @@ const isSeen = (term: string) => getStatus(term) === 'seen';
 const isCorrect = (term: string) => getStatus(term) === 'correct';
 const isMastered = (term: string) => getStatus(term) === 'mastered';
 const isAnySeen = (term: string) => !!getStatus(term);
+
+const getWordAriaLabel = (word: any) => {
+  if (!isAnySeen(word.word)) {
+    return `??? - ${t('menu.locked')}`;
+  }
+  const statusLabel = isMastered(word.word)
+    ? t('menu.mastered')
+    : isCorrect(word.word)
+      ? t('battle.good')
+      : t('menu.seen');
+
+  return word.definition
+    ? `${word.word}, ${statusLabel}: ${word.definition}`
+    : `${word.word}, ${statusLabel}`;
+};
 
 const fetchWords = async () => {
   loading.value = true;
@@ -234,7 +258,7 @@ const { selectedIndex, reset } = useKeyboardNavigation({
 
 watch(selectedIndex, (newIdx) => {
   const el = itemRefs.value[newIdx];
-  if (el) {
+  if (el && typeof el.scrollIntoView === 'function') {
     el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
